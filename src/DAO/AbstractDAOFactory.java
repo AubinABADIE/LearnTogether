@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * 
  */
-public class AbstractDAOFactory {
+public abstract class AbstractDAOFactory {
 
     /**
      * Default constructor
