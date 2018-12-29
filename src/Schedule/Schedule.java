@@ -5,6 +5,6 @@ import java.util.*;
 /**
  * 
  */
-public interface Schedule {
+public class Schedule {
 
 }

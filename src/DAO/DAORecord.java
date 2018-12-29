@@ -1,16 +1,16 @@
-package Chat;
+package DAO;
 
 import java.util.*;
 
 /**
  * 
  */
-public class Observable {
+public abstract class DAORecord {
 
     /**
      * Default constructor
      */
-    public Observable() {
+    public DAORecord() {
     }
 
 }

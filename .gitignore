@@ -25,3 +25,7 @@ hs_err_pid*
 src/com/lloseng/\.DS_Store
 
 \.DS_Store
+
+\.idea/
+
+LearnTogether\.iml
