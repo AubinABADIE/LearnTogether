@@ -6,7 +6,7 @@ import javafx.application.Application;
 /**
  * 
  */
-public class StudentUI extends UI {
+public class StudentUI extends UI  {
 	
 	/**
 	 * Launch the chat interface.
@@ -16,4 +16,9 @@ public class StudentUI extends UI {
 	public static void main(String[] args) {
         Application.launch(StudentUI.class, args);
     }
-} 
+
+	@Override
+	public void displayCommand(String cmd) {
+
+	}
+}

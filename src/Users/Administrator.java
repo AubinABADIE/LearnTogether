@@ -2,8 +2,7 @@ package Users;
 
 import java.util.Date;
 import java.util.List;
-
-import Autre.Course;
+import Courses.Course;
 
 /**
  * 

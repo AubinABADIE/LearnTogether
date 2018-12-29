@@ -6,4 +6,6 @@ public interface DisplayIF {
 	   * a UI.
 	   */
 	  public abstract void display(String message);
+
+	  public abstract void displayCommand(String cmd);
 }

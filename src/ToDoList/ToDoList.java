@@ -7,7 +7,7 @@ import common.DisplayIF;
 /**
  * 
  */
-public class ToDoList implements DisplayIF {
+public class ToDoList {
 
     /**
      * Default constructor
@@ -54,9 +54,4 @@ public class ToDoList implements DisplayIF {
         // TODO implement here
     }
 
-	@Override
-	public void display(String message) {
-		// TODO Auto-generated method stub
-		
-	}
 }

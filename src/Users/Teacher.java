@@ -1,8 +1,9 @@
 package Users;
 
+import Courses.Course;
+
 import java.util.*;
 
-import Autre.Course;
 
 /**
  * 

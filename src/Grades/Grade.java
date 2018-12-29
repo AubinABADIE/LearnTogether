@@ -1,3 +1,4 @@
+package Grades;
 
 import Courses.Course;
 import Users.Student;
@@ -9,7 +10,7 @@ import java.util.*;
 /**
  * 
  */
-public class Grade implements DisplayIF {
+public class Grade{
 
     /**
      * Default constructor
@@ -86,14 +87,10 @@ public class Grade implements DisplayIF {
     }
 
     /**
-     * @param Object o : The object to display
+     * @param o : The object to display
      */
     public void display(Object o) {
         // TODO implement here
     }
 
-    @Override
-    public void display(String message) {
-
-    }
 }

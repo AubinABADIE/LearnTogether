@@ -1,7 +1,9 @@
 package UI;
 
+import java.io.IOException;
 import java.util.Optional;
 
+import Users.User;
 import common.DisplayIF;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
@@ -30,7 +32,12 @@ public abstract class UI extends Application implements DisplayIF {
 	private Stage primaryStage;
 	private Scene connectionScene;
 	private Scene principaleScene;
-	
+	private User user;
+
+	private void createUser(String host, int port, DisplayIF display, String id) throws IOException{
+        user = new User(host, port, this, id);
+    }
+
 	/**
 	 * Create the window with the two scene and set the first scene as main.
 	 * 
