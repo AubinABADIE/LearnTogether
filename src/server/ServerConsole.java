@@ -37,7 +37,7 @@ public class ServerConsole implements ChatIF {
         }
     }
 
-    public static  void main(String[] args){
+    public static void main(String[] args){
         int port; //Port to listen on
 
         try

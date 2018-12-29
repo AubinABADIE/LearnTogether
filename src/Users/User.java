@@ -16,7 +16,7 @@ public class User implements Observer {
 	public User() {
 	}
 
-	public User(String host, int port, DisplayIF display, String id) throws IOException {
+	public User(String host, int port, DisplayIF display) throws IOException {
 		comm = new ObservableClient(host, port);
 		comm.addObserver(this);
 		this.display = display;
@@ -55,7 +55,12 @@ public class User implements Observer {
 
 
 	public void handleAnswerLogin(String loginString){
-		display.displayCommand(loginString);
+		String[] credentials = loginString.split(" ");
+		boolean isConnected;
+		isConnected = credentials[1].matches("TRUE");
+		int id = Integer.parseInt(credentials[2]);
+		String role = credentials[3];
+		display.showLogin(isConnected, id, role);
 	}
 
 	@Override

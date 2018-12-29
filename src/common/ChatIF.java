@@ -1,9 +1,10 @@
+package common;
 
 import java.util.*;
 
 /**
  * 
  */
-public interface chatIF {
-
+public interface ChatIF {
+    void display(String message);
 }

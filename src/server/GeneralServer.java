@@ -9,7 +9,6 @@ import Groups.Promotion;
 import Records.Record;
 import Users.User;
 import com.lloseng.ocsf.server.ObservableOriginatorServer;
-import common.DisplayIF;
 import server.DAO.*;
 
 import java.io.File;
@@ -40,6 +39,7 @@ public class GeneralServer implements Observer {
         this.display=display;
         dao = new SQLServerFactory();
         dao.createDAOUser();
+        display.display("Server is running on port " + port);
     }
 
     public void handleMessageFromClient(Object msg, ConnectionToClient client) {

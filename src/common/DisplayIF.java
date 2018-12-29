@@ -8,4 +8,5 @@ public interface DisplayIF {
 	  public abstract void display(String message);
 
 	  public abstract void displayCommand(String cmd);
+	  public abstract void showLogin(boolean isConnected, int id, String role);
 }

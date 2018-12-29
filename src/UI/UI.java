@@ -31,11 +31,15 @@ public abstract class UI extends Application implements DisplayIF {
 
 	private Stage primaryStage;
 	private Scene connectionScene;
-	private Scene principaleScene;
+	private Scene principalScene;
 	private User user;
+    private String login;
+    private String password;
 
-	private void createUser(String host, int port, DisplayIF display, String id) throws IOException{
-        user = new User(host, port, this, id);
+    private void createUser() throws IOException{
+        String host = "localhost";
+        int port = 5555;
+        user = new User(host, port, this);
     }
 
 	/**
@@ -55,7 +59,7 @@ public abstract class UI extends Application implements DisplayIF {
         // Add UI controls to the registration form grid pane
         //addUIControls2(root);
         // Create a scene with registration form grid pane as the root node
-        principaleScene = new Scene(root, 800, 500);
+        principalScene = new Scene(root, 800, 500);
         
         // Scene 1
         // Create the registration form grid pane
@@ -121,16 +125,16 @@ public abstract class UI extends Application implements DisplayIF {
         GridPane.setMargin(headerLabel, new Insets(20, 0,20,0));
 
         // Add Name Label
-        Label nameLabel = new Label("Name : ");
+        Label nameLabel = new Label("Email address: ");
         gridPane.add(nameLabel, 0,1);
 
         // Add Name Text Field
-        TextField nameField = new TextField("aubin");
+        TextField nameField = new TextField("yvan.sanson@etu.umontpellier.fr");
         nameField.setPrefHeight(40);
         gridPane.add(nameField, 1,1);
 
         // Add Host Label
-        Label passwordLabel = new Label("Password : ");
+        Label passwordLabel = new Label("Password: ");
         gridPane.add(passwordLabel, 0, 2);
 
         // Add Host Text Field
@@ -170,8 +174,15 @@ public abstract class UI extends Application implements DisplayIF {
                 if(!result.isPresent()) {
                 	// alert is exited, no button has been pressed.
                 } else if(result.get() == ButtonType.OK) {
-                	
-                	primaryStage.setScene(principaleScene);
+                	login=nameField.getText();
+                	password = passwordField.getText();
+                    try {
+                        createUser();
+                        user.handleLogin(login, password);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
                 	
                 } else if(result.get() == ButtonType.CANCEL) {
                 	
@@ -182,6 +193,8 @@ public abstract class UI extends Application implements DisplayIF {
             }
         });
     }
+
+
     
     /**
      *  Create an instance of StackPane and apply format on it.
@@ -223,4 +236,27 @@ public abstract class UI extends Application implements DisplayIF {
 	public void display(String message) {
 		
 	}
+
+	@Override
+    public void showLogin(boolean isConnected, int id, String role){
+	    if(isConnected){
+            primaryStage.setScene(principalScene);
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Succès !");
+            alert.setHeaderText(null);
+            alert.setContentText("ID: "+id + " Role: " + role);
+            alert.setResizable(false);
+        }
+	    else{
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Echec !");
+            alert.setHeaderText(null);
+            alert.setContentText("Nous n'avons pas pu effectuer la connexion.");
+            alert.setResizable(false);
+        }
+    }
+    @Override
+    public void displayCommand(String cmd){
+
+    }
 }
