@@ -12,6 +12,7 @@ import com.lloseng.ocsf.server.ObservableOriginatorServer;
 import server.DAO.*;
 
 import java.io.File;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -31,9 +32,10 @@ public class GeneralServer implements Observer {
     /**
      * Default constructor
      */
-    public GeneralServer(int port, ChatIF display) {
+    public GeneralServer(int port, ChatIF display) throws IOException {
         comm = new ObservableOriginatorServer(port);
         comm.addObserver(this);
+        comm.listen();
         currentDate = new Date();
         dateFormat = new SimpleDateFormat(" '['HH:mm:ss']'");
         this.display=display;

@@ -55,6 +55,7 @@ public class User implements Observer {
 
 
 	public void handleAnswerLogin(String loginString){
+		System.out.println(loginString);
 		String[] credentials = loginString.split(" ");
 		boolean isConnected;
 		isConnected = credentials[1].matches("TRUE");

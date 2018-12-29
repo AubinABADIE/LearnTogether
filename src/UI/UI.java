@@ -29,6 +29,7 @@ import javafx.stage.Window;
 
 public abstract class UI extends Application implements DisplayIF {
 
+    private StackPane root;
 	private Stage primaryStage;
 	private Scene connectionScene;
 	private Scene principalScene;
@@ -55,7 +56,7 @@ public abstract class UI extends Application implements DisplayIF {
         
         // Scene 2
         // Create the registration form grid pane
-        StackPane root = createPrincipalPane();
+        root = createPrincipalPane();
         // Add UI controls to the registration form grid pane
         //addUIControls2(root);
         // Create a scene with registration form grid pane as the root node
@@ -68,7 +69,8 @@ public abstract class UI extends Application implements DisplayIF {
         addUIControls(gridPane);
         // Create a scene with registration form grid pane as the root node
         this.connectionScene = new Scene(gridPane, 800, 500);
-        
+
+
         // Set the scene in primary stage	
         this.primaryStage.setScene(connectionScene);
         // Set the stage visible
@@ -151,46 +153,25 @@ public abstract class UI extends Application implements DisplayIF {
         GridPane.setHalignment(loginButton, HPos.CENTER);
         GridPane.setMargin(loginButton, new Insets(20, 0,20,0));
         
-        loginButton.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                if(nameField.getText().isEmpty()) {
-                    showAlert(Alert.AlertType.ERROR, gridPane.getScene().getWindow(), "Form Error!", "Please enter your name");
-                    return;
-                }
-                if(passwordField.getText().isEmpty()) {
-                    showAlert(Alert.AlertType.ERROR, gridPane.getScene().getWindow(), "Form Error!", "Please enter your password");
-                    return;
-                }
-                
-                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-                alert.setTitle("Registration Successful!");
-                alert.setHeaderText(null);
-                alert.setContentText("Welcome " + nameField.getText());
-                alert.initOwner(gridPane.getScene().getWindow());
-                alert.setResizable(false);
-                
-                Optional<ButtonType> result = alert.showAndWait();
-                if(!result.isPresent()) {
-                	// alert is exited, no button has been pressed.
-                } else if(result.get() == ButtonType.OK) {
-                	login=nameField.getText();
-                	password = passwordField.getText();
-                    try {
-                        createUser();
-                        user.handleLogin(login, password);
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-
-                	
-                } else if(result.get() == ButtonType.CANCEL) {
-                	
-                	nameField.setText("");
-                	passwordField.setText("");
-                }
-                	
+        loginButton.setOnAction(event -> {
+            if(nameField.getText().isEmpty()) {
+                showAlert(Alert.AlertType.ERROR, gridPane.getScene().getWindow(), "Form Error!", "Please enter your name");
+                return;
             }
+            if(passwordField.getText().isEmpty()) {
+                showAlert(Alert.AlertType.ERROR, gridPane.getScene().getWindow(), "Form Error!", "Please enter your password");
+                return;
+            }
+
+            login=nameField.getText();
+            password = passwordField.getText();
+            try {
+                createUser();
+                user.handleLogin(login, password);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            primaryStage.setScene(principalScene);
         });
     }
 
@@ -223,7 +204,17 @@ public abstract class UI extends Application implements DisplayIF {
         alert.setContentText(message);
         alert.initOwner(owner);
         alert.setResizable(false);
-        alert.show();
+        alert.showAndWait();
+    }
+
+    @Override
+    public void showLogin(boolean isConnected, int id, String role){
+        if(isConnected){
+            showAlert(Alert.AlertType.CONFIRMATION, root.getScene().getWindow(),"Succès", "ID " + id + "role " + role);
+        }
+        else{
+            showAlert(Alert.AlertType.ERROR, root.getScene().getWindow(), "Echec", "Nous n'avons pas pu effectuer la connexion.");
+        }
     }
 
     /**
@@ -237,24 +228,7 @@ public abstract class UI extends Application implements DisplayIF {
 		
 	}
 
-	@Override
-    public void showLogin(boolean isConnected, int id, String role){
-	    if(isConnected){
-            primaryStage.setScene(principalScene);
-            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-            alert.setTitle("Succès !");
-            alert.setHeaderText(null);
-            alert.setContentText("ID: "+id + " Role: " + role);
-            alert.setResizable(false);
-        }
-	    else{
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Echec !");
-            alert.setHeaderText(null);
-            alert.setContentText("Nous n'avons pas pu effectuer la connexion.");
-            alert.setResizable(false);
-        }
-    }
+
     @Override
     public void displayCommand(String cmd){
 

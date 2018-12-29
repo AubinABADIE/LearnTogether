@@ -70,15 +70,12 @@ public class SQLServerDAOUser extends AbstractDAOUser {
                 preparedStatement.setString(1, Integer.toString(id));
                 ResultSet resultSet = preparedStatement.executeQuery();
                 if(resultSet != null){
+                    resultSet.next();
                     user=new UserType(id, resultSet.getString("role"));
                 }
             }catch (SQLException e){e.printStackTrace();}
             finally {
-                try {
-                    connection.close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
+                closeConnection(connection);
             }
         }
         return user;
@@ -88,20 +85,15 @@ public class SQLServerDAOUser extends AbstractDAOUser {
         Connection connection = getConnection();
         if(connection != null){
             try{
-                PreparedStatement preparedStatement = connection.prepareStatement("SELECT * from GeneralUsers WHERE email = ? and login = ? ");
+                PreparedStatement preparedStatement = connection.prepareStatement("SELECT * from GeneralUsers WHERE email = ? and password = ? ");
                 preparedStatement.setString(1,login);
                 preparedStatement.setString(2,password);
                 ResultSet resultSet = preparedStatement.executeQuery();
-                if(resultSet != null){
-                    return resultSet.getInt("idUser");
-                }
+                resultSet.next();
+                return resultSet.getInt("idUser");
             }catch (Exception e){e.printStackTrace();}
             finally {
-                try {
-                    connection.close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
+                closeConnection(connection);
             }
         }
         return -1;

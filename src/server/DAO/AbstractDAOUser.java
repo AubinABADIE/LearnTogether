@@ -1,6 +1,7 @@
 package server.DAO;
 
 
+import com.lloseng.ocsf.server.ConnectionToClient;
 import server.DBTypes.UserType;
 
 import java.sql.Connection;
@@ -26,6 +27,14 @@ public abstract class AbstractDAOUser {
             e.printStackTrace();
         }
         return connection;
+    }
+
+    public void closeConnection(Connection connexion){
+        try {
+            connexion.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     public abstract int readDAOUserByLogin(String login, String password);
