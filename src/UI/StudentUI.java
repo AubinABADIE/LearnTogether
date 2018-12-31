@@ -1,9 +1,14 @@
 package UI;
 
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
+import javafx.scene.control.Tab;
+import javafx.scene.control.TabPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
@@ -35,12 +40,50 @@ public class StudentUI extends UI  {
 	public Scene createPrincipalStudentScene(){
 		this.primaryStage.setTitle("LearnTogether for Students");
 		BorderPane studentScene = new BorderPane();
+		//Create the top bar
+		VBox topBar = new VBox();
 		HBox titleBar = new HBox();
 		Text title = new Text("Learn Together -- Student side");
-		Text user = new Text("Connecté en tant que : " + login);
+		Text user = new Text("Connected as: " + login);
 		title.setFont(Font.font("Cambria", 20));
 		titleBar.getChildren().addAll(title, user);
-		studentScene.setTop(titleBar);
+
+		//Create the Tabs
+		TabPane tabPane = new TabPane();
+
+		Tab tabProfile= new Tab();
+		tabProfile.setText("Profile");
+		tabProfile.setClosable(false);
+
+		Tab tabSchedule = new Tab();
+		tabSchedule.setText("Schedule");
+		tabSchedule.setClosable(false);
+
+		Tab tabRecords = new Tab();
+		tabRecords.setText("Record");
+		tabRecords.setClosable(false);
+
+		Tab tabDiary = new Tab();
+		tabDiary.setText("Diary");
+		tabDiary.setClosable(false);
+
+		Tab tabChat = new Tab();
+		tabChat.setText("Chat");
+		tabChat.setClosable(false);
+
+		tabPane.getTabs().add(tabProfile);
+		tabPane.getTabs().add(tabSchedule);
+		tabPane.getTabs().add(tabRecords);
+		tabPane.getTabs().add(tabDiary);
+		tabPane.getTabs().add(tabChat);
+
+		HBox hbox = new HBox();
+		hbox.getChildren().add(new Label("Tab" ));
+		hbox.setAlignment(Pos.CENTER);
+		tabProfile.setContent(hbox);
+
+		topBar.getChildren().addAll(titleBar, tabPane);
+		studentScene.setTop(topBar);
 		titleBar.setSpacing(20);
 		titleBar.setPadding(new Insets(15, 12, 15, 12));
 
