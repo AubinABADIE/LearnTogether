@@ -56,6 +56,10 @@ public class GeneralServer implements Observer {
             String[] ids = instruction.split(" ");
             handleLoginFromClient(ids[1], ids[2], client);
         }
+        else if(instruction.startsWith("FIRSTCONN")){
+            String[] creds = instruction.split(" ");
+            handleFirstConnectionFromClient(creds[1], creds[2], client);
+        }
     }
 
     /**
@@ -75,9 +79,22 @@ public class GeneralServer implements Observer {
         }
     }
 
+    public void sendToClientFirstConn(boolean hasSucceeded, ConnectionToClient client){
+        try{
+            if(hasSucceeded){
+                client.sendToClient("#FIRSTCONN SUCCESS");
+            }else{
+                client.sendToClient("#FIRSTCONN FAILURE");
+            }
+        }catch (IOException e){
+            e.printStackTrace();
+        }
+    }
+
     /**
-     * @param login
-     * @param password
+     * This method is activated when a user wants to connect.
+     * @param login : the email the client provided.
+     * @param password: the password the client provided.
      */
     public void handleLoginFromClient(String login, String password, ConnectionToClient client) {
         int userID = dao.readDAOUserByLogin(login, password);
@@ -86,6 +103,22 @@ public class GeneralServer implements Observer {
         } else {
             sendToClientLogin(false, -1, null, client);
         }
+    }
+
+    /**
+     * This method is activated when a user wants to first connect to the application.
+     * @param login
+     * @param password
+     * @param client
+     */
+    public void handleFirstConnectionFromClient(String login, String password, ConnectionToClient client){
+        if(dao.isPdwNull(login)) {
+            if (dao.setNewPwd(login, password)) {
+                sendToClientFirstConn(true, client);
+            }
+        }
+        sendToClientFirstConn(false, client);
+
     }
 
     /**

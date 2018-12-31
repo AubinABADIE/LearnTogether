@@ -51,10 +51,4 @@ public class StudentUI extends UI  {
 	public void addUIControls(BorderPane borderPane){
 
 	}
-
-
-	@Override
-	protected void setWaiting(boolean value) {
-
-	}
 }

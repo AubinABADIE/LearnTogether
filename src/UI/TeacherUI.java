@@ -55,7 +55,7 @@ public class TeacherUI extends UI {
 	}
 
 	@Override
-	public void displayCommand(String cmd) {
+	public void setState(String cmd) {
 
 	}
 
@@ -64,10 +64,4 @@ public class TeacherUI extends UI {
 		// TODO Auto-generated method stub
 		
 	}
-
-	@Override
-	protected void setWaiting(boolean value) {
-
-	}
-
 }

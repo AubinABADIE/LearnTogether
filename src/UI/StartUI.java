@@ -2,12 +2,7 @@ package UI;
 
 import javafx.application.Application;
 import javafx.application.Platform;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
-import javafx.scene.Scene;
 import javafx.scene.control.Alert;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
 
@@ -16,15 +11,11 @@ public class StartUI extends UI {
     private StudentUI studentUI;
     private SuperAdminUI superAdminUI;
     private TeacherUI teacherUI;
-    private StringProperty connectionStatus = new SimpleStringProperty("NOT CONNECTED");
 
     public static void main(String[] args) {
         Application.launch(StartUI.class, args);
     }
 
-    @Override
-    public void displayCommand(String cmd){
-    }
 
     public void setPrincipalSceneAsStudent(){
         studentUI = new StudentUI(primaryStage, login, userID);
@@ -56,6 +47,7 @@ public class StartUI extends UI {
     protected void setupListeners(){
         connectionStatus.addListener((observable, oldValue, newValue) -> {
             if(newValue.equalsIgnoreCase("STUDENT")){
+                Platform.runLater(() -> showAlert(Alert.AlertType.CONFIRMATION, null, "Success", "Connected."));
                 Platform.runLater(this::setPrincipalSceneAsStudent);
             }
             else if(newValue.equalsIgnoreCase("TEACHER")){
@@ -74,14 +66,21 @@ public class StartUI extends UI {
             else if(newValue.equalsIgnoreCase("WAITING")){
                 Platform.runLater(() -> primaryStage.setScene(waitingScene));
             }
+
         });
 
+        currentState.addListener((observable, oldValue, newValue) -> {
+            if(newValue.equalsIgnoreCase("FC SUCCESS")){
+                Platform.runLater(()-> showAlert(Alert.AlertType.CONFIRMATION, null, "Success", "This account has been activated. You can now log in properly."));
+                Platform.runLater(()->primaryStage.setScene(connectionScene));
+            }
+            else if(newValue.equalsIgnoreCase("FC FAILURE")){
+                Platform.runLater(() -> showAlert(Alert.AlertType.ERROR, null, "Failure", "Error: impossible to activate your account. Is it already activated? Otherwise, please check later."));
+                Platform.runLater(()->primaryStage.setScene(connectionScene));
+            }
+        });
     }
 
-    @Override
-    public void setWaiting(boolean value){
-        connectionStatus.setValue("WAITING");
-    }
 
     @Override
     public void showLogin(boolean isConnected, int id, String role){
@@ -114,5 +113,6 @@ public class StartUI extends UI {
     public void display(String message){
 
     }
+
 }
 

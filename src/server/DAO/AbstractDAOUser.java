@@ -39,5 +39,7 @@ public abstract class AbstractDAOUser {
 
     public abstract int readDAOUserByLogin(String login, String password);
     public abstract UserType readDAOUser(int id);
+    public abstract boolean isPdwNull(String login);
+    public abstract boolean setNewPwd(String login, String password);
 
 }

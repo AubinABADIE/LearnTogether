@@ -31,24 +31,39 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import javafx.stage.Window;
 
 public abstract class UI extends Application implements DisplayIF {
 
+    //Scenes and other UI elements
     private StackPane root;
 	Stage primaryStage;
     Scene connectionScene;
     Scene waitingScene;
+    Scene firstConnectionScene;
+    StringProperty connectionStatus = new SimpleStringProperty("NOT CONNECTED");
+    StringProperty currentState = new SimpleStringProperty("UNDEFINED");
+
+    //Business logic
     protected User user;
+
+    //Information about the user and the general environment
     protected String login;
     protected String password;
     protected int userID;
 
 
+    /**
+     * Creates the instance of the User, for the business logic relative to it
+     * @throws IOException
+     */
     private void createUser() throws IOException{
-        String host = "localhost";
-        int port = 5555;
-        user = new User(host, port, this);
+        if(user==null){
+            String host = "localhost";
+            int port = 5555;
+            user = new User(host, port, this);
+        }
     }
 
 	/**
@@ -61,8 +76,8 @@ public abstract class UI extends Application implements DisplayIF {
     public void start(Stage primaryStage) throws Exception {
         setupListeners();
     	this.primaryStage = primaryStage;
-        this.primaryStage.setTitle("Connexion");
-
+        this.primaryStage.setTitle("Learn Together - Connection");
+        primaryStage.setAlwaysOnTop(true);
         // Scene 2
         // Create the registration form grid pane
         root = createPrincipalPane();
@@ -78,6 +93,10 @@ public abstract class UI extends Application implements DisplayIF {
         this.primaryStage.setScene(connectionScene);
         // Set the stage visible
         this.primaryStage.show();
+
+        GridPane gridPaneFirstConnection = createConnectionFormPane();
+        addUIControlsFirstConnectionPane(gridPaneFirstConnection);
+        firstConnectionScene = new Scene(gridPaneFirstConnection, 800, 500);
 
         BorderPane borderPaneWaiting = createWaitingPane();
         addUIControlsWaitingPane(borderPaneWaiting);
@@ -132,7 +151,7 @@ public abstract class UI extends Application implements DisplayIF {
      */
     protected void addUIControlsConnectionPane(GridPane gridPane) {
         // Add Header
-        Label headerLabel = new Label("Connexion");
+        Label headerLabel = new Label("Connection");
         headerLabel.setFont(Font.font("Arial", FontWeight.BOLD, 24));
         gridPane.add(headerLabel, 0,0,2,1);
         GridPane.setHalignment(headerLabel, HPos.CENTER);
@@ -147,11 +166,11 @@ public abstract class UI extends Application implements DisplayIF {
         nameField.setPrefHeight(40);
         gridPane.add(nameField, 1,1);
 
-        // Add Host Label
+        // Add Password Label
         Label passwordLabel = new Label("Password: ");
         gridPane.add(passwordLabel, 0, 2);
 
-        // Add Host Text Field
+        // Add Password Text Field
         PasswordField passwordField = new PasswordField();
         passwordField.setPrefHeight(40);
         gridPane.add(passwordField, 1, 2);
@@ -162,16 +181,16 @@ public abstract class UI extends Application implements DisplayIF {
         loginButton.setDefaultButton(true);
         loginButton.setPrefWidth(100);
         gridPane.add(loginButton, 0, 4, 1, 1);
-        GridPane.setHalignment(loginButton, HPos.CENTER);
+        GridPane.setHalignment(loginButton, HPos.RIGHT);
         GridPane.setMargin(loginButton, new Insets(20, 0,20,0));
         //Add FirstConnection Button
-        Button firstConectionButton = new Button("First connection?");
-        firstConectionButton.setDefaultButton(false);
-        firstConectionButton.setPrefHeight(40);
-        firstConectionButton.setPrefWidth(200);
-        gridPane.add(firstConectionButton, 1, 4, 1, 1);
-        GridPane.setHalignment(firstConectionButton, HPos.CENTER);
-        GridPane.setMargin(firstConectionButton, new Insets(20, 0, 20, 0));
+        Button firstConnectionButton = new Button("First connection?");
+        firstConnectionButton.setDefaultButton(false);
+        firstConnectionButton.setPrefHeight(40);
+        firstConnectionButton.setPrefWidth(200);
+        gridPane.add(firstConnectionButton, 1, 4, 1, 1);
+        GridPane.setHalignment(firstConnectionButton, HPos.RIGHT);
+        GridPane.setMargin(firstConnectionButton, new Insets(20, 0, 20, 0));
 
         loginButton.setOnAction(event -> {
             if(nameField.getText().isEmpty()) {
@@ -185,7 +204,7 @@ public abstract class UI extends Application implements DisplayIF {
 
             login=nameField.getText();
             password = passwordField.getText();
-            setWaiting(true);
+            connectionStatus.setValue("WAITING");
             try {
                 createUser();
                 user.handleLogin(login, password);
@@ -194,12 +213,71 @@ public abstract class UI extends Application implements DisplayIF {
             }
         });
 
-        firstConectionButton.setOnAction(event -> {
-            
+        firstConnectionButton.setOnAction(event -> {
+            Platform.runLater(()->primaryStage.setScene(firstConnectionScene));
         });
     }
 
-    protected abstract void setWaiting(boolean value);
+    protected void addUIControlsFirstConnectionPane(GridPane pane){
+        // Add Header
+        Label headerLabel = new Label("First connection");
+        headerLabel.setFont(Font.font("Arial", FontWeight.BOLD, 24));
+        pane.add(headerLabel, 0,0,2,1);
+        GridPane.setHalignment(headerLabel, HPos.CENTER);
+        GridPane.setMargin(headerLabel, new Insets(20, 0,20,0));
+        Text howto = new Text("If it is your first connection, enter your email address and your new password in the form below. \nThis only work once, on the first connection.");
+        pane.add(howto, 0, 1, 2, 2);
+        GridPane.setHalignment(howto, HPos.CENTER);
+        GridPane.setMargin(howto,  new Insets(20, 0,20,0));
+
+        // Add Name Label
+        Label nameLabel = new Label("Enter you email address: ");
+        pane.add(nameLabel, 0,3);
+
+        // Add Name Text Field
+        TextField nameField = new TextField("yvan.sanson@etu.umontpellier.fr");
+        nameField.setPrefHeight(40);
+        pane.add(nameField, 1,3);
+
+        // Add Password Label
+        Label passwordLabel = new Label("New password: ");
+        pane.add(passwordLabel, 0, 4);
+
+        // Add Password Text Field
+        PasswordField passwordField = new PasswordField();
+        passwordField.setPrefHeight(40);
+        pane.add(passwordField, 1, 4);
+
+        //Add Button
+        Button loginButton = new Button("Connect");
+        loginButton.setPrefHeight(40);
+        loginButton.setDefaultButton(true);
+        loginButton.setPrefWidth(100);
+        pane.add(loginButton, 0, 5, 2, 1);
+        GridPane.setHalignment(loginButton, HPos.CENTER);
+        GridPane.setMargin(loginButton, new Insets(20, 0,20,0));
+
+        loginButton.setOnAction(event -> {
+            if(nameField.getText().isEmpty()) {
+                showAlert(Alert.AlertType.ERROR, pane.getScene().getWindow(), "Form Error!", "Please enter your name");
+                return;
+            }
+            if(passwordField.getText().isEmpty()) {
+                showAlert(Alert.AlertType.ERROR, pane.getScene().getWindow(), "Form Error!", "Please enter your password");
+                return;
+            }
+
+            login=nameField.getText();
+            password = passwordField.getText();
+            connectionStatus.setValue("WAITING");
+            try {
+                createUser();
+                user.setFirstPassword(login, password);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
+    }
 
     protected BorderPane createWaitingPane(){
         BorderPane borderPane = new BorderPane();
@@ -239,17 +317,24 @@ public abstract class UI extends Application implements DisplayIF {
         alert.setTitle(title);
         alert.setHeaderText(null);
         alert.setContentText(message);
-        alert.initOwner(owner);
+        if(owner != null)
+            alert.initOwner(owner);
+        else
+            alert.initOwner(primaryStage);
+        alert.initStyle(StageStyle.DECORATED);
         alert.setResizable(false);
-        alert.showAndWait();
+        alert.show();
     }
+    @Override
     public void display(String message){
 
     }
-    public void displayCommand(String cmd){
-
+    @Override
+    public void setState(String cmd){
+        currentState.setValue(cmd);
     }
     public void showLogin(boolean isConnected, int id, String role){
 
     }
+
 }

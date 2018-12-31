@@ -6,6 +6,6 @@ public interface DisplayIF {
      * a UI.
      */
     void display(String message);
-    void displayCommand(String cmd);
+    void setState(String cmd);
     void showLogin(boolean isConnected, int id, String role);
 }

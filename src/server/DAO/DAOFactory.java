@@ -22,4 +22,14 @@ public class DAOFactory extends AbstractDAOFactory {
     public UserType readDAOUser(int id) {
         return null;
     }
+
+    @Override
+    public boolean isPdwNull(String login) {
+        return false;
+    }
+
+    @Override
+    public boolean setNewPwd(String login, String password) {
+        return false;
+    }
 }

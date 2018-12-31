@@ -29,3 +29,5 @@ src/com/lloseng/\.DS_Store
 \.idea/
 
 LearnTogether\.iml
+
+out/production/LearnTogether/META-INF/

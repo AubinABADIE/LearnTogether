@@ -45,16 +45,27 @@ public class User implements Observer {
         }
     }
 
+    public void setFirstPassword(String login, String password){
+        try{
+            comm.sendToServer("#FIRSTCONN " + login + " " + password);
+        }catch (IOException e){
+            e.printStackTrace();
+        }
+    }
+
     private void handleMessageFromServer(Object arg) {
         if(arg instanceof String){
             if(((String) arg).startsWith("#LOGIN")){
                 handleAnswerLogin((String)arg);
             }
+            else if(((String) arg).startsWith("#FIRSTCONN")){
+                handleFirstConnAnswer((String) arg);
+            }
         }
     }
 
 
-    public void handleAnswerLogin(String loginString){
+    private void handleAnswerLogin(String loginString){
         System.out.println(loginString);
         String[] credentials = loginString.split(" ");
         boolean isConnected;
@@ -62,6 +73,15 @@ public class User implements Observer {
         int id = Integer.parseInt(credentials[2]);
         String role = credentials[3];
         display.showLogin(isConnected, id, role);
+    }
+
+    private void handleFirstConnAnswer(String firstConnString){
+        System.out.println(firstConnString);
+        String[] args = firstConnString.split(" ");
+        if(args[1].equalsIgnoreCase("SUCCESS"))
+            display.setState("FC SUCCESS");
+        else
+            display.setState("FC FAILURE");
     }
 
     @Override
