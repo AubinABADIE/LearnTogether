@@ -6,6 +6,14 @@ import java.util.Optional;
 import Users.User;
 import common.DisplayIF;
 import javafx.application.Application;
+import javafx.application.Platform;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.HPos;
@@ -18,24 +26,24 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.ColumnConstraints;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Priority;
-import javafx.scene.layout.StackPane;
+import javafx.scene.layout.*;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.stage.Window;
 
 public abstract class UI extends Application implements DisplayIF {
 
     private StackPane root;
-	private Stage primaryStage;
-	private Scene connectionScene;
-	private Scene principalScene;
-	private User user;
-    private String login;
-    private String password;
+	Stage primaryStage;
+    Scene connectionScene;
+    Scene waitingScene;
+    protected User user;
+    protected String login;
+    protected String password;
+    protected int userID;
+
 
     private void createUser() throws IOException{
         String host = "localhost";
@@ -51,38 +59,42 @@ public abstract class UI extends Application implements DisplayIF {
 	 */
     @Override
     public void start(Stage primaryStage) throws Exception {
+        setupListeners();
     	this.primaryStage = primaryStage;
-        this.primaryStage.setTitle("Connection");
-        
+        this.primaryStage.setTitle("Connexion");
+
         // Scene 2
         // Create the registration form grid pane
         root = createPrincipalPane();
-        // Add UI controls to the registration form grid pane
-        //addUIControls2(root);
         // Create a scene with registration form grid pane as the root node
-        principalScene = new Scene(root, 800, 500);
-        
         // Scene 1
         // Create the registration form grid pane
-        GridPane gridPane = createRegistrationFormPane();
+        GridPane gridPaneConnection = createConnectionFormPane();
         // Add UI controls to the registration form grid pane
-        addUIControls(gridPane);
+        addUIControlsConnectionPane(gridPaneConnection);
         // Create a scene with registration form grid pane as the root node
-        this.connectionScene = new Scene(gridPane, 800, 500);
-
-
-        // Set the scene in primary stage	
+        this.connectionScene = new Scene(gridPaneConnection, 800, 500);
+        // Set the scene in primary stage
         this.primaryStage.setScene(connectionScene);
         // Set the stage visible
         this.primaryStage.show();
+
+        BorderPane borderPaneWaiting = createWaitingPane();
+        addUIControlsWaitingPane(borderPaneWaiting);
+        waitingScene = new Scene(borderPaneWaiting, 800, 500);
+
+    }
+
+    protected void setupListeners(){
+
     }
     
     /**
      * Create an instance of GridPane and apply format on it.
-     * 
+     *
      * @return GridPane Login pane.
      */
-    private GridPane createRegistrationFormPane() {
+    protected GridPane createConnectionFormPane() {
         // Instantiate a new Grid Pane
         GridPane gridPane = new GridPane();
 
@@ -109,18 +121,18 @@ public abstract class UI extends Application implements DisplayIF {
         columnTwoConstrains.setHgrow(Priority.ALWAYS);
 
         gridPane.getColumnConstraints().addAll(columnOneConstraints, columnTwoConstrains);
-        
+
         return gridPane;
     }
-    
+
     /**
      * Design the primary scene with the connection interface and handle the events.
-     * 
+     *
      * @param gridPane Login pane.
      */
-    private void addUIControls(GridPane gridPane) {
+    protected void addUIControlsConnectionPane(GridPane gridPane) {
         // Add Header
-        Label headerLabel = new Label("Connection");
+        Label headerLabel = new Label("Connexion");
         headerLabel.setFont(Font.font("Arial", FontWeight.BOLD, 24));
         gridPane.add(headerLabel, 0,0,2,1);
         GridPane.setHalignment(headerLabel, HPos.CENTER);
@@ -149,10 +161,18 @@ public abstract class UI extends Application implements DisplayIF {
         loginButton.setPrefHeight(40);
         loginButton.setDefaultButton(true);
         loginButton.setPrefWidth(100);
-        gridPane.add(loginButton, 0, 4, 2, 1);
+        gridPane.add(loginButton, 0, 4, 1, 1);
         GridPane.setHalignment(loginButton, HPos.CENTER);
         GridPane.setMargin(loginButton, new Insets(20, 0,20,0));
-        
+        //Add FirstConnection Button
+        Button firstConectionButton = new Button("First connection?");
+        firstConectionButton.setDefaultButton(false);
+        firstConectionButton.setPrefHeight(40);
+        firstConectionButton.setPrefWidth(200);
+        gridPane.add(firstConectionButton, 1, 4, 1, 1);
+        GridPane.setHalignment(firstConectionButton, HPos.CENTER);
+        GridPane.setMargin(firstConectionButton, new Insets(20, 0, 20, 0));
+
         loginButton.setOnAction(event -> {
             if(nameField.getText().isEmpty()) {
                 showAlert(Alert.AlertType.ERROR, gridPane.getScene().getWindow(), "Form Error!", "Please enter your name");
@@ -165,39 +185,56 @@ public abstract class UI extends Application implements DisplayIF {
 
             login=nameField.getText();
             password = passwordField.getText();
+            setWaiting(true);
             try {
                 createUser();
                 user.handleLogin(login, password);
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            primaryStage.setScene(principalScene);
+        });
+
+        firstConectionButton.setOnAction(event -> {
+            
         });
     }
 
+    protected abstract void setWaiting(boolean value);
 
-    
+    protected BorderPane createWaitingPane(){
+        BorderPane borderPane = new BorderPane();
+        borderPane.setPadding(new Insets(40, 40, 40, 40));
+        return borderPane;
+    }
+
+    protected void addUIControlsWaitingPane(BorderPane pane){
+        Text waitingText = new Text("Connexion en cours... Veuillez patienter.");
+        pane.setCenter(waitingText);
+    }
+
+
+
     /**
      *  Create an instance of StackPane and apply format on it.
-     * 
+     *
      * @return StackPane Chat pane.
      */
-    private StackPane createPrincipalPane() {
-        // Instantiate a new VBox 
+    protected StackPane createPrincipalPane() {
+        // Instantiate a new VBox
     	StackPane root = new StackPane();
-        
+
         return root;
     }
-    
+
     /**
      * Show personalized alert to user.
-     * 
+     *
      * @param alertType Format of the alert.
      * @param owner Window on which alert will be displayed.
      * @param title Title to be displayed.
      * @param message Message to be displayed.
      */
-    private void showAlert(Alert.AlertType alertType, Window owner, String title, String message) {
+    protected void showAlert(Alert.AlertType alertType, Window owner, String title, String message) {
         Alert alert = new Alert(alertType);
         alert.setTitle(title);
         alert.setHeaderText(null);
@@ -206,31 +243,13 @@ public abstract class UI extends Application implements DisplayIF {
         alert.setResizable(false);
         alert.showAndWait();
     }
+    public void display(String message){
 
-    @Override
-    public void showLogin(boolean isConnected, int id, String role){
-        if(isConnected){
-            showAlert(Alert.AlertType.CONFIRMATION, root.getScene().getWindow(),"Succès", "ID " + id + "role " + role);
-        }
-        else{
-            showAlert(Alert.AlertType.ERROR, root.getScene().getWindow(), "Echec", "Nous n'avons pas pu effectuer la connexion.");
-        }
     }
-
-    /**
-     * This method overrides the method in the ChatIF interface. 
-     * It displays a message onto the screen.
-     *
-     * @param message The string to be displayed.
-     */
-	@Override
-	public void display(String message) {
-		
-	}
-
-
-    @Override
     public void displayCommand(String cmd){
+
+    }
+    public void showLogin(boolean isConnected, int id, String role){
 
     }
 }

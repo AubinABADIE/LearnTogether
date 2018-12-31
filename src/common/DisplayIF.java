@@ -1,12 +1,11 @@
 package common;
 public interface DisplayIF {
-	
-	/**
-	   * Method that when overriden is used to display objects onto
-	   * a UI.
-	   */
-	  public abstract void display(String message);
 
-	  public abstract void displayCommand(String cmd);
-	  public abstract void showLogin(boolean isConnected, int id, String role);
+    /**
+     * Method that when overriden is used to display objects onto
+     * a UI.
+     */
+    void display(String message);
+    void displayCommand(String cmd);
+    void showLogin(boolean isConnected, int id, String role);
 }

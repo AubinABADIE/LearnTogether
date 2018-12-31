@@ -10,82 +10,82 @@ import java.util.Observer;
 
 public class User implements Observer {
 
-	private DisplayIF display;
-	private ObservableClient comm;
-	
-	public User() {
-	}
+    private DisplayIF display;
+    private ObservableClient comm;
 
-	public User(String host, int port, DisplayIF display) throws IOException {
-		comm = new ObservableClient(host, port);
-		comm.addObserver(this);
-		this.display = display;
-		comm.openConnection();
-	}
+    public User() {
+    }
 
-	/**
-	 * Handles what comes from the UI
-	 * @param instruction
-	 */
-	public void handleInstrFromUI(Object instruction){
-		if(instruction instanceof String){
-			String command = (String)instruction;
-			if(command.startsWith("#LOGIN")){
-				String[] ids = command.split(" ");
-				handleLogin(ids[1], ids[2]);
-			}
-		}
-	}
+    public User(String host, int port, DisplayIF display) throws IOException {
+        comm = new ObservableClient(host, port);
+        comm.addObserver(this);
+        this.display = display;
+        comm.openConnection();
+    }
 
-	public void handleLogin(String login, String password){
-		try {
-			comm.sendToServer("#LOGIN " + login + " " + password);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
+    /**
+     * Handles what comes from the UI
+     * @param instruction
+     */
+    public void handleInstrFromUI(Object instruction){
+        if(instruction instanceof String){
+            String command = (String)instruction;
+            if(command.startsWith("#LOGIN")){
+                String[] ids = command.split(" ");
+                handleLogin(ids[1], ids[2]);
+            }
+        }
+    }
 
-	private void handleMessageFromServer(Object arg) {
-		if(arg instanceof String){
-			if(((String) arg).startsWith("#LOGIN")){
-				handleAnswerLogin((String)arg);
-			}
-		}
-	}
+    public void handleLogin(String login, String password){
+        try {
+            comm.sendToServer("#LOGIN " + login + " " + password);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
-
-	public void handleAnswerLogin(String loginString){
-		System.out.println(loginString);
-		String[] credentials = loginString.split(" ");
-		boolean isConnected;
-		isConnected = credentials[1].matches("TRUE");
-		int id = Integer.parseInt(credentials[2]);
-		String role = credentials[3];
-		display.showLogin(isConnected, id, role);
-	}
-
-	@Override
-	public void update(Observable o, Object arg) {
-		if(arg instanceof String){
-			if(arg.equals(ObservableClient.CONNECTION_CLOSED))
-				this.connectionClosed();
-			else if(arg.equals(ObservableClient.CONNECTION_ESTABLISHED))
-				this.connectionEstablished();
-			else
-				this.handleMessageFromServer(arg);
-		}
-		else if(arg instanceof Exception)
-			this.connectionException((Exception)arg);
-
-	}
-
-	private void connectionException(Exception arg) {
-	}
-
-	private void connectionEstablished() {
-	}
+    private void handleMessageFromServer(Object arg) {
+        if(arg instanceof String){
+            if(((String) arg).startsWith("#LOGIN")){
+                handleAnswerLogin((String)arg);
+            }
+        }
+    }
 
 
-	private void connectionClosed() {
-	}
+    public void handleAnswerLogin(String loginString){
+        System.out.println(loginString);
+        String[] credentials = loginString.split(" ");
+        boolean isConnected;
+        isConnected = credentials[1].matches("TRUE");
+        int id = Integer.parseInt(credentials[2]);
+        String role = credentials[3];
+        display.showLogin(isConnected, id, role);
+    }
+
+    @Override
+    public void update(Observable o, Object arg) {
+        if(arg instanceof String){
+            if(arg.equals(ObservableClient.CONNECTION_CLOSED))
+                this.connectionClosed();
+            else if(arg.equals(ObservableClient.CONNECTION_ESTABLISHED))
+                this.connectionEstablished();
+            else
+                this.handleMessageFromServer(arg);
+        }
+        else if(arg instanceof Exception)
+            this.connectionException((Exception)arg);
+
+    }
+
+    private void connectionException(Exception arg) {
+    }
+
+    private void connectionEstablished() {
+    }
+
+
+    private void connectionClosed() {
+    }
 }
