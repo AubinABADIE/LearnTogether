@@ -136,13 +136,19 @@ public class SQLServerDAOUser extends AbstractDAOUser {
         return result;
     }
 
+    /**
+     * Checks the DB and asks to set a new password to the client.
+     * @param login: the email of the client. Since it is personal, there can't be two same emails.
+     * @param password: the new client's password.
+     * @return true if the change has been successful, false otherwise.
+     */
     @Override
     public boolean setNewPwd(String login, String password) {
         Connection connection = getConnection();
-        Boolean result = false;
+        boolean result = false;
         if(connection != null){
             try{
-                PreparedStatement preparedStatement = connection.prepareStatement("UPDATE GeneralUsers SET password = ? WHERE idUser = ?");
+                PreparedStatement preparedStatement = connection.prepareStatement("UPDATE GeneralUsers SET password = ? WHERE email = ?");
                 preparedStatement.setString(1,password);
                 preparedStatement.setString(2,login);
                 ResultSet resultSet = preparedStatement.executeQuery();
@@ -152,7 +158,7 @@ public class SQLServerDAOUser extends AbstractDAOUser {
                 closeConnection(connection);
             }
         }
-        return false;
+        return result;
     }
 
 

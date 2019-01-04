@@ -13,6 +13,10 @@ import java.sql.SQLException;
  */
 public abstract class AbstractDAOUser {
 
+    /**
+     * This method gets to the database and opens a connection.
+     * @return the connection instance.
+     */
     public Connection getConnection(){
         Connection connection = null;
         String hostName = "learntogether.database.windows.net"; // update me
@@ -29,6 +33,10 @@ public abstract class AbstractDAOUser {
         return connection;
     }
 
+    /**
+     * This method closes a connection to a database.
+     * @param connexion
+     */
     public void closeConnection(Connection connexion){
         try {
             connexion.close();

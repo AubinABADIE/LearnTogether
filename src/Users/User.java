@@ -16,6 +16,13 @@ public class User implements Observer {
     public User() {
     }
 
+    /**
+     * Creates a new instance of User
+      * @param host: the server address
+     * @param port: the server port
+     * @param display: the display
+     * @throws IOException
+     */
     public User(String host, int port, DisplayIF display) throws IOException {
         comm = new ObservableClient(host, port);
         comm.addObserver(this);
@@ -24,19 +31,11 @@ public class User implements Observer {
     }
 
     /**
-     * Handles what comes from the UI
-     * @param instruction
+     * This method is called whenever the client wants to connect.
+     * The display calls this function.
+     * @param login: the email the client enters.
+     * @param password: the password the client enters
      */
-    public void handleInstrFromUI(Object instruction){
-        if(instruction instanceof String){
-            String command = (String)instruction;
-            if(command.startsWith("#LOGIN")){
-                String[] ids = command.split(" ");
-                handleLogin(ids[1], ids[2]);
-            }
-        }
-    }
-
     public void handleLogin(String login, String password){
         try {
             comm.sendToServer("#LOGIN " + login + " " + password);
@@ -45,6 +44,12 @@ public class User implements Observer {
         }
     }
 
+    /**
+     * This method is called whenever the client wants to set up his account for his first connection.
+     * The display calls this function.
+     * @param login: the email the client enters.
+     * @param password: the (first) password the client enters.
+     */
     public void setFirstPassword(String login, String password){
         try{
             comm.sendToServer("#FIRSTCONN " + login + " " + password);
@@ -53,6 +58,10 @@ public class User implements Observer {
         }
     }
 
+    /**
+     * Handles whatever comes from the server. It then calls the related functions.
+     * @param arg: what the server sent.
+     */
     private void handleMessageFromServer(Object arg) {
         if(arg instanceof String){
             if(((String) arg).startsWith("#LOGIN")){
@@ -64,7 +73,10 @@ public class User implements Observer {
         }
     }
 
-
+    /**
+     * When the server responds to a LOGIN command sent by this client. This method interprets what is returned.
+     * @param loginString: the response from the server.
+     */
     private void handleAnswerLogin(String loginString){
         System.out.println(loginString);
         String[] credentials = loginString.split(" ");
@@ -75,6 +87,10 @@ public class User implements Observer {
         display.showLogin(isConnected, id, role);
     }
 
+    /**
+     * When the server responds to a FIRSTCONN command send by this client. This method interprets what is returned.
+     * @param firstConnString: the response from the server.
+     */
     private void handleFirstConnAnswer(String firstConnString){
         System.out.println(firstConnString);
         String[] args = firstConnString.split(" ");

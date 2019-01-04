@@ -30,7 +30,10 @@ public class GeneralServer implements Observer {
 
 
     /**
-     * Default constructor
+     * The useful constructor
+     * @param port: the server address
+     * @param display: the server display
+     * @throws IOException
      */
     public GeneralServer(int port, ChatIF display) throws IOException {
         comm = new ObservableOriginatorServer(port);
@@ -44,6 +47,11 @@ public class GeneralServer implements Observer {
         display.display("Server is running on port " + port);
     }
 
+    /**
+     * This method is called whenever a client sends something to the server.
+     * @param msg: the object the client sent.
+     * @param client: the original client.
+     */
     public void handleMessageFromClient(Object msg, ConnectionToClient client) {
         if (msg instanceof String) {
             if (((String) msg).startsWith("#"))
@@ -51,6 +59,11 @@ public class GeneralServer implements Observer {
         }
     }
 
+    /**
+     * This method is used whenever a message sent by a client starts with '#'
+     * @param instruction: what the client sent.
+     * @param client: the original client.
+     */
     public void handleInstrFromClient(String instruction, ConnectionToClient client) {
         if (instruction.startsWith("LOGIN")) {
             String[] ids = instruction.split(" ");
@@ -63,9 +76,11 @@ public class GeneralServer implements Observer {
     }
 
     /**
+     * This method is used to send a client a response of a #LOGIN demand.
      * @param isConnected : true if the connection succeeded, false otherwise
      * @param id          : the user ID. value -1 if not connected.
      * @param role        : the user role. Value null if not connected.
+     * @param client : the original client.
      */
     public void sendToClientLogin(boolean isConnected, int id, String role, ConnectionToClient client) {
         try {
@@ -79,6 +94,11 @@ public class GeneralServer implements Observer {
         }
     }
 
+    /**
+     * This method is used to send a client a response of a #FIRSTCONN demand.
+     * @param hasSucceeded: true id the first conenction was a success, false otherwise.
+     * @param client: the original client.
+     */
     public void sendToClientFirstConn(boolean hasSucceeded, ConnectionToClient client){
         try{
             if(hasSucceeded){
@@ -92,9 +112,11 @@ public class GeneralServer implements Observer {
     }
 
     /**
-     * This method is activated when a user wants to connect.
+     * This method is used when a client wants to connect.
+     * It needs to check in the database to see if credentials matches or not.
      * @param login : the email the client provided.
      * @param password: the password the client provided.
+     * @param client: the original client.
      */
     public void handleLoginFromClient(String login, String password, ConnectionToClient client) {
         int userID = dao.readDAOUserByLogin(login, password);
@@ -106,22 +128,24 @@ public class GeneralServer implements Observer {
     }
 
     /**
-     * This method is activated when a user wants to first connect to the application.
-     * @param login
-     * @param password
-     * @param client
+     * This method is used when a user wants to first connect to the application.
+     * @param login: the email the client provided.
+     * @param password: the (new) password the client provided.
+     * @param client: the original client.
      */
     public void handleFirstConnectionFromClient(String login, String password, ConnectionToClient client){
-        if(dao.isPdwNull(login)) {
+        if(dao.isPdwNull(login))
             if (dao.setNewPwd(login, password)) {
                 sendToClientFirstConn(true, client);
+                return;
             }
-        }
         sendToClientFirstConn(false, client);
-
     }
 
     /**
+     * This method is called when a user has the right credentials and connected.
+     * It checks in the DB and grabs the user ID and its role.
+     * It always sends true on the login, as it has already been checked.
      * @param id: the user ID
      * @param client: the client from which it originated.
      */
