@@ -1,7 +1,6 @@
 package server.DAO;
 
 import Courses.Course;
-import com.lloseng.ocsf.server.ConnectionToClient;
 import server.DBTypes.UserType;
 import Groups.Promotion;
 
@@ -86,6 +85,7 @@ public class SQLServerDAOUser extends AbstractDAOUser {
 
     /**
      * Reads the DB and retrieves the user by its login and password.
+     * Returns -1 if the email or password is null
      * @param login: the email of the user
      * @param password: the password of the user
      * @return the ID if successful, -1 otherwise
@@ -94,7 +94,7 @@ public class SQLServerDAOUser extends AbstractDAOUser {
     public int readDAOUserByLogin(String login, String password){
         Connection connection = getConnection();
         int id = -1;
-        if(connection != null){
+        if(connection != null && password != null && login != null){
             try{
                 PreparedStatement preparedStatement = connection.prepareStatement("SELECT * from GeneralUsers WHERE email = ? and password = ? ");
                 preparedStatement.setString(1,login);

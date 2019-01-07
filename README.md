@@ -16,14 +16,14 @@ Used when the client wants to change its password **for the first time** (he han
 # FROM the server
 
 
-## \#LOGIN 
+## \#LOGON 
 
 The server responds to a #LOGIN injonction from the client by sending this to the client. It is accompanied by several arguments:
 
  - isConnected: boolean, true if the connection has been succesful or false otherwise
  - id: the user id from the DB
  - role: the user role in the application.
-*Usage*:`#LOGIN {isConnected} {id} {role}`
+*Usage*:`#LOGON {isConnected} {id} {role}`
 
 ## \#FIRSTCONN
 The server responds to a #FIRSTCONN injonction from the client by sending this.

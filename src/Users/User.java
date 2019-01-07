@@ -2,13 +2,13 @@ package Users;
 
 
 import com.lloseng.ocsf.client.ObservableClient;
+import common.ClientIF;
 import common.DisplayIF;
 
 import java.io.IOException;
 import java.util.Observable;
-import java.util.Observer;
 
-public class User implements Observer {
+public class User implements ClientIF {
 
     private DisplayIF display;
     private ObservableClient comm;
@@ -25,7 +25,6 @@ public class User implements Observer {
      */
     public User(String host, int port, DisplayIF display) throws IOException {
         comm = new ObservableClient(host, port);
-        comm.addObserver(this);
         this.display = display;
         comm.openConnection();
     }
@@ -62,9 +61,9 @@ public class User implements Observer {
      * Handles whatever comes from the server. It then calls the related functions.
      * @param arg: what the server sent.
      */
-    private void handleMessageFromServer(Object arg) {
+    public void handleMessageFromServer(Object arg) {
         if(arg instanceof String){
-            if(((String) arg).startsWith("#LOGIN")){
+            if(((String) arg).startsWith("#LOGON")){
                 handleAnswerLogin((String)arg);
             }
             else if(((String) arg).startsWith("#FIRSTCONN")){
@@ -100,28 +99,14 @@ public class User implements Observer {
             display.setState("FC FAILURE");
     }
 
-    @Override
-    public void update(Observable o, Object arg) {
-        if(arg instanceof String){
-            if(arg.equals(ObservableClient.CONNECTION_CLOSED))
-                this.connectionClosed();
-            else if(arg.equals(ObservableClient.CONNECTION_ESTABLISHED))
-                this.connectionEstablished();
-            else
-                this.handleMessageFromServer(arg);
-        }
-        else if(arg instanceof Exception)
-            this.connectionException((Exception)arg);
 
+    public void connectionException(Exception arg) {
     }
 
-    private void connectionException(Exception arg) {
-    }
-
-    private void connectionEstablished() {
+    public void connectionEstablished() {
     }
 
 
-    private void connectionClosed() {
+    public void connectionClosed() {
     }
 }
