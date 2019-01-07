@@ -1,32 +1,20 @@
 package Users;
 
 
-import com.lloseng.ocsf.client.ObservableClient;
-import common.ClientIF;
-import common.DisplayIF;
+import client.CoreClient;
+
 
 import java.io.IOException;
-import java.util.Observable;
 
-public class User implements ClientIF {
+public class User{
 
-    private DisplayIF display;
-    private ObservableClient comm;
+    private CoreClient coreClient;
 
     public User() {
     }
 
-    /**
-     * Creates a new instance of User
-      * @param host: the server address
-     * @param port: the server port
-     * @param display: the display
-     * @throws IOException
-     */
-    public User(String host, int port, DisplayIF display) throws IOException {
-        comm = new ObservableClient(host, port);
-        this.display = display;
-        comm.openConnection();
+    public User(CoreClient coreClient) throws IOException {
+        this.coreClient = coreClient;
     }
 
     /**
@@ -37,7 +25,7 @@ public class User implements ClientIF {
      */
     public void handleLogin(String login, String password){
         try {
-            comm.sendToServer("#LOGIN " + login + " " + password);
+            coreClient.getClient().sendToServer("#LOGIN " + login + " " + password);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -51,24 +39,9 @@ public class User implements ClientIF {
      */
     public void setFirstPassword(String login, String password){
         try{
-            comm.sendToServer("#FIRSTCONN " + login + " " + password);
+            coreClient.getClient().sendToServer("#FIRSTCONN " + login + " " + password);
         }catch (IOException e){
             e.printStackTrace();
-        }
-    }
-
-    /**
-     * Handles whatever comes from the server. It then calls the related functions.
-     * @param arg: what the server sent.
-     */
-    public void handleMessageFromServer(Object arg) {
-        if(arg instanceof String){
-            if(((String) arg).startsWith("#LOGON")){
-                handleAnswerLogin((String)arg);
-            }
-            else if(((String) arg).startsWith("#FIRSTCONN")){
-                handleFirstConnAnswer((String) arg);
-            }
         }
     }
 
@@ -76,37 +49,27 @@ public class User implements ClientIF {
      * When the server responds to a LOGIN command sent by this client. This method interprets what is returned.
      * @param loginString: the response from the server.
      */
-    private void handleAnswerLogin(String loginString){
+    public void handleAnswerLogin(String loginString){
         System.out.println(loginString);
         String[] credentials = loginString.split(" ");
         boolean isConnected;
         isConnected = credentials[1].matches("TRUE");
         int id = Integer.parseInt(credentials[2]);
         String role = credentials[3];
-        display.showLogin(isConnected, id, role);
+        coreClient.getDisplay().showLogin(isConnected, id, role);
     }
 
     /**
      * When the server responds to a FIRSTCONN command send by this client. This method interprets what is returned.
      * @param firstConnString: the response from the server.
      */
-    private void handleFirstConnAnswer(String firstConnString){
+    public void handleFirstConnAnswer(String firstConnString){
         System.out.println(firstConnString);
         String[] args = firstConnString.split(" ");
         if(args[1].equalsIgnoreCase("SUCCESS"))
-            display.setState("FC SUCCESS");
+            coreClient.getDisplay().setState("FC SUCCESS");
         else
-            display.setState("FC FAILURE");
+            coreClient.getDisplay().setState("FC FAILURE");
     }
 
-
-    public void connectionException(Exception arg) {
-    }
-
-    public void connectionEstablished() {
-    }
-
-
-    public void connectionClosed() {
-    }
 }

@@ -95,8 +95,4 @@ public class StudentUI extends UI  {
         principalStudentScene = new Scene(studentScene, 900, 700);
         return principalStudentScene;
     }
-
-    public void addUIControls(BorderPane borderPane){
-
-    }
 }

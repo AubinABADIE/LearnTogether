@@ -20,7 +20,7 @@ import java.util.*;
 * @author Dr. Robert Lagani&egrave;re
 * @version Febuary 2001
 */
-class AdaptableClient extends AbstractClient
+public class AdaptableClient extends AbstractClient
 {
   //Instance variables **********************************************
 
@@ -37,9 +37,10 @@ class AdaptableClient extends AbstractClient
    * @param  host  the server's host name.
    * @param  port  the port number.
    */
-  public AdaptableClient(String host, int port, ObservableClient client)
+  public AdaptableClient(String host, int port, ClientIF client)
   {
     super(host, port);
+    this.client=client;
   }
 
 // OVERRIDDEN METHODS *************************************************

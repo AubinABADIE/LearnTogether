@@ -1,6 +1,7 @@
 package UI;
 
 import Users.User;
+import client.CoreClient;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.geometry.HPos;
@@ -27,7 +28,7 @@ public class StartUI extends UI {
     private TeacherUI teacherUI;
 
     //Business logic
-    protected User user;
+    private CoreClient client;
 
     public static void main(String[] args) {
         Application.launch(StartUI.class, args);
@@ -59,16 +60,16 @@ public class StartUI extends UI {
      * Creates the instance of the User, for the business logic relative to it
      * @throws IOException
      */
-    private void createUser() throws IOException{
-        if(user==null){
+    private void createCoreClient() throws IOException{
+        if(client == null){
             String host = "localhost";
             int port = 5555;
-            user = new User(host, port, this);
+            client = new CoreClient(host, port, this);
         }
     }
 
     @Override
-    public void start(Stage primaryStage) throws Exception {
+    public void start(Stage primaryStage){
         setupListeners();
         this.primaryStage = primaryStage;
         this.primaryStage.setTitle("Learn Together - Connection");
@@ -237,8 +238,8 @@ public class StartUI extends UI {
             password = passwordField.getText();
             connectionStatus.setValue("WAITING");
             try {
-                createUser();
-                user.handleLogin(login, password);
+                createCoreClient();
+                client.handleLogin(login, password);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -302,8 +303,8 @@ public class StartUI extends UI {
             password = passwordField.getText();
             connectionStatus.setValue("WAITING");
             try {
-                createUser();
-                user.setFirstPassword(login, password);
+                createCoreClient();
+                client.setFirstPassword(login, password);
             } catch (IOException e) {
                 e.printStackTrace();
             }
