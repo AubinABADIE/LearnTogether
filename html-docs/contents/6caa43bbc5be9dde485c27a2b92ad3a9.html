@@ -1,0 +1,638 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>GeneralServer</title>
+    <link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700,300italic,400italic,700italic|Source+Code+Pro:300,400,700' rel='stylesheet' type='text/css'>
+<link rel="stylesheet" href="../assets/css/bootstrap.css">
+<link rel="stylesheet" href="../assets/css/jquery.bonsai.css">
+<link rel="stylesheet" href="../assets/css/main.css">
+<link rel="stylesheet" href="../assets/icon-font/icons.css">
+<script type="text/javascript" src="../assets/js/jquery-2.1.0.min.js"></script>
+<script type="text/javascript" src="../assets/js/bootstrap.js"></script>
+<script type="text/javascript" src="../assets/js/jquery.bonsai.js"></script>
+
+  </head>
+  <body>
+    <div>
+
+      <!-- Name Title -->
+
+      <h1>GeneralServer</h1>
+
+      <!-- Type and Stereotype -->
+
+      <section style="margin-top: .5em;">
+        <span class="alert alert-info">
+          <span class="node-icon staruml-icon icon-UMLClass"></span>
+          UMLClass
+        </span>
+        
+      </section>
+
+      <!-- Path -->
+
+      <section style="margin-top: 10px">
+        
+        
+        
+          
+          <span class="label label-info"><a href='cf9c8b720f3815adeccaf3ef6e48c6c4.html'><span class='node-icon staruml-icon icon-Project'></span>Learn Together</a></span>
+        
+          <span>::</span>
+          <span class="label label-info"><a href='eaa9c4194dd3d0ade8911ed8153e8f37.html'><span class='node-icon staruml-icon icon-UMLModel'></span>Model</a></span>
+        
+          <span>::</span>
+          <span class="label label-info"><a href='6caa43bbc5be9dde485c27a2b92ad3a9.html'><span class='node-icon staruml-icon icon-UMLClass'></span>GeneralServer</a></span>
+        
+      </section>
+
+      <!-- Diagram -->
+
+      
+
+      <!-- Description -->
+
+      
+      <section>
+        <h3>Description</h3>
+        <div>
+          
+            <span class="label label-info">none</span>
+          
+        </div>
+      </section>
+      
+
+      <!-- Specification -->
+
+      
+
+      <!-- Directed Relationship -->
+
+      
+
+      <!-- Undirected Relationship -->
+
+      
+
+      <!-- Classifier -->
+
+      
+        
+        
+
+
+        
+        
+
+
+        
+        
+<section class="element-list">
+    <h3>Interfaces</h3>
+    <ul class="nav nav-list">
+        
+        <li><a href='c2e5dd58e0db3de406cbf4b6ec78b999.html'><span class='node-icon staruml-icon icon-UMLInterface'></span>Observer</a></li>
+        
+        <li><a href='c2e5dd58e0db3de406cbf4b6ec78b999.html'><span class='node-icon staruml-icon icon-UMLInterface'></span>Observer</a></li>
+        
+    </ul>
+</section>
+
+
+
+        
+        
+
+
+        
+        
+
+      
+
+      <!-- Interface -->
+
+      
+
+      <!-- Component -->
+
+      
+
+      <!-- Node -->
+
+      
+
+      <!-- Actor -->
+
+      
+
+      <!-- Use Case -->
+
+      
+
+      <!-- Template Parameters -->
+
+      
+
+      <!-- Literals -->
+
+      
+
+      <!-- Attributes -->
+
+      
+
+      <!-- Operations -->
+
+      
+      <section>
+        <h3>Operations</h3>
+        <table class="table table-striped table-bordered">
+          <tr>
+            <th>Visibility</th>
+            <th>Name</th>
+            <th>Description</th>
+          </tr>
+          
+          <tr>
+            <td>public</td>
+            <td><a href="d55571a3048f96acaffdc3a6c91014ba.html">sendToClientLogin(isConnected: boolean, id: String, role: String)</a></td>
+            <td></td>
+          </tr>
+          
+          <tr>
+            <td>public</td>
+            <td><a href="47e400a42c7fac396680892385687a32.html">handleLoginFromClient(login : String, password : String)</a></td>
+            <td></td>
+          </tr>
+          
+          <tr>
+            <td>public</td>
+            <td><a href="b000c64874d4df8b2a6049f5d73973bb.html">checkLogin(user: User)</a></td>
+            <td></td>
+          </tr>
+          
+          <tr>
+            <td>public</td>
+            <td><a href="acf57e86a74d57706067b060d5deea37.html">sendToClientRecord(object: Object)</a></td>
+            <td></td>
+          </tr>
+          
+          <tr>
+            <td>public</td>
+            <td><a href="8a87ff331b6e7cf255bda8644cf89bc1.html">handleCreateRecordFromClient(name: String, year: Date, record: file, course: Course, donatingUser: User)</a></td>
+            <td></td>
+          </tr>
+          
+          <tr>
+            <td>public</td>
+            <td><a href="64887a79f97893e0ca69d0a39740402c.html">handleDeleteRecordFromClient(id: Record, donatingUser: User)</a></td>
+            <td></td>
+          </tr>
+          
+          <tr>
+            <td>public</td>
+            <td><a href="0f31a4fa12e5aabb2c8740f25d716d4c.html">handleReadRecordFromClient(id: Record)</a></td>
+            <td></td>
+          </tr>
+          
+          <tr>
+            <td>public</td>
+            <td><a href="d731f42c37896a021e34d2f9779f3d75.html">checkSuccess(message: Boolean)</a></td>
+            <td></td>
+          </tr>
+          
+          <tr>
+            <td>public</td>
+            <td><a href="846c3ad6cf28c473919a0daaf78bbbbd.html">checkRecord(record: Record)</a></td>
+            <td></td>
+          </tr>
+          
+          <tr>
+            <td>public</td>
+            <td><a href="851850aa57bbf93054f9d6545e27e925.html">handleCreateProfile(name: String, firstname: String, login: String, birthDate: Date, courses: Course, promotions: Promotion, typeJob: String, studentGroup: Class)</a></td>
+            <td></td>
+          </tr>
+          
+          <tr>
+            <td>public</td>
+            <td><a href="f2e56c5dbd239238fb42437f5cc74470.html">handleUpdateProfile(name: String, firstName: String, login: String, birthDate: Date, courses: Course, promotions: Promotion, typeJob: String, studentGroup: Class, picture: file, password: String)</a></td>
+            <td></td>
+          </tr>
+          
+          <tr>
+            <td>public</td>
+            <td><a href="44c9803c4d618d22b28e564f95bf642e.html">sendToClientUser(object : Object)</a></td>
+            <td></td>
+          </tr>
+          
+          <tr>
+            <td>public</td>
+            <td><a href="c53e0b34c40726109c1aa53dd4643ffb.html">checkUser(user: User)</a></td>
+            <td></td>
+          </tr>
+          
+          <tr>
+            <td>public</td>
+            <td><a href="da9f03b6ddd1bb4028818d87e78223d9.html">handleReadProfile(id: int)</a></td>
+            <td></td>
+          </tr>
+          
+          <tr>
+            <td>public</td>
+            <td><a href="1b24a872d940d127f437dda60414713f.html">handleDeleteProfileFromClient(id: int)</a></td>
+            <td></td>
+          </tr>
+          
+          <tr>
+            <td>public</td>
+            <td><a href="d66aea772407ee1cb666727018d13eb6.html">handleCreateGradeFromClient(description: String, grades: List&lt;float&gt;, students: List&lt;Student&gt;, course: Course, coeff: float, teacher: Teacher)</a></td>
+            <td></td>
+          </tr>
+          
+          <tr>
+            <td>public</td>
+            <td><a href="408440f6806bee47572a8736b2414337.html">handleUpdateGradeFromCLient(description: String, grades: List&lt;float&gt;, students: List&lt;Student&gt;, course: Course, coeff: float, teacher: Teacher)</a></td>
+            <td></td>
+          </tr>
+          
+          <tr>
+            <td>public</td>
+            <td><a href="2d813cd5b24647bae685c7bc94886ebd.html">handleDeleteGradeFromClient(id: Grade, teacher: Teacher)</a></td>
+            <td></td>
+          </tr>
+          
+          <tr>
+            <td>public</td>
+            <td><a href="c6cbd8e02d5cd61f5842ac529167a2ed.html">handleReadGradeFromClient(id: Grade)</a></td>
+            <td></td>
+          </tr>
+          
+          <tr>
+            <td>public</td>
+            <td><a href="892c176cdc22a241ed9b2c7a85fe8c43.html">checkGrade(grade: Grade)</a></td>
+            <td></td>
+          </tr>
+          
+          <tr>
+            <td>public</td>
+            <td><a href="1c25c7ed24ba54fabc46e51a0940819f.html">sendToClientGrade(object: Object)</a></td>
+            <td></td>
+          </tr>
+          
+          <tr>
+            <td>public</td>
+            <td><a href="508e1ffd7c8ada3a96a8c3264c0acfbc.html">handleMessageFromClient(object: Object)</a></td>
+            <td></td>
+          </tr>
+          
+          <tr>
+            <td>public</td>
+            <td><a href="e8460a3eb68736e31fd8d89f8cd5cd51.html">checkConversation(conversation: Conversation)</a></td>
+            <td></td>
+          </tr>
+          
+          <tr>
+            <td>public</td>
+            <td><a href="58f61846688827c3ed03a0ad712e0848.html">handleCreateConversationFromClient(name: String, users: List&lt;User&gt;, messages: List&lt;Message&gt;)</a></td>
+            <td></td>
+          </tr>
+          
+          <tr>
+            <td>public</td>
+            <td><a href="3ca2ca1b4b0589bb85b7af8c3aff6baf.html">handleCreateMessageFromClient(sender: User, date: Date, message: String, conversation: Conversation)</a></td>
+            <td></td>
+          </tr>
+          
+          <tr>
+            <td>public</td>
+            <td><a href="013ca1942d40fae53603c61f0eb874e6.html">handleReadConversationFromClient(id: int)</a></td>
+            <td></td>
+          </tr>
+          
+          <tr>
+            <td>public</td>
+            <td><a href="62adbb5596d8d81e724221051b237ade.html">sendToClientConversation(conversation: Conversation)</a></td>
+            <td></td>
+          </tr>
+          
+          <tr>
+            <td>public</td>
+            <td><a href="338476eaf567a8dd13fcd104c4913791.html">handleQuitConversation(userDeleted: User, conversationID: int)</a></td>
+            <td></td>
+          </tr>
+          
+          <tr>
+            <td>public</td>
+            <td><a href="0940afc4915f05681bea47ba259fc12b.html">sendToClientMessage(message: String)</a></td>
+            <td></td>
+          </tr>
+          
+          <tr>
+            <td>public</td>
+            <td><a href="39f39b208f52c8aaa27e042043122d67.html">checkRoom(id: Room)</a></td>
+            <td></td>
+          </tr>
+          
+          <tr>
+            <td>public</td>
+            <td><a href="a28989e8c8a72d27969f0612d7866b45.html">sendToClientRoom(id: Room)</a></td>
+            <td></td>
+          </tr>
+          
+          <tr>
+            <td>public</td>
+            <td><a href="4f3d98912dbc2d8a786a849d110bcaa6.html">createRoom(name: String, building; String, computer: boolean, proj: boolean, desc: String, cap: int)</a></td>
+            <td></td>
+          </tr>
+          
+          <tr>
+            <td>public</td>
+            <td><a href="b3c5003ee1dd19cd11bc3303fd7e162a.html">updateRoom(name: String, building; String, computer: boolean, proj: boolean, desc: String, cap: int)</a></td>
+            <td></td>
+          </tr>
+          
+          <tr>
+            <td>public</td>
+            <td><a href="ba74df205fb287ceaa596a026538da42.html">deleteRoom(id: Room)</a></td>
+            <td></td>
+          </tr>
+          
+        </table>
+      </section>
+      
+
+      <!-- Receptions -->
+
+      
+
+      <!-- Extension Points -->
+
+      
+
+      <!-- Parameters -->
+
+      
+
+      <!-- Diagrams -->
+
+      
+      
+
+      <!-- Behavior -->
+
+      
+
+      <!-- Action -->
+
+      
+
+      <!-- Interaction -->
+
+      
+
+      <!-- CombinedFragment -->
+
+      
+
+      <!-- Activity -->
+
+      
+
+      <!-- State Machine -->
+
+      
+
+      <!-- State Machine -->
+
+      
+
+      <!-- State -->
+
+      
+
+      <!-- Vertex -->
+
+      
+
+      <!-- Transition -->
+
+      
+
+      <!-- Data Model (ERD) -->
+
+      
+
+      <!-- Columns (ERD) -->
+
+      
+
+      <!-- Related Entities (ERD) -->
+
+      
+
+      <!-- Data Flows (DFD) -->
+
+      
+
+      <!-- Flows (Flowchart) -->
+
+      
+
+      <!-- Properties -->
+
+      <section>
+        <h3>Properties</h3>
+        
+        <table class="table table-striped table-bordered">
+    <tr>
+        <th width="50%">Name</th>
+        <th width="50%">Value</th>
+    </tr>
+    
+    
+    
+    
+    
+    
+    
+    <tr>
+        <td>name</td>
+        <td>GeneralServer</td>
+    </tr>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <tr>
+        <td>stereotype</td>
+        <td><span class='label label-info'>null</span></td>
+    </tr>
+    
+    
+    
+    
+    
+    <tr>
+        <td>visibility</td>
+        <td>public</td>
+    </tr>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <tr>
+        <td>isAbstract</td>
+        <td><span class='label label-info'>false</span></td>
+    </tr>
+    
+    
+    
+    
+    
+    <tr>
+        <td>isFinalSpecialization</td>
+        <td><span class='label label-info'>false</span></td>
+    </tr>
+    
+    
+    
+    
+    
+    <tr>
+        <td>isLeaf</td>
+        <td><span class='label label-info'>false</span></td>
+    </tr>
+    
+    
+    
+    
+    
+    <tr>
+        <td>isActive</td>
+        <td><span class='label label-info'>false</span></td>
+    </tr>
+    
+    
+    
+</table>                
+
+      </section>
+
+      <!-- Tags -->
+
+      
+
+      <!-- Constraints, Dependencies, Dependants -->
+
+      
+        
+        
+
+
+        
+        
+<section class="element-list">
+    <h3>Dependencies</h3>
+    <ul class="nav nav-list">
+        
+        <li><a href='c2e5dd58e0db3de406cbf4b6ec78b999.html'><span class='node-icon staruml-icon icon-UMLInterface'></span>Observer</a></li>
+        
+        <li><a href='c2e5dd58e0db3de406cbf4b6ec78b999.html'><span class='node-icon staruml-icon icon-UMLInterface'></span>Observer</a></li>
+        
+    </ul>
+</section>
+
+
+
+        
+        
+
+      
+
+      <!-- Relationships -->
+
+      
+      
+<section class="element-list">
+    <h3>Relationships</h3>
+    <ul class="nav nav-list">
+        
+        <li><a href='694275f1c73ea935d6d79dcfdb69e14e.html'><span class='node-icon staruml-icon icon-UMLAssociation'></span>(User—GeneralServer)</a></li>
+        
+        <li><a href='fcad8aaf826d66f02697826506ae4df0.html'><span class='node-icon staruml-icon icon-UMLAssociation'></span>(GeneralServer—AbstractDAOFactory)</a></li>
+        
+        <li><a href='6b0480396aebc0d9272cc3738e262854.html'><span class='node-icon staruml-icon icon-UMLAssociation'></span>(GeneralServer—User)</a></li>
+        
+        <li><a href='62e41f8059528aea03f3f23c18ec6acd.html'><span class='node-icon staruml-icon icon-UMLInterfaceRealization'></span>(GeneralServer→Observer)</a></li>
+        
+        <li><a href='82c9259b95132f3b35c597ef1bb1c053.html'><span class='node-icon staruml-icon icon-UMLAssociation'></span>(GeneralServer—ObservableServer)</a></li>
+        
+        <li><a href='fb3f1ca773c7bd0dfbcad3221fe6b2cf.html'><span class='node-icon staruml-icon icon-UMLAssociation'></span>(GeneralServer—ObservableOriginatorServer)</a></li>
+        
+        <li><a href='e4040a6df1905e238773ad6c40722185.html'><span class='node-icon staruml-icon icon-UMLAssociation'></span>(GeneralServer—DisplayIF)</a></li>
+        
+        <li><a href='ce097eeb5c80b7b8e66c2bc904214ba9.html'><span class='node-icon staruml-icon icon-UMLAssociation'></span>(GeneralServer—DAOUser)</a></li>
+        
+        <li><a href='d33299c87547da5ed3d597e148e4311b.html'><span class='node-icon staruml-icon icon-UMLInterfaceRealization'></span>(GeneralServer→Observer)</a></li>
+        
+        <li><a href='be2d7a382ca6cb10deb695479d13f180.html'><span class='node-icon staruml-icon icon-UMLAssociation'></span>(GeneralServer—ObservableOriginatorServer)</a></li>
+        
+        <li><a href='de3d7a653730f5fe1ecfb29a8e4b66cc.html'><span class='node-icon staruml-icon icon-UMLAssociation'></span>(ServerUI—GeneralServer)</a></li>
+        
+    </ul>
+</section>
+
+
+
+      <!-- Owned Elements -->
+
+      
+      
+<section class="element-list">
+    <h3>Owned Elements</h3>
+    <ul class="nav nav-list">
+        
+        <li><a href='6b0480396aebc0d9272cc3738e262854.html'><span class='node-icon staruml-icon icon-UMLAssociation'></span>(GeneralServer—User)</a></li>
+        
+        <li><a href='62e41f8059528aea03f3f23c18ec6acd.html'><span class='node-icon staruml-icon icon-UMLInterfaceRealization'></span>(GeneralServer→Observer)</a></li>
+        
+        <li><a href='82c9259b95132f3b35c597ef1bb1c053.html'><span class='node-icon staruml-icon icon-UMLAssociation'></span>(GeneralServer—ObservableServer)</a></li>
+        
+        <li><a href='fb3f1ca773c7bd0dfbcad3221fe6b2cf.html'><span class='node-icon staruml-icon icon-UMLAssociation'></span>(GeneralServer—ObservableOriginatorServer)</a></li>
+        
+        <li><a href='e4040a6df1905e238773ad6c40722185.html'><span class='node-icon staruml-icon icon-UMLAssociation'></span>(GeneralServer—DisplayIF)</a></li>
+        
+        <li><a href='ce097eeb5c80b7b8e66c2bc904214ba9.html'><span class='node-icon staruml-icon icon-UMLAssociation'></span>(GeneralServer—DAOUser)</a></li>
+        
+        <li><a href='d33299c87547da5ed3d597e148e4311b.html'><span class='node-icon staruml-icon icon-UMLInterfaceRealization'></span>(GeneralServer→Observer)</a></li>
+        
+        <li><a href='be2d7a382ca6cb10deb695479d13f180.html'><span class='node-icon staruml-icon icon-UMLAssociation'></span>(GeneralServer—ObservableOriginatorServer)</a></li>
+        
+    </ul>
+</section>
+
+
+
+    </div>
+  </body>
+</html>
