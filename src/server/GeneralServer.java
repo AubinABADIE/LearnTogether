@@ -85,9 +85,9 @@ public class GeneralServer implements Observer {
     public void sendToClientLogin(boolean isConnected, int id, String role, ConnectionToClient client) {
         try {
             if (isConnected) {
-                client.sendToClient("#LOGIN TRUE " + id + " " + role);
+                client.sendToClient("#LOGON TRUE " + id + " " + role);
             } else {
-                client.sendToClient("#LOGIN FALSE -1 null");
+                client.sendToClient("#LOGON FALSE -1 null");
             }
         } catch (Exception e) {
             e.printStackTrace();

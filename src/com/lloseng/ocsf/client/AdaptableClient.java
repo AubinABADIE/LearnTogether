@@ -4,6 +4,8 @@
 
 package com.lloseng.ocsf.client;
 
+import common.ClientIF;
+
 import java.io.*;
 import java.net.*;
 import java.util.*;
@@ -25,7 +27,7 @@ class AdaptableClient extends AbstractClient
   /**
    * The proxy used to simulate multiple class inheritance.
    */
-  private ObservableClient client;
+  private ClientIF client;
 
 // CONSTRUCTORS *****************************************************
 
@@ -38,7 +40,6 @@ class AdaptableClient extends AbstractClient
   public AdaptableClient(String host, int port, ObservableClient client)
   {
     super(host, port);
-    this.client = client;
   }
 
 // OVERRIDDEN METHODS *************************************************
