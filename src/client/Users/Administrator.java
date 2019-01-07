@@ -2,7 +2,7 @@ package Users;
 
 import java.util.Date;
 import java.util.List;
-import Courses.Course;
+import client.Courses.Course;
 
 /**
  * 

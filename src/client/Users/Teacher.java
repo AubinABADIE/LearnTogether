@@ -1,6 +1,6 @@
 package Users;
 
-import Courses.Course;
+import client.Courses.Course;
 
 import java.util.*;
 
