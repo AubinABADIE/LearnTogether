@@ -1,7 +1,5 @@
 package client.Chat;
 
-import client.Users.User;
-
 import java.util.List;
 
 
@@ -15,19 +13,6 @@ public class Conversation {
      */
     public Conversation() {
     }
-
-    /**
-     * 
-     */
-    private String conversationName;
-
-    /**
-     * 
-     */
-    private String typeConversation;
-
-
-
 
     /**
      * @param Name
@@ -45,9 +30,9 @@ public class Conversation {
 
     /**
      * @param conv 
-     * @param member
+     * @param members
      */
-    public void addMembers(Conversation conv, List<User> member) {
+    public void addMembers(Conversation conv, List<Integer> members) {
         // TODO implement here
     }
 

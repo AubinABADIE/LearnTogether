@@ -143,7 +143,7 @@ public class StartUI extends UI {
      *
      * @return GridPane Login pane.
      */
-    protected GridPane createConnectionFormPane() {
+    private GridPane createConnectionFormPane() {
         // Instantiate a new Grid Pane
         GridPane gridPane = new GridPane();
 
@@ -180,7 +180,7 @@ public class StartUI extends UI {
      *
      * @param gridPane Login pane.
      */
-    protected void addUIControlsConnectionPane(GridPane gridPane) {
+    private void addUIControlsConnectionPane(GridPane gridPane) {
         // Add Header
         Label headerLabel = new Label("Connection");
         headerLabel.setFont(Font.font("Arial", FontWeight.BOLD, 24));
@@ -249,7 +249,7 @@ public class StartUI extends UI {
         });
     }
 
-    protected void addUIControlsFirstConnectionPane(GridPane pane){
+    private void addUIControlsFirstConnectionPane(GridPane pane){
         // Add Header
         Label headerLabel = new Label("First connection");
         headerLabel.setFont(Font.font("Arial", FontWeight.BOLD, 24));

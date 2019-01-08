@@ -1,6 +1,7 @@
 package client.Groups;
 
-import client.Users.Teacher;
+
+import client.Users.TeacherServices;
 
 /**
  * 
@@ -13,37 +14,22 @@ public class Department {
     public Department() {
     }
 
-    /**
-     * 
-     */
-    private String nameDep;
-
-    /**
-     * 
-     */
-    private Teacher referenceTeacher;
-
-    /**
-     * 
-     */
-    private String descriptionDep;
-
 
     /**
      * @param name 
-     * @param refTeacher 
+     * @param refTeacherID
      * @param desc
      */
-    public void createDepartment(String name, Teacher refTeacher, String desc) {
+    public void createDepartment(String name, int refTeacherID, String desc) {
         // TODO implement here
     }
 
     /**
      * @param name 
-     * @param refTeacher 
+     * @param refTeacherID
      * @param desc
      */
-    public void updateDepartment(String name, Teacher refTeacher, String desc) {
+    public void updateDepartment(String name, int refTeacherID, String desc) {
         // TODO implement here
     }
 
