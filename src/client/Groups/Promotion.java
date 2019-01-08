@@ -1,8 +1,7 @@
-package Groups;
+package client.Groups;
 
 import java.util.Date;
-
-import Users.Teacher;
+import client.Users.Teacher;
 
 /**
  * 

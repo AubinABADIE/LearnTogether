@@ -1,8 +1,8 @@
 package server.DAO;
 
-import Courses.Course;
-import Records.Record;
-import Users.User;
+import client.Courses.Course;
+import client.Records.Record;
+import client.Users.User;
 
 import java.io.File;
 import java.util.*;

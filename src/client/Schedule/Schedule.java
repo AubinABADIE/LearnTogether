@@ -1,4 +1,4 @@
-package Schedule;
+package client.Schedule;
 
 import java.util.*;
 

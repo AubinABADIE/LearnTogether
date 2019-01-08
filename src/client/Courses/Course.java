@@ -1,4 +1,4 @@
-package Courses;
+package client.Courses;
 
 import java.util.*;
 

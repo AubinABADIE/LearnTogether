@@ -1,13 +1,12 @@
 package server;
 
-import Courses.Course;
 import com.lloseng.ocsf.server.ConnectionToClient;
 import com.lloseng.ocsf.server.OriginatorMessage;
 import common.ChatIF;
+import server.DBTypes.CourseType;
+import server.DBTypes.PromotionType;
+import server.DBTypes.RecordType;
 import server.DBTypes.UserType;
-import Groups.Promotion;
-import Records.Record;
-import Users.User;
 import com.lloseng.ocsf.server.ObservableOriginatorServer;
 import server.DAO.*;
 
@@ -96,7 +95,7 @@ public class GeneralServer implements Observer {
 
     /**
      * This method is used to send a client a response of a #FIRSTCONN demand.
-     * @param hasSucceeded: true id the first conenction was a success, false otherwise.
+     * @param hasSucceeded: true id the first connection was a success, false otherwise.
      * @param client: the original client.
      */
     public void sendToClientFirstConn(boolean hasSucceeded, ConnectionToClient client){
@@ -168,7 +167,7 @@ public class GeneralServer implements Observer {
      * @param course
      * @param donatingUser
      */
-    public void handleCreateRecordFromClient(String name, Date year, File record, Course course, User donatingUser) {
+    public void handleCreateRecordFromClient(String name, Date year, File record, CourseType course, UserType donatingUser) {
         // TODO implement here
     }
 
@@ -176,14 +175,14 @@ public class GeneralServer implements Observer {
      * @param id
      * @param donatingUser
      */
-    public void handleDeleteRecordFromClient(Record id, User donatingUser) {
+    public void handleDeleteRecordFromClient(RecordType id, UserType donatingUser) {
         // TODO implement here
     }
 
     /**
      * @param id
      */
-    public void handleReadRecordFromClient(Record id) {
+    public void handleReadRecordFromClient(RecordType id) {
         // TODO implement here
     }
 
@@ -197,7 +196,7 @@ public class GeneralServer implements Observer {
     /**
      * @param record
      */
-    public void checkRecord(Record record) {
+    public void checkRecord(RecordType record) {
         // TODO implement here
     }
 
@@ -211,7 +210,7 @@ public class GeneralServer implements Observer {
      * @param typeJob
      * @param studentGroup
      */
-    public void handleCreateProfile(String name, String firstname, String login, Date birthDate, Course courses, Promotion promotions, String typeJob, Class studentGroup) {
+    public void handleCreateProfile(String name, String firstname, String login, Date birthDate, CourseType courses, PromotionType promotions, String typeJob, Class studentGroup) {
         // TODO implement here
     }
 
@@ -227,7 +226,7 @@ public class GeneralServer implements Observer {
      * @param picture
      * @param password
      */
-    public void handleUpdateProfile(String name, String firstName, String login, Date birthDate, Course courses, Promotion promotions, String typeJob, Class studentGroup, File picture, String password) {
+    public void handleUpdateProfile(String name, String firstName, String login, Date birthDate, CourseType courses, PromotionType promotions, String typeJob, Class studentGroup, File picture, String password) {
         // TODO implement here
     }
 
@@ -241,7 +240,7 @@ public class GeneralServer implements Observer {
     /**
      * @param user
      */
-    public void checkUser(User user) {
+    public void checkUser(UserType user) {
         // TODO implement here
     }
 

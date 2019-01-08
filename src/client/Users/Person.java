@@ -1,4 +1,4 @@
-package Users;
+package client.Users;
 
 public abstract class Person {
 

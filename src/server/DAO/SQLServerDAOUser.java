@@ -1,8 +1,8 @@
 package server.DAO;
 
-import Courses.Course;
+import server.DBTypes.CourseType;
+import server.DBTypes.PromotionType;
 import server.DBTypes.UserType;
-import Groups.Promotion;
 
 import java.io.File;
 import java.sql.*;
@@ -31,7 +31,7 @@ public class SQLServerDAOUser extends AbstractDAOUser {
      * @param typeJob 
      * @param studentGroup
      */
-    public void createDAOUser(String name, String firstname, String login, Date birthDate, Course courses, Promotion promotions, String typeJob, Class studentGroup) {
+    public void createDAOUser(String name, String firstname, String login, Date birthDate, CourseType courses, PromotionType promotions, String typeJob, Class studentGroup) {
         // TODO implement here
     }
 
@@ -47,7 +47,7 @@ public class SQLServerDAOUser extends AbstractDAOUser {
      * @param password 
      * @param picture
      */
-    public void updateDAOUser(String name, String firstname, String login, Date birthDate, Course courses, Promotion promotions, String typeJob, Class studentGroup, String password, File picture) {
+    public void updateDAOUser(String name, String firstname, String login, Date birthDate, CourseType courses, PromotionType promotions, String typeJob, Class studentGroup, String password, File picture) {
         // TODO implement here
     }
 
