@@ -8,12 +8,12 @@ import java.util.*;
 /**
  * 
  */
-public class Teacher extends Person {
+public class TeacherServices{
 
     /**
      * Default constructor
      */
-    public Teacher() {
+    public TeacherServices() {
     }
 
     /**

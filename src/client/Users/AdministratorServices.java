@@ -7,12 +7,12 @@ import client.Courses.Course;
 /**
  * 
  */
-public class Administrator extends User {
+public class AdministratorServices extends UserServices {
 
     /**
      * Default constructor
      */
-    public Administrator() {
+    public AdministratorServices() {
     	super();
     }
 
@@ -30,7 +30,7 @@ public class Administrator extends User {
     /**
      * @param user
      */
-    public void deleteUser(User user) {
+    public void deleteUser(UserServices user) {
         // TODO implement here
     }
 

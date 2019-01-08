@@ -5,30 +5,30 @@ import java.util.*;
 /**
  * 
  */
-public class SuperAdministrator extends Administrator {
+public class SuperAdministratorServices extends AdministratorServices {
 
     /**
      * Default constructor
      */
-    public SuperAdministrator() {
+    public SuperAdministratorServices() {
     }
 
     /**
      * 
      */
-    private SuperAdministrator SuperAdminInstance;
+    private SuperAdministratorServices SuperAdminInstance;
 
     /**
      * @param user
      */
-    public void createAdmin(User user) {
+    public void createAdmin(UserServices user) {
         // TODO implement here
     }
 
     /**
      * @return
      */
-    public SuperAdministrator getSupAdmin() {
+    public SuperAdministratorServices getSupAdmin() {
         // TODO implement here
         return null;
     }
