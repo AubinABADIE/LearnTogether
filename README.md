@@ -28,6 +28,6 @@ The server responds to a #LOGIN injonction from the client by sending this to th
 ## \#FIRSTCONN
 The server responds to a #FIRSTCONN injonction from the client by sending this.
 Arguments :
-- hasSucceeded : boolean, true if it was the first connection and the password has been defined, false otherwise.`
+- hasSucceeded : boolean, true if it was the first connection and the password has been defined, false otherwise.
 
 *Usage*:`#FIRSTCONN {hasConected}`
