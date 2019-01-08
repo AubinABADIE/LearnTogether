@@ -1,6 +1,6 @@
 package client;
 
-import Users.User;
+import client.Users.User;
 import com.lloseng.ocsf.client.AdaptableClient;
 import common.ClientIF;
 import common.DisplayIF;

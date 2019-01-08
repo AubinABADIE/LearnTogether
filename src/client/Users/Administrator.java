@@ -1,4 +1,4 @@
-package Users;
+package client.Users;
 
 import java.util.Date;
 import java.util.List;

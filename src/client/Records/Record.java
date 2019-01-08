@@ -1,8 +1,8 @@
-package Records;
+package client.Records;
 
-import Courses.Course;
-import Users.User;
-import common.DisplayIF;
+
+import client.Courses.Course;
+import client.Users.User;
 
 import java.time.Year;
 import java.util.*;

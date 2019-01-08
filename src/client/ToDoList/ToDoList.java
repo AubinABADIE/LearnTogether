@@ -1,7 +1,8 @@
-package ToDoList;
+package client.ToDoList;
 
 import java.util.List;
 
+import client.ToDoList.Task;
 import common.DisplayIF;
 
 /**

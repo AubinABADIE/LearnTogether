@@ -1,4 +1,4 @@
-package Chat;
+package client.Chat;
 
 import java.util.Observable;
 import java.util.Observer;

@@ -1,6 +1,6 @@
-package Groups;
+package client.Groups;
 
-import Users.Teacher;
+import client.Users.Teacher;
 
 /**
  * 

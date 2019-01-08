@@ -1,8 +1,9 @@
-package Chat;
+package client.Chat;
+
+import client.Users.User;
 
 import java.util.List;
 
-import Users.User;
 
 /**
  * 

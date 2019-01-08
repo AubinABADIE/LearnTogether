@@ -1,9 +1,8 @@
-package Grades;
+package client.Grades;
 
-import Courses.Course;
-import Users.Student;
-import Users.Teacher;
-import common.DisplayIF;
+import client.Courses.Course;
+import client.Users.Student;
+import client.Users.Teacher;
 
 import java.util.*;
 

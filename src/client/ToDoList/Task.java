@@ -1,4 +1,4 @@
-package ToDoList;
+package client.ToDoList;
 
 import java.util.*;
 

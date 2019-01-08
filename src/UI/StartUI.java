@@ -1,6 +1,5 @@
 package UI;
 
-import Users.User;
 import client.CoreClient;
 import javafx.application.Application;
 import javafx.application.Platform;
