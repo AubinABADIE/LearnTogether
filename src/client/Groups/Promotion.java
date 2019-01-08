@@ -1,7 +1,6 @@
 package client.Groups;
 
 import java.util.Date;
-import client.Users.Teacher;
 
 /**
  * 
@@ -14,52 +13,27 @@ public class Promotion {
     public Promotion() {
     }
 
-    /**
-     * 
-     */
-    private String namePromo;
-
-    /**
-     * 
-     */
-    private Teacher referenceTeacher;
-
-    /**
-     * 
-     */
-    private String descriptionPromo;
-
-    /**
-     * 
-     */
-    private Date graduationYear;
-
-    /**
-     * 
-     */
-    private Department department;
-
 
 
     /**
      * @param name 
-     * @param refTeacher 
+     * @param refTeacherID
      * @param desc 
      * @param gradYear 
      * @param dep
      */
-    public void createPromotion(String name, Teacher refTeacher, String desc, Date gradYear, Department dep) {
+    public void createPromotion(String name, int refTeacherID, String desc, Date gradYear, Department dep) {
         // TODO implement here
     }
 
     /**
      * @param name 
-     * @param refTeacher 
+     * @param refTeacherID
      * @param desc 
      * @param gradYear 
      * @param dep
      */
-    public void updatePromotion(String name, Teacher refTeacher, String desc, Date gradYear, Department dep) {
+    public void updatePromotion(String name, int refTeacherID, String desc, Date gradYear, Department dep) {
         // TODO implement here
     }
 

@@ -2,7 +2,7 @@ package server.DAO;
 
 import client.Courses.Course;
 import client.Records.Record;
-import client.Users.User;
+import server.DBTypes.UserType;
 
 import java.io.File;
 import java.util.*;
@@ -25,7 +25,7 @@ public class SQLServerDAORecord {
      * @param record 
      * @param donatingUser
      */
-    public void createRecord(String name, Date year, Course course, File record, User donatingUser) {
+    public void createRecord(String name, Date year, Course course, File record, UserType donatingUser) {
         // TODO implement here
     }
 
@@ -33,7 +33,7 @@ public class SQLServerDAORecord {
      * @param id 
      * @param donatingUser
      */
-   public void deleteRecord(Record id, User donatingUser) {
+   public void deleteRecord(Record id, UserType donatingUser) {
         // TODO implement here
     }
 

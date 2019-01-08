@@ -2,7 +2,6 @@ package client.Records;
 
 
 import client.Courses.Course;
-import client.Users.User;
 
 import java.time.Year;
 import java.util.*;
@@ -18,36 +17,21 @@ public class Record implements Observer {
     public Record() {
     }
 
-    /**
-     * 
-     */
-    private Date recordYear;
-
-    /**
-     * 
-     */
-    private Course course;
-
-    /**
-     * 
-     */
-    private User donatingUser;
-
 
     /**
      * @param recYear 
      * @param course 
-     * @param donatingUser
+     * @param donatingUserID
      */
-    public void CreateRecord(Year recYear, Course course, User donatingUser) {
+    public void CreateRecord(Year recYear, Course course, int donatingUserID) {
         // TODO implement here
     }
 
     /**
      * @param rec 
-     * @param donatingUser
+     * @param donatingUserID
      */
-    public void DeleteRecord(Record rec, User donatingUser) {
+    public void DeleteRecord(Record rec, int donatingUserID) {
         // TODO implement here
     }
 
