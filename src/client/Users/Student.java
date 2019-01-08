@@ -1,6 +1,6 @@
 package client.Users;
 
-public class Student extends Person {
+public class Student{
 	
 
 

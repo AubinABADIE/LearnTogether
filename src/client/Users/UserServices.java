@@ -6,14 +6,14 @@ import client.CoreClient;
 
 import java.io.IOException;
 
-public class User{
+public class UserServices{
 
     private CoreClient coreClient;
 
-    public User() {
+    public UserServices() {
     }
 
-    public User(CoreClient coreClient) throws IOException {
+    public UserServices(CoreClient coreClient) {
         this.coreClient = coreClient;
     }
 

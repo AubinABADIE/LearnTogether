@@ -121,7 +121,7 @@ public class SQLServerDAOUser extends AbstractDAOUser {
         boolean result = false;
         if(connection != null){
             try{
-                PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM GeneralUsers WHERE email = ? AND password = NULL");
+                PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM GeneralUsers WHERE email = ? AND password IS NULL");
                 preparedStatement.setString(1, login);
                 ResultSet resultSet = preparedStatement.executeQuery();
                 resultSet.next();
@@ -145,20 +145,19 @@ public class SQLServerDAOUser extends AbstractDAOUser {
     @Override
     public boolean setNewPwd(String login, String password) {
         Connection connection = getConnection();
-        boolean result = false;
+        int res = 0;
         if(connection != null){
             try{
                 PreparedStatement preparedStatement = connection.prepareStatement("UPDATE GeneralUsers SET password = ? WHERE email = ?");
                 preparedStatement.setString(1,password);
                 preparedStatement.setString(2,login);
-                ResultSet resultSet = preparedStatement.executeQuery();
-                result = true;
+                res = preparedStatement.executeUpdate();
             }catch (SQLException e){e.printStackTrace();}
             finally {
                 closeConnection(connection);
             }
         }
-        return result;
+        return res == 1;
     }
 
 

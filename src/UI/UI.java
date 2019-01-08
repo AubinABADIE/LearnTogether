@@ -1,34 +1,14 @@
 package UI;
 
-import java.io.IOException;
-import java.util.Optional;
-
-import Users.User;
 import common.DisplayIF;
 import javafx.application.Application;
 import javafx.application.Platform;
-import javafx.beans.property.BooleanProperty;
-import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
-import javafx.concurrent.Task;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
-import javafx.geometry.HPos;
 import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.Label;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
 import javafx.scene.layout.*;
-import javafx.scene.text.Font;
-import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -76,7 +56,7 @@ public abstract class UI extends Application implements DisplayIF {
     }
 
     protected void addUIControlsWaitingPane(BorderPane pane){
-        Text waitingText = new Text("Connexion en cours... Veuillez patienter.");
+        Text waitingText = new Text("Connecting... Please wait.");
         pane.setCenter(waitingText);
     }
 
@@ -103,17 +83,20 @@ public abstract class UI extends Application implements DisplayIF {
      * @param message Message to be displayed.
      */
     protected void showAlert(Alert.AlertType alertType, Window owner, String title, String message) {
-        Alert alert = new Alert(alertType);
-        alert.setTitle(title);
-        alert.setHeaderText(null);
-        alert.setContentText(message);
-        if(owner != null)
-            alert.initOwner(owner);
-        else
-            alert.initOwner(primaryStage);
-        alert.initStyle(StageStyle.DECORATED);
-        alert.setResizable(false);
-        alert.show();
+        Platform.runLater(() -> {
+            Alert alert = new Alert(alertType);
+            alert.setTitle(title);
+            alert.setHeaderText(null);
+            alert.setContentText(message);
+            if(owner != null)
+                alert.initOwner(owner);
+            else
+                alert.initOwner(primaryStage);
+            alert.initStyle(StageStyle.DECORATED);
+            alert.setResizable(false);
+            alert.show();
+        });
+
     }
     @Override
     public void display(String message){
