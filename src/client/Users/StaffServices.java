@@ -5,12 +5,12 @@ import java.util.*;
 /**
  * 
  */
-public class Staff{
+public class StaffServices{
 
     /**
      * Default constructor
      */
-    public Staff() {
+    public StaffServices() {
     }
 
     /**

@@ -104,7 +104,7 @@ public class StartUI extends UI {
     protected void setupListeners(){
         connectionStatus.addListener((observable, oldValue, newValue) -> {
             if(newValue.equalsIgnoreCase("STUDENT")){
-                Platform.runLater(() -> showAlert(Alert.AlertType.CONFIRMATION, null, "Success", "Connected."));
+                showAlert(Alert.AlertType.CONFIRMATION, null, "Success", "Connected.");
                 Platform.runLater(this::setPrincipalSceneAsStudent);
             }
             else if(newValue.equalsIgnoreCase("TEACHER")){
