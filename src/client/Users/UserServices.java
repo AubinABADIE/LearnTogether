@@ -25,7 +25,7 @@ public class UserServices{
      */
     public void handleLogin(String login, String password){
         try {
-            coreClient.getClient().sendToServer("#LOGIN " + login + " " + password);
+            coreClient.getConnection().sendToServer("#LOGIN " + login + " " + password);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -39,7 +39,7 @@ public class UserServices{
      */
     public void setFirstPassword(String login, String password){
         try{
-            coreClient.getClient().sendToServer("#FIRSTCONN " + login + " " + password);
+            coreClient.getConnection().sendToServer("#FIRSTCONN " + login + " " + password);
         }catch (IOException e){
             e.printStackTrace();
         }

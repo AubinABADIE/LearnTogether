@@ -9,7 +9,7 @@ import java.io.IOException;
 
 public class CoreClient implements ClientIF {
     private UserServices user;
-    private AdaptableClient client;
+    private AdaptableClient connection;
     private DisplayIF display;
 
     public UserServices getUser() {
@@ -20,12 +20,12 @@ public class CoreClient implements ClientIF {
         this.user = user;
     }
 
-    public AdaptableClient getClient() {
-        return client;
+    public AdaptableClient getConnection() {
+        return connection;
     }
 
-    public void setClient(AdaptableClient client) {
-        this.client = client;
+    public void setConnection(AdaptableClient client) {
+        this.connection = client;
     }
 
     public DisplayIF getDisplay() {
@@ -37,9 +37,9 @@ public class CoreClient implements ClientIF {
     }
 
     public CoreClient(String host, int port, DisplayIF display) throws IOException {
-        client = new AdaptableClient(host, port, this);
+        connection = new AdaptableClient(host, port, this);
         this.display = display;
-        client.openConnection();
+        connection.openConnection();
         user = new UserServices(this);
     }
 

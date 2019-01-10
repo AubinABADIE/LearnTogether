@@ -97,6 +97,16 @@ public class StartUI extends UI {
         addUIControlsWaitingPane(borderPaneWaiting);
         waitingScene = new Scene(borderPaneWaiting, 800, 500);
 
+        primaryStage.setOnCloseRequest(event ->{
+            if(client != null){
+                try {
+                    client.getConnection().closeConnection();
+                    System.exit(0);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
 
     }
 
