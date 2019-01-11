@@ -87,7 +87,7 @@ public class GeneralServer implements Observer {
         }
         else if (instruction.startsWith("CREATEROOM")){
             String[] attributes = instruction.split("-/-");
-            handleCreateRoomFromClient(attributes[1], attributes[2], attributes[3], attributes[4], attributes[5],attributes[6], client);
+            handleCreateRoomFromClient(attributes[1], Integer.parseInt(attributes[2]), Integer.parseInt(attributes[3]), Boolean.parseBoolean(attributes[4]), Boolean.parseBoolean(attributes[5]),attributes[6], client);
         }
     }
 
@@ -208,8 +208,8 @@ public class GeneralServer implements Observer {
      * @param hasComputer
      * @param description
      */
-    private void handleCreateRoomFromClient(String name, int capacity, int building, boolean hasProjector, boolean hasComputer, String description){
-        dao.createRoom(name, capacity, building, hasProjector, hasComputer, description);
+    private void handleCreateRoomFromClient(String name, int capacity, int building, boolean hasProjector, boolean hasComputer, String description, ConnectionToClient client){
+        dao.getRoomDAO().createRoom(name, capacity, building, hasProjector, hasComputer, description);
     }
 
     /**

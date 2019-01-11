@@ -40,6 +40,18 @@ public class SQLServerDAOUser extends AbstractDAOUser {
         }
     }
 
+    /**
+     * This method closes a connection to a database.
+     * @param connexion
+     */
+    public void closeConnection(Connection connexion){
+        try {
+            connexion.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
 
     /**
      * @param name 

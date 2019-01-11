@@ -146,12 +146,12 @@ public Tab createTabProfile() {
     	
     	// Photo
     	Image image = null;
-		try {
+		/*try {
 			image = new Image(new FileInputStream("C:\\Users\\Aubin\\Pictures\\avatar.png"));
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
+		}*/
         //Setting the image view 
         ImageView imageView = new ImageView(image); 
         //Setting the position of the image 

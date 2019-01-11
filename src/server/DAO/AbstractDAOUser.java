@@ -18,17 +18,7 @@ public abstract class AbstractDAOUser {
      */
     public abstract Connection getConnection();
 
-    /**
-     * This method closes a connection to a database.
-     * @param connexion
-     */
-    public void closeConnection(Connection connexion){
-        try {
-            connexion.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
+
 
     public abstract int readDAOUserByLogin(String login, String password);
     public abstract UserType readDAOUser(int id);
