@@ -11,7 +11,7 @@ public abstract class AbstractDAOFactory{
 
     private AbstractDAOUser userDAO;
     private AbstractDAODepartment departmentDAO;
-    private RoomDAO roomDAO;
+    private AbstractRoomDAO roomDAO;
 
     /**
      * Default constructor
@@ -22,11 +22,11 @@ public abstract class AbstractDAOFactory{
 
     public abstract Connection getConnection();
 
-    public RoomDAO getRoomDAO() {
+    public AbstractRoomDAO getRoomDAO() {
         return roomDAO;
     }
 
-    public void setRoomDAO(RoomDAO roomDAO) {
+    public void setRoomDAO(AbstractRoomDAO roomDAO) {
         this.roomDAO = roomDAO;
     }
 
