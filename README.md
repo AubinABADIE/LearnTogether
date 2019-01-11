@@ -44,6 +44,13 @@ Arguments :
 
 *Usage*:`#FIRSTCONN {hasConected}`
 
+## \#CREATEDROOM
+The server responds to a #CREATEROOMinjonction from the client by sending this.
+Arguments :
+- mess : String with the result of the action.
+
+*Usage*: `#CREATEDROOM {mess}`
+
 #Users in the DB
 | id       |      name     |  first name |           email                   |   password   | role     |
 |----------|:-------------:|:-----------:|:---------------------------------:|:------------:|:--------:|

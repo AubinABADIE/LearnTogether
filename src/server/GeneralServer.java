@@ -209,7 +209,21 @@ public class GeneralServer implements Observer {
      * @param description
      */
     private void handleCreateRoomFromClient(String name, int capacity, int building, boolean hasProjector, boolean hasComputer, String description, ConnectionToClient client){
-        dao.getRoomDAO().createRoom(name, capacity, building, hasProjector, hasComputer, description);
+        int result = dao.getRoomDAO().createRoom(name, capacity, building, hasProjector, hasComputer, description);
+
+        String mess = " ";
+        if (result == 1){
+            mess = "#CREATEDROOM Success";
+        }
+        else{
+            mess = "#CREATEDROOM Failure";
+        }
+        try {
+            client.sendToClient(mess);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
 
     /**

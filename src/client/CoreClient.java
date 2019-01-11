@@ -61,6 +61,8 @@ public class CoreClient implements ClientIF {
                 user.handleAnswerLogin((String) msg);
             } else if (((String) msg).startsWith("#FIRSTCONN")) {
                 user.handleFirstConnAnswer((String) msg);
+            } else if  (((String) msg).startsWith("#CREATEDROOM")){
+                room.handleCreatedRoom((String) msg);
             }
         }
     }

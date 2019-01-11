@@ -1,6 +1,7 @@
 package UI;
 
 import client.CoreClient;
+import javafx.application.Platform;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -319,6 +320,20 @@ public class AdminUI extends TeacherUI {
         });
 
         return tabRoom;
+    }
+
+    @Override
+    protected void setupListeners(){
+        currentState.addListener((observable, oldValue, newValue) -> {
+            if (newValue.equalsIgnoreCase("RC SUCCESS")) {
+                showAlert(Alert.AlertType.CONFIRMATION, null, "Success", "You have created the room.");
+                //Platform.runLater(this::createPrincipalAdminScene);
+            }
+        });
+    }
+
+    protected void setDefaultTab(){
+
     }
 
     public void addUIControls(BorderPane borderPane){

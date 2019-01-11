@@ -61,4 +61,12 @@ public class RoomServices {
             e.printStackTrace();
         }
     }
+
+    public void handleCreatedRoom(String msg) {
+        String args[] = msg.split(" ");
+        if(args[1].equalsIgnoreCase("SUCCESS"))
+            client.getDisplay().setState("RC SUCCESS");
+        else
+            client.getDisplay().setState("RC FAILURE");
+    }
 }

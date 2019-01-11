@@ -43,8 +43,10 @@ public class SQLServerDAORoom extends AbstractRoomDAO{
      * @param hasComputer : if the room has computers
      * @param description : small description of the room
      */
-    public void createRoom(String name, int capacity, int building, boolean hasProjector, boolean hasComputer, String description ){
+    @Override
+    public int createRoom(String name, int capacity, int building, boolean hasProjector, boolean hasComputer, String description ){
         Connection connection = getConnection();
+        int result = 0;
         if(connection != null){
             try{
                 PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO Rooms (roomName, building, hasComputer, hasProjector, descriptionRoom, capacity) VALUES ? ,? ,? ,? ,?, ? ");
@@ -54,8 +56,7 @@ public class SQLServerDAORoom extends AbstractRoomDAO{
                 preparedStatement.setBoolean(4, hasProjector);
                 preparedStatement.setString(5, description);
                 preparedStatement.setInt(6, capacity);
-                ResultSet resultSet = preparedStatement.executeQuery();
-                resultSet.next();
+                result = preparedStatement.executeUpdate();
 
             }catch (SQLException e){
                 e.printStackTrace();
@@ -64,6 +65,6 @@ public class SQLServerDAORoom extends AbstractRoomDAO{
                 closeConnection(connection);
             }
         }
-
+        return result;
     }
 }
