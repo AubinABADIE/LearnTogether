@@ -5,7 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class SQLServerDAORoom extends RoomDAO{
+public class SQLServerDAORoom extends AbstractRoomDAO{
 
     public SQLServerDAORoom(){
 
