@@ -101,6 +101,8 @@
         
         <li><a href='7b8058dc73b6c56d0414f346905120fd.html'><span class='node-icon staruml-icon icon-UMLClass'></span>MySQLFactory</a></li>
         
+        <li><a href='7b8058dc73b6c56d0414f346905120fd.html'><span class='node-icon staruml-icon icon-UMLClass'></span>MySQLFactory</a></li>
+        
         <li><a href='cb8629a3f87b5261a8444893f52a5547.html'><span class='node-icon staruml-icon icon-UMLClass'></span>DAO</a></li>
         
         <li><a href='211671efb80261927a5d10a824147efb.html'><span class='node-icon staruml-icon icon-UMLClass'></span>SQLServerFactory</a></li>
@@ -200,6 +202,36 @@
           <tr>
             <td>public</td>
             <td><a href="40ff7b028edb36d4006e5bd68aa7c12c.html">createDAORoom()</a></td>
+            <td></td>
+          </tr>
+          
+          <tr>
+            <td>public</td>
+            <td><a href="b8b7d37b2cd15ba0ab8010a8bc32552c.html">createDAOCourse()</a></td>
+            <td></td>
+          </tr>
+          
+          <tr>
+            <td>public</td>
+            <td><a href="bb74f8b14c19d38a47346d3b79934de1.html">createDAOTeacher()</a></td>
+            <td></td>
+          </tr>
+          
+          <tr>
+            <td>public</td>
+            <td><a href="e1d2e97fe20471181be49f3c1e0d1d0b.html">createDAOStaff()</a></td>
+            <td></td>
+          </tr>
+          
+          <tr>
+            <td>public</td>
+            <td><a href="4439d41694f1b398465a30a3d005bffc.html">createSQLPromotion()</a></td>
+            <td></td>
+          </tr>
+          
+          <tr>
+            <td>public</td>
+            <td><a href="b965a1e66947c5a57462a4ceccf8b8ae.html">createSQLEvent()</a></td>
             <td></td>
           </tr>
           
@@ -429,9 +461,17 @@
         
         <li><a href='46bfe62991a9bb1adc7ae3c2f3c6cc28.html'><span class='node-icon staruml-icon icon-UMLAssociation'></span>(AbstractDAOFactory—DAOConversation)</a></li>
         
-        <li><a href='8bd080da8c9a48f50a50f983fd4e838c.html'><span class='node-icon staruml-icon icon-UMLAssociation'></span>(AbstractDAOFactory—DAORoom)</a></li>
+        <li><a href='8bd080da8c9a48f50a50f983fd4e838c.html'><span class='node-icon staruml-icon icon-UMLAssociation'></span>(AbstractDAOFactory—DAOEvent)</a></li>
         
         <li><a href='0c43321d8165527994f4fd7a16cb2cbf.html'><span class='node-icon staruml-icon icon-UMLAssociation'></span>(AbstractDAOFactory—DAOMessage)</a></li>
+        
+        <li><a href='0c9e52c254e5fd942d68b0c49e0ff1d0.html'><span class='node-icon staruml-icon icon-UMLAssociation'></span>(AbstractDAOFactory—DAOCourse)</a></li>
+        
+        <li><a href='d5cbda18f5b6c35f114525a5e3222181.html'><span class='node-icon staruml-icon icon-UMLAssociation'></span>(AbstractDAOFactory—DAOStaff)</a></li>
+        
+        <li><a href='5177c141d216911c59ed8743b14ac57f.html'><span class='node-icon staruml-icon icon-UMLAssociation'></span>(AbstractDAOFactory—DAOTeacher)</a></li>
+        
+        <li><a href='2f256e3c55137168f0f1494b4445f9cd.html'><span class='node-icon staruml-icon icon-UMLAssociation'></span>(AbstractDAOFactory—DAOPromo)</a></li>
         
         <li><a href='7f1c34f38e4c767bf106cf300710da2c.html'><span class='node-icon staruml-icon icon-UMLGeneralization'></span>(MySQLFactory→AbstractDAOFactory)</a></li>
         
@@ -443,6 +483,8 @@
         
         <li><a href='300e8e46baf0c3f5845d190c9eb06f28.html'><span class='node-icon staruml-icon icon-UMLGeneralization'></span>(MySQLFactory→AbstractDAOFactory)</a></li>
         
+        <li><a href='e0c33c905a7c927b514dbde21d0128ed.html'><span class='node-icon staruml-icon icon-UMLGeneralization'></span>(MySQLFactory→AbstractDAOFactory)</a></li>
+        
         <li><a href='fc5895ba00f4834b06ccbe543911918c.html'><span class='node-icon staruml-icon icon-UMLGeneralization'></span>(DAO→AbstractDAOFactory)</a></li>
         
         <li><a href='17f9fc464924397f81a4fac0f9dcdc43.html'><span class='node-icon staruml-icon icon-UMLGeneralization'></span>(SQLServerFactory→AbstractDAOFactory)</a></li>
@@ -452,6 +494,8 @@
         <li><a href='4f4bacac234fe72be4688d58214035fd.html'><span class='node-icon staruml-icon icon-UMLAssociation'></span>(ControlerServer—AbstractDAOFactory)</a></li>
         
         <li><a href='fcad8aaf826d66f02697826506ae4df0.html'><span class='node-icon staruml-icon icon-UMLAssociation'></span>(GeneralServer—AbstractDAOFactory)</a></li>
+        
+        <li><a href='b0a836f74ef979e70a72d52bae41915f.html'><span class='node-icon staruml-icon icon-UMLAssociation'></span>(GeneralServer—AbstractDAOFactory)</a></li>
         
     </ul>
 </section>
@@ -476,9 +520,17 @@
         
         <li><a href='46bfe62991a9bb1adc7ae3c2f3c6cc28.html'><span class='node-icon staruml-icon icon-UMLAssociation'></span>(AbstractDAOFactory—DAOConversation)</a></li>
         
-        <li><a href='8bd080da8c9a48f50a50f983fd4e838c.html'><span class='node-icon staruml-icon icon-UMLAssociation'></span>(AbstractDAOFactory—DAORoom)</a></li>
+        <li><a href='8bd080da8c9a48f50a50f983fd4e838c.html'><span class='node-icon staruml-icon icon-UMLAssociation'></span>(AbstractDAOFactory—DAOEvent)</a></li>
         
         <li><a href='0c43321d8165527994f4fd7a16cb2cbf.html'><span class='node-icon staruml-icon icon-UMLAssociation'></span>(AbstractDAOFactory—DAOMessage)</a></li>
+        
+        <li><a href='0c9e52c254e5fd942d68b0c49e0ff1d0.html'><span class='node-icon staruml-icon icon-UMLAssociation'></span>(AbstractDAOFactory—DAOCourse)</a></li>
+        
+        <li><a href='d5cbda18f5b6c35f114525a5e3222181.html'><span class='node-icon staruml-icon icon-UMLAssociation'></span>(AbstractDAOFactory—DAOStaff)</a></li>
+        
+        <li><a href='5177c141d216911c59ed8743b14ac57f.html'><span class='node-icon staruml-icon icon-UMLAssociation'></span>(AbstractDAOFactory—DAOTeacher)</a></li>
+        
+        <li><a href='2f256e3c55137168f0f1494b4445f9cd.html'><span class='node-icon staruml-icon icon-UMLAssociation'></span>(AbstractDAOFactory—DAOPromo)</a></li>
         
     </ul>
 </section>

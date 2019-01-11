@@ -186,7 +186,7 @@
           
           <tr>
             <td>public</td>
-            <td><a href="0625810b9cc22d2a3ac8c169086cce2d.html">handleQuitConversation(userDeleted: User, conversation: Conversation)</a></td>
+            <td><a href="0625810b9cc22d2a3ac8c169086cce2d.html">quitConversation(userDeleted: User, conversation: Conversation)</a></td>
             <td></td>
           </tr>
           
@@ -210,7 +210,13 @@
           
           <tr>
             <td>public</td>
-            <td><a href="6c2b1e22fd73077debba795757422a6b.html">DeleteConversation(conversation: Conversation)</a></td>
+            <td><a href="6c2b1e22fd73077debba795757422a6b.html">deleteConversation(conversation: Conversation)</a></td>
+            <td></td>
+          </tr>
+          
+          <tr>
+            <td>public</td>
+            <td><a href="509314cd6e1a684ef4c93e594cce089a.html">updateConversation(Name: String, users: List&lt;User&gt;, messages: List&lt;Message&gt;)</a></td>
             <td></td>
           </tr>
           
@@ -431,7 +437,11 @@
         
         <li><a href='61de5a1cd942563be5df35a907747846.html'><span class='node-icon staruml-icon icon-UMLAssociation'></span>(Conversation—ChatServer)</a></li>
         
-        <li><a href='c44d4f0580458f8a39e47556a50aa68d.html'><span class='node-icon staruml-icon icon-UMLAssociation'></span>(Conversation—ChatClient)</a></li>
+        <li><a href='c44d4f0580458f8a39e47556a50aa68d.html'><span class='node-icon staruml-icon icon-UMLAssociation'></span>(Conversation—CoreClient)</a></li>
+        
+        <li><a href='2258233af687a5bf0f245d019f1523d9.html'><span class='node-icon staruml-icon icon-UMLAssociation'></span>(Conversation—CoreClient)</a></li>
+        
+        <li><a href='e87533171546e8567bc4136f12e65ccc.html'><span class='node-icon staruml-icon icon-UMLAssociation'></span>(CoreClient—Conversation)</a></li>
         
     </ul>
 </section>
@@ -448,7 +458,9 @@
         
         <li><a href='61de5a1cd942563be5df35a907747846.html'><span class='node-icon staruml-icon icon-UMLAssociation'></span>(Conversation—ChatServer)</a></li>
         
-        <li><a href='c44d4f0580458f8a39e47556a50aa68d.html'><span class='node-icon staruml-icon icon-UMLAssociation'></span>(Conversation—ChatClient)</a></li>
+        <li><a href='c44d4f0580458f8a39e47556a50aa68d.html'><span class='node-icon staruml-icon icon-UMLAssociation'></span>(Conversation—CoreClient)</a></li>
+        
+        <li><a href='2258233af687a5bf0f245d019f1523d9.html'><span class='node-icon staruml-icon icon-UMLAssociation'></span>(Conversation—CoreClient)</a></li>
         
     </ul>
 </section>

@@ -159,36 +159,22 @@
           
           <tr>
             <td>private</td>
-            <td><a href="eab982a87c814cfe36a28314ec23d447.html">grades</a></td>
-            <td>List&lt;float&gt;</td>
-            <td></td>
-          </tr>
-          
-          <tr>
-            <td>private</td>
-            <td><a href="cf783c835d4f56678c48ae8cb97dd83f.html">students</a></td>
-            <td>List&lt;Student&gt;</td>
-            <td></td>
-          </tr>
-          
-          <tr>
-            <td>private</td>
-            <td><a href="6a6ab137dbec6da82ea659b40ee329f3.html">course</a></td>
-            <td><a href='2067d052ecef2f4833727ee6ad8731ef.html'>Course</a></td>
-            <td></td>
-          </tr>
-          
-          <tr>
-            <td>private</td>
-            <td><a href="1a26e14121c0b27e961d8c1c7cb50181.html">coeff</a></td>
+            <td><a href="eab982a87c814cfe36a28314ec23d447.html">grade</a></td>
             <td>float</td>
             <td></td>
           </tr>
           
           <tr>
+            <td>public</td>
+            <td><a href="09ed48022bbfeb77b3dc97aaf669e232.html">idStudent</a></td>
+            <td>int</td>
+            <td></td>
+          </tr>
+          
+          <tr>
             <td>private</td>
-            <td><a href="78515d416e4d4ef561d8f926b81c1f07.html">teacher</a></td>
-            <td><a href='0f2b5feb19d799db93546d6fb34e5ee2.html'>Teacher</a></td>
+            <td><a href="6a6ab137dbec6da82ea659b40ee329f3.html">idCourse</a></td>
+            <td>int</td>
             <td></td>
           </tr>
           
@@ -216,25 +202,19 @@
           
           <tr>
             <td>public</td>
-            <td><a href="d63c42b836ecce1130bf6514ec1711d4.html">updateGrade(description: String, grades: List&lt;float&gt;, students: List&lt;Student&gt;, course: Course, coeff: float, teacher: Teacher)</a></td>
+            <td><a href="d63c42b836ecce1130bf6514ec1711d4.html">updateGrade(description: String, grade: float, idStudent: int, idCourse: int)</a></td>
             <td></td>
           </tr>
           
           <tr>
             <td>public</td>
-            <td><a href="c0dd9dd39383587dca5ce8e2e01852a0.html">deleteGrade(grade: Grade, teacher: Teacher)</a></td>
+            <td><a href="c0dd9dd39383587dca5ce8e2e01852a0.html">deleteGrade(grade: Grade)</a></td>
             <td></td>
           </tr>
           
           <tr>
             <td>public</td>
-            <td><a href="0240aae7e62a2e2b52594cf4660c0830.html">readGrade(id : int)</a></td>
-            <td></td>
-          </tr>
-          
-          <tr>
-            <td>public</td>
-            <td><a href="c43e0157aa0978356b713bd7ff1f4ed4.html">readGrade(grade: Grade)</a></td>
+            <td><a href="0240aae7e62a2e2b52594cf4660c0830.html">readGrade(grade: Grade)</a></td>
             <td></td>
           </tr>
           
@@ -474,6 +454,8 @@
         
         <li><a href='8c6e0eb5e955cf80733d548d01d83f24.html'><span class='node-icon staruml-icon icon-UMLAssociation'></span>(Grade—GradesUI)</a></li>
         
+        <li><a href='2142a5097570ebc63b236de0400290b8.html'><span class='node-icon staruml-icon icon-UMLAssociation'></span>(Grade—CoreClient)</a></li>
+        
         <li><a href='fff77199694bb1867a03d8bb04dcf91e.html'><span class='node-icon staruml-icon icon-UMLAssociation'></span>(StudentUI—Grade)</a></li>
         
         <li><a href='5c03889d732559a125dfd7b6285cece5.html'><span class='node-icon staruml-icon icon-UMLAssociation'></span>(TeacherUI—Grade)</a></li>
@@ -501,15 +483,17 @@
         
         <li><a href='cefee62bed3e5a23c3ced87e1f0f0335.html'><span class='node-icon staruml-icon icon-UMLAssociation'></span>(Grade—ControlerServer)</a></li>
         
-        <li><a href='2363a7bd63cca335a304463d28675d12.html'><span class='node-icon staruml-icon icon-UMLAssociation'></span>(ChatClient—DisplayIF)</a></li>
+        <li><a href='2363a7bd63cca335a304463d28675d12.html'><span class='node-icon staruml-icon icon-UMLAssociation'></span>(CoreClient—DisplayIF)</a></li>
         
         <li><a href='6ea7b2c8113fa93f138cd9a6052a7617.html'><span class='node-icon staruml-icon icon-UMLAssociation'></span>(Grade—ControlerServer)</a></li>
         
         <li><a href='8c6e0eb5e955cf80733d548d01d83f24.html'><span class='node-icon staruml-icon icon-UMLAssociation'></span>(Grade—GradesUI)</a></li>
         
-        <li><a href='bfbbbe91c8da78eb2a79ff3c4dcb4c01.html'><span class='node-icon staruml-icon icon-UMLInterfaceRealization'></span>(ChatClient→Observer)</a></li>
+        <li><a href='bfbbbe91c8da78eb2a79ff3c4dcb4c01.html'><span class='node-icon staruml-icon icon-UMLInterfaceRealization'></span>(CoreClient→Observer)</a></li>
         
-        <li><a href='88407d0a4eabe62a56dfa505a9dfe63d.html'><span class='node-icon staruml-icon icon-UMLAssociation'></span>(ChatClient—ObservableClient)</a></li>
+        <li><a href='88407d0a4eabe62a56dfa505a9dfe63d.html'><span class='node-icon staruml-icon icon-UMLAssociation'></span>(CoreClient—ObservableClient)</a></li>
+        
+        <li><a href='2142a5097570ebc63b236de0400290b8.html'><span class='node-icon staruml-icon icon-UMLAssociation'></span>(Grade—CoreClient)</a></li>
         
     </ul>
 </section>

@@ -26,8 +26,7 @@ public class StartUI extends UI {
     private SuperAdminUI superAdminUI;
     private TeacherUI teacherUI;
 
-    //Business logic
-    private CoreClient client;
+
 
     public static void main(String[] args) {
         Application.launch(StartUI.class, args);

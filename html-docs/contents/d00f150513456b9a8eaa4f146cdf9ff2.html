@@ -2,7 +2,7 @@
 <html>
   <head>
     <meta charset="UTF-8">
-    <title>ChatClient</title>
+    <title>CoreClient</title>
     <link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700,300italic,400italic,700italic|Source+Code+Pro:300,400,700' rel='stylesheet' type='text/css'>
 <link rel="stylesheet" href="../assets/css/bootstrap.css">
 <link rel="stylesheet" href="../assets/css/jquery.bonsai.css">
@@ -18,7 +18,7 @@
 
       <!-- Name Title -->
 
-      <h1>ChatClient</h1>
+      <h1>CoreClient</h1>
 
       <!-- Type and Stereotype -->
 
@@ -43,7 +43,7 @@
           <span class="label label-info"><a href='eaa9c4194dd3d0ade8911ed8153e8f37.html'><span class='node-icon staruml-icon icon-UMLModel'></span>Model</a></span>
         
           <span>::</span>
-          <span class="label label-info"><a href='d00f150513456b9a8eaa4f146cdf9ff2.html'><span class='node-icon staruml-icon icon-UMLClass'></span>ChatClient</a></span>
+          <span class="label label-info"><a href='d00f150513456b9a8eaa4f146cdf9ff2.html'><span class='node-icon staruml-icon icon-UMLClass'></span>CoreClient</a></span>
         
       </section>
 
@@ -94,6 +94,8 @@
     <ul class="nav nav-list">
         
         <li><a href='c2e5dd58e0db3de406cbf4b6ec78b999.html'><span class='node-icon staruml-icon icon-UMLInterface'></span>Observer</a></li>
+        
+        <li><a href='618728177d2b408fa7c17c495744f089.html'><span class='node-icon staruml-icon icon-UMLInterface'></span>ClientIF</a></li>
         
     </ul>
 </section>
@@ -161,31 +163,193 @@
           
           <tr>
             <td>public</td>
-            <td><a href="2a8b71d1db4ab5d5149403bb8665696e.html">handleCreateConversation(name: String, users: List&lt;User&gt;, messages: List&lt;Message&gt;)</a></td>
+            <td><a href="24dae89a532804dabb2950fa8b06565e.html">handleCreateCourse(name: String, desc: String, nbHour: float, promotion: Promotion)</a></td>
             <td></td>
           </tr>
           
           <tr>
             <td>public</td>
-            <td><a href="14285f7afa3bd9d096f703f7859bd554.html">handleQuitConversation(userDeleted: User, conversationID: int)</a></td>
+            <td><a href="c32d1a513d03bf0a68a4baa1ee928cc8.html">handleUpdateCourse(name: String, desc: String, nbHour: float, promotion: Promotion)</a></td>
             <td></td>
           </tr>
           
           <tr>
             <td>public</td>
-            <td><a href="dd9a15476e19bb43728c790fb74b2e2b.html">handleCreateMessage(sender: User, date: Date, message: String, conversation: Conversation)</a></td>
+            <td><a href="e8e23045c4bcb7861ab331af44a7b86c.html">handleDeleteCourse(id: int)</a></td>
             <td></td>
           </tr>
           
           <tr>
             <td>public</td>
-            <td><a href="0bc6579c83f17b2b024ae680dd4caabf.html">readConversation(conversation: Conversation)</a></td>
+            <td><a href="c793f19e9db914053d317d2ed13ac96e.html">handleReadCourse(id: int)</a></td>
             <td></td>
           </tr>
           
           <tr>
             <td>public</td>
-            <td><a href="dde9a8a77f6ff85c0ea8cefe44521208.html">handleReadConversation(id: int)</a></td>
+            <td><a href="e72ad71a3687b5b048392baf3d16a8dd.html">handleCreateAdmin(user: User)</a></td>
+            <td></td>
+          </tr>
+          
+          <tr>
+            <td>public</td>
+            <td><a href="4b35cc4682a010ccca41bac47c7b79b0.html">handlerUpdateAdmin(user: User)</a></td>
+            <td></td>
+          </tr>
+          
+          <tr>
+            <td>public</td>
+            <td><a href="1cbb0be1303043de1c81874492201fd4.html">handleDeleteAdmin(user: User)</a></td>
+            <td></td>
+          </tr>
+          
+          <tr>
+            <td>public</td>
+            <td><a href="f42461749877643b510b468c5eff894f.html">handleCreateGrade(description: String, grade: float, idStudent: int, idCourse: int)</a></td>
+            <td></td>
+          </tr>
+          
+          <tr>
+            <td>public</td>
+            <td><a href="eb7fc24277f32570475e5ee255ebfc3e.html">handleUpdateGrade(description: String, grade: float, idStudent: int, idCourse: int)</a></td>
+            <td></td>
+          </tr>
+          
+          <tr>
+            <td>public</td>
+            <td><a href="b59474a6493ef308e1a33029979754df.html">handleDeleteGrade(grade: Grade)</a></td>
+            <td></td>
+          </tr>
+          
+          <tr>
+            <td>public</td>
+            <td><a href="47c870a9d657b232fd8e076f3d0b9a2a.html">handleReadGrade(id: int)</a></td>
+            <td></td>
+          </tr>
+          
+          <tr>
+            <td>public</td>
+            <td><a href="4baff5508eeba917327198795bb87ef5.html">handleCreateConversation(name: String, users: List&lt;User&gt;, messages: List&lt;Message&gt;)</a></td>
+            <td></td>
+          </tr>
+          
+          <tr>
+            <td>public</td>
+            <td><a href="1e32404bb637ac876a0a6c0db70ac754.html">handleQuitConversation(userDeleted: User, conversation: Conversation)</a></td>
+            <td></td>
+          </tr>
+          
+          <tr>
+            <td>public</td>
+            <td><a href="e177d1998dadd9302082615a96adf4cd.html">handleReadConversation(conv: Conversation)</a></td>
+            <td></td>
+          </tr>
+          
+          <tr>
+            <td>public</td>
+            <td><a href="782fe512d88bcb589043cfd11d7d29ae.html">handleCreateMessage(sender: User, date: Date, message: String, conversation: Conversation)</a></td>
+            <td></td>
+          </tr>
+          
+          <tr>
+            <td>public</td>
+            <td><a href="07e63f9e8cc9414f31e17b4011f711aa.html">handleDeleteConversation(id: int)</a></td>
+            <td></td>
+          </tr>
+          
+          <tr>
+            <td>public</td>
+            <td><a href="98ea50c3f365d9862947b34851337636.html">handleAddMembers(conv: Conversation, member: List&lt;User&gt;)</a></td>
+            <td></td>
+          </tr>
+          
+          <tr>
+            <td>public</td>
+            <td><a href="a50041c180f7383263e1cc7fee439c46.html">handleUpdateConversation(Name: String, users: List&lt;User&gt;, messages: List&lt;Message&gt;)</a></td>
+            <td></td>
+          </tr>
+          
+          <tr>
+            <td>public</td>
+            <td><a href="fdc1160861da7c7cbc0eb8314bcc01ee.html">handleUpdatePhoto(Photo: File)</a></td>
+            <td></td>
+          </tr>
+          
+          <tr>
+            <td>public</td>
+            <td><a href="49b0811d3f7be1fbde6d4a394be0a2ce.html">handleLogin(login: String, password: String)</a></td>
+            <td></td>
+          </tr>
+          
+          <tr>
+            <td>public</td>
+            <td><a href="8aea6d7c582572aea50dc35bc020f24f.html">handleCreatePromo(name: String, year: Date, teacher: Teacher, dep: Department)</a></td>
+            <td></td>
+          </tr>
+          
+          <tr>
+            <td>public</td>
+            <td><a href="06509233e678d67606a489d53cf2f2f3.html">handleUpdatePromo(name: String, id: int, year: Date, teacher: Teacher, dep: Department)</a></td>
+            <td></td>
+          </tr>
+          
+          <tr>
+            <td>public</td>
+            <td><a href="d80dfe4f84669acccc680c1d0d82907c.html">handleDeletePromo(id: int)</a></td>
+            <td></td>
+          </tr>
+          
+          <tr>
+            <td>public</td>
+            <td><a href="2021ff37be49c1652df4063a0eea66f8.html">handleCreateRoom(name: String, building; String, computer: boolean, proj: boolean, desc: String, cap: int)</a></td>
+            <td></td>
+          </tr>
+          
+          <tr>
+            <td>public</td>
+            <td><a href="cae4aa727b73b3e3130f576a7e10ed78.html">handleUpdateRoom(name: String, building; String, computer: boolean, proj: boolean, desc: String, cap: int)</a></td>
+            <td></td>
+          </tr>
+          
+          <tr>
+            <td>public</td>
+            <td><a href="f5bf14655895131ea9a72defeaca2b6d.html">handleDeleteRoom(id, donatingUser)</a></td>
+            <td></td>
+          </tr>
+          
+          <tr>
+            <td>public</td>
+            <td><a href="a2748d160859a900b87edf724c210516.html">handleCreateEvent(dateTime: DateTime, teacher: Teacher, course: Course, room: Room, class: Class, duration: float)</a></td>
+            <td></td>
+          </tr>
+          
+          <tr>
+            <td>public</td>
+            <td><a href="bcd207f9b10611e63aae4487808184c9.html">handleUpdateEvent(dateTime: DateTime, teacher: Teacher, course: Course, room: Room, class: Class, duration: float)</a></td>
+            <td></td>
+          </tr>
+          
+          <tr>
+            <td>public</td>
+            <td><a href="2a8a6e49dcea7941f22ce2c1f5ed14c7.html">handleDeleteEvent(id, donatingUser)</a></td>
+            <td></td>
+          </tr>
+          
+          <tr>
+            <td>public</td>
+            <td><a href="cc14f0fd0a8e4330f0a133097e4fdd6b.html">setFirstPassword(login: String, password: String)</a></td>
+            <td></td>
+          </tr>
+          
+          <tr>
+            <td>public</td>
+            <td><a href="e1a4435a8844a11fde734da8805387b7.html">handleAnswerLogin(loginString: String)</a></td>
+            <td></td>
+          </tr>
+          
+          <tr>
+            <td>public</td>
+            <td><a href="7eab60fcd82840bf60b6d5f5be462036.html">handleFirstConnAnswer(firstConnString: String)</a></td>
             <td></td>
           </tr>
           
@@ -289,7 +453,7 @@
     
     <tr>
         <td>name</td>
-        <td>ChatClient</td>
+        <td>CoreClient</td>
     </tr>
     
     
@@ -387,6 +551,8 @@
         
         <li><a href='c2e5dd58e0db3de406cbf4b6ec78b999.html'><span class='node-icon staruml-icon icon-UMLInterface'></span>Observer</a></li>
         
+        <li><a href='618728177d2b408fa7c17c495744f089.html'><span class='node-icon staruml-icon icon-UMLInterface'></span>ClientIF</a></li>
+        
     </ul>
 </section>
 
@@ -405,21 +571,97 @@
     <h3>Relationships</h3>
     <ul class="nav nav-list">
         
-        <li><a href='c7f07031a8f9a23f6ab2ec7555644f83.html'><span class='node-icon staruml-icon icon-UMLAssociation'></span>(Student—ChatClient)</a></li>
+        <li><a href='313ba27a4a5c0241303103a8312c8981.html'><span class='node-icon staruml-icon icon-UMLAssociation'></span>(User—CoreClient)</a></li>
         
-        <li><a href='c44d4f0580458f8a39e47556a50aa68d.html'><span class='node-icon staruml-icon icon-UMLAssociation'></span>(Conversation—ChatClient)</a></li>
+        <li><a href='e76b2591dfa15686972e81c5d2535534.html'><span class='node-icon staruml-icon icon-UMLAssociation'></span>(User—CoreClient)</a></li>
         
-        <li><a href='2363a7bd63cca335a304463d28675d12.html'><span class='node-icon staruml-icon icon-UMLAssociation'></span>(ChatClient—DisplayIF)</a></li>
+        <li><a href='c7f07031a8f9a23f6ab2ec7555644f83.html'><span class='node-icon staruml-icon icon-UMLAssociation'></span>(Student—CoreClient)</a></li>
         
-        <li><a href='bfbbbe91c8da78eb2a79ff3c4dcb4c01.html'><span class='node-icon staruml-icon icon-UMLInterfaceRealization'></span>(ChatClient→Observer)</a></li>
+        <li><a href='90526c5b82bee2cdae3a5430ff1a2506.html'><span class='node-icon staruml-icon icon-UMLAssociation'></span>(SuperAdministrator—CoreClient)</a></li>
         
-        <li><a href='88407d0a4eabe62a56dfa505a9dfe63d.html'><span class='node-icon staruml-icon icon-UMLAssociation'></span>(ChatClient—ObservableClient)</a></li>
+        <li><a href='bdc9b9257dd1416871cae9ab5a9b67a4.html'><span class='node-icon staruml-icon icon-UMLAssociation'></span>(Department—CoreClient)</a></li>
         
-        <li><a href='a75f24a3bbf11584b090b245a65ce4df.html'><span class='node-icon staruml-icon icon-UMLAssociation'></span>(StudentUI—ChatClient)</a></li>
+        <li><a href='c255d79983653031a70f85a6595c4c2d.html'><span class='node-icon staruml-icon icon-UMLAssociation'></span>(Promotion—CoreClient)</a></li>
         
-        <li><a href='c7ec81eb131ad7e27b89b2863f4d5bef.html'><span class='node-icon staruml-icon icon-UMLAssociation'></span>(ConsoleClient—ChatClient)</a></li>
+        <li><a href='16a0d5ce9026cc868e618cbf7e6705b1.html'><span class='node-icon staruml-icon icon-UMLAssociation'></span>(Class—CoreClient)</a></li>
         
-        <li><a href='f9ffb09a0da995667a6b7e687f2f9715.html'><span class='node-icon staruml-icon icon-UMLAssociation'></span>(ChatClient—chatIF)</a></li>
+        <li><a href='eb5948c0a585a202bacccd8b045c3f21.html'><span class='node-icon staruml-icon icon-UMLAssociation'></span>(Room—CoreClient)</a></li>
+        
+        <li><a href='ff0a307a95f152cbd0666da3c1865c53.html'><span class='node-icon staruml-icon icon-UMLAssociation'></span>(Course—CoreClient)</a></li>
+        
+        <li><a href='584d802425f06438c42b436c555e5f0c.html'><span class='node-icon staruml-icon icon-UMLAssociation'></span>(Event—CoreClient)</a></li>
+        
+        <li><a href='c44d4f0580458f8a39e47556a50aa68d.html'><span class='node-icon staruml-icon icon-UMLAssociation'></span>(Conversation—CoreClient)</a></li>
+        
+        <li><a href='2258233af687a5bf0f245d019f1523d9.html'><span class='node-icon staruml-icon icon-UMLAssociation'></span>(Conversation—CoreClient)</a></li>
+        
+        <li><a href='713e593027c110af35d1f88bead875a1.html'><span class='node-icon staruml-icon icon-UMLAssociation'></span>(Record—CoreClient)</a></li>
+        
+        <li><a href='2363a7bd63cca335a304463d28675d12.html'><span class='node-icon staruml-icon icon-UMLAssociation'></span>(CoreClient—DisplayIF)</a></li>
+        
+        <li><a href='bfbbbe91c8da78eb2a79ff3c4dcb4c01.html'><span class='node-icon staruml-icon icon-UMLInterfaceRealization'></span>(CoreClient→Observer)</a></li>
+        
+        <li><a href='88407d0a4eabe62a56dfa505a9dfe63d.html'><span class='node-icon staruml-icon icon-UMLAssociation'></span>(CoreClient—ObservableClient)</a></li>
+        
+        <li><a href='2142a5097570ebc63b236de0400290b8.html'><span class='node-icon staruml-icon icon-UMLAssociation'></span>(Grade—CoreClient)</a></li>
+        
+        <li><a href='a75f24a3bbf11584b090b245a65ce4df.html'><span class='node-icon staruml-icon icon-UMLAssociation'></span>(StudentUI—CoreClient)</a></li>
+        
+        <li><a href='b5ce9c4660e7341ec805155a2ee69b6a.html'><span class='node-icon staruml-icon icon-UMLAssociation'></span>(StudentUI—CoreClient)</a></li>
+        
+        <li><a href='b202ccead9fbca08b6d8c3fd67924e2f.html'><span class='node-icon staruml-icon icon-UMLAssociation'></span>(StudentUI—CoreClient)</a></li>
+        
+        <li><a href='b40b971d24b433519523fe816b964e4a.html'><span class='node-icon staruml-icon icon-UMLAssociation'></span>(AdminUI—CoreClient)</a></li>
+        
+        <li><a href='f3781e9149f74b1e0d2401077e0b7220.html'><span class='node-icon staruml-icon icon-UMLAssociation'></span>(TeacherUI—CoreClient)</a></li>
+        
+        <li><a href='c7ec81eb131ad7e27b89b2863f4d5bef.html'><span class='node-icon staruml-icon icon-UMLAssociation'></span>(ConsoleClient—CoreClient)</a></li>
+        
+        <li><a href='f9ffb09a0da995667a6b7e687f2f9715.html'><span class='node-icon staruml-icon icon-UMLAssociation'></span>(CoreClient—chatIF)</a></li>
+        
+        <li><a href='bc08a7c965863dacdc4184bd556cb103.html'><span class='node-icon staruml-icon icon-UMLAssociation'></span>(CoreClient—Room)</a></li>
+        
+        <li><a href='2e3090bd341073561d5d24ba8b92c9f4.html'><span class='node-icon staruml-icon icon-UMLInterfaceRealization'></span>(CoreClient→ClientIF)</a></li>
+        
+        <li><a href='f4ee55277239ed8a96006064cbc8c27d.html'><span class='node-icon staruml-icon icon-UMLAssociation'></span>(CoreClient—Event)</a></li>
+        
+        <li><a href='bf6e13603d3e1d4f84054d7c231a15b5.html'><span class='node-icon staruml-icon icon-UMLAssociation'></span>(CoreClient—User)</a></li>
+        
+        <li><a href='aa43db388c9f852b3ea95285a3c5d46d.html'><span class='node-icon staruml-icon icon-UMLAssociation'></span>(CoreClient—Record)</a></li>
+        
+        <li><a href='ee73b9dfc85a4acd198c42156c760d5e.html'><span class='node-icon staruml-icon icon-UMLAssociation'></span>(CoreClient—DisplayIF)</a></li>
+        
+        <li><a href='e87533171546e8567bc4136f12e65ccc.html'><span class='node-icon staruml-icon icon-UMLAssociation'></span>(CoreClient—Conversation)</a></li>
+        
+        <li><a href='cb18e084a8620420c4326cc11b2ef666.html'><span class='node-icon staruml-icon icon-UMLAssociation'></span>(CoreClient—Course)</a></li>
+        
+        <li><a href='963448c8f9463e3791361a21d55b4205.html'><span class='node-icon staruml-icon icon-UMLAssociation'></span>(CoreClient—SuperAdministrator)</a></li>
+        
+        <li><a href='aec3ba7d8b2caeb572c759d647ce4af2.html'><span class='node-icon staruml-icon icon-UMLAssociation'></span>(CoreClient—AdaptableClient)</a></li>
+        
+        <li><a href='2279ed6a9c3085fc52523f61e5e36e9e.html'><span class='node-icon staruml-icon icon-UMLAssociation'></span>(CoreClient—AdaptableClient)</a></li>
+        
+        <li><a href='0fceff296d8b3cd47640738ec9930e85.html'><span class='node-icon staruml-icon icon-UMLAssociation'></span>(CoreClient—AdaptableClient)</a></li>
+        
+        <li><a href='7e3195c4bcddc489b24df3cc2dfc1ee3.html'><span class='node-icon staruml-icon icon-UMLAssociation'></span>(CoreClient—AdaptableClient)</a></li>
+        
+        <li><a href='6d9757f4926eb178186321e60bcda493.html'><span class='node-icon staruml-icon icon-UMLAssociation'></span>(CoreClient—AdaptableClient)</a></li>
+        
+        <li><a href='cd128a9c8cb82dcc9ec93bae3b8416a9.html'><span class='node-icon staruml-icon icon-UMLAssociation'></span>(CoreClient—AdaptableClient)</a></li>
+        
+        <li><a href='c73f7cb52efffa83f76bfa9cb8b8a473.html'><span class='node-icon staruml-icon icon-UMLAssociation'></span>(CoreClient—AdaptableClient)</a></li>
+        
+        <li><a href='ce0039b350418677ac4e4f96e072e149.html'><span class='node-icon staruml-icon icon-UMLAssociation'></span>(CoreClient—AdaptableClient)</a></li>
+        
+        <li><a href='9324527387fcba9185699da8718d90e2.html'><span class='node-icon staruml-icon icon-UMLAssociation'></span>(CoreClient—AdaptableClient)</a></li>
+        
+        <li><a href='ea1cb89a424589774995a2cd40889fe3.html'><span class='node-icon staruml-icon icon-UMLAssociation'></span>(CoreClient—Promotion)</a></li>
+        
+        <li><a href='4822d3baefd49bdc8d4b3b95cf92c4a3.html'><span class='node-icon staruml-icon icon-UMLAssociation'></span>(CoreClient—CoreClient)</a></li>
+        
+        <li><a href='9252410791f23bf19170649e1c5a9ef2.html'><span class='node-icon staruml-icon icon-UMLAssociation'></span>(CoreClient—Department)</a></li>
+        
+        <li><a href='b6067bb5c51a0ce9385ea699a8ff4426.html'><span class='node-icon staruml-icon icon-UMLAssociation'></span>(CoreClient—Class)</a></li>
         
     </ul>
 </section>
@@ -436,9 +678,53 @@
         
         <li><a href='833f3f18e3bf6c633144760427d923e3.html'><span class='node-icon staruml-icon icon-UMLInterfaceRealization'></span>(User→Observer)</a></li>
         
-        <li><a href='f9ffb09a0da995667a6b7e687f2f9715.html'><span class='node-icon staruml-icon icon-UMLAssociation'></span>(ChatClient—chatIF)</a></li>
+        <li><a href='f9ffb09a0da995667a6b7e687f2f9715.html'><span class='node-icon staruml-icon icon-UMLAssociation'></span>(CoreClient—chatIF)</a></li>
         
         <li><a href='862245d91d4ebc09ff24dec11d05dbca.html'><span class='node-icon staruml-icon icon-UMLAssociation'></span>(User—ObservableClient)</a></li>
+        
+        <li><a href='bc08a7c965863dacdc4184bd556cb103.html'><span class='node-icon staruml-icon icon-UMLAssociation'></span>(CoreClient—Room)</a></li>
+        
+        <li><a href='2e3090bd341073561d5d24ba8b92c9f4.html'><span class='node-icon staruml-icon icon-UMLInterfaceRealization'></span>(CoreClient→ClientIF)</a></li>
+        
+        <li><a href='f4ee55277239ed8a96006064cbc8c27d.html'><span class='node-icon staruml-icon icon-UMLAssociation'></span>(CoreClient—Event)</a></li>
+        
+        <li><a href='bf6e13603d3e1d4f84054d7c231a15b5.html'><span class='node-icon staruml-icon icon-UMLAssociation'></span>(CoreClient—User)</a></li>
+        
+        <li><a href='aa43db388c9f852b3ea95285a3c5d46d.html'><span class='node-icon staruml-icon icon-UMLAssociation'></span>(CoreClient—Record)</a></li>
+        
+        <li><a href='ee73b9dfc85a4acd198c42156c760d5e.html'><span class='node-icon staruml-icon icon-UMLAssociation'></span>(CoreClient—DisplayIF)</a></li>
+        
+        <li><a href='e87533171546e8567bc4136f12e65ccc.html'><span class='node-icon staruml-icon icon-UMLAssociation'></span>(CoreClient—Conversation)</a></li>
+        
+        <li><a href='cb18e084a8620420c4326cc11b2ef666.html'><span class='node-icon staruml-icon icon-UMLAssociation'></span>(CoreClient—Course)</a></li>
+        
+        <li><a href='963448c8f9463e3791361a21d55b4205.html'><span class='node-icon staruml-icon icon-UMLAssociation'></span>(CoreClient—SuperAdministrator)</a></li>
+        
+        <li><a href='aec3ba7d8b2caeb572c759d647ce4af2.html'><span class='node-icon staruml-icon icon-UMLAssociation'></span>(CoreClient—AdaptableClient)</a></li>
+        
+        <li><a href='2279ed6a9c3085fc52523f61e5e36e9e.html'><span class='node-icon staruml-icon icon-UMLAssociation'></span>(CoreClient—AdaptableClient)</a></li>
+        
+        <li><a href='0fceff296d8b3cd47640738ec9930e85.html'><span class='node-icon staruml-icon icon-UMLAssociation'></span>(CoreClient—AdaptableClient)</a></li>
+        
+        <li><a href='7e3195c4bcddc489b24df3cc2dfc1ee3.html'><span class='node-icon staruml-icon icon-UMLAssociation'></span>(CoreClient—AdaptableClient)</a></li>
+        
+        <li><a href='6d9757f4926eb178186321e60bcda493.html'><span class='node-icon staruml-icon icon-UMLAssociation'></span>(CoreClient—AdaptableClient)</a></li>
+        
+        <li><a href='cd128a9c8cb82dcc9ec93bae3b8416a9.html'><span class='node-icon staruml-icon icon-UMLAssociation'></span>(CoreClient—AdaptableClient)</a></li>
+        
+        <li><a href='c73f7cb52efffa83f76bfa9cb8b8a473.html'><span class='node-icon staruml-icon icon-UMLAssociation'></span>(CoreClient—AdaptableClient)</a></li>
+        
+        <li><a href='ce0039b350418677ac4e4f96e072e149.html'><span class='node-icon staruml-icon icon-UMLAssociation'></span>(CoreClient—AdaptableClient)</a></li>
+        
+        <li><a href='9324527387fcba9185699da8718d90e2.html'><span class='node-icon staruml-icon icon-UMLAssociation'></span>(CoreClient—AdaptableClient)</a></li>
+        
+        <li><a href='ea1cb89a424589774995a2cd40889fe3.html'><span class='node-icon staruml-icon icon-UMLAssociation'></span>(CoreClient—Promotion)</a></li>
+        
+        <li><a href='4822d3baefd49bdc8d4b3b95cf92c4a3.html'><span class='node-icon staruml-icon icon-UMLAssociation'></span>(CoreClient—CoreClient)</a></li>
+        
+        <li><a href='9252410791f23bf19170649e1c5a9ef2.html'><span class='node-icon staruml-icon icon-UMLAssociation'></span>(CoreClient—Department)</a></li>
+        
+        <li><a href='b6067bb5c51a0ce9385ea699a8ff4426.html'><span class='node-icon staruml-icon icon-UMLAssociation'></span>(CoreClient—Class)</a></li>
         
     </ul>
 </section>
