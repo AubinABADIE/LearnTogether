@@ -10,7 +10,7 @@ import java.util.*;
 /**
  * 
  */
-public class SQLServerDAORecord {
+public class SQLServerDAORecord extends RecordsDAO{
 
     /**
      * Default constructor
