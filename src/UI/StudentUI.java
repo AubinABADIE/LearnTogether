@@ -119,7 +119,7 @@ public class StudentUI extends UI  {
         chatPane.setCenter(conversations);
         chatPane.setLeft(conversationList);
 
-
+        chatTab.setContent(chatPane);
         return chatTab;
     }
 
