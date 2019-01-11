@@ -3,7 +3,7 @@ package server.DAO;
 /**
  * 
  */
-public class CourseDAO extends DAO {
+public class CourseDAO{
 
     /**
      * Default constructor
