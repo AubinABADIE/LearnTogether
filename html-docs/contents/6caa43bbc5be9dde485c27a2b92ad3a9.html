@@ -157,25 +157,25 @@
           
           <tr>
             <td>public</td>
-            <td><a href="d55571a3048f96acaffdc3a6c91014ba.html">sendToClientLogin(isConnected: boolean, id: String, role: String)</a></td>
+            <td><a href="508e1ffd7c8ada3a96a8c3264c0acfbc.html">handleMessageFromClient(object: Object)</a></td>
             <td></td>
           </tr>
           
           <tr>
             <td>public</td>
-            <td><a href="47e400a42c7fac396680892385687a32.html">handleLoginFromClient(login : String, password : String)</a></td>
+            <td><a href="acf57e86a74d57706067b060d5deea37.html">sendToClient(object: Object)</a></td>
             <td></td>
           </tr>
           
           <tr>
             <td>public</td>
-            <td><a href="b000c64874d4df8b2a6049f5d73973bb.html">checkLogin(user: User)</a></td>
+            <td><a href="d55571a3048f96acaffdc3a6c91014ba.html">sendToClientLogin(isConnected: boolean, id: String, role: String, client: ConnectionToClient)</a></td>
             <td></td>
           </tr>
           
           <tr>
             <td>public</td>
-            <td><a href="acf57e86a74d57706067b060d5deea37.html">sendToClientRecord(object: Object)</a></td>
+            <td><a href="47e400a42c7fac396680892385687a32.html">handleLoginFromClient(login : String, password : String, client: ConnectionToClient)</a></td>
             <td></td>
           </tr>
           
@@ -199,18 +199,6 @@
           
           <tr>
             <td>public</td>
-            <td><a href="d731f42c37896a021e34d2f9779f3d75.html">checkSuccess(message: Boolean)</a></td>
-            <td></td>
-          </tr>
-          
-          <tr>
-            <td>public</td>
-            <td><a href="846c3ad6cf28c473919a0daaf78bbbbd.html">checkRecord(record: Record)</a></td>
-            <td></td>
-          </tr>
-          
-          <tr>
-            <td>public</td>
             <td><a href="851850aa57bbf93054f9d6545e27e925.html">handleCreateProfile(name: String, firstname: String, login: String, birthDate: Date, courses: Course, promotions: Promotion, typeJob: String, studentGroup: Class)</a></td>
             <td></td>
           </tr>
@@ -218,18 +206,6 @@
           <tr>
             <td>public</td>
             <td><a href="f2e56c5dbd239238fb42437f5cc74470.html">handleUpdateProfile(name: String, firstName: String, login: String, birthDate: Date, courses: Course, promotions: Promotion, typeJob: String, studentGroup: Class, picture: file, password: String)</a></td>
-            <td></td>
-          </tr>
-          
-          <tr>
-            <td>public</td>
-            <td><a href="44c9803c4d618d22b28e564f95bf642e.html">sendToClientUser(object : Object)</a></td>
-            <td></td>
-          </tr>
-          
-          <tr>
-            <td>public</td>
-            <td><a href="c53e0b34c40726109c1aa53dd4643ffb.html">checkUser(user: User)</a></td>
             <td></td>
           </tr>
           
@@ -247,49 +223,25 @@
           
           <tr>
             <td>public</td>
-            <td><a href="d66aea772407ee1cb666727018d13eb6.html">handleCreateGradeFromClient(description: String, grades: List&lt;float&gt;, students: List&lt;Student&gt;, course: Course, coeff: float, teacher: Teacher)</a></td>
+            <td><a href="408440f6806bee47572a8736b2414337.html">handleUpdateGradeFromClient(description: String, grade: float, idStudent : int, idCourse: int)</a></td>
             <td></td>
           </tr>
           
           <tr>
             <td>public</td>
-            <td><a href="408440f6806bee47572a8736b2414337.html">handleUpdateGradeFromCLient(description: String, grades: List&lt;float&gt;, students: List&lt;Student&gt;, course: Course, coeff: float, teacher: Teacher)</a></td>
+            <td><a href="d66aea772407ee1cb666727018d13eb6.html">handleCreateGradeFromClient(description: String, grade: float, idStudent: int, idCourse: int)</a></td>
             <td></td>
           </tr>
           
           <tr>
             <td>public</td>
-            <td><a href="2d813cd5b24647bae685c7bc94886ebd.html">handleDeleteGradeFromClient(id: Grade, teacher: Teacher)</a></td>
+            <td><a href="2d813cd5b24647bae685c7bc94886ebd.html">handleDeleteGradeFromClient(id: int)</a></td>
             <td></td>
           </tr>
           
           <tr>
             <td>public</td>
-            <td><a href="c6cbd8e02d5cd61f5842ac529167a2ed.html">handleReadGradeFromClient(id: Grade)</a></td>
-            <td></td>
-          </tr>
-          
-          <tr>
-            <td>public</td>
-            <td><a href="892c176cdc22a241ed9b2c7a85fe8c43.html">checkGrade(grade: Grade)</a></td>
-            <td></td>
-          </tr>
-          
-          <tr>
-            <td>public</td>
-            <td><a href="1c25c7ed24ba54fabc46e51a0940819f.html">sendToClientGrade(object: Object)</a></td>
-            <td></td>
-          </tr>
-          
-          <tr>
-            <td>public</td>
-            <td><a href="508e1ffd7c8ada3a96a8c3264c0acfbc.html">handleMessageFromClient(object: Object)</a></td>
-            <td></td>
-          </tr>
-          
-          <tr>
-            <td>public</td>
-            <td><a href="e8460a3eb68736e31fd8d89f8cd5cd51.html">checkConversation(conversation: Conversation)</a></td>
+            <td><a href="c6cbd8e02d5cd61f5842ac529167a2ed.html">handleReadGradeFromClient(id: int)</a></td>
             <td></td>
           </tr>
           
@@ -313,7 +265,7 @@
           
           <tr>
             <td>public</td>
-            <td><a href="62adbb5596d8d81e724221051b237ade.html">sendToClientConversation(conversation: Conversation)</a></td>
+            <td><a href="87e9235fadb6af6240ec7fdc5cf1c7a4.html">handleUpdateConversation(name: String, users: List&lt;User&gt;, messages: List&lt;Message&gt;)</a></td>
             <td></td>
           </tr>
           
@@ -325,37 +277,121 @@
           
           <tr>
             <td>public</td>
-            <td><a href="0940afc4915f05681bea47ba259fc12b.html">sendToClientMessage(message: String)</a></td>
+            <td><a href="b0f19eaee8191d4725a5813f1d6ae29e.html">handleAddMembers(conv: Conversation, member: List&lt;User&gt;)</a></td>
             <td></td>
           </tr>
           
           <tr>
             <td>public</td>
-            <td><a href="39f39b208f52c8aaa27e042043122d67.html">checkRoom(id: Room)</a></td>
+            <td><a href="8eb11be6146eb094ad2c19d109350049.html">handleDeleteConversation(id: int)</a></td>
             <td></td>
           </tr>
           
           <tr>
             <td>public</td>
-            <td><a href="a28989e8c8a72d27969f0612d7866b45.html">sendToClientRoom(id: Room)</a></td>
+            <td><a href="4f3d98912dbc2d8a786a849d110bcaa6.html">handleCreateRoomFromClient(name: String, building; String, computer: boolean, proj: boolean, desc: String, cap: int)</a></td>
             <td></td>
           </tr>
           
           <tr>
             <td>public</td>
-            <td><a href="4f3d98912dbc2d8a786a849d110bcaa6.html">createRoom(name: String, building; String, computer: boolean, proj: boolean, desc: String, cap: int)</a></td>
+            <td><a href="b3c5003ee1dd19cd11bc3303fd7e162a.html">handleUpdateRoomFromClient(name: String, building; String, computer: boolean, proj: boolean, desc: String, cap: int)</a></td>
             <td></td>
           </tr>
           
           <tr>
             <td>public</td>
-            <td><a href="b3c5003ee1dd19cd11bc3303fd7e162a.html">updateRoom(name: String, building; String, computer: boolean, proj: boolean, desc: String, cap: int)</a></td>
+            <td><a href="ba74df205fb287ceaa596a026538da42.html">handleDeleteRoomFromClient(id: Room)</a></td>
             <td></td>
           </tr>
           
           <tr>
             <td>public</td>
-            <td><a href="ba74df205fb287ceaa596a026538da42.html">deleteRoom(id: Room)</a></td>
+            <td><a href="4dd1ca94f00912845274f3396015b0cc.html">handleCreateCourse(name: String, desc: String, nbHour: float, promotion: Promotion)</a></td>
+            <td></td>
+          </tr>
+          
+          <tr>
+            <td>public</td>
+            <td><a href="af513a75735a45399c98ddeb647e0cb1.html">handleUpdateCourse(name: String, desc: String, nbHour: float, promotion: Promotion)</a></td>
+            <td></td>
+          </tr>
+          
+          <tr>
+            <td>public</td>
+            <td><a href="0d5cb645f9fa1558e13c30fd4db80308.html">handleDeleteCourse(id: int)</a></td>
+            <td></td>
+          </tr>
+          
+          <tr>
+            <td>public</td>
+            <td><a href="eb988275f43dd31443cec17d64557461.html">handleCreateAdmin(user: User)</a></td>
+            <td></td>
+          </tr>
+          
+          <tr>
+            <td>public</td>
+            <td><a href="32ddfad289f9306ffb910ff6f12e0a7b.html">handleUpdateAdmin(user: User)</a></td>
+            <td></td>
+          </tr>
+          
+          <tr>
+            <td>public</td>
+            <td><a href="29fd817c26385dc19771f84469df5a86.html">handleDeleteAdmin(user: User)</a></td>
+            <td></td>
+          </tr>
+          
+          <tr>
+            <td>public</td>
+            <td><a href="ace47e4ee7eeeee85b66e77948ddee64.html">handleCreatePromoFromClient(name: String, year: Date, teacher: Teacher, dep: Department)</a></td>
+            <td></td>
+          </tr>
+          
+          <tr>
+            <td>public</td>
+            <td><a href="b740725a74ff90e37b28ee1101b234ab.html">handleDeletePromoFromClient(id: int)</a></td>
+            <td></td>
+          </tr>
+          
+          <tr>
+            <td>public</td>
+            <td><a href="fd165cfd125c23273c9aeddc30d7b6c0.html">handleUdatePromoFromClient(name: String, year: Date, teacher: Teacher, dep: Department)</a></td>
+            <td></td>
+          </tr>
+          
+          <tr>
+            <td>public</td>
+            <td><a href="fd097e47885613740e434c7a2d337431.html">handleCreateEventFromClient(dateTime: DateTime, teacher: Teacher, course: Course, room: Room, class: Class, duration: float)</a></td>
+            <td></td>
+          </tr>
+          
+          <tr>
+            <td>public</td>
+            <td><a href="1ac03a4fac628ed9928c7b365867bc45.html">handleUpdateEventFromClient(dateTime: DateTime, teacher: Teacher, course: Course, room: Room, class: Class, duration: float)</a></td>
+            <td></td>
+          </tr>
+          
+          <tr>
+            <td>public</td>
+            <td><a href="a59dd132e9b1cb5e307c6f9db08b4fe4.html">handleDeleteEventFromClient(id: int)</a></td>
+            <td></td>
+          </tr>
+          
+          <tr>
+            <td>public</td>
+            <td><a href="8853e6ff33c68f360a719edd0620c3c2.html">sendToClientFirstConn(hasSucceeded: boolean, client: ConnectionToClient)</a></td>
+            <td></td>
+          </tr>
+          
+          <tr>
+            <td>public</td>
+            <td><a href="c6464f993754a040f06309e057977691.html">handleFirstConnectionFromClient(login: String, password: String, client: ConnectionToClient)</a></td>
+            <td></td>
+          </tr>
+          
+          <tr>
+            <td>public</td>
+            <td><a href="b2ac48884120f669d77ed080227c2218.html">checkLogin(id: int, client: ConnectionToClient)</a></td>
             <td></td>
           </tr>
           
@@ -597,6 +633,10 @@
         
         <li><a href='be2d7a382ca6cb10deb695479d13f180.html'><span class='node-icon staruml-icon icon-UMLAssociation'></span>(GeneralServer—ObservableOriginatorServer)</a></li>
         
+        <li><a href='b0a836f74ef979e70a72d52bae41915f.html'><span class='node-icon staruml-icon icon-UMLAssociation'></span>(GeneralServer—AbstractDAOFactory)</a></li>
+        
+        <li><a href='f2ca77c314a9f71ba1d6a988d9fa0775.html'><span class='node-icon staruml-icon icon-UMLAssociation'></span>(GeneralServer—ObservableOriginatorServer)</a></li>
+        
         <li><a href='de3d7a653730f5fe1ecfb29a8e4b66cc.html'><span class='node-icon staruml-icon icon-UMLAssociation'></span>(ServerUI—GeneralServer)</a></li>
         
     </ul>
@@ -627,6 +667,10 @@
         <li><a href='d33299c87547da5ed3d597e148e4311b.html'><span class='node-icon staruml-icon icon-UMLInterfaceRealization'></span>(GeneralServer→Observer)</a></li>
         
         <li><a href='be2d7a382ca6cb10deb695479d13f180.html'><span class='node-icon staruml-icon icon-UMLAssociation'></span>(GeneralServer—ObservableOriginatorServer)</a></li>
+        
+        <li><a href='b0a836f74ef979e70a72d52bae41915f.html'><span class='node-icon staruml-icon icon-UMLAssociation'></span>(GeneralServer—AbstractDAOFactory)</a></li>
+        
+        <li><a href='f2ca77c314a9f71ba1d6a988d9fa0775.html'><span class='node-icon staruml-icon icon-UMLAssociation'></span>(GeneralServer—ObservableOriginatorServer)</a></li>
         
     </ul>
 </section>
