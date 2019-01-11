@@ -1,5 +1,6 @@
 package UI;
 
+import client.CoreClient;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -23,10 +24,11 @@ import javafx.stage.Stage;
 public class StudentUI extends UI  {
     private Scene principalStudentScene;
 
-    public StudentUI(Stage primaryStage, String login, int id){
+    public StudentUI(Stage primaryStage, String login, int id, CoreClient client){
         this.primaryStage = primaryStage;
         this.login = login;
         this.userID = id;
+        this.client=client;
     }
 
     public Scene getPrincipalStudentScene() {
