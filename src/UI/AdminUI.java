@@ -121,6 +121,7 @@ public class AdminUI extends TeacherUI {
 
         py.setToggleGroup(tp);
         pn.setToggleGroup(tp);
+        tp.selectToggle(py);
 
         RadioButton cy = new RadioButton();
         cy.setText("Yes");
@@ -131,6 +132,7 @@ public class AdminUI extends TeacherUI {
 
         cy.setToggleGroup(tp2);
         cn.setToggleGroup(tp2);
+        tp2.selectToggle(cn);
 
         TextArea descriptionField = new TextArea();
 
@@ -173,28 +175,37 @@ public class AdminUI extends TeacherUI {
         okCreate.setPrefHeight(40);
         okCreate.setDefaultButton(true);
         okCreate.setPrefWidth(100);
-        gridRoom.add(okCreate, 1, 13, 1, 1);
+        gridRoom.add(okCreate, 0, 13, 1, 1);
         gridRoom.setHalignment(okCreate, HPos.RIGHT);
         gridRoom.setMargin(okCreate, new Insets(20, 0,20,0));
 
         Button cancelCreate = new Button("Cancel");
         cancelCreate.setPrefHeight(40);
-        cancelCreate.setDefaultButton(true);
+        cancelCreate.setDefaultButton(false);
         cancelCreate.setPrefWidth(100);
-        gridRoom.add(cancelCreate, 4, 13, 1, 1);
+        gridRoom.add(cancelCreate, 2, 13, 1, 1);
         gridRoom.setHalignment(cancelCreate, HPos.RIGHT);
         gridRoom.setMargin(cancelCreate, new Insets(20, 0,20,0));
 
         okCreate.setOnAction(event -> {
-            if(nameField.getText().isEmpty()) {
+            if (nameField.getText().isEmpty()) {
                 showAlert(Alert.AlertType.ERROR, gridRoom.getScene().getWindow(), "Form Error!", "Please enter room name");
                 return;
             }
-            if(capacityField.getText().isEmpty()) {
+            if (capacityField.getText().isEmpty()) {
                 showAlert(Alert.AlertType.ERROR, gridRoom.getScene().getWindow(), "Form Error!", "Please enter room capacity");
                 return;
             }
-
+            if (buildingField.getText().isEmpty()) {
+                showAlert(Alert.AlertType.ERROR, gridRoom.getScene().getWindow(), "Form Error!", "Please enter room building");
+                return;
+            }
+        });
+        cancelCreate.setOnAction(event -> {
+            nameField.setText("");
+            capacityField.setText("");
+            buildingField.setText("");
+            descriptionField.setText("");
         });
 
         return tabRoom;
