@@ -4,10 +4,7 @@ import client.CoreClient;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
-import javafx.scene.control.Tab;
-import javafx.scene.control.TabPane;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -106,6 +103,24 @@ public class StudentUI extends UI  {
         Label startConvLabel = new Label("Email for a new conversation: ");
         TextField startConvEmail = new TextField();
         newConv.getChildren().addAll(startConvLabel, startConvEmail);
+
+        ScrollPane conversations = new ScrollPane();
+        conversations.setFitToWidth(true);
+        conversations.setFitToHeight(true);
+        TextArea convo = new TextArea();
+        convo.setEditable(false);
+        convo.setPrefWidth(conversations.getHvalue());
+        convo.setWrapText(true);
+        conversations.setContent(convo);
+
+        VBox conversationList = new VBox();
+        Label conversationListLabel = new Label("All conversations");
+
+        conversationList.getChildren().addAll(conversationListLabel);
+
+        chatPane.setTop(newConv);
+        chatPane.setCenter(conversations);
+        chatPane.setLeft(conversationList);
 
 
         return chatTab;

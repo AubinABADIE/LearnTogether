@@ -43,6 +43,7 @@ public class GeneralServer implements Observer {
         this.display=display;
         dao = new SQLServerFactory();
         dao.createDAOUser();
+        dao.createDAODepartment();
         display.display("Server is running on port " + port);
     }
 
@@ -135,7 +136,7 @@ public class GeneralServer implements Observer {
      * @param client: the original client.
      */
     public void handleLoginFromClient(String login, String password, ConnectionToClient client) {
-        int userID = dao.readDAOUserByLogin(login, password);
+        int userID = dao.getUserDAO().readDAOUserByLogin(login, password);
         if (userID != -1) {
             checkLogin(userID, client);
         } else {
@@ -150,8 +151,8 @@ public class GeneralServer implements Observer {
      * @param client: the original client.
      */
     public void handleFirstConnectionFromClient(String login, String password, ConnectionToClient client){
-        if(dao.isPdwNull(login))
-            if (dao.setNewPwd(login, password)) {
+        if(dao.getUserDAO().isPdwNull(login))
+            if (dao.getUserDAO().setNewPwd(login, password)) {
                 sendToClientFirstConn(true, client);
                 return;
             }
@@ -166,7 +167,7 @@ public class GeneralServer implements Observer {
      * @param client: the client from which it originated.
      */
     public void checkLogin(int id, ConnectionToClient client) {
-        UserType user = dao.readDAOUser(id);
+        UserType user = dao.getUserDAO().readDAOUser(id);
         sendToClientLogin(true, user.getId(), user.getRole(), client);
     }
 
@@ -176,8 +177,8 @@ public class GeneralServer implements Observer {
      * @param cred2
      * @param client
      */
-    private void handleCreateDepartmentFromClient(String cred, String cred1, String cred2, ConnectionToClient client) {
-        dao.createDAODepartment(cred,cred1,cred2);
+    public void handleCreateDepartmentFromClient(String cred, String cred1, String cred2, ConnectionToClient client) {
+        //dao.createDAODepartment(cred,cred1,cred2);
     }
 
     /**
@@ -186,16 +187,16 @@ public class GeneralServer implements Observer {
      * @param cred2
      * @param client
      */
-    private void handleUpdateDepartmentFromClient(String cred, String cred1, String cred2, ConnectionToClient client) {
-        dao.updateDAODepartment(cred,cred1,cred2);
+    public void handleUpdateDepartmentFromClient(String cred, String cred1, String cred2, ConnectionToClient client) {
+        //dao.updateDAODepartment(cred,cred1,cred2);
     }
 
     /**
      * @param cred
      * @param client
      */
-    private void handleDeleteDepartmentFromClient(String cred, ConnectionToClient client) {
-        dao.deleteDAODepartment(cred);
+    public void handleDeleteDepartmentFromClient(String cred, ConnectionToClient client) {
+        //dao.deleteDAODepartment(cred);
     }
 
     /**

@@ -22,6 +22,7 @@ Arguments:
 - hasProjector: boolean
 - hadComputer: boolean
 - description: String
+
 *Usage*: `#CRATEROOM-/-{name}-/-{capacity}-/-{building}-/-{hasProjector}-/-{hasComputer}-/-{description}`
 
 # FROM the server

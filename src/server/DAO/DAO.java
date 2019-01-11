@@ -21,50 +21,30 @@ public class DAO extends AbstractDAOFactory {
     }
 
     /**
-     * 
+     *
      */
     public void find() {
         // TODO implement here
     }
 
     /**
-     * 
+     *
      */
     public void create() {
         // TODO implement here
     }
 
     /**
-     * 
+     *
      */
     public void update() {
         // TODO implement here
     }
 
     /**
-     * 
+     *
      */
     public void delete() {
         // TODO implement here
-    }
-
-    @Override
-    public int readDAOUserByLogin(String login, String password) {
-        return 0;
-    }
-
-    @Override
-    public UserType readDAOUser(int id) {
-        return null;
-    }
-
-    @Override
-    public boolean isPdwNull(String login) {
-        return false;
-    }
-
-    @Override
-    public boolean setNewPwd(String login, String password) {
-        return false;
     }
 }
