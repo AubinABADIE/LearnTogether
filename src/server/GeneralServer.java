@@ -43,6 +43,7 @@ public class GeneralServer implements Observer {
         this.display=display;
         dao = new SQLServerFactory();
         dao.createDAOUser();
+        dao.createDAODepartment();
         display.display("Server is running on port " + port);
     }
 
@@ -172,8 +173,8 @@ public class GeneralServer implements Observer {
      * @param cred2
      * @param client
      */
-    private void handleCreateDepartmentFromClient(String cred, String cred1, String cred2, ConnectionToClient client) {
-        dao.createDAODepartment(cred,cred1,cred2);
+    public void handleCreateDepartmentFromClient(String cred, String cred1, String cred2, ConnectionToClient client) {
+        //dao.createDAODepartment(cred,cred1,cred2);
     }
 
     /**
@@ -182,16 +183,16 @@ public class GeneralServer implements Observer {
      * @param cred2
      * @param client
      */
-    private void handleUpdateDepartmentFromClient(String cred, String cred1, String cred2, ConnectionToClient client) {
-        dao.updateDAODepartment(cred,cred1,cred2);
+    public void handleUpdateDepartmentFromClient(String cred, String cred1, String cred2, ConnectionToClient client) {
+        //dao.updateDAODepartment(cred,cred1,cred2);
     }
 
     /**
      * @param cred
      * @param client
      */
-    private void handleDeleteDepartmentFromClient(String cred, ConnectionToClient client) {
-        dao.deleteDAODepartment(cred);
+    public void handleDeleteDepartmentFromClient(String cred, ConnectionToClient client) {
+        //dao.deleteDAODepartment(cred);
     }
 
     /**

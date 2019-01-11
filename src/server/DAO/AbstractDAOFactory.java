@@ -18,11 +18,7 @@ public abstract class AbstractDAOFactory extends AbstractDAOUser{
     public void createDAOUser(){
     }
 
-    public void creatDAODepartment(){
-
-    }
-    public AbstractDAODepartment getDepartmentDAO() {
-        return departmentDAO;
+    public void createDAODepartment(){
     }
 
 }

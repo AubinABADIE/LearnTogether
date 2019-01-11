@@ -1,11 +1,26 @@
 package server.DAO;
 
-public class SQLServerDAODepartment {
+public class SQLServerDAODepartment extends AbstractDAODepartment{
 
     /**
      * Default constructor
      */
     public SQLServerDAODepartment() {
+
+    }
+
+    @Override
+    public void handleCreateDepartmentFromClient(String cred, String cred1, String cred2) {
+
+    }
+
+    @Override
+    public void handleUpdateDepartmentFromClient(String cred, String cred1, String cred2) {
+
+    }
+
+    @Override
+    public void handleDeleteDepartmentFromClient(String cred) {
 
     }
 
