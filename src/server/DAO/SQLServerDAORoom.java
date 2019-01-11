@@ -49,7 +49,7 @@ public class SQLServerDAORoom extends AbstractRoomDAO{
         int result = 0;
         if(connection != null){
             try{
-                PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO Rooms (roomName, building, hasComputer, hasProjector, descriptionRoom, capacity) VALUES ? ,? ,? ,? ,?, ? ");
+                PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO Rooms(roomName, building, hasComputer, hasProjector, descriptionRoom, capacity) VALUES (? ,? ,? ,? ,?, ?)");
                 preparedStatement.setString(1, name);
                 preparedStatement.setInt(2, building);
                 preparedStatement.setBoolean(3, hasComputer);

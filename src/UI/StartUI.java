@@ -144,6 +144,10 @@ public class StartUI extends UI {
                 Platform.runLater(() -> showAlert(Alert.AlertType.ERROR, null, "Failure", "Error: impossible to activate your account. Is it already activated? Otherwise, please check later."));
                 Platform.runLater(()->primaryStage.setScene(connectionScene));
             }
+            else if (newValue.equalsIgnoreCase("RC SUCCESS")) {
+                showAlert(Alert.AlertType.CONFIRMATION, null, "Success", "You have created the room.");
+                Platform.runLater(()->adminUI.setDefaultTab());
+            }
         });
     }
 

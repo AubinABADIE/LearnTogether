@@ -24,6 +24,8 @@ import javafx.stage.Stage;
 public class AdminUI extends TeacherUI {
 
     private Scene principalAdminScene;
+    private TabPane tabPane;
+    private Tab tabProfile, tabSchedule, tabRecords, tabDiary, tabChat, tabCourse, tabRoom;
     /**
      * Default constructor
      */
@@ -55,31 +57,31 @@ public class AdminUI extends TeacherUI {
         titleBar.getChildren().addAll(title, user);
 
         //Create the Tabs
-        TabPane tabPane = new TabPane();
+        tabPane = new TabPane();
 
-        Tab tabProfile= new Tab();
+        tabProfile= new Tab();
         tabProfile.setText("Profile");
         tabProfile.setClosable(false);
 
-        Tab tabSchedule = new Tab();
+        tabSchedule = new Tab();
         tabSchedule.setText("Schedule");
         tabSchedule.setClosable(false);
 
-        Tab tabRecords = new Tab();
+        tabRecords = new Tab();
         tabRecords.setText("Record");
         tabRecords.setClosable(false);
 
-        Tab tabDiary = new Tab();
+        tabDiary = new Tab();
         tabDiary.setText("Diary");
         tabDiary.setClosable(false);
 
-        Tab tabChat = new Tab();
+        tabChat = new Tab();
         tabChat.setText("Chat");
         tabChat.setClosable(false);
 
-        Tab tabRoom= createTabRoom();
+        tabRoom= createTabRoom();
         
-        Tab tabCourse = createTabCourse();
+        tabCourse = createTabCourse();
 
 
         tabPane.getTabs().add(tabProfile);
@@ -310,6 +312,11 @@ public class AdminUI extends TeacherUI {
                 hasComputer = false;
 
             client.handleCreateRoom(nameField.getText(), Integer.parseInt(capacityField.getText()),Integer.parseInt(buildingField.getText()), hasProjector, hasComputer, descriptionField.getText());
+            nameField.setText("");
+            capacityField.setText("");
+            buildingField.setText("");
+            descriptionField.setText("");
+
         });
 
         cancelCreate.setOnAction(event -> {
@@ -322,19 +329,13 @@ public class AdminUI extends TeacherUI {
         return tabRoom;
     }
 
-    @Override
-    protected void setupListeners(){
-        currentState.addListener((observable, oldValue, newValue) -> {
-            if (newValue.equalsIgnoreCase("RC SUCCESS")) {
-                showAlert(Alert.AlertType.CONFIRMATION, null, "Success", "You have created the room.");
-                //Platform.runLater(this::createPrincipalAdminScene);
-            }
-        });
-    }
 
     protected void setDefaultTab(){
+        SingleSelectionModel<Tab> selectionModel = tabPane.getSelectionModel();
+        selectionModel.select(tabProfile);
 
     }
+
 
     public void addUIControls(BorderPane borderPane){
 

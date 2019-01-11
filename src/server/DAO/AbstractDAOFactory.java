@@ -46,10 +46,9 @@ public abstract class AbstractDAOFactory{
         this.departmentDAO = departmentDAO;
     }
 
-    public void createDAOUser(){
-    }
+    public abstract void createDAOUser();
 
-    public void createDAODepartment(){
-    }
+    public abstract void createDAODepartment();
 
+    public abstract void createDAORoom();
 }

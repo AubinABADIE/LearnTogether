@@ -1,5 +1,6 @@
 package client;
 
+import client.Chat.Conversation;
 import client.Groups.Department;
 import client.Room.RoomServices;
 import client.Users.UserServices;
@@ -10,9 +11,13 @@ import common.DisplayIF;
 import java.io.IOException;
 
 public class CoreClient implements ClientIF {
+    //Business logics
     private UserServices user;
     private RoomServices room;
     private Department department;
+    private Conversation conversations;
+
+    //UI and Connections
     private AdaptableClient connection;
     private DisplayIF display;
 
@@ -47,6 +52,7 @@ public class CoreClient implements ClientIF {
         user = new UserServices(this);
         department = new Department( this);
         room = new RoomServices(this);
+        conversations = new Conversation();
     }
 
     /**

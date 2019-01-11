@@ -44,6 +44,7 @@ public class GeneralServer implements Observer {
         dao = new SQLServerFactory();
         dao.createDAOUser();
         dao.createDAODepartment();
+        dao.createDAORoom();
         display.display("Server is running on port " + port);
     }
 
