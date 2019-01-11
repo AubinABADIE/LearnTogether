@@ -9,6 +9,7 @@ import server.DBTypes.UserType;
 public class SQLServerFactory extends AbstractDAOFactory {
 
     private SQLServerDAOUser userDAO;
+    private SQLServerDAODepartment departmentDAO;
     /**
      * Default constructor
      */
@@ -18,6 +19,10 @@ public class SQLServerFactory extends AbstractDAOFactory {
 
     public void createDAOUser(){
         createSQLServerDAOUser();
+    }
+
+    public void createDAODepartment(){
+        createSQLServerDAODepartment();
     }
 
     /**
@@ -39,5 +44,9 @@ public class SQLServerFactory extends AbstractDAOFactory {
     @Override
     public boolean setNewPwd(String login, String password) {
         return userDAO.setNewPwd(login, password);
+    }
+
+    public void createSQLServerDAODepartment() {
+        departmentDAO = new SQLServerDAODepartment();
     }
 }

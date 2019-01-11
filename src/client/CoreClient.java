@@ -1,5 +1,6 @@
 package client;
 
+import client.Groups.Department;
 import client.Room.RoomServices;
 import client.Users.UserServices;
 import com.lloseng.ocsf.client.AdaptableClient;
@@ -11,6 +12,7 @@ import java.io.IOException;
 public class CoreClient implements ClientIF {
     private UserServices user;
     private RoomServices room;
+    private Department department;
     private AdaptableClient connection;
     private DisplayIF display;
 
@@ -43,6 +45,7 @@ public class CoreClient implements ClientIF {
         this.display = display;
         connection.openConnection();
         user = new UserServices(this);
+        department = new Department( this);
         room = new RoomServices(this);
     }
 
@@ -84,5 +87,17 @@ public class CoreClient implements ClientIF {
 
     public void handleCreateRoom(String name, int capacity, int building, boolean hasProjector, boolean hasComputer, String description) {
         room.handleCreateRoom(name, capacity, building, hasProjector, hasComputer, description);
+    }
+
+    public void handleCreateDepartment(String name, int refTeacherID, String descriptionDep){
+        department.createDepartment(name, refTeacherID, descriptionDep);
+    }
+
+    public void handleUpdateDepartment(String name, int refTeacherID, String descriptionDep){
+        department.updateDepartment(name, refTeacherID, descriptionDep);
+    }
+
+    public void handleDeleteDepartment(int departmentID){
+        department.deleteDepartment(departmentID);
     }
 }
