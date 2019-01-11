@@ -3,7 +3,7 @@ package server.DAO;
 /**
  * 
  */
-public class AbstractDAODepartment extends DAO {
+public abstract class AbstractDAODepartment extends DAO {
 
     /**
      * Default constructor

@@ -1,5 +1,7 @@
 package client;
 
+import client.Groups.Department;
+import client.Room.RoomServices;
 import client.Users.UserServices;
 import com.lloseng.ocsf.client.AdaptableClient;
 import common.ClientIF;

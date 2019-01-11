@@ -57,6 +57,10 @@ public class Department {
     }
 
     /**
+     * Methods
+     */
+
+    /**
      * @param name 
      * @param refTeacherID
      * @param descDep
