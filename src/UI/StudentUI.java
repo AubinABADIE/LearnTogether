@@ -7,6 +7,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -74,9 +75,7 @@ public class StudentUI extends UI  {
         tabDiary.setText("Diary");
         tabDiary.setClosable(false);
 
-        Tab tabChat = new Tab();
-        tabChat.setText("Chat");
-        tabChat.setClosable(false);
+        Tab tabChat = createChatTab();
 
         tabPane.getTabs().add(tabProfile);
         tabPane.getTabs().add(tabSchedule);
@@ -97,4 +96,19 @@ public class StudentUI extends UI  {
         principalStudentScene = new Scene(studentScene, 900, 700);
         return principalStudentScene;
     }
+
+    private Tab createChatTab(){
+        Tab chatTab = new Tab();
+        chatTab.setText("Chat");
+        chatTab.setClosable(false);
+        BorderPane chatPane = new BorderPane();
+        HBox newConv = new HBox();
+        Label startConvLabel = new Label("Email for a new conversation: ");
+        TextField startConvEmail = new TextField();
+        newConv.getChildren().addAll(startConvLabel, startConvEmail);
+
+
+        return chatTab;
+    }
+
 }

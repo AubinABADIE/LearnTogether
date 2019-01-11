@@ -333,8 +333,8 @@ public class StartUI extends UI {
                 case "ADMIN":
                     connectionStatus.setValue("ADMIN");
                     break;
-                case "SUPER ADMIN":
-                    connectionStatus.setValue("SUPER ADMIN");
+                case "SUPERADMIN":
+                    connectionStatus.setValue("SUPERADMIN");
                     break;
                 default:
                     connectionStatus.setValue("CONNECTION ERROR");

@@ -13,6 +13,17 @@ Used when the client wants to connect to the server. With this command, the serv
 Used when the client wants to change its password **for the first time** (he hans't yet connected, and in the DB, the password is blank).
 *Usage*: `#FIRSTCONN {email} {password}`
 
+## \#CREATEROOM
+Used when the client wants to create a room into the database. The parse method for the different parameters are 
+Arguments:
+- name: String
+- capacity: int
+-building: int
+- hasProjector: boolean
+- hadComputer: boolean
+- description: String
+*Usage*: `#CRATEROOM-/-{name}-/-{capacity}-/-{building}-/-{hasProjector}-/-{hasComputer}-/-{description}`
+
 # FROM the server
 
 
@@ -21,8 +32,8 @@ Used when the client wants to change its password **for the first time** (he han
 The server responds to a #LOGIN injonction from the client by sending this to the client. It is accompanied by several arguments:
 
  - isConnected: boolean, true if the connection has been succesful or false otherwise
- - id: the user id from the DB
- - role: the user role in the application.
+ - id: int the user id from the DB
+ - role: String the user role in the application.
 *Usage*:`#LOGON {isConnected} {id} {role}`
 
 ## \#FIRSTCONN
@@ -31,3 +42,13 @@ Arguments :
 - hasSucceeded : boolean, true if it was the first connection and the password has been defined, false otherwise.
 
 *Usage*:`#FIRSTCONN {hasConected}`
+
+#Users in the DB
+| id       |      name     |  first name |           email                   |   password   | role     |
+|----------|:-------------:|:-----------:|:---------------------------------:|:------------:|:--------:|
+| 3        |  SANSON       | Yvan       | yvan.sanson@etu.umontpellier.fr    |LearnTogether |STUDENT   |      
+| 4        |    SALELLES   |   Marie    | marie.salelles@etu.umontpellier.fr |Test          |STUDENT   |
+| 6        | Teacher       |    PolyMtp | teacher@umontpellier.fr            |Teacher       |TEACHER   |
+| 8        | Staff         | PolyMtp    | StaffAdmin@umontpellier.fr         |AdmStaff      |ADMIN     |
+| 9        | SuperStaff    | PolyMtp    | SuperAdminAdmin@umontpellier.fr    |SuperAdmin    |SUPERADMIN|
+    
