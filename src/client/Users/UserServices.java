@@ -71,5 +71,12 @@ public class UserServices{
         else
             coreClient.getDisplay().setState("FC FAILURE");
     }
+    
+    /**
+     * 
+     */
+    public void updatePhoto() {
+    	
+    }
 
 }
