@@ -132,7 +132,7 @@ public class GeneralServer implements Observer {
      * @param client: the original client.
      */
     public void handleLoginFromClient(String login, String password, ConnectionToClient client) {
-        int userID = dao.readDAOUserByLogin(login, password);
+        int userID = dao.getUserDAO().readDAOUserByLogin(login, password);
         if (userID != -1) {
             checkLogin(userID, client);
         } else {
@@ -147,8 +147,8 @@ public class GeneralServer implements Observer {
      * @param client: the original client.
      */
     public void handleFirstConnectionFromClient(String login, String password, ConnectionToClient client){
-        if(dao.isPdwNull(login))
-            if (dao.setNewPwd(login, password)) {
+        if(dao.getUserDAO().isPdwNull(login))
+            if (dao.getUserDAO().setNewPwd(login, password)) {
                 sendToClientFirstConn(true, client);
                 return;
             }
@@ -163,7 +163,7 @@ public class GeneralServer implements Observer {
      * @param client: the client from which it originated.
      */
     public void checkLogin(int id, ConnectionToClient client) {
-        UserType user = dao.readDAOUser(id);
+        UserType user = dao.getUserDAO().readDAOUser(id);
         sendToClientLogin(true, user.getId(), user.getRole(), client);
     }
 

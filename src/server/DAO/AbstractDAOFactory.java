@@ -3,7 +3,7 @@ package server.DAO;
 /**
  * 
  */
-public abstract class AbstractDAOFactory extends AbstractDAOUser{
+public abstract class AbstractDAOFactory{
 
     private AbstractDAOUser userDAO;
     private AbstractDAODepartment departmentDAO;
@@ -13,6 +13,22 @@ public abstract class AbstractDAOFactory extends AbstractDAOUser{
      */
     public AbstractDAOFactory() {
 
+    }
+
+    public AbstractDAOUser getUserDAO() {
+        return userDAO;
+    }
+
+    public void setUserDAO(AbstractDAOUser userDAO) {
+        this.userDAO = userDAO;
+    }
+
+    public AbstractDAODepartment getDepartmentDAO() {
+        return departmentDAO;
+    }
+
+    public void setDepartmentDAO(AbstractDAODepartment departmentDAO) {
+        this.departmentDAO = departmentDAO;
     }
 
     public void createDAOUser(){

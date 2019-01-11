@@ -11,7 +11,7 @@ import java.sql.SQLException;
 /**
  * 
  */
-public abstract class AbstractDAOUser {
+public abstract class AbstractDAOUser extends AbstractDAO {
 
     /**
      * This method gets to the database and opens a connection.
