@@ -1,8 +1,6 @@
 package UI;
 
-import javafx.application.Platform;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
+import client.CoreClient;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -25,8 +23,8 @@ public class AdminUI extends TeacherUI {
     /**
      * Default constructor
      */
-    public AdminUI(Stage primaryStage, String login, int id) {
-        super(primaryStage, login, id);
+    public AdminUI(Stage primaryStage, String login, int id, CoreClient client) {
+        super(primaryStage, login, id, client);
     }
 
     public Scene getPrincipalAdminScene() {

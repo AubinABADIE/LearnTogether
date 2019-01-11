@@ -1,5 +1,6 @@
 package UI;
 
+import client.CoreClient;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
@@ -7,8 +8,6 @@ import javafx.scene.layout.HBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-
-import java.util.*;
 
 /**
  * 
@@ -18,8 +17,8 @@ public class SuperAdminUI extends AdminUI {
     /**
      * Default constructor
      */
-    public SuperAdminUI(Stage primaryStage, String login, int id) {
-        super(primaryStage, login, id);
+    public SuperAdminUI(Stage primaryStage, String login, int id, CoreClient client) {
+        super(primaryStage, login, id, client);
     }
 
     public Scene getPrincipalSuperAdminScene() {
