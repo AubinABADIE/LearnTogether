@@ -201,13 +201,13 @@ public class GeneralServer implements Observer {
     }
 
     /**
-     * This method delegates to the dao the room creation
-     * @param name
-     * @param capacity
-     * @param building
-     * @param hasProjector
-     * @param hasComputer
-     * @param description
+     * This method delegates to the dao the room creation and interprets the result of the insert. At the end, ta message is sending to the client.
+     * @param name : room name
+     * @param capacity : room capacity
+     * @param building : room building number
+     * @param hasProjector : if the room has a projector
+     * @param hasComputer : if th room has computers
+     * @param description : small description of the room
      */
     private void handleCreateRoomFromClient(String name, int capacity, int building, boolean hasProjector, boolean hasComputer, String description, ConnectionToClient client){
         int result = dao.getRoomDAO().createRoom(name, capacity, building, hasProjector, hasComputer, description);
