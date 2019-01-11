@@ -1,5 +1,9 @@
 package server.DAO;
 
+import client.Chat.Conversation;
+
+import java.sql.Connection;
+
 /**
  * 
  */
@@ -7,12 +11,23 @@ public abstract class AbstractDAOFactory{
 
     private AbstractDAOUser userDAO;
     private AbstractDAODepartment departmentDAO;
+    private RoomDAO roomDAO;
 
     /**
      * Default constructor
      */
     public AbstractDAOFactory() {
 
+    }
+
+    public abstract Connection getConnection();
+
+    public RoomDAO getRoomDAO() {
+        return roomDAO;
+    }
+
+    public void setRoomDAO(RoomDAO roomDAO) {
+        this.roomDAO = roomDAO;
     }
 
     public AbstractDAOUser getUserDAO() {
