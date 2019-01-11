@@ -1,6 +1,6 @@
 package UI;
 
-import javafx.application.Platform;
+import client.CoreClient;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -26,8 +26,8 @@ public class AdminUI extends TeacherUI {
     /**
      * Default constructor
      */
-    public AdminUI(Stage primaryStage, String login, int id) {
-        super(primaryStage, login, id);
+    public AdminUI(Stage primaryStage, String login, int id, CoreClient client) {
+        super(primaryStage, login, id, client);
     }
 
     public Scene getPrincipalAdminScene() {
@@ -37,6 +37,10 @@ public class AdminUI extends TeacherUI {
     public void setPrincipalAdminScene(Scene principalAdminScene) {
         this.principalAdminScene = principalAdminScene;
     }
+
+    /**
+     * This method create the principal admin scene
+     */
 
     public Scene createPrincipalAdminScene(){
         this.primaryStage.setTitle("LearnTogether for Admins");
@@ -174,6 +178,9 @@ public class AdminUI extends TeacherUI {
         return tabCourse;
     }
 
+    /**
+     * This method create the room tab in the principal admin scene
+     */
     private Tab createTabRoom(){
 
         Tab tabRoom = new Tab();
@@ -191,7 +198,15 @@ public class AdminUI extends TeacherUI {
         // Add text Field
         TextField nameField = new TextField();
         TextField capacityField = new TextField();
+        capacityField.textProperty().addListener((observable, oldValue, newValue) -> {
+            if(!newValue.matches("\\d*"))
+                capacityField.setText(newValue.replaceAll("[^\\d]", ""));
+        });
         TextField buildingField = new TextField();
+        buildingField.textProperty().addListener((observable, oldValue, newValue) -> {
+            if(!newValue.matches("\\d*"))
+                buildingField.setText(newValue.replaceAll("[^\\d]", ""));
+        });
 
         RadioButton py = new RadioButton();
         py.setText("Yes");
@@ -281,7 +296,21 @@ public class AdminUI extends TeacherUI {
                 showAlert(Alert.AlertType.ERROR, gridRoom.getScene().getWindow(), "Form Error!", "Please enter room building");
                 return;
             }
+            boolean hasProjector;
+            boolean hasComputer;
+            if(((RadioButton) tp.getSelectedToggle()).getText().equals("Yes"))
+                hasProjector = true;
+            else
+                hasProjector = false;
+
+            if(((RadioButton) tp2.getSelectedToggle()).getText().equals("Yes"))
+                hasComputer = true;
+            else
+                hasComputer = false;
+
+            client.handleCreateRoom(nameField.getText(), Integer.parseInt(capacityField.getText()),Integer.parseInt(buildingField.getText()), hasProjector, hasComputer, descriptionField.getText());
         });
+
         cancelCreate.setOnAction(event -> {
             nameField.setText("");
             capacityField.setText("");

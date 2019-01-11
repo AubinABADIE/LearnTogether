@@ -1,5 +1,6 @@
 package UI;
 
+import client.CoreClient;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
@@ -17,10 +18,11 @@ public class TeacherUI extends UI {
     /**
      * Default constructor
      */
-    public TeacherUI(Stage primaryStage, String login, int id) {
+    public TeacherUI(Stage primaryStage, String login, int id, CoreClient client) {
 		this.primaryStage = primaryStage;
 		this.login = login;
 		this.userID = id;
+		this.client = client;
     }
 
 	public Scene getPrincpalTeacherScene() {

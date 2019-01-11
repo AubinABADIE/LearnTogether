@@ -26,8 +26,7 @@ public class StartUI extends UI {
     private SuperAdminUI superAdminUI;
     private TeacherUI teacherUI;
 
-    //Business logic
-    private CoreClient client;
+
 
     public static void main(String[] args) {
         Application.launch(StartUI.class, args);
@@ -35,22 +34,22 @@ public class StartUI extends UI {
 
 
     private void setPrincipalSceneAsStudent(){
-        studentUI = new StudentUI(primaryStage, login, userID);
+        studentUI = new StudentUI(primaryStage, login, userID, client);
         primaryStage.setScene(studentUI.createPrincipalStudentScene());
     }
 
     private void setPrincipalSceneAsTeacher(){
-        teacherUI = new TeacherUI(primaryStage, login, userID);
+        teacherUI = new TeacherUI(primaryStage, login, userID, client);
         primaryStage.setScene(teacherUI.createPrincipalTeacherScene());
     }
 
     private void setPrincipalSceneAsAdmin(){
-        adminUI = new AdminUI(primaryStage, login, userID);
+        adminUI = new AdminUI(primaryStage, login, userID, client);
         primaryStage.setScene(adminUI.createPrincipalAdminScene());
     }
 
     private void setPrincipalSceneAsSuperAdmin(){
-        superAdminUI = new SuperAdminUI(primaryStage, login, userID);
+        superAdminUI = new SuperAdminUI(primaryStage, login, userID, client);
         primaryStage.setScene(superAdminUI.createPrincipalSuperAdminScene());
     }
 
@@ -334,8 +333,8 @@ public class StartUI extends UI {
                 case "ADMIN":
                     connectionStatus.setValue("ADMIN");
                     break;
-                case "SUPER ADMIN":
-                    connectionStatus.setValue("SUPER ADMIN");
+                case "SUPERADMIN":
+                    connectionStatus.setValue("SUPERADMIN");
                     break;
                 default:
                     connectionStatus.setValue("CONNECTION ERROR");

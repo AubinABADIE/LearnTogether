@@ -1,12 +1,15 @@
 package UI;
 
+import client.CoreClient;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Group;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
-import javafx.scene.control.Tab;
-import javafx.scene.control.TabPane;
+import javafx.scene.control.*;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
@@ -23,10 +26,11 @@ import javafx.stage.Stage;
 public class StudentUI extends UI  {
     private Scene principalStudentScene;
 
-    public StudentUI(Stage primaryStage, String login, int id){
+    public StudentUI(Stage primaryStage, String login, int id, CoreClient client){
         this.primaryStage = primaryStage;
         this.login = login;
         this.userID = id;
+        this.client=client;
     }
 
     public Scene getPrincipalStudentScene() {
@@ -38,7 +42,7 @@ public class StudentUI extends UI  {
     }
 
     /**
-     * This funciton creates the principal scene (view) for the student.
+     * This function creates the principal scene (view) for the student.
      * It is called by the startUI when a student logs in.
      * @return the principal scene
      */
@@ -55,11 +59,7 @@ public class StudentUI extends UI  {
 
         //Create the Tabs
         TabPane tabPane = new TabPane();
-
-        Tab tabProfile= new Tab();
-        tabProfile.setText("Profile");
-        tabProfile.setClosable(false);
-
+        
         Tab tabSchedule = new Tab();
         tabSchedule.setText("Schedule");
         tabSchedule.setClosable(false);
@@ -72,20 +72,15 @@ public class StudentUI extends UI  {
         tabDiary.setText("Diary");
         tabDiary.setClosable(false);
 
-        Tab tabChat = new Tab();
-        tabChat.setText("Chat");
-        tabChat.setClosable(false);
+        Tab tabChat = createChatTab();
 
-        tabPane.getTabs().add(tabProfile);
+        tabPane.getTabs().add(createTabProfile());
         tabPane.getTabs().add(tabSchedule);
         tabPane.getTabs().add(tabRecords);
         tabPane.getTabs().add(tabDiary);
         tabPane.getTabs().add(tabChat);
 
-        HBox hbox = new HBox();
-        hbox.getChildren().add(new Label("Tab" ));
-        hbox.setAlignment(Pos.CENTER);
-        tabProfile.setContent(hbox);
+        
 
         topBar.getChildren().addAll(titleBar, tabPane);
         studentScene.setTop(topBar);
@@ -95,4 +90,37 @@ public class StudentUI extends UI  {
         principalStudentScene = new Scene(studentScene, 900, 700);
         return principalStudentScene;
     }
+
+    private Tab createChatTab(){
+        Tab chatTab = new Tab();
+        chatTab.setText("Chat");
+        chatTab.setClosable(false);
+        BorderPane chatPane = new BorderPane();
+        HBox newConv = new HBox();
+        Label startConvLabel = new Label("Email for a new conversation: ");
+        TextField startConvEmail = new TextField();
+        newConv.getChildren().addAll(startConvLabel, startConvEmail);
+
+        ScrollPane conversations = new ScrollPane();
+        conversations.setFitToWidth(true);
+        conversations.setFitToHeight(true);
+        TextArea convo = new TextArea();
+        convo.setEditable(false);
+        convo.setPrefWidth(conversations.getHvalue());
+        convo.setWrapText(true);
+        conversations.setContent(convo);
+
+        VBox conversationList = new VBox();
+        Label conversationListLabel = new Label("All conversations");
+
+        conversationList.getChildren().addAll(conversationListLabel);
+
+        chatPane.setTop(newConv);
+        chatPane.setCenter(conversations);
+        chatPane.setLeft(conversationList);
+
+        chatTab.setContent(chatPane);
+        return chatTab;
+    }
+
 }

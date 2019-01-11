@@ -3,7 +3,7 @@ package server.DAO;
 /**
  * 
  */
-public class EventDAO extends DAO {
+public class EventDAO{
 
     /**
      * Default constructor
