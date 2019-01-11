@@ -1,5 +1,6 @@
 package UI;
 
+import client.CoreClient;
 import common.DisplayIF;
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -25,6 +26,8 @@ public abstract class UI extends Application implements DisplayIF {
     StringProperty connectionStatus = new SimpleStringProperty("NOT CONNECTED");
     StringProperty currentState = new SimpleStringProperty("UNDEFINED");
 
+    //Business logic
+    CoreClient client;
 
     //Information about the user and the general environment
     protected String login;
