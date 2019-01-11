@@ -72,7 +72,20 @@ public class GeneralServer implements Observer {
             String[] creds = instruction.split(" ");
             handleFirstConnectionFromClient(creds[1], creds[2], client);
         }
+        else if(instruction.startsWith("CREATEDEP")){
+            String[] creds = instruction.split(" ");
+            handleCreateDepartmentFromClient(creds[1], creds[2], creds[3], client);
+        }
+        else if(instruction.startsWith("UPDATEDEP")){
+            String[] creds = instruction.split(" ");
+            handleUpdateDepartmentFromClient(creds[1], creds[2], creds[3], client);
+        }
+        else if(instruction.startsWith("DELETEDEP")){
+            String[] creds = instruction.split(" ");
+            handleDeleteDepartmentFromClient(creds[1], client);
+        }
     }
+
 
     /**
      * This method is used to send a client a response of a #LOGIN demand.
@@ -154,114 +167,37 @@ public class GeneralServer implements Observer {
     }
 
     /**
-     * @param object
+     * @param cred
+     * @param cred1
+     * @param cred2
+     * @param client
      */
-    public void sendToClientRecord(Object object) {
-        // TODO implement here
+    private void handleCreateDepartmentFromClient(String cred, String cred1, String cred2, ConnectionToClient client) {
+        dao.createDAODepartment(cred,cred1,cred2);
     }
 
     /**
-     * @param name
-     * @param year
-     * @param record
-     * @param course
-     * @param donatingUser
+     * @param cred
+     * @param cred1
+     * @param cred2
+     * @param client
      */
-    public void handleCreateRecordFromClient(String name, Date year, File record, CourseType course, UserType donatingUser) {
-        // TODO implement here
+    private void handleUpdateDepartmentFromClient(String cred, String cred1, String cred2, ConnectionToClient client) {
+        dao.updateDAODepartment(cred,cred1,cred2);
     }
 
     /**
-     * @param id
-     * @param donatingUser
+     * @param cred
+     * @param client
      */
-    public void handleDeleteRecordFromClient(RecordType id, UserType donatingUser) {
-        // TODO implement here
-    }
-
-    /**
-     * @param id
-     */
-    public void handleReadRecordFromClient(RecordType id) {
-        // TODO implement here
+    private void handleDeleteDepartmentFromClient(String cred, ConnectionToClient client) {
+        dao.deleteDAODepartment(cred);
     }
 
     /**
      * @param message
      */
     public void checkSuccess(Boolean message) {
-        // TODO implement here
-    }
-
-    /**
-     * @param record
-     */
-    public void checkRecord(RecordType record) {
-        // TODO implement here
-    }
-
-    /**
-     * @param name
-     * @param firstname
-     * @param login
-     * @param birthDate
-     * @param courses
-     * @param promotions
-     * @param typeJob
-     * @param studentGroup
-     */
-    public void handleCreateProfile(String name, String firstname, String login, Date birthDate, CourseType courses, PromotionType promotions, String typeJob, Class studentGroup) {
-        // TODO implement here
-    }
-
-    /**
-     * @param name
-     * @param firstName
-     * @param login
-     * @param birthDate
-     * @param courses
-     * @param promotions
-     * @param typeJob
-     * @param studentGroup
-     * @param picture
-     * @param password
-     */
-    public void handleUpdateProfile(String name, String firstName, String login, Date birthDate, CourseType courses, PromotionType promotions, String typeJob, Class studentGroup, File picture, String password) {
-        // TODO implement here
-    }
-
-    /**
-     * @param object
-     */
-    public void sendToClientUser(Object object) {
-        // TODO implement here
-    }
-
-    /**
-     * @param user
-     */
-    public void checkUser(UserType user) {
-        // TODO implement here
-    }
-
-    /**
-     * @param id
-     */
-    public void handleReadProfile(int id) {
-        // TODO implement here
-    }
-
-    /**
-     * @param id
-     */
-    public void handleDeleteProfileFromClient(int id) {
-        // TODO implement here
-    }
-
-    /**
-     * @param obj
-     */
-    public void handleMessageFromClient(Object obj) {
         // TODO implement here
     }
 

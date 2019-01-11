@@ -1,19 +1,12 @@
 package server.DAO;
 
-/**
- * 
- */
-public abstract class AbstractDAOFactory extends AbstractDAOUser{
+public class SQLServerDAODepartment {
 
-    private AbstractDAOUser userDAO;
-    private AbstractDAODepartment departmentDAO;
     /**
      * Default constructor
      */
-    public AbstractDAOFactory() {
-    }
+    public SQLServerDAODepartment() {
 
-    public void createDAOUser(){
     }
 
     /**
@@ -22,7 +15,6 @@ public abstract class AbstractDAOFactory extends AbstractDAOUser{
      * @param cred2
      */
     public void createDAODepartment(String cred, String cred1, String cred2){
-
 
     }
 
@@ -42,4 +34,7 @@ public abstract class AbstractDAOFactory extends AbstractDAOUser{
 
     }
 
+    public void readDAODepartment(int iddep){
+
+    }
 }

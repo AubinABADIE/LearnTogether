@@ -1,5 +1,7 @@
 package client;
 
+import client.Groups.Department;
+import client.Users.TeacherServices;
 import client.Users.UserServices;
 import com.lloseng.ocsf.client.AdaptableClient;
 import common.ClientIF;
@@ -9,6 +11,7 @@ import java.io.IOException;
 
 public class CoreClient implements ClientIF {
     private UserServices user;
+    private Department department;
     private AdaptableClient connection;
     private DisplayIF display;
 
@@ -41,6 +44,7 @@ public class CoreClient implements ClientIF {
         this.display = display;
         connection.openConnection();
         user = new UserServices(this);
+        department = new Department( this);
     }
 
     /**
@@ -74,5 +78,17 @@ public class CoreClient implements ClientIF {
 
     public void setFirstPassword(String login, String password) {
         user.setFirstPassword(login, password);
+    }
+
+    public void handleCreateDepartment(String name, int refTeacherID, String descriptionDep){
+        department.createDepartment(name, refTeacherID, descriptionDep);
+    }
+
+    public void handleUpdateDepartment(String name, int refTeacherID, String descriptionDep){
+        department.updateDepartment(name, refTeacherID, descriptionDep);
+    }
+
+    public void handleDeleteDepartment(int departmentID){
+        department.deleteDepartment(departmentID);
     }
 }
