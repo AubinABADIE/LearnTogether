@@ -85,6 +85,10 @@ public class GeneralServer implements Observer {
             String[] creds = instruction.split(" ");
             handleDeleteDepartmentFromClient(creds[1], client);
         }
+        else if (instruction.startsWith("CREATEROOM")){
+            String[] attributes = instruction.split("-/-");
+            handleCreateRoomFromClient(attributes[1], attributes[2], attributes[3], attributes[4], attributes[5],attributes[6], client);
+        }
     }
 
 
@@ -193,6 +197,19 @@ public class GeneralServer implements Observer {
      */
     public void handleDeleteDepartmentFromClient(String cred, ConnectionToClient client) {
         //dao.deleteDAODepartment(cred);
+    }
+
+    /**
+     * This method delegates to the dao the room creation
+     * @param name
+     * @param capacity
+     * @param building
+     * @param hasProjector
+     * @param hasComputer
+     * @param description
+     */
+    private void handleCreateRoomFromClient(String name, int capacity, int building, boolean hasProjector, boolean hasComputer, String description){
+        dao.createRoom(name, capacity, building, hasProjector, hasComputer, description);
     }
 
     /**
