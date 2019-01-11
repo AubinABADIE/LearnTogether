@@ -1,12 +1,20 @@
 package UI;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
@@ -38,7 +46,7 @@ public class StudentUI extends UI  {
     }
 
     /**
-     * This funciton creates the principal scene (view) for the student.
+     * This function creates the principal scene (view) for the student.
      * It is called by the startUI when a student logs in.
      * @return the principal scene
      */
@@ -55,11 +63,7 @@ public class StudentUI extends UI  {
 
         //Create the Tabs
         TabPane tabPane = new TabPane();
-
-        Tab tabProfile= new Tab();
-        tabProfile.setText("Profile");
-        tabProfile.setClosable(false);
-
+        
         Tab tabSchedule = new Tab();
         tabSchedule.setText("Schedule");
         tabSchedule.setClosable(false);
@@ -76,16 +80,13 @@ public class StudentUI extends UI  {
         tabChat.setText("Chat");
         tabChat.setClosable(false);
 
-        tabPane.getTabs().add(tabProfile);
+        tabPane.getTabs().add(createTabProfile());
         tabPane.getTabs().add(tabSchedule);
         tabPane.getTabs().add(tabRecords);
         tabPane.getTabs().add(tabDiary);
         tabPane.getTabs().add(tabChat);
 
-        HBox hbox = new HBox();
-        hbox.getChildren().add(new Label("Tab" ));
-        hbox.setAlignment(Pos.CENTER);
-        tabProfile.setContent(hbox);
+        
 
         topBar.getChildren().addAll(titleBar, tabPane);
         studentScene.setTop(topBar);
