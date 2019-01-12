@@ -12,13 +12,13 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.Tab;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.*;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontPosture;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -206,5 +206,72 @@ public Tab createTabProfile() {
         
         return tabProfile;
     }
+
+    Tab createChatTab(){
+        Tab chatTab = new Tab();
+        chatTab.setText("Chat");
+        chatTab.setClosable(false);
+        BorderPane chatPane = new BorderPane();
+        HBox newConv = new HBox();
+        Label startConvLabel = new Label("Email for a new conversation: ");
+        TextField startConvEmail = new TextField();
+        Button startConvButton = new Button("New conversation");
+        //startConvButton.setOnAction(event -> client.createConversation(startConvEmail.getText()));
+        newConv.setSpacing(20);
+        newConv.setPadding(new Insets(15,12,15,12));
+        newConv.getChildren().addAll(startConvLabel, startConvEmail, startConvButton);
+
+        ScrollPane conversations = new ScrollPane();
+        conversations.setFitToWidth(true);
+        conversations.setFitToHeight(true);
+        TextArea convo = new TextArea();
+        convo.setEditable(false);
+        convo.setPrefWidth(conversations.getHvalue());
+        convo.setWrapText(true);
+        conversations.setContent(convo);
+        conversations.setPrefHeight(500);
+
+        VBox conversationList = new VBox();
+        Label conversationListLabel = new Label("All conversations");
+        conversationList.setSpacing(10);
+        conversationList.setPadding(new Insets(10,10,10,10));
+
+        conversationList.getChildren().addAll(conversationListLabel);
+
+        HBox sendMsgBar = new HBox();
+        sendMsgBar.setSpacing(20);
+        sendMsgBar.setPadding(new Insets(15, 12, 15, 12));
+        Text enterMsg = new Text("Enter your message: ");
+        enterMsg.setFont(Font.font("Cambria", FontPosture.ITALIC, 15));
+        TextField msgInput = new TextField();
+        msgInput.setPrefWidth(600);
+        Button sendBtn = new Button("Envoyer");
+        msgInput.setOnKeyPressed(event -> {
+            if(event.getCode().equals(KeyCode.ENTER)){
+                if(client!=null){
+                    //client.handleMessageFromClientUI(msgInput.getText());
+                    msgInput.setText("");
+                }
+            }
+        });
+        sendBtn.setOnAction(event -> {
+            if(client!=null){
+                //client.handleMessageFromClientUI(msgInput.getText());
+                msgInput.setText("");
+            }
+        });
+
+        sendMsgBar.getChildren().addAll(enterMsg, msgInput, sendBtn);
+
+        chatPane.setTop(newConv);
+        chatPane.setCenter(conversations);
+        chatPane.setLeft(conversationList);
+        chatPane.setBottom(sendMsgBar);
+        chatPane.setPadding(new Insets(10,10,10,10));
+
+        chatTab.setContent(chatPane);
+        return chatTab;
+    }
+
 
 }

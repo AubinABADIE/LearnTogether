@@ -15,6 +15,7 @@ public class SQLServerFactory extends AbstractDAOFactory {
     private SQLServerDAOUser userDAO;
     private SQLServerDAODepartment departmentDAO;
     private SQLServerDAORoom roomDAO;
+    private SQLServerDAOConversation conversationDAO;
     /**
      * Default constructor
      */
@@ -52,6 +53,12 @@ public class SQLServerFactory extends AbstractDAOFactory {
     public void createDAORoom() {
         this.roomDAO = new SQLServerDAORoom();
     }
+
+    @Override
+    public void createDAOConversation() {
+        this.conversationDAO = new SQLServerDAOConversation();
+    }
+
     @Override
     public SQLServerDAOUser getUserDAO() {
         return userDAO;

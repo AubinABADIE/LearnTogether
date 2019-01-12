@@ -1,6 +1,8 @@
 package UI;
 
 import client.CoreClient;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
@@ -93,68 +95,5 @@ public class StudentUI extends UI  {
         return principalStudentScene;
     }
 
-    private Tab createChatTab(){
-        Tab chatTab = new Tab();
-        chatTab.setText("Chat");
-        chatTab.setClosable(false);
-        BorderPane chatPane = new BorderPane();
-        HBox newConv = new HBox();
-        Label startConvLabel = new Label("Email for a new conversation: ");
-        TextField startConvEmail = new TextField();
-        newConv.setSpacing(20);
-        newConv.setPadding(new Insets(15,12,15,12));
-        newConv.getChildren().addAll(startConvLabel, startConvEmail);
-
-        ScrollPane conversations = new ScrollPane();
-        conversations.setFitToWidth(true);
-        conversations.setFitToHeight(true);
-        TextArea convo = new TextArea();
-        convo.setEditable(false);
-        convo.setPrefWidth(conversations.getHvalue());
-        convo.setWrapText(true);
-        conversations.setContent(convo);
-        conversations.setPrefHeight(500);
-
-        VBox conversationList = new VBox();
-        Label conversationListLabel = new Label("All conversations");
-        conversationList.setSpacing(10);
-        conversationList.setPadding(new Insets(10,10,10,10));
-
-        conversationList.getChildren().addAll(conversationListLabel);
-
-        HBox sendMsgBar = new HBox();
-        sendMsgBar.setSpacing(20);
-        sendMsgBar.setPadding(new Insets(15, 12, 15, 12));
-        Text enterMsg = new Text("Enter your message: ");
-        enterMsg.setFont(Font.font("Cambria", FontPosture.ITALIC, 15));
-        TextField msgInput = new TextField();
-        msgInput.setPrefWidth(600);
-        Button sendBtn = new Button("Envoyer");
-        msgInput.setOnKeyPressed(event -> {
-            if(event.getCode().equals(KeyCode.ENTER)){
-                if(client!=null){
-                    //client.handleMessageFromClientUI(msgInput.getText());
-                    msgInput.setText("");
-                }
-            }
-        });
-        sendBtn.setOnAction(event -> {
-            if(client!=null){
-                //client.handleMessageFromClientUI(msgInput.getText());
-                msgInput.setText("");
-            }
-        });
-
-        sendMsgBar.getChildren().addAll(enterMsg, msgInput, sendBtn);
-
-        chatPane.setTop(newConv);
-        chatPane.setCenter(conversations);
-        chatPane.setLeft(conversationList);
-        chatPane.setBottom(sendMsgBar);
-        chatPane.setPadding(new Insets(10,10,10,10));
-
-        chatTab.setContent(chatPane);
-        return chatTab;
-    }
 
 }

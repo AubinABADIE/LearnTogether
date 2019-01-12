@@ -12,6 +12,7 @@ import server.DAO.*;
 
 import java.io.File;
 import java.io.IOException;
+import java.sql.Connection;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -90,7 +91,13 @@ public class GeneralServer implements Observer {
             String[] attributes = instruction.split("-/-");
             handleCreateRoomFromClient(attributes[1], Integer.parseInt(attributes[2]), Integer.parseInt(attributes[3]), Boolean.parseBoolean(attributes[4]), Boolean.parseBoolean(attributes[5]),attributes[6], client);
         }
+        else if(instruction.startsWith("SENDMSGTOCLIENT")){
+            String[] attributes = instruction.split("-/-");
+            handleSendMessageToClient(Integer.parseInt(attributes[2]), attributes[1],attributes[3], client);
+        }
     }
+
+
 
 
     /**
@@ -140,6 +147,8 @@ public class GeneralServer implements Observer {
         int userID = dao.getUserDAO().readDAOUserByLogin(login, password);
         if (userID != -1) {
             checkLogin(userID, client);
+            client.setInfo("email", login);
+            client.setInfo("id", userID);
         } else {
             sendToClientLogin(false, -1, null, client);
         }
@@ -158,6 +167,7 @@ public class GeneralServer implements Observer {
                 return;
             }
         sendToClientFirstConn(false, client);
+
     }
 
     /**
@@ -181,7 +191,7 @@ public class GeneralServer implements Observer {
     public void handleCreateDepartmentFromClient(String name, String refTeacherID, String descriptionDep, ConnectionToClient client) {
         int result = dao.getDepartmentDAO().createDepartment(name,refTeacherID,descriptionDep);
 
-        String mess = " ";
+        String mess;
         if (result == 1){
             mess = "#CREATEDEPARTMENT Success";
         }
@@ -205,7 +215,7 @@ public class GeneralServer implements Observer {
         int idDepart=Integer.parseInt(idDep);
         int result = dao.getDepartmentDAO().updateDepartment(idDepart,name,refTeacherID,descriptionDep);
 
-        String mess = " ";
+        String mess;
         if (result == 1){
             mess = "#CREATEDDEPARTMENT Success";
         }
@@ -227,7 +237,7 @@ public class GeneralServer implements Observer {
         int idDepart=Integer.parseInt(idDep);
         int result = dao.getDepartmentDAO().deleteDepartment(idDepart);
 
-        String mess = " ";
+        String mess;
         if (result == 1){
             mess = "#DELETEDDEPARTMENT Success";
         }
@@ -249,7 +259,7 @@ public class GeneralServer implements Observer {
         int idDepart=Integer.parseInt(idDep);
         int result = dao.getDepartmentDAO().readDepartment(idDepart);
 
-        String mess = " ";
+        String mess;
         if (result == 1){
             mess = "#READDEPARTMENT Success";
         }
@@ -275,7 +285,7 @@ public class GeneralServer implements Observer {
     private void handleCreateRoomFromClient(String name, int capacity, int building, boolean hasProjector, boolean hasComputer, String description, ConnectionToClient client){
         int result = dao.getRoomDAO().createRoom(name, capacity, building, hasProjector, hasComputer, description);
 
-        String mess = " ";
+        String mess;
         if (result == 1){
             mess = "#CREATEDROOM Success";
         }
@@ -288,6 +298,35 @@ public class GeneralServer implements Observer {
             e.printStackTrace();
         }
 
+    }
+
+    /**
+     * This method retrieves a message sent by a client to another.
+     * It then sends back to the original client, and to the receiver if it is connected.
+     * @param senderID: the sender ID from the DB
+     * @param receiverEmail: The email of the receiver.
+     * @param messageContent: The message content.
+     * @param client: The original client.
+     */
+    private void handleSendMessageToClient(int senderID, String receiverEmail, String messageContent, ConnectionToClient client) {
+        int res = dao.getConversationDAO().storeMessage(senderID, receiverEmail, messageContent);
+        try{
+            if(res == 1){
+                client.sendToClient("#MESSAGE SENT");
+                Thread[] clients = comm.getClientConnections();
+                for(Thread cli : clients){
+                    if(((ConnectionToClient)cli).getInfo("email").equals(receiverEmail)) {
+                        ((ConnectionToClient) cli).sendToClient("#MSGFORYOU-/-" + client.getInfo("email") + "-/-" + messageContent);
+                        continue;
+                    }
+                }
+                client.sendToClient("#MSGFORYOU-/-"+client.getInfo("email")+"-/-"+messageContent);
+            }else {
+                client.sendToClient("#MESSAGE ERROR");
+            }
+        }catch (IOException e){
+            e.printStackTrace();
+        }
     }
 
     /**

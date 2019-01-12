@@ -2,7 +2,7 @@ package server.DAO;
 
 import java.sql.*;
 
-public class SQLServerDAORoom extends AbstractRoomDAO{
+public class SQLServerDAORoom extends AbstractDAORoom{
 
     public SQLServerDAORoom(){
 

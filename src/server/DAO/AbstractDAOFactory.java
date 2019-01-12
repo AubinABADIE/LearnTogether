@@ -11,7 +11,8 @@ public abstract class AbstractDAOFactory{
 
     private AbstractDAOUser userDAO;
     private AbstractDAODepartment departmentDAO;
-    private AbstractRoomDAO roomDAO;
+    private AbstractDAORoom roomDAO;
+    private AbstractDAOConversation conversationDAO;
 
     /**
      * Default constructor
@@ -22,11 +23,11 @@ public abstract class AbstractDAOFactory{
 
     public abstract Connection getConnection();
 
-    public AbstractRoomDAO getRoomDAO() {
+    public AbstractDAORoom getRoomDAO() {
         return roomDAO;
     }
 
-    public void setRoomDAO(AbstractRoomDAO roomDAO) {
+    public void setRoomDAO(AbstractDAORoom roomDAO) {
         this.roomDAO = roomDAO;
     }
 
@@ -46,9 +47,19 @@ public abstract class AbstractDAOFactory{
         this.departmentDAO = departmentDAO;
     }
 
+    public AbstractDAOConversation getConversationDAO() {
+        return conversationDAO;
+    }
+
+    public void setConversationDAO(AbstractDAOConversation conversationDAO) {
+        this.conversationDAO = conversationDAO;
+    }
+
     public abstract void createDAOUser();
 
     public abstract void createDAODepartment();
 
     public abstract void createDAORoom();
+
+    public abstract void createDAOConversation();
 }
