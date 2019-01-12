@@ -303,8 +303,20 @@ public class AdminUI extends TeacherUI {
         hboxcomputerRoomInfo.getChildren().add(computer);
         hboxdescRoomInfo.getChildren().add(description);
 
-        vboxInfoRoom.getChildren().addAll(hboxnameRoomInfo,hboxcapacityRoomInfo,hboxbuildingRoomInfo,hboxprojectorRoomInfo, hboxcomputerRoomInfo, hboxdescRoomInfo);
+        hboxnameRoomInfo.setAlignment(Pos.CENTER);
+        hboxcapacityRoomInfo.setAlignment(Pos.CENTER);
+        hboxbuildingRoomInfo.setAlignment(Pos.CENTER);
+        hboxcomputerRoomInfo.setAlignment(Pos.CENTER);
+        hboxprojectorRoomInfo.setAlignment(Pos.CENTER);
+        hboxdescRoomInfo.setAlignment(Pos.CENTER);
 
+        //create update button
+        Button btnUpdateRoom = new Button("Update");
+        btnUpdateRoom.setAlignment(Pos.CENTER);
+
+        vboxInfoRoom.getChildren().addAll(hboxnameRoomInfo,hboxcapacityRoomInfo,hboxbuildingRoomInfo,hboxprojectorRoomInfo, hboxcomputerRoomInfo, hboxdescRoomInfo, btnUpdateRoom);
+        vboxInfoRoom.setSpacing(10);
+        vboxInfoRoom.setPadding( new Insets(100, 0, 0, 75));
 
 
         btnAddRoom.setOnAction(event -> {
