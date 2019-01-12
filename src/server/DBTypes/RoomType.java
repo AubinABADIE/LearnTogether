@@ -1,6 +1,8 @@
 package server.DBTypes;
 
-public class RoomType {
+import java.io.Serializable;
+
+public class RoomType implements Serializable {
     private int id;
     private String name;
     private int capacity;
