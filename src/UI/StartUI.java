@@ -358,9 +358,7 @@ public class StartUI extends UI {
     }
     @Override
     public void getRooms(List<RoomType> rooms){
-        Platform.runLater(() -> {
-            adminUI.setRooms(rooms);
-        });
+        Platform.runLater(() -> adminUI.setRooms(rooms));
 
     }
 
