@@ -1,10 +1,8 @@
 package client.Room;
 
 import client.CoreClient;
-import server.DBTypes.RoomType;
 
 import java.io.IOException;
-import java.util.List;
 
 public class RoomServices {
     private CoreClient client;

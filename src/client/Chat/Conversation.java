@@ -1,8 +1,11 @@
 package client.Chat;
 
+import Types.MessageType;
 import client.CoreClient;
 
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -68,12 +71,14 @@ public class Conversation {
 
     public void handleReceivedMessage(String msg) {
         String[] arguments = msg.split("-/-");
-        StringBuffer message = new StringBuffer();
-        arguments[1].substring(0, arguments[1].indexOf('@'));
-        message.append(arguments[2]);
-        message.append(arguments[1]);
-        message.append(": ");
-        message.append(arguments[3]);
+        SimpleDateFormat parser = new SimpleDateFormat(" '['HH:mm:ss']'");
+
+        try {
+            MessageType message = new MessageType(0, arguments[4], parser.parse(arguments[3]), arguments[1],arguments[2]);
+            client.getDisplay().displayMessage(message);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
 
     }
 }

@@ -2,7 +2,7 @@ package server.DAO;
 
 import client.Courses.Course;
 import client.Records.Record;
-import server.DBTypes.UserType;
+import Types.UserType;
 
 import java.io.File;
 import java.util.*;

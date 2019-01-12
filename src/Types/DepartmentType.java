@@ -1,4 +1,4 @@
-package server.DBTypes;
+package Types;
 
 public class DepartmentType {
     private int idDeppartment;

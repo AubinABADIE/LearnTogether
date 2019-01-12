@@ -1,6 +1,7 @@
 package common;
 
-import server.DBTypes.RoomType;
+import Types.MessageType;
+import Types.RoomType;
 
 import java.util.List;
 
@@ -14,5 +15,5 @@ public interface DisplayIF {
     void setState(String cmd);
     void showLogin(boolean isConnected, int id, String role);
     void getRooms(List<RoomType> rooms);
-    void displayMessage(String message);
+    void displayMessage(MessageType message);
 }

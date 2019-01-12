@@ -1,8 +1,8 @@
 package server.DAO;
 
-import server.DBTypes.CourseType;
-import server.DBTypes.PromotionType;
-import server.DBTypes.UserType;
+import Types.CourseType;
+import Types.PromotionType;
+import Types.UserType;
 
 import java.io.File;
 import java.sql.*;

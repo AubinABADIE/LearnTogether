@@ -2,6 +2,8 @@ package UI;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+
+import Types.MessageType;
 import client.CoreClient;
 import common.DisplayIF;
 import javafx.application.Application;
@@ -11,6 +13,8 @@ import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
@@ -242,7 +246,12 @@ public Tab createTabProfile() {
         Label startConvLabel = new Label("Email for a new conversation: ");
         TextField startConvEmail = new TextField();
         Button startConvButton = new Button("New conversation");
-        //startConvButton.setOnAction(event -> client.createConversation(startConvEmail.getText()));
+        startConvButton.setOnAction(event -> {
+            if(startConvEmail.getText()!=null){
+                receiversEmail.add(startConvEmail.getText());
+            }
+
+        });
         newConv.setSpacing(20);
         newConv.setPadding(new Insets(15,12,15,12));
         newConv.getChildren().addAll(startConvLabel, startConvEmail, startConvButton);
@@ -262,7 +271,7 @@ public Tab createTabProfile() {
         conversationList.setSpacing(10);
         conversationList.setPadding(new Insets(10,10,10,10));
         ListView<String> convoNameList = new ListView<>();
-        receiversEmail = FXCollections.observableArrayList("Nothing...");
+        receiversEmail = FXCollections.observableArrayList("");
         receiversEmail.addListener((ListChangeListener<String>) c -> convoNameList.setItems(receiversEmail));
         convoNameList.setOnMouseClicked(event -> client.readConversation(userID, convoNameList.getSelectionModel().getSelectedItem()));
         conversationList.getChildren().addAll(conversationListLabel, convoNameList);
@@ -303,7 +312,7 @@ public Tab createTabProfile() {
     }
 
     @Override
-    public void displayMessage(String message){
+    public void displayMessage(MessageType message){
 
     }
 

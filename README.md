@@ -76,10 +76,11 @@ The server responds to a #SENDMSGTOCLIENT demand with this. It has two states, e
 ##\#MSGFORYOU
 The server sends a message from a client to another using this command. The parse method is "-/-"
 Arguments:
-- Email: the sender email
+- SendEmail: the sender email
+- RecvEmail: the receiver email
 - Timestamp: the time the message was sent, format ['HH:mm:ss']
 - Content: the message content  
-*Usage*:`#MSGFORYOU-/-{email}-/-{Timestamp}-/-{content}`
+*Usage*:`#MSGFORYOU-/-{SendEmail}-/-{RecvEmail}-/-{Timestamp}-/-{content}`
 
 #Users in the DB
 | id       |      name     |  first name |           email                   |   password   | role     |

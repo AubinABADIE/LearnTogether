@@ -16,7 +16,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import server.DBTypes.RoomType;
+import Types.RoomType;
 
 import java.io.IOException;
 import java.util.List;
@@ -359,7 +359,6 @@ public class StartUI extends UI {
     @Override
     public void getRooms(List<RoomType> rooms){
         Platform.runLater(() -> adminUI.setRooms(rooms));
-
     }
 
 }

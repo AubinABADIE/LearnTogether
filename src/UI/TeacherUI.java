@@ -8,7 +8,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import server.DBTypes.RoomType;
+import Types.RoomType;
 
 import java.util.List;
 

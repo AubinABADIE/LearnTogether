@@ -3,13 +3,11 @@ package server;
 import com.lloseng.ocsf.server.ConnectionToClient;
 import com.lloseng.ocsf.server.OriginatorMessage;
 import common.ChatIF;
-import server.DBTypes.*;
+import Types.*;
 import com.lloseng.ocsf.server.ObservableOriginatorServer;
 import server.DAO.*;
 
-import java.io.File;
 import java.io.IOException;
-import java.sql.Connection;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -101,9 +99,7 @@ public class GeneralServer implements Observer {
         }
     }
 
-    private void handleReadConversation(int askingId, String otherEmail, ConnectionToClient client) {
 
-    }
 
 
     /**
@@ -336,15 +332,30 @@ public class GeneralServer implements Observer {
                 Thread[] clients = comm.getClientConnections();
                 for(Thread cli : clients){
                     if(((ConnectionToClient)cli).getInfo("email").equals(receiverEmail)) {
-                        ((ConnectionToClient) cli).sendToClient("#MSGFORYOU-/-" + client.getInfo("email") + "-/-" +dateFormat.format(currentDate) + "-/-" + messageContent);
+                        ((ConnectionToClient) cli).sendToClient("#MSGFORYOU-/-" + client.getInfo("email")+"-/-"+receiverEmail + "-/-" +dateFormat.format(currentDate) + "-/-" + messageContent);
                         continue;
                     }
                 }
-                client.sendToClient("#MSGFORYOU-/-"+client.getInfo("email") + "-/-" + dateFormat.format(currentDate) + "-/-" + messageContent);
+                client.sendToClient("#MSGFORYOU-/-"+client.getInfo("email")+"-/-"+receiverEmail  + "-/-" + dateFormat.format(currentDate) + "-/-" + messageContent);
             }else {
                 client.sendToClient("#MESSAGE ERROR");
             }
         }catch (IOException e){
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * This function retrieves all the messages from a specific confirmation and then sends it to the asking client.
+     * @param askingId: the ID of the asking client.
+     * @param otherEmail: the other participant to the conversation.
+     * @param client: the asking client.
+     */
+    private void handleReadConversation(int askingId, String otherEmail, ConnectionToClient client) {
+        List<MessageType> conversationMessages = dao.getConversationDAO().retrieveConversation(askingId, otherEmail);
+        try {
+            client.sendToClient(conversationMessages);
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }

@@ -1,6 +1,6 @@
 package server.DAO;
 
-import server.DBTypes.RoomType;
+import Types.RoomType;
 
 import java.sql.*;
 import java.util.ArrayList;

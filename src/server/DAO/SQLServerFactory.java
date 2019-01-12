@@ -1,7 +1,7 @@
 package server.DAO;
 
 
-import server.DBTypes.UserType;
+import Types.UserType;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

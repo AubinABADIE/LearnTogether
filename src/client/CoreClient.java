@@ -7,7 +7,7 @@ import client.Users.UserServices;
 import com.lloseng.ocsf.client.AdaptableClient;
 import common.ClientIF;
 import common.DisplayIF;
-import server.DBTypes.RoomType;
+import Types.RoomType;
 
 import java.io.IOException;
 import java.util.List;
