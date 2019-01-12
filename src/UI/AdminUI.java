@@ -240,6 +240,7 @@ public class AdminUI extends TeacherUI {
         Button btnDeleteRoom = new Button("Delete");
         btnDeleteRoom.setGraphic(deleteRoomView);//setting icon to button
 
+        // add in hbox buttons and title
         HBox hboxButtonRoom = new HBox();
 
         Text title = new Text("Room : ");
@@ -248,17 +249,17 @@ public class AdminUI extends TeacherUI {
         hboxButtonRoom.getChildren().add(btnAddRoom);
         hboxButtonRoom.getChildren().add(btnDeleteRoom);
         hboxButtonRoom.setSpacing(5);
-        /*ObservableList<String> items = FXCollections.observableArrayList (
-                "Single", "Double", "Suite", "Family App");*/
 
         list.setItems(roomNames);
         System.out.println(roomNames);
         list.setPrefWidth(350);
         list.setPrefHeight(500);
 
+        // left vbox
         VBox vboxListRoom = new VBox();
         vboxListRoom.getChildren().add(list);
 
+        //grid pane
         GridPane gridRoomVisu = new GridPane();
         gridRoomVisu.setHgap(10);
         gridRoomVisu.setVgap(10);
@@ -270,12 +271,40 @@ public class AdminUI extends TeacherUI {
         /*creation of the info vbox of one room*/
         VBox vboxInfoRoom = new VBox();
         HBox hboxnameRoomInfo = new HBox();
+        HBox hboxcapacityRoomInfo = new HBox();
+        HBox hboxbuildingRoomInfo = new HBox();
+        HBox hboxprojectorRoomInfo = new HBox();
+        HBox hboxcomputerRoomInfo = new HBox();
+        HBox hboxdescRoomInfo = new HBox();
         Label nameLabel = new Label("Name of room : ");
+        Label capacityLabel = new Label( "Capacity room : ");
+        Label buildingLabel = new Label("Room building number : ");
+        Label hasComputerLabel = new Label(" There are computers : ");
+        Label hasProjectorLabel = new Label(" There is projector : ");
+        Label descriptionLabel = new Label("Room description : ");
         Text name = new Text(" ");
-        hboxnameRoomInfo.getChildren().add(nameLabel);
-        hboxnameRoomInfo.getChildren().add(name);
+        Text capacity = new Text(" ");
+        Text building = new Text(" ");
+        Text projector = new Text(" ");
+        Text computer = new Text(" ");
+        Text description = new Text(" ");
 
-        vboxInfoRoom.getChildren().add(hboxnameRoomInfo);
+
+        hboxnameRoomInfo.getChildren().add(nameLabel);
+        hboxcapacityRoomInfo.getChildren().add(capacityLabel);
+        hboxbuildingRoomInfo.getChildren().add(buildingLabel);
+        hboxcomputerRoomInfo.getChildren().add(hasComputerLabel);
+        hboxprojectorRoomInfo.getChildren().add(hasProjectorLabel);
+        hboxdescRoomInfo.getChildren().add(descriptionLabel);
+        hboxnameRoomInfo.getChildren().add(name);
+        hboxcapacityRoomInfo.getChildren().add(capacity);
+        hboxbuildingRoomInfo.getChildren().add(building);
+        hboxprojectorRoomInfo.getChildren().add(projector);
+        hboxcomputerRoomInfo.getChildren().add(computer);
+        hboxdescRoomInfo.getChildren().add(description);
+
+        vboxInfoRoom.getChildren().addAll(hboxnameRoomInfo,hboxcapacityRoomInfo,hboxbuildingRoomInfo,hboxprojectorRoomInfo, hboxcomputerRoomInfo, hboxdescRoomInfo);
+
 
 
         btnAddRoom.setOnAction(event -> {
@@ -283,8 +312,25 @@ public class AdminUI extends TeacherUI {
         });
 
         list.setOnMouseClicked(event -> {
+            gridRoomVisu.getChildren().remove(vboxInfoRoom);
             gridRoomVisu.add(vboxInfoRoom, 2, 2);
             System.out.println("clicked on " + list.getSelectionModel().getSelectedItem());
+            SelectionModel<RoomType> selectedRoom = list.getSelectionModel();
+            name.setText(selectedRoom.getSelectedItem().getName());
+            capacity.setText(Integer.toString(selectedRoom.getSelectedItem().getCapacity()));
+            building.setText(Integer.toString(selectedRoom.getSelectedItem().getBuilding()));
+            if ( selectedRoom.getSelectedItem().isHasProjector()){
+                projector.setText("Yes");
+            } else {
+                projector.setText("No");
+            }
+            if ( selectedRoom.getSelectedItem().isHasComputer()){
+                computer.setText("Yes");
+            } else {
+                computer.setText("No");
+            }
+            description.setText(selectedRoom.getSelectedItem().getDescription());
+
         });
 
 
