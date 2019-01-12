@@ -37,14 +37,12 @@ public class AdminUI extends TeacherUI {
     private Scene principalAdminScene;
     private TabPane tabPane;
     private Tab tabProfile, tabSchedule, tabRecords, tabDiary, tabChat, tabCourse, tabRoom;
-    private List<RoomType> roomList;
-    private ObservableList<RoomType> rooms;
+    private ObservableList<RoomType> roomNames;
     /**
      * Default constructor
      */
     public AdminUI(Stage primaryStage, String login, int id, CoreClient client) {
         super(primaryStage, login, id, client);
-        this.roomList = new ArrayList();
     }
 
     public Scene getPrincipalAdminScene() {
@@ -55,16 +53,8 @@ public class AdminUI extends TeacherUI {
         this.principalAdminScene = principalAdminScene;
     }
 
-    public List<RoomType> getRoomList() {
-        return roomList;
-    }
-
-    public void setRoomList(List<RoomType> roomList) {
-        this.roomList = roomList;
-    }
-
-    public void setRooms(List<RoomType> rooms) {
-        this.rooms = FXCollections.observableArrayList(rooms);
+    public void setRooms(List<RoomType> roomList) {
+        roomNames.setAll(roomList);
     }
 
     /**
@@ -140,7 +130,7 @@ public class AdminUI extends TeacherUI {
         // labels
         Label nameLabel = new Label("Name of course : ");
         Label descriptionLabel = new Label("Description : ");
-        Label totalHoursLabel = new Label("Toltal hours : ");
+        Label totalHoursLabel = new Label("Total hours : ");
         Label promotionLabel = new Label ("Promotion : ");
         Label referingTeacherLabel = new Label ("Refering teacher : ");
 
@@ -225,7 +215,11 @@ public class AdminUI extends TeacherUI {
 
         /*add list of room*/
         client.getRooms();
-
+        ListView<RoomType> list = new ListView<>();
+        roomNames = FXCollections.observableArrayList();
+        roomNames.addListener((ListChangeListener<RoomType>) c -> {
+            list.setItems(roomNames);
+        });
 
         Image addRoom = new Image(getClass().getResourceAsStream("images/icons8-plus-208.png"));
         ImageView addRoomView = new ImageView(addRoom);
@@ -254,15 +248,11 @@ public class AdminUI extends TeacherUI {
         hboxButtonRoom.getChildren().add(btnAddRoom);
         hboxButtonRoom.getChildren().add(btnDeleteRoom);
         hboxButtonRoom.setSpacing(5);
+        /*ObservableList<String> items = FXCollections.observableArrayList (
+                "Single", "Double", "Suite", "Family App");*/
 
-
-        ListView<RoomType> list = new ListView<RoomType>();
-        ObservableList<String> items = FXCollections.observableArrayList (
-                "Single", "Double", "Suite", "Family App");
-        /*rooms.addListener((ListChangeListener<RoomType>) c -> {
-
-        });*/
-        list.setItems(rooms);
+        list.setItems(roomNames);
+        System.out.println(roomNames);
         list.setPrefWidth(350);
         list.setPrefHeight(500);
 
@@ -277,7 +267,7 @@ public class AdminUI extends TeacherUI {
         gridRoomVisu.add(hboxButtonRoom, 1, 0);
         gridRoomVisu.add(vboxListRoom, 1, 2);
 
-        /*creation of the info vboxof one room*/
+        /*creation of the info vbox of one room*/
         VBox vboxInfoRoom = new VBox();
         HBox hboxnameRoomInfo = new HBox();
         Label nameLabel = new Label("Name of room : ");
@@ -292,15 +282,12 @@ public class AdminUI extends TeacherUI {
             createTabRoom(tabRoom);
         });
 
-        list.setOnMouseClicked(new EventHandler<MouseEvent>() {
-
-            public void handle(MouseEvent event) {
-
-                gridRoomVisu.add(vboxInfoRoom, 2, 2);
-
-                System.out.println("clicked on " + list.getSelectionModel().getSelectedItem());
-            }
+        list.setOnMouseClicked(event -> {
+            gridRoomVisu.add(vboxInfoRoom, 2, 2);
+            System.out.println("clicked on " + list.getSelectionModel().getSelectedItem());
         });
+
+
 
         return gridRoomVisu;
     }

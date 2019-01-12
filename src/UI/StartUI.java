@@ -358,9 +358,10 @@ public class StartUI extends UI {
     }
     @Override
     public void getRooms(List<RoomType> rooms){
-        adminUI.setRoomList(rooms);
-        adminUI.currentStateProperty().setValue("LISTROOM");
-        adminUI.setRooms(rooms);
+        Platform.runLater(() -> {
+            adminUI.setRooms(rooms);
+        });
+
     }
 
 }

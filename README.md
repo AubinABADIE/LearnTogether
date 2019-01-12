@@ -41,7 +41,7 @@ Arguments:
 
 ## \#LOGON 
 
-The server responds to a #LOGIN injonction from the client by sending this to the client. It is accompanied by several arguments:
+The server responds to a #LOGIN injunction from the client by sending this to the client. It is accompanied by several arguments:
 
  - isConnected: boolean, true if the connection has been successful or false otherwise
  - id: int the user id from the DB
@@ -49,7 +49,7 @@ The server responds to a #LOGIN injonction from the client by sending this to th
 *Usage*:`#LOGON {isConnected} {id} {role}`
 
 ## \#FIRSTCONN
-The server responds to a #FIRSTCONN injonction from the client by sending this.
+The server responds to a #FIRSTCONN injunction from the client by sending this.
 Arguments :
 - hasSucceeded : boolean, true if it was the first connection and the password has been defined, false otherwise.
 
@@ -65,6 +65,13 @@ Arguments :
 ## \#MESSAGE
 The server responds to a #SENDMSGTOCLIENT demand with this. It has two states, either sent (the message is in the DB) or error (the message cannot be put into the DB)  
 *Usage*:`#MESSAGE {State}`
+
+##\#MSGFORYOU
+The server sends a message from a client to another using this command. The parse method is "-/-"
+Arguments:
+- Email: the sender email
+- Content: the message content  
+*Usage*:`#MSGFORYOU-/-{email}-/-{content}`
 
 #Users in the DB
 | id       |      name     |  first name |           email                   |   password   | role     |
