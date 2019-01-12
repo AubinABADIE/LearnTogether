@@ -43,9 +43,31 @@ public abstract class UI extends Application implements DisplayIF {
     protected String password;
     protected int userID;
 
+    public String getConnectionStatus() {
+        return connectionStatus.get();
+    }
 
+    public StringProperty connectionStatusProperty() {
+        return connectionStatus;
+    }
 
-	/**
+    public void setConnectionStatus(String connectionStatus) {
+        this.connectionStatus.set(connectionStatus);
+    }
+
+    public String getCurrentState() {
+        return currentState.get();
+    }
+
+    public StringProperty currentStateProperty() {
+        return currentState;
+    }
+
+    public void setCurrentState(String currentState) {
+        this.currentState.set(currentState);
+    }
+
+    /**
 	 * Create the window with the two scene and set the first scene as main.
 	 * 
 	 * @param primaryStage Frame window.

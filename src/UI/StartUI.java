@@ -16,8 +16,10 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import server.DBTypes.RoomType;
 
 import java.io.IOException;
+import java.util.List;
 
 
 public class StartUI extends UI {
@@ -353,6 +355,12 @@ public class StartUI extends UI {
     @Override
     public void display(String message){
 
+    }
+    @Override
+    public void getRooms(List<RoomType> rooms){
+        adminUI.setRoomList(rooms);
+        adminUI.currentStateProperty().setValue("LISTROOM");
+        adminUI.setRooms(rooms);
     }
 
 }

@@ -25,6 +25,9 @@ Arguments:
 
 *Usage*: `#CRATEROOM-/-{name}-/-{capacity}-/-{building}-/-{hasProjector}-/-{hasComputer}-/-{description}`
 
+## \#GETROOMS
+Used when the client wants the list of all rooms.
+
 # FROM the server
 
 

@@ -3,10 +3,7 @@ package server;
 import com.lloseng.ocsf.server.ConnectionToClient;
 import com.lloseng.ocsf.server.OriginatorMessage;
 import common.ChatIF;
-import server.DBTypes.CourseType;
-import server.DBTypes.PromotionType;
-import server.DBTypes.RecordType;
-import server.DBTypes.UserType;
+import server.DBTypes.*;
 import com.lloseng.ocsf.server.ObservableOriginatorServer;
 import server.DAO.*;
 
@@ -89,6 +86,9 @@ public class GeneralServer implements Observer {
         else if (instruction.startsWith("CREATEROOM")){
             String[] attributes = instruction.split("-/-");
             handleCreateRoomFromClient(attributes[1], Integer.parseInt(attributes[2]), Integer.parseInt(attributes[3]), Boolean.parseBoolean(attributes[4]), Boolean.parseBoolean(attributes[5]),attributes[6], client);
+        }
+        else if (instruction.startsWith("GETROOMS")){
+            handleListRoomsFromClient(client);
         }
     }
 
@@ -284,6 +284,20 @@ public class GeneralServer implements Observer {
         }
         try {
             client.sendToClient(mess);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * This method delegates to the dao the research of the room
+     */
+
+    public void handleListRoomsFromClient(ConnectionToClient client){
+       List<RoomType> rooms =  dao.getRoomDAO().searchAllRooms();
+
+        try {
+            client.sendToClient(rooms);
         } catch (IOException e) {
             e.printStackTrace();
         }

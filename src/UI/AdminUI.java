@@ -2,11 +2,18 @@ package UI;
 
 import client.CoreClient;
 import javafx.application.Platform;
+import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
+import javafx.collections.ObservableList;
+import javafx.event.EventHandler;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
@@ -14,6 +21,10 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import server.DBTypes.RoomType;
+
+import java.util.ArrayList;
+import java.util.List;
 
 //StaffAdmin@umontpellier.fr
 //AdmStaff
@@ -26,11 +37,14 @@ public class AdminUI extends TeacherUI {
     private Scene principalAdminScene;
     private TabPane tabPane;
     private Tab tabProfile, tabSchedule, tabRecords, tabDiary, tabChat, tabCourse, tabRoom;
+    private List<RoomType> roomList;
+    private ObservableList<RoomType> rooms;
     /**
      * Default constructor
      */
     public AdminUI(Stage primaryStage, String login, int id, CoreClient client) {
         super(primaryStage, login, id, client);
+        this.roomList = new ArrayList();
     }
 
     public Scene getPrincipalAdminScene() {
@@ -39,6 +53,18 @@ public class AdminUI extends TeacherUI {
 
     public void setPrincipalAdminScene(Scene principalAdminScene) {
         this.principalAdminScene = principalAdminScene;
+    }
+
+    public List<RoomType> getRoomList() {
+        return roomList;
+    }
+
+    public void setRoomList(List<RoomType> roomList) {
+        this.roomList = roomList;
+    }
+
+    public void setRooms(List<RoomType> rooms) {
+        this.rooms = FXCollections.observableArrayList(rooms);
     }
 
     /**
@@ -79,7 +105,7 @@ public class AdminUI extends TeacherUI {
         tabChat.setText("Chat");
         tabChat.setClosable(false);
 
-        tabRoom= createTabRoom();
+        tabRoom= tabRoom();
         
         tabCourse = createTabCourse();
 
@@ -184,12 +210,102 @@ public class AdminUI extends TeacherUI {
     /**
      * This method create the room tab in the principal admin scene
      */
-    private Tab createTabRoom(){
+    private Tab tabRoom(){
 
         Tab tabRoom = new Tab();
         tabRoom.setText("Room");
         tabRoom.setClosable(false);
 
+
+        tabRoom.setContent(roomRead(tabRoom));
+        return tabRoom;
+    }
+
+    private GridPane roomRead(Tab tabRoom){
+
+        /*add list of room*/
+        client.getRooms();
+
+
+        Image addRoom = new Image(getClass().getResourceAsStream("images/icons8-plus-208.png"));
+        ImageView addRoomView = new ImageView(addRoom);
+        addRoomView.setFitHeight(15);
+        addRoomView.setFitWidth(15);
+
+        //create button add
+        Button btnAddRoom = new Button("Add");
+        btnAddRoom.setGraphic(addRoomView);//setting icon to button
+
+        //delete button
+        Image deleteRoom = new Image(getClass().getResourceAsStream("images/icons8-annuler-208.png"));
+        ImageView deleteRoomView = new ImageView(deleteRoom);
+        deleteRoomView.setFitHeight(12);
+        deleteRoomView.setFitWidth(12);
+
+        //create button add
+        Button btnDeleteRoom = new Button("Delete");
+        btnDeleteRoom.setGraphic(deleteRoomView);//setting icon to button
+
+        HBox hboxButtonRoom = new HBox();
+
+        Text title = new Text("Room : ");
+        title.setFont(Font.font(20));
+        hboxButtonRoom.getChildren().add(title);
+        hboxButtonRoom.getChildren().add(btnAddRoom);
+        hboxButtonRoom.getChildren().add(btnDeleteRoom);
+        hboxButtonRoom.setSpacing(5);
+
+
+        ListView<RoomType> list = new ListView<RoomType>();
+        ObservableList<String> items = FXCollections.observableArrayList (
+                "Single", "Double", "Suite", "Family App");
+        /*rooms.addListener((ListChangeListener<RoomType>) c -> {
+
+        });*/
+        list.setItems(rooms);
+        list.setPrefWidth(350);
+        list.setPrefHeight(500);
+
+        VBox vboxListRoom = new VBox();
+        vboxListRoom.getChildren().add(list);
+
+        GridPane gridRoomVisu = new GridPane();
+        gridRoomVisu.setHgap(10);
+        gridRoomVisu.setVgap(10);
+        gridRoomVisu.setPadding(new Insets(10,10,10,10));
+
+        gridRoomVisu.add(hboxButtonRoom, 1, 0);
+        gridRoomVisu.add(vboxListRoom, 1, 2);
+
+        /*creation of the info vboxof one room*/
+        VBox vboxInfoRoom = new VBox();
+        HBox hboxnameRoomInfo = new HBox();
+        Label nameLabel = new Label("Name of room : ");
+        Text name = new Text(" ");
+        hboxnameRoomInfo.getChildren().add(nameLabel);
+        hboxnameRoomInfo.getChildren().add(name);
+
+        vboxInfoRoom.getChildren().add(hboxnameRoomInfo);
+
+
+        btnAddRoom.setOnAction(event -> {
+            createTabRoom(tabRoom);
+        });
+
+        list.setOnMouseClicked(new EventHandler<MouseEvent>() {
+
+            public void handle(MouseEvent event) {
+
+                gridRoomVisu.add(vboxInfoRoom, 2, 2);
+
+                System.out.println("clicked on " + list.getSelectionModel().getSelectedItem());
+            }
+        });
+
+        return gridRoomVisu;
+    }
+
+    private GridPane createTabRoom(Tab tabRoom){
         // labels
         Label nameLabel = new Label("Name of room : ");
         Label capacityLabel = new Label("Capacity : ");
@@ -320,15 +436,12 @@ public class AdminUI extends TeacherUI {
         });
 
         cancelCreate.setOnAction(event -> {
-            nameField.setText("");
-            capacityField.setText("");
-            buildingField.setText("");
-            descriptionField.setText("");
+            tabRoom.setContent(roomRead(tabRoom));
         });
 
-        return tabRoom;
-    }
 
+        return gridRoom;
+    }
 
     protected void setDefaultTab(){
         SingleSelectionModel<Tab> selectionModel = tabPane.getSelectionModel();

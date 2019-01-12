@@ -7,8 +7,10 @@ import client.Users.UserServices;
 import com.lloseng.ocsf.client.AdaptableClient;
 import common.ClientIF;
 import common.DisplayIF;
+import server.DBTypes.RoomType;
 
 import java.io.IOException;
+import java.util.List;
 
 public class CoreClient implements ClientIF {
     //Business logics
@@ -79,6 +81,9 @@ public class CoreClient implements ClientIF {
             else if  (((String) msg).startsWith("#DELETEDDEPARTMENT")){
                 department.handleDeletedDepartment((String) msg);
             }
+        } else if (msg instanceof List) {
+            if (((List)msg).get(0) instanceof RoomType)
+                display.getRooms((List<RoomType>)msg);
         }
     }
 
@@ -116,5 +121,13 @@ public class CoreClient implements ClientIF {
 
     public void handleDeleteDepartment(int departmentID){
         department.deleteDepartment(departmentID);
+    }
+
+    /**
+     * this method delegates getRooms to roomServices
+     * @return a room list
+     */
+    public void getRooms() {
+        room.getRooms();
     }
 }

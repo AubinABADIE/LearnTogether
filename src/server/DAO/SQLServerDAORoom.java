@@ -1,6 +1,10 @@
 package server.DAO;
 
+import server.DBTypes.RoomType;
+
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class SQLServerDAORoom extends AbstractRoomDAO{
 
@@ -66,5 +70,32 @@ public class SQLServerDAORoom extends AbstractRoomDAO{
             }
         }
         return result;
+    }
+
+    /**
+     * This method return the rooms list
+     */
+    public List<RoomType> searchAllRooms(){
+        ArrayList rooms = new ArrayList();
+        Connection connection = getConnection();
+        if(connection != null){
+            try{
+                PreparedStatement preparedStatement = connection.prepareStatement("SELECT * from Rooms");
+                ResultSet resultSet = preparedStatement.executeQuery();
+                while (resultSet.next()){
+                    rooms.add(new RoomType(resultSet.getInt(1),
+                            resultSet.getString(2),
+                            resultSet.getInt("capacity"),
+                            resultSet.getInt(4),
+                            resultSet.getBoolean("hasProjector"),
+                            resultSet.getBoolean("hasComputer"),
+                            resultSet.getString("descriptionRoom")));
+                }
+            }catch (SQLException e){e.printStackTrace();}
+            finally {
+                closeConnection(connection);
+            }
+        }
+        return rooms;
     }
 }

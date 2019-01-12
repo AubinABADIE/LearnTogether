@@ -1,8 +1,10 @@
 package client.Room;
 
 import client.CoreClient;
+import server.DBTypes.RoomType;
 
 import java.io.IOException;
+import java.util.List;
 
 public class RoomServices {
     private CoreClient client;
@@ -68,5 +70,17 @@ public class RoomServices {
             client.getDisplay().setState("RC SUCCESS");
         else
             client.getDisplay().setState("RC FAILURE");
+    }
+
+    /**
+     * This method send a message to the server to have the rooms list
+     */
+    public void getRooms() {
+        try {
+            client.getConnection().sendToServer("#GETROOMS" );
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
 }
