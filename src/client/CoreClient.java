@@ -67,8 +67,17 @@ public class CoreClient implements ClientIF {
                 user.handleAnswerLogin((String) msg);
             } else if (((String) msg).startsWith("#FIRSTCONN")) {
                 user.handleFirstConnAnswer((String) msg);
-            } else if  (((String) msg).startsWith("#CREATEDROOM")){
+            } else if  (((String) msg).startsWith("#CREATEDDROOM")){
                 room.handleCreatedRoom((String) msg);
+            }
+            else if  (((String) msg).startsWith("#CREATEDDEPARTMENT")){
+                department.handleCreatedDepartment((String) msg);
+            }
+            else if  (((String) msg).startsWith("#UPDATEDDEPARTMENT")){
+                department.handleUpdatedDepartment((String) msg);
+            }
+            else if  (((String) msg).startsWith("#DELETEDDEPARTMENT")){
+                department.handleDeletedDepartment((String) msg);
             }
         }
     }

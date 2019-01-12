@@ -80,7 +80,7 @@ public class GeneralServer implements Observer {
         }
         else if(instruction.startsWith("UPDATEDEP")){
             String[] creds = instruction.split(" ");
-            handleUpdateDepartmentFromClient(creds[1], creds[2], creds[3], client);
+            handleUpdateDepartmentFromClient(creds[1], creds[2], creds[3],creds[4], client);
         }
         else if(instruction.startsWith("DELETEDEP")){
             String[] creds = instruction.split(" ");
@@ -173,31 +173,94 @@ public class GeneralServer implements Observer {
     }
 
     /**
-     * @param cred
-     * @param cred1
-     * @param cred2
+     * @param name
+     * @param refTeacherID
+     * @param descriptionDep
      * @param client
      */
-    public void handleCreateDepartmentFromClient(String cred, String cred1, String cred2, ConnectionToClient client) {
-        //dao.createDAODepartment(cred,cred1,cred2);
+    public void handleCreateDepartmentFromClient(String name, String refTeacherID, String descriptionDep, ConnectionToClient client) {
+        int result = dao.getDepartmentDAO().createDepartment(name,refTeacherID,descriptionDep);
+
+        String mess = " ";
+        if (result == 1){
+            mess = "#CREATEDEPARTMENT Success";
+        }
+        else{
+            mess = "#CREATEDEPARTMENT Failure";
+        }
+        try {
+            client.sendToClient(mess);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     /**
-     * @param cred
-     * @param cred1
-     * @param cred2
+     * @param idDep
+     * @param name
+     * @param refTeacherID
      * @param client
      */
-    public void handleUpdateDepartmentFromClient(String cred, String cred1, String cred2, ConnectionToClient client) {
-        //dao.updateDAODepartment(cred,cred1,cred2);
+    public void handleUpdateDepartmentFromClient(String idDep, String name, String refTeacherID, String descriptionDep, ConnectionToClient client) {
+        int idDepart=Integer.parseInt(idDep);
+        int result = dao.getDepartmentDAO().updateDepartment(idDepart,name,refTeacherID,descriptionDep);
+
+        String mess = " ";
+        if (result == 1){
+            mess = "#CREATEDDEPARTMENT Success";
+        }
+        else{
+            mess = "#CREATEDEPARTMENT Failure";
+        }
+        try {
+            client.sendToClient(mess);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     /**
-     * @param cred
+     * @param idDep
      * @param client
      */
-    public void handleDeleteDepartmentFromClient(String cred, ConnectionToClient client) {
-        //dao.deleteDAODepartment(cred);
+    public void handleDeleteDepartmentFromClient(String idDep, ConnectionToClient client) {
+        int idDepart=Integer.parseInt(idDep);
+        int result = dao.getDepartmentDAO().deleteDepartment(idDepart);
+
+        String mess = " ";
+        if (result == 1){
+            mess = "#DELETEDDEPARTMENT Success";
+        }
+        else{
+            mess = "#DELETEDDEPARTMENT Failure";
+        }
+        try {
+            client.sendToClient(mess);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * @param idDep
+     * @param client
+     */
+    public void handleReadDepartmentFromClient(String idDep, ConnectionToClient client) {
+        int idDepart=Integer.parseInt(idDep);
+        int result = dao.getDepartmentDAO().readDepartment(idDepart);
+
+        String mess = " ";
+        if (result == 1){
+            mess = "#READDEPARTMENT Success";
+        }
+        else{
+            mess = "#READDEPARTMENT Failure";
+        }
+        try {
+            client.sendToClient(mess);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     /**

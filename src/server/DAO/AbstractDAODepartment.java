@@ -12,21 +12,23 @@ public abstract class AbstractDAODepartment{
     }
 
     /**
-     * @param cred
-     * @param cred1
-     * @param cred2
+     * @param name
+     * @param refTeacherID
+     * @param descriptionDep
      */
-    public abstract void handleCreateDepartmentFromClient(String cred, String cred1, String cred2);
+    public abstract int createDepartment(String name, String refTeacherID, String descriptionDep);
 
     /**
-     * @param cred
-     * @param cred1
-     * @param cred2
+     * @param name
+     * @param refTeacherID
+     * @param descriptionDep
      */
-    public abstract void handleUpdateDepartmentFromClient(String cred, String cred1, String cred2);
+    public abstract int updateDepartment(int idDep, String name, String refTeacherID, String descriptionDep);
 
     /**
-     * @param cred
+     * @param idDep
      */
-    public abstract void handleDeleteDepartmentFromClient(String cred);
+    public abstract int deleteDepartment(int idDep);
+
+    public abstract int readDepartment(int idDep);
 }

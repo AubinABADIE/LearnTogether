@@ -11,6 +11,8 @@ import java.io.IOException;
  */
 public class Department {
 
+    private CoreClient client;
+
     /**
      * Attributes
      */
@@ -93,14 +95,37 @@ public class Department {
     }
 
     /**
-     * @param idep
+     * @param idDep
      */
-    public void deleteDepartment(int idep) {
+    public void deleteDepartment(int idDep) {
         try {
-            coreClient.getConnection().sendToServer("#DELETEDEP " + idep);
+            coreClient.getConnection().sendToServer("#DELETEDEP " + idDep);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
+    public void handleCreatedDepartment(String msg){
+        String args[] = msg.split(" ");
+        if(args[1].equalsIgnoreCase("SUCCESS"))
+            client.getDisplay().setState("DC SUCCESS");
+        else
+            client.getDisplay().setState("DC FAILURE");
+    }
+
+    public void handleUpdatedDepartment(String msg){
+        String args[] = msg.split(" ");
+        if(args[1].equalsIgnoreCase("SUCCESS"))
+            client.getDisplay().setState("DU SUCCESS");
+        else
+            client.getDisplay().setState("DU FAILURE");
+    }
+
+    public void handleDeletedDepartment(String msg){
+        String args[] = msg.split(" ");
+        if(args[1].equalsIgnoreCase("SUCCESS"))
+            client.getDisplay().setState("DD SUCCESS");
+        else
+            client.getDisplay().setState("DD FAILURE");
+    }
 }
