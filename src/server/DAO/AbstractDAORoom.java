@@ -8,7 +8,7 @@ import java.util.List;
 /**
  * 
  */
-public abstract class AbstractRoomDAO {
+public abstract class AbstractDAORoom {
 
     public abstract Connection getConnection();
     public abstract void closeConnection(Connection connection);

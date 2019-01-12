@@ -54,7 +54,7 @@ public class CoreClient implements ClientIF {
         user = new UserServices(this);
         department = new Department( this);
         room = new RoomServices(this);
-        conversations = new Conversation();
+        conversations = new Conversation(this);
     }
 
     /**
@@ -130,4 +130,6 @@ public class CoreClient implements ClientIF {
     public void getRooms() {
         room.getRooms();
     }
+
+    public void createConversation(String receiverEmail){conversations.createConversation(receiverEmail);}
 }
