@@ -3,6 +3,7 @@ package client.Chat;
 import client.CoreClient;
 
 import java.io.IOException;
+import java.util.Date;
 import java.util.List;
 
 
@@ -30,9 +31,9 @@ public class Conversation {
         }
     }
 
-    public void sendMsgToClient(int id, String receiverEmail){
+    public void sendMsgToClient(int id, String receiverEmail, String messageContent){
         try {
-            client.getConnection().sendToServer("#SENDMSGTOCLIENT-/-" + id + "-/-" + receiverEmail);
+            client.getConnection().sendToServer("#SENDMSGTOCLIENT-/-" + id + "-/-" + receiverEmail +"-/-"+messageContent);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -54,10 +55,25 @@ public class Conversation {
     }
 
     /**
-     * @param conv
+     * @param email
+     *
      */
-    public void readConversation(Conversation conv) {
-        // TODO implement here
+    public void readConversation(int id, String email) {
+        try {
+            client.getConnection().sendToServer("#RETRIEVECONVERSATION " +id+ " "+ email);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
+    public void handleReceivedMessage(String msg) {
+        String[] arguments = msg.split("-/-");
+        StringBuffer message = new StringBuffer();
+        arguments[1].substring(0, arguments[1].indexOf('@'));
+        message.append(arguments[2]);
+        message.append(arguments[1]);
+        message.append(": ");
+        message.append(arguments[3]);
+
+    }
 }

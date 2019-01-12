@@ -14,4 +14,5 @@ public interface DisplayIF {
     void setState(String cmd);
     void showLogin(boolean isConnected, int id, String role);
     void getRooms(List<RoomType> rooms);
+    void displayMessage(String message);
 }

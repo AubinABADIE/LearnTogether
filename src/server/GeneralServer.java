@@ -95,9 +95,15 @@ public class GeneralServer implements Observer {
             String[] attributes = instruction.split("-/-");
             handleSendMessageToClient(Integer.parseInt(attributes[2]), attributes[1],attributes[3], client);
         }
+        else if(instruction.startsWith("RETRIEVECONVERSATION")){
+            String[] attributes = instruction.split(" ");
+            handleReadConversation(Integer.parseInt(attributes[1]), attributes[2], client);
+        }
     }
 
+    private void handleReadConversation(int askingId, String otherEmail, ConnectionToClient client) {
 
+    }
 
 
     /**
@@ -330,11 +336,11 @@ public class GeneralServer implements Observer {
                 Thread[] clients = comm.getClientConnections();
                 for(Thread cli : clients){
                     if(((ConnectionToClient)cli).getInfo("email").equals(receiverEmail)) {
-                        ((ConnectionToClient) cli).sendToClient("#MSGFORYOU-/-" + client.getInfo("email") + "-/-" + messageContent);
+                        ((ConnectionToClient) cli).sendToClient("#MSGFORYOU-/-" + client.getInfo("email") + "-/-" +dateFormat.format(currentDate) + "-/-" + messageContent);
                         continue;
                     }
                 }
-                client.sendToClient("#MSGFORYOU-/-"+client.getInfo("email")+"-/-"+messageContent);
+                client.sendToClient("#MSGFORYOU-/-"+client.getInfo("email") + "-/-" + dateFormat.format(currentDate) + "-/-" + messageContent);
             }else {
                 client.sendToClient("#MESSAGE ERROR");
             }

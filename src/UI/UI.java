@@ -8,6 +8,9 @@ import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
+import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
@@ -34,6 +37,7 @@ public abstract class UI extends Application implements DisplayIF {
     Scene firstConnectionScene;
     StringProperty connectionStatus = new SimpleStringProperty("NOT CONNECTED");
     StringProperty currentState = new SimpleStringProperty("UNDEFINED");
+    ObservableList<String> receiversEmail;
 
     //Business logic
     CoreClient client;
@@ -257,8 +261,11 @@ public Tab createTabProfile() {
         Label conversationListLabel = new Label("All conversations");
         conversationList.setSpacing(10);
         conversationList.setPadding(new Insets(10,10,10,10));
-
-        conversationList.getChildren().addAll(conversationListLabel);
+        ListView<String> convoNameList = new ListView<>();
+        receiversEmail = FXCollections.observableArrayList("Nothing...");
+        receiversEmail.addListener((ListChangeListener<String>) c -> convoNameList.setItems(receiversEmail));
+        convoNameList.setOnMouseClicked(event -> client.readConversation(userID, convoNameList.getSelectionModel().getSelectedItem()));
+        conversationList.getChildren().addAll(conversationListLabel, convoNameList);
 
         HBox sendMsgBar = new HBox();
         sendMsgBar.setSpacing(20);
@@ -267,18 +274,18 @@ public Tab createTabProfile() {
         enterMsg.setFont(Font.font("Cambria", FontPosture.ITALIC, 15));
         TextField msgInput = new TextField();
         msgInput.setPrefWidth(600);
-        Button sendBtn = new Button("Envoyer");
+        Button sendBtn = new Button("Send");
         msgInput.setOnKeyPressed(event -> {
             if(event.getCode().equals(KeyCode.ENTER)){
                 if(client!=null){
-                    //client.handleMessageFromClientUI(msgInput.getText());
+                    client.sendMsgToClient(userID, convoNameList.getSelectionModel().getSelectedItem(),msgInput.getText());
                     msgInput.setText("");
                 }
             }
         });
         sendBtn.setOnAction(event -> {
             if(client!=null){
-                //client.handleMessageFromClientUI(msgInput.getText());
+                client.sendMsgToClient(userID, convoNameList.getSelectionModel().getSelectedItem(),msgInput.getText());
                 msgInput.setText("");
             }
         });
@@ -295,5 +302,9 @@ public Tab createTabProfile() {
         return chatTab;
     }
 
+    @Override
+    public void displayMessage(String message){
+
+    }
 
 }

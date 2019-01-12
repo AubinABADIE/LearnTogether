@@ -35,6 +35,13 @@ Arguments:
 - email: the receiver's email. 
 - message: the message sent.
  *Usage*: `#LOGIN {id} {email} {message}`
+ 
+ ## \#RETRIEVECONVERSATION
+ Used when the client wants to retrieve all of the conversation between him and another client.  
+ Arguments:
+ - id: int, the client id
+ - email: String, the other person's email.
+ *Usage*: `#RETRIEVECONVERSATION {id} {email}`
 
 # FROM the server
 
@@ -70,8 +77,9 @@ The server responds to a #SENDMSGTOCLIENT demand with this. It has two states, e
 The server sends a message from a client to another using this command. The parse method is "-/-"
 Arguments:
 - Email: the sender email
+- Timestamp: the time the message was sent, format ['HH:mm:ss']
 - Content: the message content  
-*Usage*:`#MSGFORYOU-/-{email}-/-{content}`
+*Usage*:`#MSGFORYOU-/-{email}-/-{Timestamp}-/-{content}`
 
 #Users in the DB
 | id       |      name     |  first name |           email                   |   password   | role     |

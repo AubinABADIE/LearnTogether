@@ -81,6 +81,8 @@ public class CoreClient implements ClientIF {
             else if  (((String) msg).startsWith("#DELETEDDEPARTMENT")){
                 department.handleDeletedDepartment((String) msg);
             }
+            else if(((String) msg).startsWith("#MSGFORYOU"))
+                conversations.handleReceivedMessage((String)msg);
         } else if (msg instanceof List) {
             if (((List)msg).get(0) instanceof RoomType)
                 display.getRooms((List<RoomType>)msg);
@@ -132,4 +134,8 @@ public class CoreClient implements ClientIF {
     }
 
     public void createConversation(String receiverEmail){conversations.createConversation(receiverEmail);}
+
+    public void sendMsgToClient(int id, String receiverEmail, String messageContent){conversations.sendMsgToClient(id, receiverEmail, messageContent);}
+
+    public void  readConversation(int id, String email){conversations.readConversation(id, email);}
 }
