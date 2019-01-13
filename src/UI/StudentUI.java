@@ -58,6 +58,8 @@ public class StudentUI extends UI  {
         //Create the Tabs
         TabPane tabPane = new TabPane();
         
+        Tab tabProfile = createProfileTab();
+        
         Tab tabSchedule = new Tab();
         tabSchedule.setText("Schedule");
         tabSchedule.setClosable(false);
@@ -72,7 +74,7 @@ public class StudentUI extends UI  {
 
         Tab tabChat = createChatTab();
 
-        tabPane.getTabs().add(createTabProfile());
+        tabPane.getTabs().add(tabProfile);
         tabPane.getTabs().add(tabSchedule);
         tabPane.getTabs().add(tabRecords);
         tabPane.getTabs().add(tabDiary);

@@ -1,16 +1,18 @@
 package client;
 
+import java.io.IOException;
+import java.util.List;
+
+import com.lloseng.ocsf.client.AdaptableClient;
+
+import Types.RoomType;
 import client.Chat.Conversation;
 import client.Groups.Department;
 import client.Room.RoomServices;
 import client.Users.UserServices;
-import com.lloseng.ocsf.client.AdaptableClient;
 import common.ClientIF;
 import common.DisplayIF;
-import Types.RoomType;
-
-import java.io.IOException;
-import java.util.List;
+import javafx.scene.image.Image;
 
 public class CoreClient implements ClientIF {
     //Business logics
@@ -138,4 +140,24 @@ public class CoreClient implements ClientIF {
     public void sendMsgToClient(int id, String receiverEmail, String messageContent){conversations.sendMsgToClient(id, receiverEmail, messageContent);}
 
     public void  readConversation(int id, String email){conversations.readConversation(id, email);}
+    
+    /**********************
+     * Profile
+     **********************/
+    
+    public void handleCreateUser() {}
+    
+    public void handleReadUser(String login) {
+    	user.readUser(login);
+    }
+    
+    public void handleUpdateUser(int id) {
+    	user.updatePhoto();
+    }
+    
+    public void handleUpdateUser(int id, Image img, String pwd) {
+    	user.updatePhoto();
+    }
+    
+    public void handleDeleteUser() {}
 }

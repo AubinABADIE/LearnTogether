@@ -97,6 +97,10 @@ public class GeneralServer implements Observer {
             String[] attributes = instruction.split(" ");
             handleReadConversation(Integer.parseInt(attributes[1]), attributes[2], client);
         }
+        else if(instruction.startsWith("GETUSER")) {
+        	String[] attributes = instruction.split(" ");
+        	
+        }
     }
 
 
@@ -358,6 +362,10 @@ public class GeneralServer implements Observer {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+    
+    private void handleReadUser(int idUser, ConnectionToClient client) {
+    	
     }
 
     /**

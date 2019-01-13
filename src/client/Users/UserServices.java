@@ -72,9 +72,18 @@ public class UserServices{
             coreClient.getDisplay().setState("FC FAILURE");
     }
     
-    /**
-     * 
-     */
+    public void readUser(String login) {
+    	try {
+    		coreClient.getConnection().sendToServer("#GETUSER " + login);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    
+    public void updateUser() {
+    	
+    }
+    
     public void updatePhoto() {
     	
     }

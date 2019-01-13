@@ -72,9 +72,7 @@ public class AdminUI extends TeacherUI {
         //Create the Tabs
         tabPane = new TabPane();
 
-        tabProfile= new Tab();
-        tabProfile.setText("Profile");
-        tabProfile.setClosable(false);
+        tabProfile = createProfileTab();
 
         tabSchedule = new Tab();
         tabSchedule.setText("Schedule");
@@ -88,9 +86,7 @@ public class AdminUI extends TeacherUI {
         tabDiary.setText("Diary");
         tabDiary.setClosable(false);
 
-        tabChat = new Tab();
-        tabChat.setText("Chat");
-        tabChat.setClosable(false);
+        tabChat = createChatTab();
 
         tabRoom= tabRoom();
         

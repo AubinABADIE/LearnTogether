@@ -26,6 +26,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.layout.*;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
+import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -152,14 +153,27 @@ public abstract class UI extends Application implements DisplayIF {
 
     }
     
-public Tab createTabProfile() {
+    /**
+     * Create the profile tab for all user type
+     * 
+     * @return Profile tab
+     */
+    public Tab createProfileTab() {
     	
     	Tab tabProfile = new Tab();
     	tabProfile.setText("Profile");
     	tabProfile.setClosable(false);
     	
+        tabProfile.setContent(readProfile(tabProfile));
+        
+        return tabProfile;
+    }
+    
+    public GridPane readProfile(Tab tabProfile) {
     	// Labels
     	Label name = new Label(login);
+    	name.setFont(Font.font("Cambria", FontWeight.BOLD, 30));
+    	name.setAlignment(Pos.CENTER_LEFT);
     	Label email = new Label("Email: ");
     	Label birthdate = new Label("Birthdate: ");
     	Label id = new Label("ID: ");
@@ -175,13 +189,7 @@ public Tab createTabProfile() {
     	changePwdButton.setDefaultButton(true);
     	
     	// Photo
-    	Image image = null;
-		/*try {
-			image = new Image(new FileInputStream("C:\\Users\\Aubin\\Pictures\\avatar.png"));
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}*/
+    	Image image = new Image(getClass().getResourceAsStream("images/profilePhoto.png"));
         //Setting the image view 
         ImageView imageView = new ImageView(image); 
         //Setting the position of the image 
@@ -224,20 +232,93 @@ public Tab createTabProfile() {
         gridProfile.add(idBox, 2, 8);
         gridProfile.add(changePwdButton, 2, 10);
 
-        // Set tab content
-        tabProfile.setContent(gridProfile);
-        
         // Event
         changePhotoButton.setOnAction(event -> {
         });
         
         changePwdButton.setOnAction(event -> {
+        	tabProfile.setContent(updateProfile(tabProfile));
         });
         
-        return tabProfile;
+        return gridProfile;
+    }
+    
+    public GridPane updateProfile(Tab tabProfile) {
+    	// Labels
+    	Label old = new Label("Old password: ");
+    	Label newPwd = new Label("New password: ");
+    	Label newPwdConfirm = new Label("Confirm new password: ");
+    	
+    	// Text fields
+    	TextField oldTF = new TextField();
+    	TextField newPwdTF = new TextField();
+    	TextField newPwdConfirmTF = new TextField();
+    	
+    	// Buttons
+    	Button updateButton = new Button("Update");
+    	Button cancelButton = new Button("Cancel");
+    	updateButton.setPrefHeight(40);
+    	updateButton.setDefaultButton(true);
+    	cancelButton.setPrefHeight(40);
+    	
+    	// Photo
+    	Image image = null;
+		/*try {
+			image = new Image(new FileInputStream("C:\\Users\\Aubin\\Pictures\\avatar.png"));
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}*/
+        //Setting the image view 
+        ImageView imageView = new ImageView(image); 
+        //Setting the position of the image 
+        imageView.setX(50); 
+        imageView.setY(25); 
+        //setting the fit height and width of the image view 
+        imageView.setFitHeight(150); 
+        imageView.setFitWidth(150); 
+        //Setting the preserve ratio of the image view 
+        imageView.setPreserveRatio(true);  
+        //Creating a Group object  
+        Group photo = new Group(imageView);  
+        
+        // GridPane
+        GridPane gridProfile = new GridPane();
+        gridProfile.setHgap(10);
+        gridProfile.setVgap(10);
+        gridProfile.setPadding(new Insets(10,10,10,10));
+        
+        // Box
+        HBox oldPwdBox = new HBox();
+        HBox newPwdBox = new HBox();
+        HBox cNewPwdBox = new HBox();
+        HBox buttonBox = new HBox();
+        
+        // Fill box
+        oldPwdBox.getChildren().addAll(old, oldTF);
+        newPwdBox.getChildren().addAll(newPwd, newPwdTF);
+        cNewPwdBox.getChildren().addAll(newPwdConfirm, newPwdConfirmTF);
+        buttonBox.getChildren().addAll(updateButton, cancelButton);
+        
+        // Fill gridpane
+        gridProfile.add(oldPwdBox, 1, 0);
+        gridProfile.add(newPwdBox, 1, 2);
+        gridProfile.add(cNewPwdBox, 1, 4);
+        gridProfile.add(buttonBox, 1, 6);
+
+        // Event
+        cancelButton.setOnAction(event -> {
+        	tabProfile.setContent(readProfile(tabProfile));
+        });
+        
+        updateButton.setOnAction(event -> {
+        	tabProfile.setContent(readProfile(tabProfile));
+        });
+        
+        return gridProfile;
     }
 
-    Tab createChatTab(){
+    public Tab createChatTab(){
         Tab chatTab = new Tab();
         chatTab.setText("Chat");
         chatTab.setClosable(false);
