@@ -87,8 +87,6 @@ public class CoreClient implements ClientIF {
             else if  (((String) msg).startsWith("#DELETEDDEPARTMENT")){
                 department.handleDeletedDepartment((String) msg);
             }
-            else if(((String) msg).startsWith("#MSGFORYOU"))
-                conversations.handleReceivedMessage((String)msg);
         } else if (msg instanceof List) {
             if (((List)msg).get(0) instanceof RoomType)
                 display.getRooms((List<RoomType>)msg);

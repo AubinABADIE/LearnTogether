@@ -72,23 +72,6 @@ public class Conversation {
     }
 
     /**
-     * This method gets called whenever the server sends a message from a client to this client.
-     * @param msg: the message.
-     */
-    public void handleReceivedMessage(String msg) {
-        String[] arguments = msg.split("-/-");
-        SimpleDateFormat parser = new SimpleDateFormat(" '['HH:mm:ss']'");
-
-        try {
-            MessageType message = new MessageType(0, arguments[4], parser.parse(arguments[3]), arguments[1],arguments[2]);
-            client.getDisplay().displayMessage(message);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-
-    }
-
-    /**
      * This method is used when the client wants to get all the conversations he has. It asks for the emails of its discussions.
      * @param userId: the asking ID.
      */

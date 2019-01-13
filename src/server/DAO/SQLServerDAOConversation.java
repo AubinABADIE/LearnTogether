@@ -130,9 +130,6 @@ public class SQLServerDAOConversation extends AbstractDAOConversation{
                                senderEmails.getString(1),
                                receiverEmails.getString(1)));
                    }
-
-
-
             } catch (SQLException e) {
                 e.printStackTrace();
             }

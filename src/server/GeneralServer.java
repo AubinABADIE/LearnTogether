@@ -393,14 +393,6 @@ public class GeneralServer implements Observer {
         try{
             if(res == 1){
                 client.sendToClient("#MESSAGE SENT");
-                Thread[] clients = comm.getClientConnections();
-                for(Thread cli : clients){
-                    if(((ConnectionToClient)cli).getInfo("email").equals(receiverEmail)) {
-                        ((ConnectionToClient) cli).sendToClient("#MSGFORYOU-/-" + client.getInfo("email")+"-/-"+receiverEmail + "-/-" +dateFormat.format(currentDate) + "-/-" + messageContent);
-                        continue;
-                    }
-                }
-                client.sendToClient("#MSGFORYOU-/-"+client.getInfo("email")+"-/-"+receiverEmail  + "-/-" + dateFormat.format(currentDate) + "-/-" + messageContent);
             }else {
                 client.sendToClient("#MESSAGE ERROR");
             }
