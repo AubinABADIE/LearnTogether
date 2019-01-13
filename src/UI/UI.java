@@ -349,6 +349,8 @@ public abstract class UI extends Application implements DisplayIF {
         startConvButton.setOnAction(event -> {
             if(startConvEmail.getText()!=null){
                 receiversEmail.add(startConvEmail.getText());
+                if(convo!=null)
+                    convo.setText("");
             }
 
         });
@@ -389,6 +391,7 @@ public abstract class UI extends Application implements DisplayIF {
                 if(client!=null){
                     client.sendMsgToClient(userID, convoNameList.getSelectionModel().getSelectedItem(),msgInput.getText());
                     msgInput.setText("");
+                    client.readConversation(userID, convoNameList.getSelectionModel().getSelectedItem());
                 }
             }
         });
@@ -396,6 +399,7 @@ public abstract class UI extends Application implements DisplayIF {
             if(client!=null){
                 client.sendMsgToClient(userID, convoNameList.getSelectionModel().getSelectedItem(),msgInput.getText());
                 msgInput.setText("");
+                client.readConversation(userID, convoNameList.getSelectionModel().getSelectedItem());
             }
         });
 
