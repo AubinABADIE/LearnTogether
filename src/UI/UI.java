@@ -336,7 +336,6 @@ public abstract class UI extends Application implements DisplayIF {
         return gridProfile;
     }
 
-    public Tab createChatTab(){
     Tab createChatTab(){
         client.getConversationEmail(userID);
         Tab chatTab = new Tab();

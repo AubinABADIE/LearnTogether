@@ -173,4 +173,8 @@ public class CoreClient implements ClientIF {
     }
     
     public void handleDeleteUser() {}
+
+    public void getConversationEmail(int userID) {
+        conversations.getConversationEmail(userID);
+    }
 }
