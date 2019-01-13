@@ -71,8 +71,10 @@ public class CoreClient implements ClientIF {
                 user.handleAnswerLogin((String) msg);
             } else if (((String) msg).startsWith("#FIRSTCONN")) {
                 user.handleFirstConnAnswer((String) msg);
-            } else if  (((String) msg).startsWith("#CREATEDDROOM")){
+            } else if  (((String) msg).startsWith("#CREATEDROOM")){
                 room.handleCreatedRoom((String) msg);
+            } else if (((String)msg).startsWith("#DELETEROOM")){
+                room.handleDeletedRoom((String)msg);
             }
             else if  (((String) msg).startsWith("#CREATEDDEPARTMENT")){
                 department.handleCreatedDepartment((String) msg);
@@ -113,6 +115,10 @@ public class CoreClient implements ClientIF {
 
     public void handleCreateRoom(String name, int capacity, int building, boolean hasProjector, boolean hasComputer, String description) {
         room.handleCreateRoom(name, capacity, building, hasProjector, hasComputer, description);
+    }
+
+    public void handleDeleteRoom(int id){
+        room.handleDeleteRoom(id);
     }
 
     public void handleCreateDepartment(String name, int refTeacherID, String descriptionDep){

@@ -42,6 +42,10 @@ public class AdminUI extends TeacherUI {
         super(primaryStage, login, id, client);
     }
 
+    public Tab getTabRoom() {
+        return tabRoom;
+    }
+
     public Scene getPrincipalAdminScene() {
         return principalAdminScene;
     }
@@ -339,7 +343,7 @@ public class AdminUI extends TeacherUI {
                     return;
                 }
                 if (alert.getResult() == ButtonType.YES) {
-                    client.handleDeleteDepartment(selectedDeleteRoom.getSelectedItem().getId());
+                    client.handleDeleteRoom(selectedDeleteRoom.getSelectedItem().getId());
                 }
             }
 
@@ -510,9 +514,10 @@ public class AdminUI extends TeacherUI {
         return gridRoom;
     }
 
-    protected void setDefaultTab(){
+    protected void setRoomTab(){
         SingleSelectionModel<Tab> selectionModel = tabPane.getSelectionModel();
-        selectionModel.select(tabProfile);
+        selectionModel.select(tabRoom());
+
 
     }
 

@@ -147,8 +147,14 @@ public class StartUI extends UI {
                 Platform.runLater(()->primaryStage.setScene(connectionScene));
             }
             else if (newValue.equalsIgnoreCase("RC SUCCESS")) {
-                showAlert(Alert.AlertType.CONFIRMATION, null, "Success", "You have created the room.");
-                Platform.runLater(()->adminUI.setDefaultTab());
+                Platform.runLater(()->showAlert(Alert.AlertType.CONFIRMATION, null, "Success", "You have created the room."));
+            } else if (newValue.equalsIgnoreCase("RC FAILURE")) {
+                showAlert(Alert.AlertType.CONFIRMATION, null, "Failure", "Error: Room hasn't been created.");
+            } else if (newValue.equalsIgnoreCase("RD SUCCESS")){
+                showAlert(Alert.AlertType.CONFIRMATION, null, "Success", "You have deleted the room.");
+               Platform.runLater(()->adminUI.client.getRooms());
+            } else if (newValue.equalsIgnoreCase("RD FAILURE")){
+                showAlert(Alert.AlertType.CONFIRMATION, null, "Failure", "Error: Room hasn't been deleted.");
             }
         });
     }

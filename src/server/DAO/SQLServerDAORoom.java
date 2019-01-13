@@ -98,4 +98,29 @@ public class SQLServerDAORoom extends AbstractDAORoom{
         }
         return rooms;
     }
+
+    /**
+     * This methos delete a room. It return an int to specify to the server the state of the deletion
+     * @param id : room id
+     * @return int who give the state of the deletion in the data base
+     */
+    @Override
+    public int deleteRoom (int id){
+        Connection connection = getConnection();
+        int result = 0;
+        if(connection != null){
+            try{
+                PreparedStatement preparedStatement = connection.prepareStatement("DELETE FROM Rooms WHERE idRoom = ?");
+                preparedStatement.setInt(1, id);
+                result = preparedStatement.executeUpdate();
+
+            }catch (SQLException e){
+                e.printStackTrace();
+            }
+            finally {
+                closeConnection(connection);
+            }
+        }
+        return result;
+    }
 }

@@ -25,6 +25,13 @@ Arguments:
 
 *Usage*: `#CRATEROOM-/-{name}-/-{capacity}-/-{building}-/-{hasProjector}-/-{hasComputer}-/-{description}`
 
+##\ #DELETEROOM
+Used when the client wants to delete a room. The parse method for the different parameters is "-/-"
+Arguments:
+- id : int
+
+*Usage*: `#CRATEROOM-/-{id}`
+
 ## \#GETROOMS
 Used when the client wants the list of all rooms.
 
@@ -42,6 +49,7 @@ Arguments:
  - id: int, the client id
  - email: String, the other person's email.
  *Usage*: `#RETRIEVECONVERSATION {id} {email}`
+
 
 # FROM the server
 
@@ -68,6 +76,13 @@ Arguments :
 - mess : String with the result of the action.
 
 *Usage*: `#CREATEDROOM {mess}`
+
+ ## \#DELETEROOM
+ The server responds to a #DELETEROOM from the client by sending this.
+ Arguments:
+ - mess : String with the result of the action.
+
+ *Usage*:  `#DELETEROOM {mess}`
 
 ## \#MESSAGE
 The server responds to a #SENDMSGTOCLIENT demand with this. It has two states, either sent (the message is in the DB) or error (the message cannot be put into the DB)  

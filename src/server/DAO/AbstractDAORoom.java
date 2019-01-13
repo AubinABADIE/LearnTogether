@@ -16,4 +16,6 @@ public abstract class AbstractDAORoom {
     public abstract int createRoom(String name, int capacity, int building, boolean hasProjector, boolean hasComputer, String description);
 
     public abstract List<RoomType> searchAllRooms();
+
+    public abstract int deleteRoom(int id);
 }
