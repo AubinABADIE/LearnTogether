@@ -232,7 +232,7 @@ public class StartUI extends UI {
         gridPane.add(nameLabel, 0,1);
 
         // Add Name Text Field
-        TextField nameField = new TextField("yvan.sanson@etu.umontpellier.fr");
+        TextField nameField = new TextField("teacher@umontpellier.fr");
         nameField.setPrefHeight(40);
         gridPane.add(nameField, 1,1);
 

@@ -2,9 +2,14 @@ package UI;
 
 import client.CoreClient;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
+import javafx.scene.control.Tab;
+import javafx.scene.control.TabPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
@@ -30,15 +35,58 @@ public class SuperAdminUI extends AdminUI {
     }
 
     public Scene createPrincipalSuperAdminScene(){
-        BorderPane root = new BorderPane();
+    	this.primaryStage.setTitle("LearnTogether for Admins");
+        BorderPane adminScene = new BorderPane();
+        //Create the top bar
+        VBox topBar = new VBox();
         HBox titleBar = new HBox();
-        Text title = new Text("Learn Together -- Super admin side");
+        Text title = new Text("Learn Together -- Admin side");
+        Text user = new Text("Connected as: " + login);
         title.setFont(Font.font("Cambria", 20));
-        root.setTop(titleBar);
+        titleBar.getChildren().addAll(title, user);
+
+        //Create the Tabs
+        tabPane = new TabPane();
+
+        tabProfile = createProfileTab();
+
+        tabSchedule = new Tab();
+        tabSchedule.setText("Schedule");
+        tabSchedule.setClosable(false);
+
+        tabRecords = new Tab();
+        tabRecords.setText("Record");
+        tabRecords.setClosable(false);
+
+        tabDiary = new Tab();
+        tabDiary.setText("Diary");
+        tabDiary.setClosable(false);
+
+        tabChat = createChatTab();
+
+        tabRoom= tabRoom();
+        
+        tabCourse = createTabCourse();
+
+        tabPane.getTabs().add(tabProfile);
+        tabPane.getTabs().add(tabSchedule);
+        tabPane.getTabs().add(tabRecords);
+        tabPane.getTabs().add(tabDiary);
+        tabPane.getTabs().add(tabChat);
+        tabPane.getTabs().add(tabRoom);
+        tabPane.getTabs().add(tabCourse);
+
+        HBox hbox = new HBox();
+        hbox.getChildren().add(new Label("Tab" ));
+        hbox.setAlignment(Pos.CENTER);
+        tabProfile.setContent(hbox);
+
+        topBar.getChildren().addAll(titleBar, tabPane);
+        adminScene.setTop(topBar);
         titleBar.setSpacing(20);
         titleBar.setPadding(new Insets(15, 12, 15, 12));
 
-        principalSuperAdminScene = new Scene(root, 900, 700);
+        principalSuperAdminScene = new Scene(adminScene, 900, 700);
         return principalSuperAdminScene;
     }
 
