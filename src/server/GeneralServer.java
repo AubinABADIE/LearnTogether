@@ -75,14 +75,15 @@ public class GeneralServer implements Observer {
         else if(instruction.startsWith("CREATEDEP")){
             String[] creds = instruction.split(" ");
             handleCreateDepartmentFromClient(creds[1], creds[2], creds[3], client);
-        }
-        else if(instruction.startsWith("UPDATEDEP")){
+        }else if(instruction.startsWith("UPDATEDEP")){
             String[] creds = instruction.split(" ");
             handleUpdateDepartmentFromClient(creds[1], creds[2], creds[3],creds[4], client);
-        }
-        else if(instruction.startsWith("DELETEDEP")){
+        }else if(instruction.startsWith("DELETEDEP")){
             String[] creds = instruction.split(" ");
             handleDeleteDepartmentFromClient(creds[1], client);
+        }else if (instruction.startsWith("GETDEPARTMENT")){
+            System.out.println("ok3");
+            handleListDepFromClient(client);
         }
         else if (instruction.startsWith("CREATEROOM")){
             String[] attributes = instruction.split("-/-");
@@ -287,6 +288,20 @@ public class GeneralServer implements Observer {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    /**
+     * This method delegates to the dao the research of the department
+     */
+
+    public void handleListDepFromClient(ConnectionToClient client){
+        List<DepartmentType> dep =  dao.getDepartmentDAO().searchAllDepartment();
+        try {
+            client.sendToClient(dep);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
 
     /**

@@ -1,5 +1,9 @@
 package server.DAO;
 
+import Types.DepartmentType;
+
+import java.util.List;
+
 /**
  * 
  */
@@ -31,4 +35,6 @@ public abstract class AbstractDAODepartment{
     public abstract int deleteDepartment(int idDep);
 
     public abstract int readDepartment(int idDep);
+
+    public abstract List<DepartmentType> searchAllDepartment();
 }
