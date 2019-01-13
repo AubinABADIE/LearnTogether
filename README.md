@@ -23,7 +23,7 @@ Arguments:
 - hadComputer: boolean
 - description: String
 
-*Usage*: `#CRATEROOM-/-{name}-/-{capacity}-/-{building}-/-{hasProjector}-/-{hasComputer}-/-{description}`
+*Usage*: `#CREATEROOM-/-{name}-/-{capacity}-/-{building}-/-{hasProjector}-/-{hasComputer}-/-{description}`
 
 ##\ #DELETEROOM
 Used when the client wants to delete a room. The parse method for the different parameters is "-/-"
@@ -31,6 +31,19 @@ Arguments:
 - id : int
 
 *Usage*: `#CRATEROOM-/-{id}`
+
+##\ #UPDATEROOM
+Used when the client wants to update a room into the database. The parce method for the different parameters is "-/-"
+Arguments:
+- id : int
+- name: String
+- capacity: int
+-building: int
+- hasProjector: boolean
+- hadComputer: boolean
+- description: String
+
+*Usage* : `#UPDATEROOM-/-{id}-/-{name}-/-{capacity}-/-{building}-/-{hasProjector}-/-{hasComputer}-/-{description}`
 
 ## \#GETROOMS
 Used when the client wants the list of all rooms.

@@ -90,8 +90,10 @@ public class GeneralServer implements Observer {
         }else if (instruction.startsWith("DELETEROOM")){
             String[] attributes = instruction.split("-/-");
             handleDeleteRoomFromClient(Integer.parseInt(attributes[1]), client);
-        }
-        else if (instruction.startsWith("GETROOMS")){
+        } else if(instruction.startsWith("#UPDATESROOM")){
+            String[] attributes = instruction.split("-/-");
+            handleUpdateRoomFromClient(Integer.parseInt(attributes[1]),attributes[2],Integer.parseInt(attributes[3]), Integer.parseInt(attributes[4]), Boolean.parseBoolean(attributes[5]),Boolean.parseBoolean( attributes[6]), attributes[7], client);
+        } else if (instruction.startsWith("GETROOMS")){
             handleListRoomsFromClient(client);
         }
         else if(instruction.startsWith("SENDMSGTOCLIENT")){
@@ -341,6 +343,34 @@ public class GeneralServer implements Observer {
             mess = "#DELETEROOM Success" ;
         } else{
             mess = "#DELETEROOM Failure";
+        }
+
+        try{
+            client.sendToClient(mess);
+        } catch(IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * This method delegates to the dao the room update
+     * @param id : room id
+     * @param name : room name
+     * @param capacity : room capacity
+     * @param building : room buildinf number
+     * @param projector: if the room has a projector
+     * @param computer : if the room has computers
+     * @param desc : small description of room
+     * @param client : client who wants to update
+     */
+    public void handleUpdateRoomFromClient (int id, String name, int capacity, int building, boolean projector, boolean computer, String desc, ConnectionToClient client ){
+        int result = dao.getRoomDAO().updateRoom(id, name, capacity, building, projector, computer, desc);
+
+        String mess;
+        if (result == 1){
+            mess = "#UPDATEROOM Success" ;
+        } else{
+            mess = "#UPDATEROOM Failure";
         }
 
         try{

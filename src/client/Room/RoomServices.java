@@ -87,6 +87,19 @@ public class RoomServices {
     }
 
     /**
+     * This method split the server message to sse if the update is a success or a failure. It change a state for the UI.
+     * @param msg : String with the result of deletion
+     */
+    public void  handleUpdatedRoom (String msg){
+        String args[] = msg.split(" ");
+        if (args[1].equalsIgnoreCase("SUCCESS")){
+            client.getDisplay().setState("RU SUCCESS");
+        } else {
+            client.getDisplay().setState("RU FAILURE");
+        }
+    }
+
+    /**
      * This method send a message to the server to have the rooms list
      */
     public void getRooms() {

@@ -168,6 +168,11 @@ public class StartUI extends UI {
                Platform.runLater(()->adminUI.client.getRooms());
             } else if (newValue.equalsIgnoreCase("RD FAILURE")){
                 showAlert(Alert.AlertType.CONFIRMATION, null, "Failure", "Error: Room hasn't been deleted.");
+            } else if (newValue.equalsIgnoreCase("RU SUCCESS")){
+                showAlert(Alert.AlertType.CONFIRMATION, null, "Success", "You have up the room.");
+                Platform.runLater(()->adminUI.client.getRooms());
+            } else if (newValue.equalsIgnoreCase("RU FAILURE")){
+                showAlert(Alert.AlertType.CONFIRMATION, null, "Failure", "Error: Room hasn't been updated.");
             }
         });
     }

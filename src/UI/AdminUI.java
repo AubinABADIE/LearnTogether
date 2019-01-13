@@ -7,6 +7,7 @@ import javafx.collections.ObservableList;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
@@ -332,6 +333,13 @@ public class AdminUI extends TeacherUI {
             createTabRoom(tabRoom);
         });
 
+        btnUpdateRoom.setOnAction(event ->{
+            SelectionModel<RoomType> selectedDeleteRoom = list.getSelectionModel();
+            if (selectedDeleteRoom.getSelectedItem() != null) {
+                updateTabRoom(tabRoom, selectedDeleteRoom.getSelectedItem().getName(), selectedDeleteRoom.getSelectedItem().getCapacity(),selectedDeleteRoom.getSelectedItem().getBuilding(), selectedDeleteRoom.getSelectedItem().isHasProjector(), selectedDeleteRoom.getSelectedItem().isHasComputer(),selectedDeleteRoom.getSelectedItem().getDescription(), selectedDeleteRoom.getSelectedItem().getId());
+            }
+        });
+
         btnDeleteRoom.setOnAction(event -> {
             SelectionModel<RoomType> selectedDeleteRoom = list.getSelectionModel();
             if (selectedDeleteRoom.getSelectedItem() != null){
@@ -513,6 +521,159 @@ public class AdminUI extends TeacherUI {
 
 
         return gridRoom;
+    }
+
+    private GridPane updateTabRoom(Tab tabRoom, String name, int capacity, int building, boolean hasProjector, boolean hasComputer, String description, int id){
+
+        // labels
+        Label nameLabel = new Label("Name of room : ");
+        Label capacityLabel = new Label("Capacity : ");
+        Label buildingLabel = new Label("Building : ");
+        Label projLabel = new Label("There is a projector : ");
+        Label compLabel = new Label("There are computers : ");
+        Label descLabel = new Label("Room description : ");
+
+        // Add text Field
+        TextField nameField = new TextField();
+        nameField.setText(name);
+        TextField capacityField = new TextField();
+        capacityField.setText(Integer.toString(capacity));
+        capacityField.textProperty().addListener((observable, oldValue, newValue) -> {
+            if(!newValue.matches("\\d*"))
+                capacityField.setText(newValue.replaceAll("[^\\d]", ""));
+        });
+        TextField buildingField = new TextField();
+        buildingField.setText(Integer.toString(building));
+        buildingField.textProperty().addListener((observable, oldValue, newValue) -> {
+            if(!newValue.matches("\\d*"))
+                buildingField.setText(newValue.replaceAll("[^\\d]", ""));
+        });
+
+        RadioButton py = new RadioButton();
+        py.setText("Yes");
+        RadioButton pn = new RadioButton();
+        pn.setText("No");
+
+        ToggleGroup tp = new ToggleGroup();
+
+        py.setToggleGroup(tp);
+        pn.setToggleGroup(tp);
+        if (hasProjector){
+            tp.selectToggle(py);
+        } else {
+            tp.selectToggle(pn);
+        }
+
+
+        RadioButton cy = new RadioButton();
+        cy.setText("Yes");
+        RadioButton cn = new RadioButton();
+        cn.setText("No");
+
+        ToggleGroup tp2 = new ToggleGroup();
+
+        cy.setToggleGroup(tp2);
+        cn.setToggleGroup(tp2);
+
+        if (hasComputer){
+            tp2.selectToggle(cy);
+        } else {
+            tp2.selectToggle(cn);
+        }
+
+
+        TextArea descriptionField = new TextArea();
+        descriptionField.setText(description);
+
+        //grid pane
+        GridPane gridUpadateRoom = new GridPane();
+        gridUpadateRoom.setHgap(10);
+        gridUpadateRoom.setVgap(10);
+        gridUpadateRoom.setPadding(new Insets(10,10,10,10));
+
+        //Hbox
+        HBox nameRoom = new HBox();
+        HBox capacityRoom = new HBox();
+        HBox buildingRoom = new HBox();
+        HBox projectorRoom = new HBox();
+        HBox computerRoom = new HBox();
+        HBox descriptionRoom = new HBox();
+
+        // add form in hbox
+        nameRoom.getChildren().addAll(nameLabel, nameField);
+        capacityRoom.getChildren().addAll(capacityLabel, capacityField) ;
+        buildingRoom.getChildren().addAll(buildingLabel, buildingField) ;
+        projectorRoom.getChildren().addAll(projLabel, py, pn) ;
+        computerRoom.getChildren().addAll(compLabel, cy, cn) ;
+        descriptionRoom.getChildren().addAll(descLabel, descriptionField) ;
+
+        //add hbox in gridpane
+        gridUpadateRoom.add(nameRoom, 1, 0);
+        gridUpadateRoom.add(capacityRoom, 1, 2);
+        gridUpadateRoom.add(buildingRoom, 1, 5);
+        gridUpadateRoom.add(projectorRoom, 1, 7);
+        gridUpadateRoom.add(computerRoom, 1, 9);
+        gridUpadateRoom.add(descriptionRoom, 1, 11);
+
+        //add gridpane in tab
+        tabRoom.setContent(gridUpadateRoom);
+
+        //add button
+
+        Button okUpdate = new Button("Create");
+        okUpdate.setPrefHeight(40);
+        okUpdate.setDefaultButton(true);
+        okUpdate.setPrefWidth(100);
+        gridUpadateRoom.add(okUpdate, 0, 13, 1, 1);
+        gridUpadateRoom.setHalignment(okUpdate, HPos.RIGHT);
+        gridUpadateRoom.setMargin(okUpdate, new Insets(20, 0,20,0));
+
+        Button cancelUpdate = new Button("Cancel");
+        cancelUpdate.setPrefHeight(40);
+        cancelUpdate.setDefaultButton(false);
+        cancelUpdate.setPrefWidth(100);
+        gridUpadateRoom.add(cancelUpdate, 2, 13, 1, 1);
+        gridUpadateRoom.setHalignment(cancelUpdate, HPos.RIGHT);
+        gridUpadateRoom.setMargin(cancelUpdate, new Insets(20, 0,20,0));
+
+        okUpdate.setOnAction(event -> {
+            if (nameField.getText().isEmpty()) {
+                showAlert(Alert.AlertType.ERROR, gridUpadateRoom.getScene().getWindow(), "Form Error!", "Please enter room name");
+                return;
+            }
+            if (capacityField.getText().isEmpty()) {
+                showAlert(Alert.AlertType.ERROR, gridUpadateRoom.getScene().getWindow(), "Form Error!", "Please enter room capacity");
+                return;
+            }
+            if (buildingField.getText().isEmpty()) {
+                showAlert(Alert.AlertType.ERROR, gridUpadateRoom.getScene().getWindow(), "Form Error!", "Please enter room building");
+                return;
+            }
+            boolean hasProjectorUp;
+            boolean hasComputerUp;
+            if(((RadioButton) tp.getSelectedToggle()).getText().equals("Yes"))
+                hasProjectorUp = true;
+            else
+                hasProjectorUp = false;
+
+            if(((RadioButton) tp2.getSelectedToggle()).getText().equals("Yes"))
+                hasComputerUp = true;
+            else
+                hasComputerUp = false;
+
+            client.handleUpdateRoom(id, nameField.getText(), Integer.parseInt(capacityField.getText()),Integer.parseInt(buildingField.getText()), hasProjector, hasComputer, descriptionField.getText());
+            nameField.setText("");
+            capacityField.setText("");
+            buildingField.setText("");
+            descriptionField.setText("");
+
+        });
+
+        cancelUpdate.setOnAction(event -> {
+            tabRoom.setContent(roomRead(tabRoom));
+        });
+
+        return gridUpadateRoom;
     }
 
     protected void setRoomTab(){

@@ -76,8 +76,9 @@ public class CoreClient implements ClientIF {
                 room.handleCreatedRoom((String) msg);
             } else if (((String)msg).startsWith("#DELETEROOM")){
                 room.handleDeletedRoom((String)msg);
-            }
-            else if  (((String) msg).startsWith("#CREATEDDEPARTMENT")){
+            } else if (((String) msg).startsWith("#UPDATEROOM")){
+                room.handleUpdatedRoom((String) msg);
+            } else if  (((String) msg).startsWith("#CREATEDDEPARTMENT")){
                 department.handleCreatedDepartment((String) msg);
             }
             else if  (((String) msg).startsWith("#UPDATEDDEPARTMENT")){
@@ -120,12 +121,39 @@ public class CoreClient implements ClientIF {
         user.setFirstPassword(login, password);
     }
 
+    /**
+     * This method delegates the management of the room creation to the roomservices
+     * @param name : room name
+     * @param capacity : room capacity
+     * @param building : room building number
+     * @param hasProjector : if the room has a projector
+     * @param hasComputer : if the room has computers
+     * @param description : small room description
+     */
     public void handleCreateRoom(String name, int capacity, int building, boolean hasProjector, boolean hasComputer, String description) {
         room.handleCreateRoom(name, capacity, building, hasProjector, hasComputer, description);
     }
 
+    /**
+     * This method delegates the management of the room deletion to the roomservices
+     * @param id : room id
+     */
     public void handleDeleteRoom(int id){
         room.handleDeleteRoom(id);
+    }
+
+    /**
+     * This method delegates the management of the room update to the roomservices
+     * @param id : room id
+     * @param name : room name
+     * @param capacity : room capacity
+     * @param building : room building number
+     * @param hasProjector : if the room has a projector
+     * @param hasComputer : if the room has computers
+     * @param desc : small room description
+     */
+    public void handleUpdateRoom(int id, String name, int capacity, int building, boolean hasProjector, boolean hasComputer, String desc){
+        room.handleUpdateRoom(id, name, capacity, building, hasProjector, hasComputer, desc);
     }
 
     public void handleCreateDepartment(String name, int refTeacherID, String descriptionDep){
@@ -141,7 +169,7 @@ public class CoreClient implements ClientIF {
     }
 
     /**
-     * this method delegates getRooms to roomServices
+     * This method delegates getRooms to roomServices
      * @return a room list
      */
     public void getRooms() {

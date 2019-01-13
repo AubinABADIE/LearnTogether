@@ -123,4 +123,30 @@ public class SQLServerDAORoom extends AbstractDAORoom{
         }
         return result;
     }
+
+    @Override
+    public int updateRoom(int id, String name, int capacity, int building, boolean projector, boolean computer, String desc){
+        Connection connection =getConnection();
+        int result = 0;
+        if(connection!= null){
+            try{
+                PreparedStatement preparedStatement = connection.prepareStatement("UPDATE Rooms SET roomName = ?, building = ?, hasComputer = ?, hasProjector = ?, descriptionRoom = ?, capacity = ? WHERE idRoom = ?");
+                preparedStatement.setString(1, name);
+                preparedStatement.setInt(2, building);
+                preparedStatement.setBoolean(3, computer);
+                preparedStatement.setBoolean(4, projector);
+                preparedStatement.setString(5, desc);
+                preparedStatement.setInt(6, capacity);
+                preparedStatement.setInt(7, id);
+                result = preparedStatement.executeUpdate();
+            } catch(SQLException e){
+                e.printStackTrace();
+            } finally {
+                closeConnection(connection);
+            }
+         }
+        return result;
+    }
 }
+
+
