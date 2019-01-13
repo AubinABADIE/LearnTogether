@@ -62,12 +62,28 @@ public class RoomServices {
         }
     }
 
+    /**
+     * This method split the server message to see if the creation is a success or a failure. It change a state for the UI.
+     * @param msg : String with the result of creation
+     */
     public void handleCreatedRoom(String msg) {
         String args[] = msg.split(" ");
         if(args[1].equalsIgnoreCase("SUCCESS"))
             client.getDisplay().setState("RC SUCCESS");
         else
             client.getDisplay().setState("RC FAILURE");
+    }
+
+    /**
+     * This method split the server message to see if the deletion is a success or a failure. It change a state for the UI.
+     * @param msg : String with the result of deletion
+     */
+    public void handleDeletedRoom(String msg){
+        String args[] = msg.split(" ");
+        if (args[1].equalsIgnoreCase("SUCCESS"))
+            client.getDisplay().setState("RD SUCCESS");
+        else
+            client.getDisplay().setState("RD FAILURE");
     }
 
     /**

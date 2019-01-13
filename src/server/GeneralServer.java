@@ -85,6 +85,9 @@ public class GeneralServer implements Observer {
         else if (instruction.startsWith("CREATEROOM")){
             String[] attributes = instruction.split("-/-");
             handleCreateRoomFromClient(attributes[1], Integer.parseInt(attributes[2]), Integer.parseInt(attributes[3]), Boolean.parseBoolean(attributes[4]), Boolean.parseBoolean(attributes[5]),attributes[6], client);
+        }else if (instruction.startsWith("DELETEROOM")){
+            String[] attributes = instruction.split("-/-");
+            handleDeleteRoomFromClient(Integer.parseInt(attributes[1]), client);
         }
         else if (instruction.startsWith("GETROOMS")){
             handleListRoomsFromClient(client);
@@ -314,6 +317,28 @@ public class GeneralServer implements Observer {
             e.printStackTrace();
         }
 
+    }
+
+    /**
+     * This method delegates to the dao the deletion of room
+     * @param id : room id
+     * @param client : client who deletes the room
+     */
+    public void handleDeleteRoomFromClient(int id, ConnectionToClient client){
+        int result = dao.getRoomDAO().deleteRoom(id);
+
+        String mess;
+        if (result == 1){
+            mess = "#DELETEROOM Success" ;
+        } else{
+            mess = "#DELETEROOM Failure";
+        }
+
+        try{
+            client.sendToClient(mess);
+        } catch(IOException e) {
+            e.printStackTrace();
+        }
     }
 
     /**
