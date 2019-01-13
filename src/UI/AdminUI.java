@@ -19,6 +19,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import Types.RoomType;
+import javafx.stage.Window;
 
 import java.util.List;
 
@@ -232,7 +233,7 @@ public class AdminUI extends TeacherUI {
         deleteRoomView.setFitHeight(12);
         deleteRoomView.setFitWidth(12);
 
-        //create button add
+        //create button delete
         Button btnDeleteRoom = new Button("Delete");
         btnDeleteRoom.setGraphic(deleteRoomView);//setting icon to button
 
@@ -266,6 +267,15 @@ public class AdminUI extends TeacherUI {
 
         /*creation of the info vbox of one room*/
         VBox vboxInfoRoom = new VBox();
+
+        //title of column
+        HBox hboxRoomInfo = new HBox();
+        Text titleInfo = new Text("Room information : ");
+        titleInfo.setFont(Font.font(20));
+        hboxRoomInfo.getChildren().add(titleInfo);
+        hboxRoomInfo.setAlignment(Pos.CENTER);
+
+        // initialisation label and input
         HBox hboxnameRoomInfo = new HBox();
         HBox hboxcapacityRoomInfo = new HBox();
         HBox hboxbuildingRoomInfo = new HBox();
@@ -307,16 +317,36 @@ public class AdminUI extends TeacherUI {
         hboxdescRoomInfo.setAlignment(Pos.CENTER);
 
         //create update button
+        HBox hboxupdateButton = new HBox();
         Button btnUpdateRoom = new Button("Update");
-        btnUpdateRoom.setAlignment(Pos.CENTER);
+        hboxupdateButton.getChildren().add(btnUpdateRoom);
+        hboxupdateButton.setAlignment(Pos.CENTER);
 
-        vboxInfoRoom.getChildren().addAll(hboxnameRoomInfo,hboxcapacityRoomInfo,hboxbuildingRoomInfo,hboxprojectorRoomInfo, hboxcomputerRoomInfo, hboxdescRoomInfo, btnUpdateRoom);
+        vboxInfoRoom.getChildren().addAll(hboxRoomInfo, hboxnameRoomInfo,hboxcapacityRoomInfo,hboxbuildingRoomInfo,hboxprojectorRoomInfo, hboxcomputerRoomInfo, hboxdescRoomInfo, hboxupdateButton);
         vboxInfoRoom.setSpacing(10);
         vboxInfoRoom.setPadding( new Insets(100, 0, 0, 75));
 
 
         btnAddRoom.setOnAction(event -> {
             createTabRoom(tabRoom);
+        });
+
+        btnDeleteRoom.setOnAction(event -> {
+            SelectionModel<RoomType> selectedDeleteRoom = list.getSelectionModel();
+            if (selectedDeleteRoom.getSelectedItem() != null){
+                Alert alert = new Alert(Alert.AlertType.CONFIRMATION,"You are sure to delete a room", ButtonType.YES, ButtonType.NO);
+                alert.setHeaderText("Confirmation delete");
+                Window win = gridRoomVisu.getScene().getWindow();
+                alert.initOwner(win);
+                alert.showAndWait();
+                if (alert.getResult() == ButtonType.NO) {
+                    return;
+                }
+                if (alert.getResult() == ButtonType.YES) {
+                    client.handleDeleteDepartment(selectedDeleteRoom.getSelectedItem().getId());
+                }
+            }
+
         });
 
         list.setOnMouseClicked(event -> {
