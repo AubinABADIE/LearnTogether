@@ -162,17 +162,17 @@ public class StartUI extends UI {
             else if (newValue.equalsIgnoreCase("RC SUCCESS")) {
                 Platform.runLater(()->showAlert(Alert.AlertType.CONFIRMATION, null, "Success", "You have created the room."));
             } else if (newValue.equalsIgnoreCase("RC FAILURE")) {
-                showAlert(Alert.AlertType.CONFIRMATION, null, "Failure", "Error: Room hasn't been created.");
+                Platform.runLater(()->showAlert(Alert.AlertType.CONFIRMATION, null, "Failure", "Error: Room hasn't been created."));
             } else if (newValue.equalsIgnoreCase("RD SUCCESS")){
-                showAlert(Alert.AlertType.CONFIRMATION, null, "Success", "You have deleted the room.");
+                Platform.runLater(()->showAlert(Alert.AlertType.CONFIRMATION, null, "Success", "You have deleted the room."));
                Platform.runLater(()->adminUI.client.getRooms());
             } else if (newValue.equalsIgnoreCase("RD FAILURE")){
-                showAlert(Alert.AlertType.CONFIRMATION, null, "Failure", "Error: Room hasn't been deleted.");
+                Platform.runLater(()->showAlert(Alert.AlertType.CONFIRMATION, null, "Failure", "Error: Room hasn't been deleted."));
             } else if (newValue.equalsIgnoreCase("RU SUCCESS")){
-                showAlert(Alert.AlertType.CONFIRMATION, null, "Success", "You have up the room.");
-                Platform.runLater(()->adminUI.client.getRooms());
+                showAlert(Alert.AlertType.CONFIRMATION, null, "Success", "You have update the room.");
+               // Platform.runLater(()->Platform.runLater(()->adminUI.client.getRooms()));
             } else if (newValue.equalsIgnoreCase("RU FAILURE")){
-                showAlert(Alert.AlertType.CONFIRMATION, null, "Failure", "Error: Room hasn't been updated.");
+                Platform.runLater(()->showAlert(Alert.AlertType.CONFIRMATION, null, "Failure", "Error: Room hasn't been updated."));
             }
         });
     }
