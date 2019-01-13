@@ -1,5 +1,6 @@
 package UI;
 
+import Types.MessageType;
 import client.CoreClient;
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -55,6 +56,18 @@ public class StartUI extends UI {
         primaryStage.setScene(superAdminUI.createPrincipalSuperAdminScene());
     }
 
+    private UI getCurrentUI(){
+        if(adminUI != null)
+            return adminUI;
+        else if(studentUI != null)
+            return studentUI;
+        else if(superAdminUI != null)
+            return superAdminUI;
+        else if(teacherUI != null)
+            return teacherUI;
+        else
+            return null;
+    }
 
     /**
      * Creates the instance of the User, for the business logic relative to it
@@ -366,6 +379,28 @@ public class StartUI extends UI {
     public void getRooms(List<RoomType> rooms){
         Platform.runLater(() -> adminUI.setRooms(rooms));
     }
+
+    @Override
+    public void setConversationMessages(List<MessageType> conversationMessages){
+        if(getCurrentUI().getConvo() != null){
+            StringBuilder sb = new StringBuilder();
+            for(MessageType message : conversationMessages){
+                sb.append(message.toString());
+                sb.append("\n");
+            }
+            getCurrentUI().getConvo().setText(sb.toString());
+        }
+
+    }
+
+    @Override
+    public void setConversationEmails(List<String> emails) {
+        emails.remove(0);
+        if (emails.size() != 0) {
+            Platform.runLater(() ->  getCurrentUI().setReceiversEmail(emails));
+        }
+    }
+
 
 }
 

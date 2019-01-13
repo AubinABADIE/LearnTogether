@@ -41,6 +41,7 @@ public class GeneralServer implements Observer {
         dao.createDAOUser();
         dao.createDAODepartment();
         dao.createDAORoom();
+        dao.createDAOConversation();
         display.display("Server is running on port " + port);
     }
 
@@ -62,6 +63,7 @@ public class GeneralServer implements Observer {
      * @param client: the original client.
      */
     public void handleInstrFromClient(String instruction, ConnectionToClient client) {
+        display.display(instruction);
         if (instruction.startsWith("LOGIN")) {
             String[] ids = instruction.split(" ");
             handleLoginFromClient(ids[1], ids[2], client);
@@ -94,7 +96,7 @@ public class GeneralServer implements Observer {
         }
         else if(instruction.startsWith("SENDMSGTOCLIENT")){
             String[] attributes = instruction.split("-/-");
-            handleSendMessageToClient(Integer.parseInt(attributes[2]), attributes[1],attributes[3], client);
+            handleSendMessageToClient(Integer.parseInt(attributes[1]), attributes[2],attributes[3], client);
         }
         else if(instruction.startsWith("RETRIEVECONVERSATION")){
             String[] attributes = instruction.split(" ");
@@ -104,8 +106,11 @@ public class GeneralServer implements Observer {
         	String[] attributes = instruction.split(" ");
         	
         }
+        else if(instruction.startsWith("GETCONVEMAIL")){
+            String[] attributes = instruction.split(" ");
+            handleGetConversationEmails(Integer.parseInt(attributes[1]), client);
+        }
     }
-
 
 
 
@@ -375,15 +380,32 @@ public class GeneralServer implements Observer {
     }
 
     /**
-     * This function retrieves all the messages from a specific confirmation and then sends it to the asking client.
+     * This method retrieves all the messages from a specific confirmation and then sends it to the asking client.
      * @param askingId: the ID of the asking client.
      * @param otherEmail: the other participant to the conversation.
      * @param client: the asking client.
      */
     private void handleReadConversation(int askingId, String otherEmail, ConnectionToClient client) {
         List<MessageType> conversationMessages = dao.getConversationDAO().retrieveConversation(askingId, otherEmail);
+        if(conversationMessages.size()!=0) {
+            try {
+                client.sendToClient(conversationMessages);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    /**
+     * This method retrieves all the emails from the conversations the asking ID has. It then sends a List of String to the client, containing these emails.
+     * @param askingID: the asking ID
+     * @param client: the asking client.
+     */
+    private void handleGetConversationEmails(int askingID, ConnectionToClient client) {
+        List<String> emails = dao.getConversationDAO().getConversationEmails(askingID);
+        emails.add(0, "CONVERSATION EMAILS");
         try {
-            client.sendToClient(conversationMessages);
+            client.sendToClient(emails);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -392,6 +414,7 @@ public class GeneralServer implements Observer {
     private void handleReadUser(int idUser, ConnectionToClient client) {
     	
     }
+
 
     /**
      * @param message

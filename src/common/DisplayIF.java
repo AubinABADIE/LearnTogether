@@ -16,4 +16,6 @@ public interface DisplayIF {
     void showLogin(boolean isConnected, int id, String role);
     void getRooms(List<RoomType> rooms);
     void displayMessage(MessageType message);
+    void setConversationMessages(List<MessageType> conversationMessages);
+    void setConversationEmails(List<String> emails);
 }

@@ -34,6 +34,7 @@ Arguments:
 
 ## \#GETROOMS
 Used when the client wants the list of all rooms.
+No parameters.
 
 ## \#SENDMSGTOCLIENT
 Used when the client wants to send a message to another user through the server. The parse method for the different parameters is "-/-"  
@@ -49,6 +50,13 @@ Arguments:
  - id: int, the client id
  - email: String, the other person's email.
  *Usage*: `#RETRIEVECONVERSATION {id} {email}`
+ 
+ ## \#GETCONVEMAIL
+ Used when the client wants to get all its discussions.
+ Arguments:
+ - id: int the asking ID  
+ *Usage*:`#GETCONVEMAIL {id}`
+ 
 
 
 # FROM the server

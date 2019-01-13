@@ -58,7 +58,9 @@ public class Conversation {
     }
 
     /**
-     * @param email
+     * This method sends a demand to get all the messages from a specific conversation.
+     * @param id: the asking ID
+     * @param email: the other participant's email.
      *
      */
     public void readConversation(int id, String email) {
@@ -69,6 +71,10 @@ public class Conversation {
         }
     }
 
+    /**
+     * This method gets called whenever the server sends a message from a client to this client.
+     * @param msg: the message.
+     */
     public void handleReceivedMessage(String msg) {
         String[] arguments = msg.split("-/-");
         SimpleDateFormat parser = new SimpleDateFormat(" '['HH:mm:ss']'");
@@ -80,5 +86,17 @@ public class Conversation {
             e.printStackTrace();
         }
 
+    }
+
+    /**
+     * This method is used when the client wants to get all the conversations he has. It asks for the emails of its discussions.
+     * @param userId: the asking ID.
+     */
+    public void getConversationEmail(int userId) {
+        try {
+            client.getConnection().sendToServer("#GETCONVEMAIL "+userId);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

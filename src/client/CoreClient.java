@@ -6,6 +6,7 @@ import java.util.List;
 import com.lloseng.ocsf.client.AdaptableClient;
 
 import Types.RoomType;
+import Types.MessageType;
 import client.Chat.Conversation;
 import client.Groups.Department;
 import client.Room.RoomServices;
@@ -90,6 +91,12 @@ public class CoreClient implements ClientIF {
         } else if (msg instanceof List) {
             if (((List)msg).get(0) instanceof RoomType)
                 display.getRooms((List<RoomType>)msg);
+            else if(((List)msg).get(0) instanceof MessageType)
+                display.setConversationMessages((List<MessageType>)msg);
+            else if(((List)msg).get(0) instanceof String){
+                if(((String) ((List) msg).get(0)).equalsIgnoreCase("CONVERSATION EMAILS"))
+                    display.setConversationEmails((List<String>) msg);
+            }
         }
     }
 

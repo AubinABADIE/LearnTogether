@@ -65,9 +65,9 @@ public class SQLServerDAOConversation extends AbstractDAOConversation{
                 if (receiverID != 0){
                     PreparedStatement storeMsg = connection.prepareStatement("insert into Messages(content, messageDate, idSender, idReceiver) values(?,?,?,?)");
                     storeMsg.setString(1, messageContent);
-                    storeMsg.setInt(2, senderID);
                     java.sql.Timestamp timestamp = new java.sql.Timestamp(cal.getTimeInMillis());
-                    storeMsg.setTimestamp(3, timestamp);
+                    storeMsg.setTimestamp(2, timestamp);
+                    storeMsg.setInt(3, senderID);
                     storeMsg.setInt(4, receiverID);
                     res = storeMsg.executeUpdate();
                 }
@@ -106,14 +106,16 @@ public class SQLServerDAOConversation extends AbstractDAOConversation{
                     ResultSet askingMail = getAskingMail.executeQuery();
                     askingMail.next();
                     String askMail = askingMail.getString(1);
-                   PreparedStatement retrieveConv = connection.prepareStatement("select * from Messages where idReceiver=? and idSender=? order by messageDate");
+                   PreparedStatement retrieveConv = connection.prepareStatement("select * from Messages where (idReceiver=? and idSender=?) or (idSender = ? and idReceiver=?) order by messageDate");
                    retrieveConv.setInt(1, askingID);
                    retrieveConv.setInt(2, otherID);
+                   retrieveConv.setInt(3, askingID);
+                   retrieveConv.setInt(4, otherID);
                    ResultSet messages = retrieveConv.executeQuery();
                    while (messages.next()){
                        conversationMessages.add(new MessageType(messages.getInt(1),
                                messages.getString(2),
-                               messages.getDate(3),
+                               messages.getTime(3),
                                askMail,
                                otherEmail));
                    }
@@ -127,5 +129,33 @@ public class SQLServerDAOConversation extends AbstractDAOConversation{
             }
         }
         return conversationMessages;
+    }
+
+    @Override
+    public List<String> getConversationEmails(int askingID) {
+        Connection connection = getConnection();
+        List<String> emails = new ArrayList<>();
+        if(connection!=null){
+            try {
+                PreparedStatement getIds = connection.prepareStatement("select distinct idReceiver, idMessage from Messages where idSender=? order by idMessage");
+                getIds.setInt(1, askingID);
+                ResultSet ids = getIds.executeQuery();
+                PreparedStatement retrieveMail;
+                ResultSet email;
+                while (ids.next()){
+                    retrieveMail = connection.prepareStatement("select email from GeneralUsers where idUser=?");
+                    retrieveMail.setInt(1, ids.getInt(1));
+                    email = retrieveMail.executeQuery();
+                    email.next();
+                    emails.add(email.getString(1));
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            finally {
+                closeConnection(connection);
+            }
+        }
+        return emails;
     }
 }

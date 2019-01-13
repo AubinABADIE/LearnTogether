@@ -1,6 +1,7 @@
 package Types;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class MessageType implements Serializable {
@@ -8,6 +9,7 @@ public class MessageType implements Serializable {
     private String content;
     private Date messageDate;
     private String senderEmail, receiverEmail;
+    private SimpleDateFormat format;
 
     public int getIdMessage() {
         return idMessage;
@@ -55,5 +57,16 @@ public class MessageType implements Serializable {
         this.messageDate = messageDate;
         this.senderEmail = senderEmail;
         this.receiverEmail = receiverEmail;
+        format = new SimpleDateFormat(" '['HH:mm:ss']'");
+    }
+
+    @Override
+    public String toString(){
+        StringBuilder sb = new StringBuilder();
+        sb.append(format.format(messageDate));
+        sb.append(senderEmail, 0, senderEmail.indexOf('@'));
+        sb.append(": ");
+        sb.append(content);
+        return sb.toString();
     }
 }

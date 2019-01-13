@@ -91,6 +91,7 @@ public class AdminUI extends TeacherUI {
         tabDiary.setClosable(false);
 
         tabChat = createChatTab();
+        tabChat= createChatTab();
 
         tabRoom= tabRoom();
         

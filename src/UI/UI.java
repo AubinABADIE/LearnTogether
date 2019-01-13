@@ -2,6 +2,7 @@ package UI;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.util.List;
 
 import Types.MessageType;
 import client.CoreClient;
@@ -43,6 +44,7 @@ public abstract class UI extends Application implements DisplayIF {
     StringProperty connectionStatus = new SimpleStringProperty("NOT CONNECTED");
     StringProperty currentState = new SimpleStringProperty("UNDEFINED");
     ObservableList<String> receiversEmail;
+    TextArea convo;
 
     //Business logic
     CoreClient client;
@@ -74,6 +76,22 @@ public abstract class UI extends Application implements DisplayIF {
 
     public void setCurrentState(String currentState) {
         this.currentState.set(currentState);
+    }
+
+    public ObservableList<String> getReceiversEmail() {
+        return receiversEmail;
+    }
+
+    public void setReceiversEmail(List<String> receiversEmail) {
+        this.receiversEmail.setAll(receiversEmail);
+    }
+
+    public TextArea getConvo() {
+        return convo;
+    }
+
+    public void setConvo(TextArea convo) {
+        this.convo = convo;
     }
 
     /**
@@ -319,6 +337,8 @@ public abstract class UI extends Application implements DisplayIF {
     }
 
     public Tab createChatTab(){
+    Tab createChatTab(){
+        client.getConversationEmail(userID);
         Tab chatTab = new Tab();
         chatTab.setText("Chat");
         chatTab.setClosable(false);
@@ -340,7 +360,7 @@ public abstract class UI extends Application implements DisplayIF {
         ScrollPane conversations = new ScrollPane();
         conversations.setFitToWidth(true);
         conversations.setFitToHeight(true);
-        TextArea convo = new TextArea();
+        convo = new TextArea();
         convo.setEditable(false);
         convo.setPrefWidth(conversations.getHvalue());
         convo.setWrapText(true);
@@ -395,6 +415,27 @@ public abstract class UI extends Application implements DisplayIF {
     @Override
     public void displayMessage(MessageType message){
 
+    }
+
+    @Override
+    public void setConversationMessages(List<MessageType> conversationMessages){
+        if(convo != null){
+            StringBuilder sb = new StringBuilder();
+            for(MessageType message : conversationMessages){
+                sb.append(message.toString());
+                sb.append("\n");
+            }
+            convo.setText(sb.toString());
+        }
+
+    }
+
+    @Override
+    public void setConversationEmails(List<String> emails) {
+        emails.remove(0);
+        if (emails.size() != 0) {
+            Platform.runLater(() -> receiversEmail.setAll(emails));
+        }
     }
 
 }

@@ -85,6 +85,15 @@ public class SQLServerFactory extends AbstractDAOFactory {
         this.roomDAO = roomDAO;
     }
 
+    @Override
+    public SQLServerDAOConversation getConversationDAO() {
+        return conversationDAO;
+    }
+
+    public void setConversationDAO(SQLServerDAOConversation conversationDAO) {
+        this.conversationDAO = conversationDAO;
+    }
+
     public int readDAOUserByLogin(String login, String password) {
         return userDAO.readDAOUserByLogin(login, password);
     }
