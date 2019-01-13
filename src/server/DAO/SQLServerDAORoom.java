@@ -86,7 +86,7 @@ public class SQLServerDAORoom extends AbstractDAORoom{
                     rooms.add(new RoomType(resultSet.getInt(1),
                             resultSet.getString(2),
                             resultSet.getInt("capacity"),
-                            resultSet.getInt(4),
+                            resultSet.getInt("building"),
                             resultSet.getBoolean("hasProjector"),
                             resultSet.getBoolean("hasComputer"),
                             resultSet.getString("descriptionRoom")));

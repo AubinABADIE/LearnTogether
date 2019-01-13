@@ -620,7 +620,7 @@ public class AdminUI extends TeacherUI {
 
         //add button
 
-        Button okUpdate = new Button("Create");
+        Button okUpdate = new Button("Update");
         okUpdate.setPrefHeight(40);
         okUpdate.setDefaultButton(true);
         okUpdate.setPrefWidth(100);

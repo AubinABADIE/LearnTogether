@@ -90,7 +90,7 @@ public class GeneralServer implements Observer {
         }else if (instruction.startsWith("DELETEROOM")){
             String[] attributes = instruction.split("-/-");
             handleDeleteRoomFromClient(Integer.parseInt(attributes[1]), client);
-        } else if(instruction.startsWith("#UPDATESROOM")){
+        } else if(instruction.startsWith("UPDATEROOM")){
             String[] attributes = instruction.split("-/-");
             handleUpdateRoomFromClient(Integer.parseInt(attributes[1]),attributes[2],Integer.parseInt(attributes[3]), Integer.parseInt(attributes[4]), Boolean.parseBoolean(attributes[5]),Boolean.parseBoolean( attributes[6]), attributes[7], client);
         } else if (instruction.startsWith("GETROOMS")){
@@ -340,9 +340,9 @@ public class GeneralServer implements Observer {
 
         String mess;
         if (result == 1){
-            mess = "#DELETEROOM Success" ;
+            mess = "#DELETEDROOM Success" ;
         } else{
-            mess = "#DELETEROOM Failure";
+            mess = "#DELETEDROOM Failure";
         }
 
         try{
@@ -368,9 +368,9 @@ public class GeneralServer implements Observer {
 
         String mess;
         if (result == 1){
-            mess = "#UPDATEROOM Success" ;
+            mess = "#UPDATEDROOM Success" ;
         } else{
-            mess = "#UPDATEROOM Failure";
+            mess = "#UPDATEDROOM Failure";
         }
 
         try{
