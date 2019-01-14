@@ -111,7 +111,6 @@ public class GeneralServer implements Observer {
         	System.out.println("ok4");
             handleListCoursesFromClient(client);
         }
-        
         else if(instruction.startsWith("SENDMSGTOCLIENT")){
             String[] attributes = instruction.split("-/-");
             handleSendMessageToClient(Integer.parseInt(attributes[1]), attributes[2],attributes[3], client);
@@ -136,7 +135,12 @@ public class GeneralServer implements Observer {
             System.out.println("jecherchelesteacher");
             handleListTeacherFromClient(client);
         }
+        else if(instruction.startsWith("DELETECONVERSATION")){
+            String[] attributes = instruction.split(" ");
+            handleDeleteConversation(Integer.parseInt(attributes[1]), attributes[2], client);
+        }
     }
+
 
 
 
@@ -575,6 +579,24 @@ public class GeneralServer implements Observer {
             e.printStackTrace();
         }
     }
+
+    /**
+     * This method deletes a certain conversation between two users.
+     * @param askingID: the asking ID
+     * @param otherEmail: the other participant's email.
+     * @param client: the demanding client.
+     */
+    private void handleDeleteConversation(int askingID, String otherEmail, ConnectionToClient client) {
+        int res = dao.getConversationDAO().deleteConversation(askingID, otherEmail);
+        try {
+            if(res == 0)
+                client.sendToClient("#DELETEDCONVERSATION FAILURE");
+            else if(res == 1)
+                client.sendToClient("#DELETEdCONVERSATION SUCCESS");
+        }catch (IOException e){
+            e.printStackTrace();
+        }
+    }
     
     /**
      * This method get the information from the user ID has. It then sends a message containing these information.
@@ -584,7 +606,7 @@ public class GeneralServer implements Observer {
     private void handleReadUser(int idUser, ConnectionToClient client) {
     	UserType user = dao.getUserDAO().readDAOUser(idUser);
     	try {
-            client.sendToClient("#READUSER " + user.getId() + " " + user.getName() + " " + user.getFirstName() + " " + user.getBirthDate() + " " + user.getEmail() + " " + user.getRole());
+            client.sendToClient(user);
         } catch (IOException e) {
             e.printStackTrace();
         }

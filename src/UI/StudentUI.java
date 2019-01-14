@@ -16,6 +16,7 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import Types.CourseType;
 import Types.RoomType;
+import Types.UserType;
 
 import java.util.List;
 
@@ -106,18 +107,17 @@ public class StudentUI extends UI  {
 	public void getCourses(List<CourseType> courses) {
 		
 	}
+	
+	@Override
+	public void setUser(UserType user) {
+		this.user = user;
+		
+	}
 
     @Override
     public void getDepartment(List<DepartmentType> dep) {
 
     }
-
-	@Override
-	public void displayMessage(MessageType message) {
-		// TODO Auto-generated method stub
-		
-	}
-
     @Override
     public void getTeacher(List<TeacherType> teacher) {
 

@@ -70,6 +70,13 @@ Arguments:
  - id: int the asking ID  
  *Usage*:`#GETCONVEMAIL {id}`
  
+ ## \#DELETECONVERSATION
+ The client asks to delete a conversation with this command.
+ Arguments: 
+ - id: int, the asking ID
+ - email: String, the other email.  
+ *Usage*: `#DELETECONVERSATION {id} {email}`
+ 
 
 
 # FROM the server
@@ -109,14 +116,9 @@ Arguments :
 The server responds to a #SENDMSGTOCLIENT demand with this. It has two states, either sent (the message is in the DB) or error (the message cannot be put into the DB)  
 *Usage*:`#MESSAGE {State}`
 
-##\#MSGFORYOU
-The server sends a message from a client to another using this command. The parse method is "-/-"
-Arguments:
-- SendEmail: the sender email
-- RecvEmail: the receiver email
-- Timestamp: the time the message was sent, format ['HH:mm:ss']
-- Content: the message content  
-*Usage*:`#MSGFORYOU-/-{SendEmail}-/-{RecvEmail}-/-{Timestamp}-/-{content}`
+## \#DELETEDCONVERSATION
+The server responds to a #DELETECONVERSATION demand with this. it has two states, either success or failure.
+*Usage*:`{#DELETEDCONVERSATION} {state}
 
 #Users in the DB
 | id       |      name     |  first name |           email                   |   password   | role     |

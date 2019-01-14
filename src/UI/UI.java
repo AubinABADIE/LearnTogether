@@ -3,15 +3,20 @@ package UI;
 import java.util.List;
 
 import Types.MessageType;
+import Types.UserType;
 import client.CoreClient;
 import common.DisplayIF;
 import javafx.application.Application;
 import javafx.application.Platform;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
@@ -40,6 +45,7 @@ public abstract class UI extends Application implements DisplayIF {
     StringProperty connectionStatus = new SimpleStringProperty("NOT CONNECTED");
     StringProperty currentState = new SimpleStringProperty("UNDEFINED");
     ObservableList<String> receiversEmail;
+    BooleanProperty hasClient = new SimpleBooleanProperty(false);
     TextArea convo;
 
     //Business logic
@@ -49,6 +55,7 @@ public abstract class UI extends Application implements DisplayIF {
     protected String login;
     protected String password;
     protected int userID;
+    protected UserType user;
 
     public String getConnectionStatus() {
         return connectionStatus.get();
@@ -89,8 +96,16 @@ public abstract class UI extends Application implements DisplayIF {
     public void setConvo(TextArea convo) {
         this.convo = convo;
     }
+    
+    public BooleanProperty getHasClient() {
+		return hasClient;
+	}
 
-    /**
+	public void setHasClient(boolean hasClient) {
+		this.hasClient.setValue(hasClient);
+	}
+
+	/**
 	 * Create the window with the two scene and set the first scene as main.
 	 * 
 	 * @param primaryStage Frame window.
@@ -102,7 +117,7 @@ public abstract class UI extends Application implements DisplayIF {
     }
 
     protected void setupListeners(){
-
+    	
     }
 
 
@@ -184,17 +199,26 @@ public abstract class UI extends Application implements DisplayIF {
     }
     
     public GridPane readProfile(Tab tabProfile) {
-        
+    	
+        client.handleReadUser(userID);
+    	
     	// Labels
-    	Label name = new Label(login);
+    	Label name = new Label();
     	name.setFont(Font.font("Cambria", FontWeight.BOLD, 30));
     	name.setAlignment(Pos.CENTER_LEFT);
     	Label email = new Label("Email: ");
     	Label birthdate = new Label("Birthdate: ");
     	Label id = new Label("ID: ");
-    	Label emailDB = new Label(login);
+    	Label emailDB = new Label();
     	Label birthdateDB = new Label();
     	Label idDB = new Label();
+    	
+    	if(hasClient.getValue()) {
+    		name.setText(user.getName() + " " + user.getFirstName());
+			emailDB.setText(user.getEmail());
+			birthdateDB.setText(user.getBirthDate());
+			idDB.setText(Integer.toString(user.getId()));
+    	}
     	
     	// Buttons
     	Button changePhotoButton = new Button("Change...");
@@ -253,6 +277,15 @@ public abstract class UI extends Application implements DisplayIF {
         changePwdButton.setOnAction(event -> {
         	tabProfile.setContent(updateProfile(tabProfile));
         });
+        
+        hasClient.addListener((observable, oldValue, newValue)->{
+    		if(newValue) {
+    			name.setText(user.getName() + " " + user.getFirstName());
+    			emailDB.setText(user.getEmail());
+    			birthdateDB.setText(user.getBirthDate());
+    			idDB.setText(Integer.toString(user.getId()));
+    		}
+    	});
         
         return gridProfile;
     }
@@ -330,6 +363,7 @@ public abstract class UI extends Application implements DisplayIF {
         HBox newConv = new HBox();
         Label startConvLabel = new Label("Email for a new conversation: ");
         TextField startConvEmail = new TextField();
+        startConvEmail.setPrefWidth(200);
         Button startConvButton = new Button("New conversation");
         startConvButton.setOnAction(event -> {
             if(startConvEmail.getText()!=null){
@@ -339,9 +373,17 @@ public abstract class UI extends Application implements DisplayIF {
             }
 
         });
+        Image delConv = new Image(getClass().getResourceAsStream("images/icons8-annuler-208.png"));
+        ImageView delConvView = new ImageView(delConv);
+        delConvView.setFitHeight(12);
+        delConvView.setFitWidth(12);
+        Button btnDelConv = new Button("Delete this conversation...");
+        btnDelConv.setGraphic(delConvView);//setting icon to button
+
+
         newConv.setSpacing(20);
         newConv.setPadding(new Insets(15,12,15,12));
-        newConv.getChildren().addAll(startConvLabel, startConvEmail, startConvButton);
+        newConv.getChildren().addAll(startConvLabel, startConvEmail, startConvButton, btnDelConv);
 
         ScrollPane conversations = new ScrollPane();
         conversations.setFitToWidth(true);
@@ -374,15 +416,19 @@ public abstract class UI extends Application implements DisplayIF {
         msgInput.setOnKeyPressed(event -> {
             if(event.getCode().equals(KeyCode.ENTER)){
                 if(client!=null){
-                    client.sendMsgToClient(userID, convoNameList.getSelectionModel().getSelectedItem(),msgInput.getText());
-                    msgInput.setText("");
-                    client.readConversation(userID, convoNameList.getSelectionModel().getSelectedItem());
+                    String convEmail = convoNameList.getSelectionModel().getSelectedItem();
+                    if(convEmail != null) {
+                        client.sendMsgToClient(userID, convoNameList.getSelectionModel().getSelectedItem(), msgInput.getText());
+                        msgInput.setText("");
+                        client.readConversation(userID, convoNameList.getSelectionModel().getSelectedItem());
+                    }
                 }
             }
         });
         sendBtn.setOnAction(event -> {
-            if(client!=null){
-                client.sendMsgToClient(userID, convoNameList.getSelectionModel().getSelectedItem(),msgInput.getText());
+            String convEmail = convoNameList.getSelectionModel().getSelectedItem();
+            if(convEmail != null) {
+                client.sendMsgToClient(userID, convoNameList.getSelectionModel().getSelectedItem(), msgInput.getText());
                 msgInput.setText("");
                 client.readConversation(userID, convoNameList.getSelectionModel().getSelectedItem());
             }
@@ -395,6 +441,24 @@ public abstract class UI extends Application implements DisplayIF {
         chatPane.setLeft(conversationList);
         chatPane.setBottom(sendMsgBar);
         chatPane.setPadding(new Insets(10,10,10,10));
+
+        btnDelConv.setOnAction(event -> {
+            String emailConv = convoNameList.getSelectionModel().getSelectedItem();
+            if(emailConv != null) {
+                Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure you want to delete this conversation with " + emailConv + "?", ButtonType.YES, ButtonType.NO);
+                alert.setHeaderText("Confirmation delete");
+                Window win = chatPane.getScene().getWindow();
+                alert.initOwner(win);
+                alert.showAndWait();
+                if (alert.getResult() == ButtonType.NO) {
+                    return;
+                }
+                if (alert.getResult() == ButtonType.YES) {
+                    client.deleteConversation(userID, emailConv);
+                    client.getConversationEmail(userID);
+                }
+            }
+        });
 
         chatTab.setContent(chatPane);
         return chatTab;

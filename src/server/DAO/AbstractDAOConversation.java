@@ -12,4 +12,5 @@ public abstract class AbstractDAOConversation {
     public abstract int storeMessage(int senderID, String receiverEmail, String messageContent);
     public abstract List<MessageType> retrieveConversation(int askingID, String otherEmail);
     public abstract List<String> getConversationEmails(int askingID);
+    public abstract int deleteConversation(int askingID, String otherEmail);
 }

@@ -100,12 +100,13 @@ public class CoreClient implements ClientIF {
             else if  (((String) msg).startsWith("#DELETEDDEPARTMENT")){
                 department.handleDeletedDepartment((String) msg);
             }
-            else if(((String) msg).startsWith("#READUSER")) {
-            	user.handleReadUser((String)msg);
-            }
             else if(((String) msg).startsWith("#UPDATEDPWD")) {
             	user.handleUpdatedPwd((String)msg);
             }
+            else if(((String) msg).startsWith("#DELETEDCONVERSATION")){
+                conversations.handleDeletedConversation((String)msg);
+            }
+
         } else if (msg instanceof List) {
             if (((List)msg).get(0) instanceof RoomType)
                 display.getRooms((List<RoomType>)msg);
@@ -121,8 +122,8 @@ public class CoreClient implements ClientIF {
                 display.getTeacher((List<TeacherType>)msg);}
 
         }
-        else if(msg instanceof UserType){
-            //TODO
+        else if(msg instanceof UserType) {
+        	display.setUser((UserType)msg);
         }
     }
 
@@ -146,6 +147,9 @@ public class CoreClient implements ClientIF {
         user.setFirstPassword(login, password);
     }
 
+    /**********************
+     * Rooms
+     **********************/
     /**
      * This method delegates the management of the room creation to the roomservices
      * @param name : room name
@@ -200,6 +204,15 @@ public class CoreClient implements ClientIF {
         room.handleDeleteRoom(id);
     }
 
+
+    /**
+     * This method delegates getRooms to roomServices
+     * @return a room list
+     */
+    public void getRooms() {
+        room.getRooms();
+    }
+
     /**
      * This method delegates the management of the room update to the courseservices
      * @param name : course name
@@ -211,8 +224,9 @@ public class CoreClient implements ClientIF {
         course.handleUpdateCourse(id, name, description, totalHours, idT);
     }
 
-    
-    
+    /**********************
+     * Departments
+     **********************/
     
     public void handleCreateDepartment(String name, int refTeacherID, String descriptionDep){
         department.createDepartment(name, refTeacherID, descriptionDep);
@@ -226,15 +240,6 @@ public class CoreClient implements ClientIF {
         department.deleteDepartment(departmentID);
     }
 
-    
-    
-    /**
-     * This method delegates getRooms to roomServices
-     * @return a room list
-     */
-    public void getRooms() {
-        room.getRooms();
-    }
     
     /**
      * This method delegates getCourses to courseServices
@@ -254,15 +259,44 @@ public class CoreClient implements ClientIF {
         department.getDepartment();
     }
 
+    /***************
+     * Conversations
+     ***************/
+    /**
+     * This method delegates to the conversation Business Logic
+     * @param receiverEmail: The conversation you want to create.
+     */
     public void createConversation(String receiverEmail){conversations.createConversation(receiverEmail);}
 
+    /**
+     * This method delegates to the conversation Business Logic.
+     * @param id: the sender's id.
+     * @param receiverEmail: the receiver email.
+     * @param messageContent: the message content.
+     */
     public void sendMsgToClient(int id, String receiverEmail, String messageContent){conversations.sendMsgToClient(id, receiverEmail, messageContent);}
 
+    /**
+     * This method delegates to the conversation Business Logic.
+     * @param id: the asking ID.
+     * @param email: the other participant's email.
+     */
     public void  readConversation(int id, String email){conversations.readConversation(id, email);}
-    
+
+    /**
+     * This method delegates to the conversation Business Logic.
+     * @param userID: the asking ID.
+     */
     public void getConversationEmail(int userID) {
         conversations.getConversationEmail(userID);
     }
+
+    /**
+     * This method delegates to the conversation Business Logic.
+     * @param userID: the asking ID.
+     * @param conversationEmail: the conversation to delete.
+     */
+    public void deleteConversation(int userID, String conversationEmail){conversations.deleteConversation(userID, conversationEmail);}
     
     /**********************
      * Profile

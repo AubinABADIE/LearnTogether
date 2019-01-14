@@ -18,6 +18,7 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import Types.RoomType;
+import Types.UserType;
 import Types.CourseType;
 
 import java.io.IOException;
@@ -87,7 +88,7 @@ public class StartUI extends UI {
         setupListeners();
         this.primaryStage = primaryStage;
         this.primaryStage.setTitle("Learn Together - Connection");
-        primaryStage.setAlwaysOnTop(true);
+        primaryStage.setAlwaysOnTop(false);
         // Scene 2
         // Create the registration form grid pane
         root = createPrincipalPane();
@@ -189,9 +190,7 @@ public class StartUI extends UI {
                 }
             } else if (newValue.equalsIgnoreCase("RU FAILURE")){
                 Platform.runLater(()->showAlert(Alert.AlertType.CONFIRMATION, null, "Failure", "Error: Room hasn't been updated."));
-            }
-
-            else if (newValue.equalsIgnoreCase("CC SUCCESS")) {
+            } else if (newValue.equalsIgnoreCase("CC SUCCESS")) {
                 Platform.runLater(()->showAlert(Alert.AlertType.CONFIRMATION, null, "Success", "You have created the course."));
             } else if (newValue.equalsIgnoreCase("CC FAILURE")) {
                 Platform.runLater(()->showAlert(Alert.AlertType.CONFIRMATION, null, "Failure", "Error: Course hasn't been created."));
@@ -201,10 +200,13 @@ public class StartUI extends UI {
             } else if (newValue.equalsIgnoreCase("CD FAILURE")){
                 Platform.runLater(()->showAlert(Alert.AlertType.CONFIRMATION, null, "Failure", "Error: Course hasn't been deleted."));
             } else if (newValue.equalsIgnoreCase("CU SUCCESS")){
-                showAlert(Alert.AlertType.CONFIRMATION, null, "Success", "You have update the course.");
-               
+                showAlert(Alert.AlertType.CONFIRMATION, null, "Success", "You have updated the course.");
             } else if (newValue.equalsIgnoreCase("CU FAILURE")){
-                Platform.runLater(()->showAlert(Alert.AlertType.CONFIRMATION, null, "Failure", "Error: Course hasn't been updated."));
+                Platform.runLater(()->showAlert(Alert.AlertType.ERROR, null, "Failure", "Error: Course hasn't been updated."));
+            } else if(newValue.equalsIgnoreCase("MD SUCCESS")){
+                Platform.runLater(()->showAlert(Alert.AlertType.CONFIRMATION, null, "Success", "The conversation has been deleted."));
+            } else if(newValue.equalsIgnoreCase("MD FAILURE.")){
+                Platform.runLater(()->showAlert(Alert.AlertType.ERROR, null, "Failure", "The conversation cannot be deleted at this time."));
             }
         });
     }
@@ -461,6 +463,14 @@ public class StartUI extends UI {
             });
 
         }
+    
+    @Override
+	public void setUser(UserType user) {
+    	Platform.runLater(() -> {
+    		getCurrentUI().setUser(user);
+    		getCurrentUI().setHasClient(true);
+    	});
+	}
 
     @Override
     public void getTeacher(List<TeacherType> teacher) {
@@ -472,14 +482,6 @@ public class StartUI extends UI {
         });
 
     }
-
-
-	@Override
-	public void displayMessage(MessageType message) {
-		// TODO Auto-generated method stub
-		
-	}
-
 
 }
 
