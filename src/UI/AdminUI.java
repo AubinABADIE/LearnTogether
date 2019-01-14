@@ -947,7 +947,7 @@ public class AdminUI extends TeacherUI {
         btnDeleteDep.setOnAction(event -> {
             SelectionModel<DepartmentType> selectedDeleteDepartment = list.getSelectionModel();
             if (selectedDeleteDepartment.getSelectedItem() != null){
-                Alert alert = new Alert(Alert.AlertType.CONFIRMATION,"You are sure to delete a department", ButtonType.YES, ButtonType.NO);
+                Alert alert = new Alert(Alert.AlertType.CONFIRMATION,"You are sure to delete this department", ButtonType.YES, ButtonType.NO);
                 alert.setHeaderText("Confirmation delete");
                 Window win = gridDepV.getScene().getWindow();
                 alert.initOwner(win);
@@ -956,7 +956,7 @@ public class AdminUI extends TeacherUI {
                     return;
                 }
                 if (alert.getResult() == ButtonType.YES) {
-                    return;
+                    client.handleDeleteDepartment(selectedDeleteDepartment.getSelectedItem().getIdDepartment());;
                 }
             }
 
@@ -1013,7 +1013,7 @@ public class AdminUI extends TeacherUI {
         });
 
 
-        btnDeleteDep.setOnAction(event -> {
+        btnDeleteClass.setOnAction(event -> {
             SelectionModel<ClassType> selectedDeleteDepartment = listClass.getSelectionModel();
             if (selectedDeleteDepartment.getSelectedItem() != null){
                 Alert alert = new Alert(Alert.AlertType.CONFIRMATION,"You are sure to delete a department", ButtonType.YES, ButtonType.NO);
@@ -1119,7 +1119,8 @@ public class AdminUI extends TeacherUI {
                 return;
             }
 
-            client.handleCreateDepartment(nameField.getText(), Integer.parseInt(teacherComboBox.getId()), descriptionField.getText());
+            TeacherType teach= (TeacherType) teacherComboBox.getSelectionModel().getSelectedItem();
+            client.handleCreateDepartment(nameField.getText(), teach.getId(), descriptionField.getText());
             nameField.setText("");
             descriptionField.setText("");
 

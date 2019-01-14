@@ -88,7 +88,7 @@ public class StartUI extends UI {
         setupListeners();
         this.primaryStage = primaryStage;
         this.primaryStage.setTitle("Learn Together - Connection");
-        primaryStage.setAlwaysOnTop(false);
+        primaryStage.setAlwaysOnTop(true);
         // Scene 2
         // Create the registration form grid pane
         root = createPrincipalPane();

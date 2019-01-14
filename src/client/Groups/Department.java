@@ -68,7 +68,7 @@ public class Department {
         this.refTeacherID=refTeacherID;
         this.descDep=descDep;
         try {
-            coreClient.getConnection().sendToServer("#CREATEDEP " + name + " " + refTeacherID + " " + descDep);
+            coreClient.getConnection().sendToServer("#CREATEDEP-/-" + name + "-/-" + refTeacherID + "-/-" + descDep);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -95,7 +95,7 @@ public class Department {
      */
     public void deleteDepartment(int idDep) {
         try {
-            coreClient.getConnection().sendToServer("#DELETEDEP " + idDep);
+            coreClient.getConnection().sendToServer("#DELETEDEP-/-" + idDep);
         } catch (IOException e) {
             e.printStackTrace();
         }

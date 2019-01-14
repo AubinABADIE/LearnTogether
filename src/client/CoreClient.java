@@ -147,6 +147,9 @@ public class CoreClient implements ClientIF {
         user.setFirstPassword(login, password);
     }
 
+    /**********************
+     * Rooms
+     **********************/
     /**
      * This method delegates the management of the room creation to the roomservices
      * @param name : room name
@@ -201,6 +204,15 @@ public class CoreClient implements ClientIF {
         room.handleDeleteRoom(id);
     }
 
+
+    /**
+     * This method delegates getRooms to roomServices
+     * @return a room list
+     */
+    public void getRooms() {
+        room.getRooms();
+    }
+
     /**
      * This method delegates the management of the room update to the courseservices
      * @param name : course name
@@ -212,8 +224,9 @@ public class CoreClient implements ClientIF {
         course.handleUpdateCourse(id, name, description, totalHours, idT);
     }
 
-    
-    
+    /**********************
+     * Departments
+     **********************/
     
     public void handleCreateDepartment(String name, int refTeacherID, String descriptionDep){
         department.createDepartment(name, refTeacherID, descriptionDep);
@@ -227,15 +240,6 @@ public class CoreClient implements ClientIF {
         department.deleteDepartment(departmentID);
     }
 
-    
-    
-    /**
-     * This method delegates getRooms to roomServices
-     * @return a room list
-     */
-    public void getRooms() {
-        room.getRooms();
-    }
     
     /**
      * This method delegates getCourses to courseServices

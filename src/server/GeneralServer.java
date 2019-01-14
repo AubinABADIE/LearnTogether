@@ -75,16 +75,15 @@ public class GeneralServer implements Observer {
             handleFirstConnectionFromClient(creds[1], creds[2], client);
         }
         else if(instruction.startsWith("CREATEDEP")){
-            String[] creds = instruction.split(" ");
+            String[] creds = instruction.split("-/-");
             handleCreateDepartmentFromClient(creds[1], creds[2], creds[3], client);
         }else if(instruction.startsWith("UPDATEDEP")){
             String[] creds = instruction.split(" ");
             handleUpdateDepartmentFromClient(creds[1], creds[2], creds[3],creds[4], client);
         }else if(instruction.startsWith("DELETEDEP")){
-            String[] creds = instruction.split(" ");
-            handleDeleteDepartmentFromClient(creds[1], client);
+            String[] creds = instruction.split("-/-");
+            handleDeleteDepartmentFromClient(Integer.parseInt(creds[1]), client);
         }else if (instruction.startsWith("GETDEPARTMENT")){
-            System.out.println("oooook");
             handleListDepFromClient(client);
         }
         else if (instruction.startsWith("CREATEROOM")){
@@ -278,9 +277,9 @@ public class GeneralServer implements Observer {
      * @param idDep
      * @param client
      */
-    public void handleDeleteDepartmentFromClient(String idDep, ConnectionToClient client) {
-        int idDepart=Integer.parseInt(idDep);
-        int result = dao.getDepartmentDAO().deleteDepartment(idDepart);
+    public void handleDeleteDepartmentFromClient(int idDep, ConnectionToClient client) {
+
+        int result = dao.getDepartmentDAO().deleteDepartment(idDep);
 
         String mess;
         if (result == 1){
