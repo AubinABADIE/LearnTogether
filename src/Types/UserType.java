@@ -1,6 +1,8 @@
 package Types;
 
-public class UserType {
+import java.io.Serializable;
+
+public class UserType implements Serializable {
     private int id;
     private String name;
     private String firstName;

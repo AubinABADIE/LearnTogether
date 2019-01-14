@@ -14,6 +14,7 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import Types.CourseType;
 import Types.RoomType;
+import Types.UserType;
 
 import java.util.List;
 
@@ -102,6 +103,12 @@ public class StudentUI extends UI  {
 
 	@Override
 	public void getCourses(List<CourseType> courses) {
+		
+	}
+	
+	@Override
+	public void setUser(UserType user) {
+		this.user = user;
 		
 	}
 

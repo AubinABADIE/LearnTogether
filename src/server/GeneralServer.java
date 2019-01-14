@@ -564,7 +564,7 @@ public class GeneralServer implements Observer {
     private void handleReadUser(int idUser, ConnectionToClient client) {
     	UserType user = dao.getUserDAO().readDAOUser(idUser);
     	try {
-            client.sendToClient("#READUSER " + user.getId() + " " + user.getName() + " " + user.getFirstName() + " " + user.getBirthDate() + " " + user.getEmail() + " " + user.getRole());
+            client.sendToClient(user);
         } catch (IOException e) {
             e.printStackTrace();
         }

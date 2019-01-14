@@ -4,6 +4,7 @@ import Types.DepartmentType;
 import Types.MessageType;
 
 import Types.RoomType;
+import Types.UserType;
 import Types.CourseType;
 
 import java.util.List;
@@ -22,6 +23,7 @@ public interface DisplayIF {
     void displayMessage(MessageType message);
     void setConversationMessages(List<MessageType> conversationMessages);
     void setConversationEmails(List<String> emails);
+    void setUser(UserType user);
 	
     void getDepartment(List<DepartmentType> dep);
 }

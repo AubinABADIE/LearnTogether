@@ -3,10 +3,13 @@ package UI;
 import java.util.List;
 
 import Types.MessageType;
+import Types.UserType;
 import client.CoreClient;
 import common.DisplayIF;
 import javafx.application.Application;
 import javafx.application.Platform;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
@@ -40,6 +43,7 @@ public abstract class UI extends Application implements DisplayIF {
     StringProperty connectionStatus = new SimpleStringProperty("NOT CONNECTED");
     StringProperty currentState = new SimpleStringProperty("UNDEFINED");
     ObservableList<String> receiversEmail;
+    BooleanProperty hasClient = new SimpleBooleanProperty(false);
     TextArea convo;
 
     //Business logic
@@ -49,6 +53,7 @@ public abstract class UI extends Application implements DisplayIF {
     protected String login;
     protected String password;
     protected int userID;
+    protected UserType user;
 
     public String getConnectionStatus() {
         return connectionStatus.get();
@@ -89,8 +94,16 @@ public abstract class UI extends Application implements DisplayIF {
     public void setConvo(TextArea convo) {
         this.convo = convo;
     }
+    
+    public BooleanProperty getHasClient() {
+		return hasClient;
+	}
 
-    /**
+	public void setHasClient(boolean hasClient) {
+		this.hasClient.setValue(hasClient);
+	}
+
+	/**
 	 * Create the window with the two scene and set the first scene as main.
 	 * 
 	 * @param primaryStage Frame window.
@@ -102,7 +115,7 @@ public abstract class UI extends Application implements DisplayIF {
     }
 
     protected void setupListeners(){
-
+    	
     }
 
 
@@ -184,17 +197,26 @@ public abstract class UI extends Application implements DisplayIF {
     }
     
     public GridPane readProfile(Tab tabProfile) {
-        
+    	
+        client.handleReadUser(userID);
+    	
     	// Labels
-    	Label name = new Label(login);
+    	Label name = new Label();
     	name.setFont(Font.font("Cambria", FontWeight.BOLD, 30));
     	name.setAlignment(Pos.CENTER_LEFT);
     	Label email = new Label("Email: ");
     	Label birthdate = new Label("Birthdate: ");
     	Label id = new Label("ID: ");
-    	Label emailDB = new Label(login);
+    	Label emailDB = new Label();
     	Label birthdateDB = new Label();
     	Label idDB = new Label();
+    	
+    	if(hasClient.getValue()) {
+    		name.setText(user.getName() + " " + user.getFirstName());
+			emailDB.setText(user.getEmail());
+			birthdateDB.setText(user.getBirthDate());
+			idDB.setText(Integer.toString(user.getId()));
+    	}
     	
     	// Buttons
     	Button changePhotoButton = new Button("Change...");
@@ -253,6 +275,15 @@ public abstract class UI extends Application implements DisplayIF {
         changePwdButton.setOnAction(event -> {
         	tabProfile.setContent(updateProfile(tabProfile));
         });
+        
+        hasClient.addListener((observable, oldValue, newValue)->{
+    		if(newValue) {
+    			name.setText(user.getName() + " " + user.getFirstName());
+    			emailDB.setText(user.getEmail());
+    			birthdateDB.setText(user.getBirthDate());
+    			idDB.setText(Integer.toString(user.getId()));
+    		}
+    	});
         
         return gridProfile;
     }
