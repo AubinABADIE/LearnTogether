@@ -82,7 +82,7 @@ public class GeneralServer implements Observer {
             String[] creds = instruction.split("-/-");
             handleCreateDepartmentFromClient(creds[1], creds[2], creds[3], client);
         }else if(instruction.startsWith("UPDATEDEP")){
-            String[] creds = instruction.split(" ");
+            String[] creds = instruction.split("-/-");
             handleUpdateDepartmentFromClient(creds[1], creds[2], creds[3],creds[4], client);
         }else if(instruction.startsWith("DELETEDEP")){
             String[] creds = instruction.split("-/-");
@@ -237,7 +237,8 @@ public class GeneralServer implements Observer {
      * @param client
      */
     public void handleCreateDepartmentFromClient(String name, String refTeacherID, String descriptionDep, ConnectionToClient client) {
-        int result = dao.getDepartmentDAO().createDepartment(name,refTeacherID,descriptionDep);
+        int refTeacher= Integer.parseInt(refTeacherID);
+        int result = dao.getDepartmentDAO().createDepartment(name,refTeacher,descriptionDep);
 
         String mess;
         if (result == 1){

@@ -79,12 +79,12 @@ public class Department {
      * @param refTeacherID
      * @param descDep
      */
-    public void updateDepartment(String name, int refTeacherID, String descDep) {
+    public void updateDepartment(int idDep,String name, int refTeacherID, String descDep) {
         setName(name);
         setRefTeacherID(refTeacherID);
         setDescDep(descDep);
         try {
-            coreClient.getConnection().sendToServer("#UPDATEDEP " + name + " " + refTeacherID + " " + descDep);
+            coreClient.getConnection().sendToServer("#UPDATEDEP-/-" + idDep + "-/-" + name + "-/-" + refTeacherID + "-/-" + descDep);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -130,9 +130,7 @@ public class Department {
      */
     public void getDepartment() {
         try {
-            System.out.println("ok1");
             coreClient.getConnection().sendToServer("#GETDEPARTMENT" );
-            System.out.println("ok2");
         }catch (IOException e) {
             e.printStackTrace();
         }

@@ -232,8 +232,8 @@ public class CoreClient implements ClientIF {
         department.createDepartment(name, refTeacherID, descriptionDep);
     }
 
-    public void handleUpdateDepartment(String name, int refTeacherID, String descriptionDep){
-        department.updateDepartment(name, refTeacherID, descriptionDep);
+    public void handleUpdateDepartment(int idDep,String name, int refTeacherID, String descriptionDep){
+        department.updateDepartment(idDep,name, refTeacherID, descriptionDep);
     }
 
     public void handleDeleteDepartment(int departmentID){
@@ -246,7 +246,6 @@ public class CoreClient implements ClientIF {
      * @return a room list
      */
     public void getCourses() {
-    	System.out.println("ok2");
         course.getCourses();
         
     }

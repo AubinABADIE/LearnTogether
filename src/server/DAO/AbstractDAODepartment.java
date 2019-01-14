@@ -20,7 +20,7 @@ public abstract class AbstractDAODepartment{
      * @param refTeacherID
      * @param descriptionDep
      */
-    public abstract int createDepartment(String name, String refTeacherID, String descriptionDep);
+    public abstract int createDepartment(String name, int refTeacherID, String descriptionDep);
 
     /**
      * @param name

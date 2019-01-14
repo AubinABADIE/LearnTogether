@@ -716,11 +716,17 @@ public class AdminUI extends TeacherUI {
         Button btnDeleteDep = new Button("Delete-Dep");
         btnDeleteDep.setGraphic(deleteDepView);//setting icon to button
 
+        //create update button
+        HBox hboxupdateButtonDep = new HBox();
+        Button btnUpdateDep = new Button("Update-Dep");
+        hboxupdateButtonDep.getChildren().add(btnUpdateDep);
+
+
         // add in hbox buttons and title
         HBox hboxButtonDep = new HBox();
 
         Text title = new Text("Department : ");
-        hboxButtonDep.getChildren().addAll(title,btnAddDep,btnDeleteDep);
+        hboxButtonDep.getChildren().addAll(title,btnAddDep,btnDeleteDep,btnUpdateDep);
         hboxButtonDep.setSpacing(5);
 
         list.setItems(depNames);
@@ -962,6 +968,13 @@ public class AdminUI extends TeacherUI {
 
         });
 
+        btnUpdateDep.setOnAction(event ->{
+            SelectionModel<DepartmentType> selectedDeleteDep = list.getSelectionModel();
+            if (selectedDeleteDep.getSelectedItem() != null) {
+                updateTabDep(tabDepartment, selectedDeleteDep.getSelectedItem().getNameDep(), selectedDeleteDep.getSelectedItem().getRefTeacher(),selectedDeleteDep.getSelectedItem().getDescriptionDep(), selectedDeleteDep.getSelectedItem().getIdDepartment());
+            }
+        });
+
         list.setOnMouseClicked(event -> {
             gridDepV.getChildren().remove(vboxInfoDep);
             gridDepV.add(vboxInfoDep, 2, 2);
@@ -1127,6 +1140,115 @@ public class AdminUI extends TeacherUI {
         });
 
         cancelCreate.setOnAction(event -> {
+            tabDepartment.setContent(departmentRead(tabDepartment));
+        });
+
+
+        return gridDep;
+    }
+
+    protected GridPane updateTabDep(Tab tabDepartment,String nameDep, int refTeacher, String descDep, int idDep) {
+        // labels
+        Label nameLabel = new Label("Name of departement : ");
+        Label teacherLabel = new Label("Referent teacher : ");
+        Label descLabel = new Label("Description : ");
+
+        // Add text Field
+        TextField nameField = new TextField();
+        TextArea descriptionField = new TextArea();
+        nameField.setText(nameDep);
+        descriptionField.setText(descDep);
+
+        client.getTeacher();
+        ListView<TeacherType> listT = new ListView<>();
+        teacherNames = FXCollections.observableArrayList();
+        teacherNames.addListener((ListChangeListener<TeacherType>) c -> {
+            listT.setItems(teacherNames);
+        });
+
+        ComboBox teacherComboBox = new ComboBox();
+        teacherComboBox.setItems(teacherNames);
+        teacherComboBox.getSelectionModel().select(1);
+
+        //return button
+        Image returnDep = new Image(getClass().getResourceAsStream("images/icons8-return.png"));
+        ImageView returnDepView = new ImageView(returnDep);
+        returnDepView.setFitHeight(15);
+        returnDepView.setFitWidth(15);
+
+        //create return button
+        Button btnReturnDep = new Button();
+        btnReturnDep.setGraphic(returnDepView);//setting icon to button
+
+        HBox returnBox = new HBox();
+        returnBox.getChildren().add(btnReturnDep);
+
+        //grid pane
+        GridPane gridDep = new GridPane();
+        gridDep.setHgap(10);
+        gridDep.setVgap(10);
+        gridDep.setPadding(new Insets(10, 10, 10, 10));
+
+        //Hbox
+        HBox nameDepUp = new HBox();
+        HBox teacherDepUp = new HBox();
+        HBox descriptionDepUp = new HBox();
+
+        // add form in hbox
+        nameDepUp.getChildren().addAll(nameLabel, nameField);
+        teacherDepUp.getChildren().addAll(teacherLabel, teacherComboBox);
+        descriptionDepUp.getChildren().addAll(descLabel, descriptionField);
+
+        //add hbox in gridpane
+        gridDep.add(nameDepUp, 1, 0);
+        gridDep.add(teacherDepUp, 1, 2);
+        gridDep.add(descriptionDepUp, 1, 5);
+        gridDep.add(returnBox,2, 0);
+
+        //add gridpane in tab
+        tabDepartment.setContent(gridDep);
+
+        //add button
+        Button okUpdate = new Button("Update");
+        okUpdate.setPrefHeight(40);
+        okUpdate.setDefaultButton(true);
+        okUpdate.setPrefWidth(100);
+        gridDep.add(okUpdate, 0, 13, 1, 1);
+        gridDep.setHalignment(okUpdate, HPos.RIGHT);
+        gridDep.setMargin(okUpdate, new Insets(20, 0,20,0));
+
+        Button cancelUpdate = new Button("Cancel");
+        cancelUpdate.setPrefHeight(40);
+        cancelUpdate.setDefaultButton(false);
+        cancelUpdate.setPrefWidth(100);
+        gridDep.add(cancelUpdate, 2, 13, 1, 1);
+        gridDep.setHalignment(cancelUpdate, HPos.RIGHT);
+        gridDep.setMargin(cancelUpdate, new Insets(20, 0,20,0));
+
+        btnReturnDep.setOnAction(event -> {
+            tabDepartment.setContent(departmentRead(tabDepartment));
+        });
+
+        okUpdate.setOnAction(event -> {
+            if (nameField.getText().isEmpty()) {
+                showAlert(Alert.AlertType.ERROR, gridDep.getScene().getWindow(), "Form Error!", "Please enter department name");
+                return;
+            }if (teacherComboBox.getSelectionModel().isEmpty()) {
+                showAlert(Alert.AlertType.ERROR, gridDep.getScene().getWindow(), "Form Error!", "Please enter referent teacher");
+                return;
+            }if (descriptionField.getText().isEmpty()) {
+                showAlert(Alert.AlertType.ERROR, gridDep.getScene().getWindow(), "Form Error!", "Please enter department description");
+                return;
+            }
+            TeacherType teach= (TeacherType) teacherComboBox.getSelectionModel().getSelectedItem();
+            client.handleUpdateDepartment(idDep, nameField.getText(), teach.getId(), descriptionField.getText());
+            nameField.setText("");
+            descriptionField.setText("");
+            tabDepartment.setContent(departmentRead(tabDepartment));
+
+        });
+
+        cancelUpdate.setOnAction(event -> {
             tabDepartment.setContent(departmentRead(tabDepartment));
         });
 

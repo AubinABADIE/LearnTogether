@@ -47,14 +47,14 @@ public class SQLServerDAODepartment extends AbstractDAODepartment{
      * @param descriptionDep : small department of the department
      */
     @Override
-    public int createDepartment(String name, String refTeacherID, String descriptionDep) {
+    public int createDepartment(String name, int refTeacherID, String descriptionDep) {
         Connection connection = getConnection();
         int result = 0;
         if(connection != null){
             try{
                 PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO Departments(depatmentName,descriptionDep,refTeacher) VALUES (? ,? ,?)");
                 preparedStatement.setString(1, name);
-                preparedStatement.setString(3, refTeacherID);
+                preparedStatement.setInt(3, refTeacherID);
                 preparedStatement.setString(2, descriptionDep);
                 result = preparedStatement.executeUpdate();
             }catch (SQLException e){
@@ -71,18 +71,16 @@ public class SQLServerDAODepartment extends AbstractDAODepartment{
 
     @Override
     public int updateDepartment(int idDep, String name, String refTeacherID, String descriptionDep) {
-
         Connection connection = getConnection();
         int result = 0;
         if(connection != null){
             try{
-                PreparedStatement preparedStatement = connection.prepareStatement("UPDATE Department SET name = ?, refTeacherID = ?, descriptionDep = ? WHERE idDepartment = ? ");
+                PreparedStatement preparedStatement = connection.prepareStatement("UPDATE Departments SET depatmentName = ?,  descriptionDep = ?, refTeacher = ? WHERE idDepartment = ? ");
                 preparedStatement.setString(1, name);
-                preparedStatement.setString(2, refTeacherID);
-                preparedStatement.setString(3, descriptionDep);
+                preparedStatement.setString(3, refTeacherID);
+                preparedStatement.setString(2, descriptionDep);
                 preparedStatement.setInt(4, idDep);
                 result = preparedStatement.executeUpdate();
-
             }catch (SQLException e){
                 e.printStackTrace();
             }
@@ -100,6 +98,7 @@ public class SQLServerDAODepartment extends AbstractDAODepartment{
      */
     @Override
     public int deleteDepartment(int idDep) {
+        System.out.println("erecu UPDATE");
         Connection connection = getConnection();
         int result = 0;
         if(connection != null){
