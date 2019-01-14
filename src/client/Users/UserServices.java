@@ -121,12 +121,12 @@ public class UserServices{
     
     /**
      * This method is called when the client wants to set a new password.
-     * @param id
-     * @param password
+     * @param login
+     * @param pwd
      */
     public void updatePwd(String login, String pwd) {
     	try {
-    		coreClient.getConnection().sendToServer("#UPDATEPWD " + login + " " + pwd);
+    		coreClient.getConnection().sendToServer("#UPDATEPWD " + login + " " + encryptPwd(pwd));
         } catch (IOException e) {
             e.printStackTrace();
         }
