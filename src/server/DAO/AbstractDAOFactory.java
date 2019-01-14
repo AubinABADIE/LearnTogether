@@ -14,6 +14,7 @@ public abstract class AbstractDAOFactory{
     private AbstractDAORoom roomDAO;
     private AbstractDAOConversation conversationDAO;
 
+
     /**
      * Default constructor
      */
@@ -62,4 +63,6 @@ public abstract class AbstractDAOFactory{
     public abstract void createDAORoom();
 
     public abstract void createDAOConversation();
+
+
 }

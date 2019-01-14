@@ -1,7 +1,6 @@
 package UI;
 
-import Types.DepartmentType;
-import Types.MessageType;
+import Types.*;
 import client.CoreClient;
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -18,7 +17,6 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import Types.RoomType;
 
 import java.io.IOException;
 import java.util.List;
@@ -410,9 +408,26 @@ public class StartUI extends UI {
     @Override
     public void getDepartment(List<DepartmentType> dep)
         {
-            Platform.runLater(() -> adminUI.setDepartment(dep));
+            Platform.runLater(() -> {
+                if(adminUI != null)
+                    adminUI.setDepartment(dep);
+                else if(superAdminUI != null)
+                    superAdminUI.setDepartment(dep);
+            });
+
+        }
+
+    @Override
+    public void getTeacher(List<TeacherType> teacher) {
+        Platform.runLater(() -> {
+            if(adminUI != null)
+                adminUI.setTeacher(teacher);
+            else if(superAdminUI != null)
+                superAdminUI.setTeacher(teacher);
+        });
 
     }
+
 
 
 }

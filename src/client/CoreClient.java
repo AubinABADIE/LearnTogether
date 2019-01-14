@@ -3,11 +3,10 @@ package client;
 import java.io.IOException;
 import java.util.List;
 
-import Types.DepartmentType;
+import Types.*;
+import client.Users.TeacherServices;
 import com.lloseng.ocsf.client.AdaptableClient;
 
-import Types.RoomType;
-import Types.MessageType;
 import client.Chat.Conversation;
 import client.Groups.Department;
 import client.Room.RoomServices;
@@ -22,6 +21,7 @@ public class CoreClient implements ClientIF {
     private RoomServices room;
     private Department department;
     private Conversation conversations;
+    private TeacherServices teacher;
 
     //UI and Connections
     private AdaptableClient connection;
@@ -59,6 +59,7 @@ public class CoreClient implements ClientIF {
         department = new Department( this);
         room = new RoomServices(this);
         conversations = new Conversation(this);
+        teacher = new TeacherServices(this);
     }
 
     /**
@@ -103,8 +104,10 @@ public class CoreClient implements ClientIF {
                 if(((String) ((List) msg).get(0)).equalsIgnoreCase("CONVERSATION EMAILS"))
                     display.setConversationEmails((List<String>) msg);
             }
-            else if (((List)msg).get(0) instanceof DepartmentType)
-                display.getDepartment((List<DepartmentType>)msg);
+            else if (((List)msg).get(0) instanceof DepartmentType){
+                display.getDepartment((List<DepartmentType>)msg);}
+            else if (((List)msg).get(0) instanceof TeacherType){
+                display.getTeacher((List<TeacherType>)msg);}
 
         }
     }
@@ -214,6 +217,11 @@ public class CoreClient implements ClientIF {
     
     public void handleUpdatePwd(String login, String pwd) {
     	user.updatePwd(login, pwd);
+    }
+
+
+    public void getTeacher() {
+        teacher.getTeacher();
     }
     
 }

@@ -1,6 +1,8 @@
 package Types;
 
-public class PromotionType {
+import java.io.Serializable;
+
+public class PromotionType implements Serializable {
     private int idPromo;
     private String namePromo;
     private String graduationPromo;

@@ -1,6 +1,8 @@
 package UI;
 
 import Types.DepartmentType;
+import Types.TeacherType;
+import Types.UserType;
 import client.CoreClient;
 import javafx.collections.ObservableList;
 import javafx.geometry.HPos;
@@ -199,6 +201,11 @@ public class TeacherUI extends UI {
 
     @Override
     public void getDepartment(List<DepartmentType> dep) {
+
+    }
+
+    @Override
+    public void getTeacher(List<TeacherType> teacher) {
 
     }
 

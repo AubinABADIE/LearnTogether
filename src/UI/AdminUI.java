@@ -45,7 +45,7 @@ public class AdminUI extends TeacherUI {
     protected ObservableList<DepartmentType> depNames;
     protected ObservableList<PromotionType> promoNames;
     protected ObservableList<ClassType> classNames;
-    protected ObservableList<UserType> teacherNames;
+    protected ObservableList<TeacherType> teacherNames;
 
     /**
      * Default constructor
@@ -76,6 +76,9 @@ public class AdminUI extends TeacherUI {
         promoNames.setAll(promoList);
     }
 
+    public void setTeacher(List<TeacherType> teacherList) {
+        teacherNames.setAll(teacherList);
+    }
     /**
      * This method create the principal admin scene
      */
@@ -1013,19 +1016,19 @@ public class AdminUI extends TeacherUI {
 
         // Add text Field
         TextField nameField = new TextField();
-        TextField teacherField = new TextField();
+        //TextField teacherField = new TextField();
         TextArea descriptionField = new TextArea();
 
-        //client.getTeacher();
-        ListView<UserType> listT = new ListView<>();
+        client.getTeacher();
+        ListView<TeacherType> listT = new ListView<>();
         teacherNames = FXCollections.observableArrayList();
-        depNames.addListener((ListChangeListener<DepartmentType>) c -> {
+        teacherNames.addListener((ListChangeListener<TeacherType>) c -> {
             listT.setItems(teacherNames);
         });
-       // ObservableList<String> options =
-          //      FXCollections.observableArrayList(listT
-            //    );
-        //final ComboBox comboBox = new ComboBox(options);
+
+        ComboBox teacherComboBox = new ComboBox();
+        teacherComboBox.setItems(teacherNames);
+        teacherComboBox.getSelectionModel().select(1);
 
 
         //grid pane
@@ -1041,7 +1044,7 @@ public class AdminUI extends TeacherUI {
 
         // add form in hbox
         nameDep.getChildren().addAll(nameLabel, nameField);
-        teacherDep.getChildren().addAll(teacherLabel, teacherField);
+        teacherDep.getChildren().addAll(teacherLabel, teacherComboBox);
         descriptionDep.getChildren().addAll(descLabel, descriptionField);
 
         //add hbox in gridpane
@@ -1075,14 +1078,13 @@ public class AdminUI extends TeacherUI {
                 showAlert(Alert.AlertType.ERROR, gridDep.getScene().getWindow(), "Form Error!", "Please enter department name");
                 return;
             }
-            if (teacherField.getText().isEmpty()) {
+            if (teacherComboBox.getSelectionModel().isEmpty()) {
                 showAlert(Alert.AlertType.ERROR, gridDep.getScene().getWindow(), "Form Error!", "Please enter referent teacher");
                 return;
             }
 
-            client.handleCreateDepartment(nameField.getText(), Integer.parseInt(teacherField.getText()), descriptionField.getText());
+            client.handleCreateDepartment(nameField.getText(), Integer.parseInt(teacherComboBox.getId()), descriptionField.getText());
             nameField.setText("");
-            teacherField.setText("");
             descriptionField.setText("");
 
         });

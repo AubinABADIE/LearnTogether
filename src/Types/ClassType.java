@@ -1,6 +1,8 @@
 package Types;
 
-public class ClassType {
+import java.io.Serializable;
+
+public class ClassType implements Serializable {
     private int idClass;
     private String nameClass;
     private int refPromo;

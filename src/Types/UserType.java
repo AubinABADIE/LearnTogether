@@ -1,6 +1,8 @@
 package Types;
 
-public class UserType {
+import java.io.Serializable;
+
+public class UserType implements Serializable {
     private int id;
     private String name;
     private String firstName;
@@ -69,5 +71,10 @@ public class UserType {
 	public void setBirthDate(String birthDate) {
 		this.birthDate = birthDate;
 	}
-    
+
+
+	@Override
+	public String toString() {
+		return "Name: " + name + " " + firstName;
+	}
 }

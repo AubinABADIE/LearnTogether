@@ -7,6 +7,7 @@ import Types.*;
 import com.lloseng.ocsf.server.ObservableOriginatorServer;
 import server.DAO.*;
 
+import javax.jws.soap.SOAPBinding;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -82,7 +83,7 @@ public class GeneralServer implements Observer {
             String[] creds = instruction.split(" ");
             handleDeleteDepartmentFromClient(creds[1], client);
         }else if (instruction.startsWith("GETDEPARTMENT")){
-            System.out.println("ok3");
+            System.out.println("oooook");
             handleListDepFromClient(client);
         }
         else if (instruction.startsWith("CREATEROOM")){
@@ -116,6 +117,10 @@ public class GeneralServer implements Observer {
         else if(instruction.startsWith("GETCONVEMAIL")){
             String[] attributes = instruction.split(" ");
             handleGetConversationEmails(Integer.parseInt(attributes[1]), client);
+        }
+        else if (instruction.startsWith("GETTEACHER")){
+            System.out.println("jecherchelesteacher");
+            handleListTeacherFromClient(client);
         }
     }
 
@@ -302,6 +307,20 @@ public class GeneralServer implements Observer {
         List<DepartmentType> dep =  dao.getDepartmentDAO().searchAllDepartment();
         try {
             client.sendToClient(dep);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    /**
+     * This method delegates to the dao the research of the department
+     */
+
+    public void handleListTeacherFromClient(ConnectionToClient client){
+        List<TeacherType> teacher =  dao.getUserDAO().searchAllTeacher();
+        try {
+            client.sendToClient(teacher);
         } catch (IOException e) {
             e.printStackTrace();
         }
