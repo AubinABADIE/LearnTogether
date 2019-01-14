@@ -330,8 +330,7 @@ public class AdminUI extends TeacherUI {
         return gridRoomVisu;
     }
 
-    private GridPane createTabRoom(Tab tabRoom){
-
+    protected GridPane createTabRoom(Tab tabRoom){
         //return button
         Image returnRoom = new Image(getClass().getResourceAsStream("images/icons8-return.png"));
         ImageView returnRoomView = new ImageView(returnRoom);
@@ -345,8 +344,6 @@ public class AdminUI extends TeacherUI {
         HBox returnBox = new HBox();
 
         returnBox.getChildren().add(btnReturnRoom);
-
-    protected GridPane createTabRoom(Tab tabRoom){
         // labels
         Label nameLabel = new Label("Name of room : ");
         Label capacityLabel = new Label("Capacity : ");
