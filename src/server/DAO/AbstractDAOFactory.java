@@ -15,6 +15,7 @@ public abstract class AbstractDAOFactory{
     private AbstractDAOCourse courseDAO;
     private AbstractDAOConversation conversationDAO;
 
+
     /**
      * Default constructor
      */

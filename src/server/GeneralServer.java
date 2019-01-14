@@ -7,6 +7,7 @@ import Types.*;
 import com.lloseng.ocsf.server.ObservableOriginatorServer;
 import server.DAO.*;
 
+import javax.jws.soap.SOAPBinding;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -83,7 +84,7 @@ public class GeneralServer implements Observer {
             String[] creds = instruction.split(" ");
             handleDeleteDepartmentFromClient(creds[1], client);
         }else if (instruction.startsWith("GETDEPARTMENT")){
-            System.out.println("ok3");
+            System.out.println("oooook");
             handleListDepFromClient(client);
         }
         else if (instruction.startsWith("CREATEROOM")){
@@ -108,9 +109,9 @@ public class GeneralServer implements Observer {
             String[] attributes = instruction.split("-/-");
             handleUpdateCourseFromClient(Integer.parseInt(attributes[1]),attributes[2],attributes[3], Integer.parseInt(attributes[4]), Integer.parseInt(attributes[5]), client);
         } else if (instruction.startsWith("GETCOURSES")){
+        	System.out.println("ok4");
             handleListCoursesFromClient(client);
         }
-        
         else if(instruction.startsWith("SENDMSGTOCLIENT")){
             String[] attributes = instruction.split("-/-");
             handleSendMessageToClient(Integer.parseInt(attributes[1]), attributes[2],attributes[3], client);
@@ -131,7 +132,16 @@ public class GeneralServer implements Observer {
             String[] attributes = instruction.split(" ");
             handleGetConversationEmails(Integer.parseInt(attributes[1]), client);
         }
+        else if (instruction.startsWith("GETTEACHER")){
+            System.out.println("jecherchelesteacher");
+            handleListTeacherFromClient(client);
+        }
+        else if(instruction.startsWith("DELETECONVERSATION")){
+            String[] attributes = instruction.split(" ");
+            handleDeleteConversation(Integer.parseInt(attributes[1]), attributes[2], client);
+        }
     }
+
 
 
 
@@ -323,6 +333,20 @@ public class GeneralServer implements Observer {
     }
 
     /**
+     * This method delegates to the dao the research of the department
+     */
+
+    public void handleListTeacherFromClient(ConnectionToClient client){
+        List<TeacherType> teacher =  dao.getUserDAO().searchAllTeacher();
+        try {
+            client.sendToClient(teacher);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    /**
      * This method delegates to the dao the room creation and interprets the result of the insert. At the end, ta message is sending to the client.
      * @param name : room name
      * @param capacity : room capacity
@@ -418,7 +442,7 @@ public class GeneralServer implements Observer {
      * @param courseName : course name
      * @param courseDescription : small description of the course
      * @param nbHourTotal : number of total hour of the course
-     * @param id Teacher : the id of the referring Teacher
+     * @param idTeacher : the id of the referring Teacher
      * @param client : client who create the course
      */
     
@@ -447,6 +471,7 @@ public class GeneralServer implements Observer {
         List<CourseType> courses =  dao.getCourseDAO().searchAllCourses();
 
          try {
+        	 System.out.println("ok5");
              client.sendToClient(courses);
          } catch (IOException e) {
              e.printStackTrace();
@@ -482,7 +507,7 @@ public class GeneralServer implements Observer {
      * @param courseName : course name
      * @param courseDescription : small description of the course
      * @param nbHourTotal : number of total hour of the course
-     * @param id Teacher : the id of the referring Teacher
+     * @param idTeacher : the id of the referring Teacher
      * @param client : client who update the course
      */
     
@@ -552,6 +577,24 @@ public class GeneralServer implements Observer {
         try {
             client.sendToClient(emails);
         } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * This method deletes a certain conversation between two users.
+     * @param askingID: the asking ID
+     * @param otherEmail: the other participant's email.
+     * @param client: the demanding client.
+     */
+    private void handleDeleteConversation(int askingID, String otherEmail, ConnectionToClient client) {
+        int res = dao.getConversationDAO().deleteConversation(askingID, otherEmail);
+        try {
+            if(res == 0)
+                client.sendToClient("#DELETEDCONVERSATION FAILURE");
+            else if(res == 1)
+                client.sendToClient("#DELETEdCONVERSATION SUCCESS");
+        }catch (IOException e){
             e.printStackTrace();
         }
     }

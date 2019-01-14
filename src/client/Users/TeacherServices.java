@@ -1,7 +1,9 @@
 package client.Users;
 
+import client.CoreClient;
 import client.Courses.*;
 
+import java.io.IOException;
 import java.util.*;
 
 
@@ -10,10 +12,17 @@ import java.util.*;
  */
 public class TeacherServices{
 
+
+    private CoreClient coreClient;
+
     /**
      * Default constructor
      */
     public TeacherServices() {
+    }
+
+    public TeacherServices(CoreClient coreClient) {
+        this.coreClient = coreClient;
     }
 
     /**
@@ -41,6 +50,15 @@ public class TeacherServices{
      */
     public void addCourses(List<CourseServices> courses) {
         // TODO implement here
+    }
+
+    public void getTeacher() {
+        try {
+            coreClient.getConnection().sendToServer("#GETTEACHER" );
+        }catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
 
 }

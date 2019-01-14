@@ -5,10 +5,10 @@ import java.util.List;
 
 import Types.DepartmentType;
 import Types.UserType;
+import Types.*;
+import client.Users.TeacherServices;
 import com.lloseng.ocsf.client.AdaptableClient;
 
-import Types.RoomType;
-import Types.MessageType;
 import client.Chat.Conversation;
 import client.Groups.Department;
 import client.Room.RoomServices;
@@ -25,6 +25,7 @@ public class CoreClient implements ClientIF {
     private CourseServices course;
     private Department department;
     private Conversation conversations;
+    private TeacherServices teacher;
 
     //UI and Connections
     private AdaptableClient connection;
@@ -63,6 +64,7 @@ public class CoreClient implements ClientIF {
         room = new RoomServices(this);
         conversations = new Conversation(this);
         course = new CourseServices(this);
+        teacher = new TeacherServices(this);
     }
 
     /**
@@ -101,6 +103,10 @@ public class CoreClient implements ClientIF {
             else if(((String) msg).startsWith("#UPDATEDPWD")) {
             	user.handleUpdatedPwd((String)msg);
             }
+            else if(((String) msg).startsWith("#DELETEDCONVERSATION")){
+                conversations.handleDeletedConversation((String)msg);
+            }
+
         } else if (msg instanceof List) {
             if (((List)msg).get(0) instanceof RoomType)
                 display.getRooms((List<RoomType>)msg);
@@ -110,8 +116,11 @@ public class CoreClient implements ClientIF {
                 if(((String) ((List) msg).get(0)).equalsIgnoreCase("CONVERSATION EMAILS"))
                     display.setConversationEmails((List<String>) msg);
             }
-            else if (((List)msg).get(0) instanceof DepartmentType)
-                display.getDepartment((List<DepartmentType>)msg);
+            else if (((List)msg).get(0) instanceof DepartmentType){
+                display.getDepartment((List<DepartmentType>)msg);}
+            else if (((List)msg).get(0) instanceof TeacherType){
+                display.getTeacher((List<TeacherType>)msg);}
+
         }
         else if(msg instanceof UserType) {
         	display.setUser((UserType)msg);
@@ -233,7 +242,9 @@ public class CoreClient implements ClientIF {
      * @return a room list
      */
     public void getCourses() {
+    	System.out.println("ok2");
         course.getCourses();
+        
     }
 
     /**
@@ -244,15 +255,44 @@ public class CoreClient implements ClientIF {
         department.getDepartment();
     }
 
+    /***************
+     * Conversations
+     ***************/
+    /**
+     * This method delegates to the conversation Business Logic
+     * @param receiverEmail: The conversation you want to create.
+     */
     public void createConversation(String receiverEmail){conversations.createConversation(receiverEmail);}
 
+    /**
+     * This method delegates to the conversation Business Logic.
+     * @param id: the sender's id.
+     * @param receiverEmail: the receiver email.
+     * @param messageContent: the message content.
+     */
     public void sendMsgToClient(int id, String receiverEmail, String messageContent){conversations.sendMsgToClient(id, receiverEmail, messageContent);}
 
+    /**
+     * This method delegates to the conversation Business Logic.
+     * @param id: the asking ID.
+     * @param email: the other participant's email.
+     */
     public void  readConversation(int id, String email){conversations.readConversation(id, email);}
-    
+
+    /**
+     * This method delegates to the conversation Business Logic.
+     * @param userID: the asking ID.
+     */
     public void getConversationEmail(int userID) {
         conversations.getConversationEmail(userID);
     }
+
+    /**
+     * This method delegates to the conversation Business Logic.
+     * @param userID: the asking ID.
+     * @param conversationEmail: the conversation to delete.
+     */
+    public void deleteConversation(int userID, String conversationEmail){conversations.deleteConversation(userID, conversationEmail);}
     
     /**********************
      * Profile
@@ -266,6 +306,11 @@ public class CoreClient implements ClientIF {
     
     public void handleUpdatePwd(String login, String pwd) {
     	user.updatePwd(login, pwd);
+    }
+
+
+    public void getTeacher() {
+        teacher.getTeacher();
     }
     
 }

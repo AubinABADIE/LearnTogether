@@ -1,7 +1,6 @@
 package UI;
 
-import Types.DepartmentType;
-import Types.MessageType;
+import Types.*;
 import client.CoreClient;
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -89,7 +88,7 @@ public class StartUI extends UI {
         setupListeners();
         this.primaryStage = primaryStage;
         this.primaryStage.setTitle("Learn Together - Connection");
-        primaryStage.setAlwaysOnTop(true);
+        primaryStage.setAlwaysOnTop(false);
         // Scene 2
         // Create the registration form grid pane
         root = createPrincipalPane();
@@ -164,21 +163,34 @@ public class StartUI extends UI {
             }
             else if (newValue.equalsIgnoreCase("RC SUCCESS")) {
                 Platform.runLater(()->showAlert(Alert.AlertType.CONFIRMATION, null, "Success", "You have created the room."));
+                if (adminUI != null){
+                    Platform.runLater(()->adminUI.tabRoom.setContent(adminUI.setRoomTab()));
+                } else if (superAdminUI != null){
+                    Platform.runLater(()->superAdminUI.tabRoom.setContent(superAdminUI.setRoomTab()));
+                }
             } else if (newValue.equalsIgnoreCase("RC FAILURE")) {
                 Platform.runLater(()->showAlert(Alert.AlertType.CONFIRMATION, null, "Failure", "Error: Room hasn't been created."));
             } else if (newValue.equalsIgnoreCase("RD SUCCESS")){
                 Platform.runLater(()->showAlert(Alert.AlertType.CONFIRMATION, null, "Success", "You have deleted the room."));
-                Platform.runLater(()->adminUI.client.getRooms());
+                if (adminUI != null){
+                    Platform.runLater(()->adminUI.client.getRooms());
+                }else if (superAdminUI != null){
+                    Platform.runLater(()->superAdminUI.client.getRooms());
+                }
             } else if (newValue.equalsIgnoreCase("RD FAILURE")){
                 Platform.runLater(()->showAlert(Alert.AlertType.CONFIRMATION, null, "Failure", "Error: Room hasn't been deleted."));
             } else if (newValue.equalsIgnoreCase("RU SUCCESS")){
                 showAlert(Alert.AlertType.CONFIRMATION, null, "Success", "You have update the room.");
-                Platform.runLater(()->Platform.runLater(()->adminUI.client.getRooms()));
+                if (adminUI != null){
+                    Platform.runLater(()->Platform.runLater(()->adminUI.client.getRooms()));
+                    Platform.runLater(()->adminUI.tabRoom.setContent(adminUI.setRoomTab()));
+                } else if (superAdminUI != null){
+                    Platform.runLater(()->Platform.runLater(()->superAdminUI.client.getRooms()));
+                    Platform.runLater(()->superAdminUI.tabRoom.setContent(superAdminUI.setRoomTab()));
+                }
             } else if (newValue.equalsIgnoreCase("RU FAILURE")){
                 Platform.runLater(()->showAlert(Alert.AlertType.CONFIRMATION, null, "Failure", "Error: Room hasn't been updated."));
-            }
-
-            else if (newValue.equalsIgnoreCase("CC SUCCESS")) {
+            } else if (newValue.equalsIgnoreCase("CC SUCCESS")) {
                 Platform.runLater(()->showAlert(Alert.AlertType.CONFIRMATION, null, "Success", "You have created the course."));
             } else if (newValue.equalsIgnoreCase("CC FAILURE")) {
                 Platform.runLater(()->showAlert(Alert.AlertType.CONFIRMATION, null, "Failure", "Error: Course hasn't been created."));
@@ -188,10 +200,13 @@ public class StartUI extends UI {
             } else if (newValue.equalsIgnoreCase("CD FAILURE")){
                 Platform.runLater(()->showAlert(Alert.AlertType.CONFIRMATION, null, "Failure", "Error: Course hasn't been deleted."));
             } else if (newValue.equalsIgnoreCase("CU SUCCESS")){
-                showAlert(Alert.AlertType.CONFIRMATION, null, "Success", "You have update the course.");
-               
+                showAlert(Alert.AlertType.CONFIRMATION, null, "Success", "You have updated the course.");
             } else if (newValue.equalsIgnoreCase("CU FAILURE")){
-                Platform.runLater(()->showAlert(Alert.AlertType.CONFIRMATION, null, "Failure", "Error: Course hasn't been updated."));
+                Platform.runLater(()->showAlert(Alert.AlertType.ERROR, null, "Failure", "Error: Course hasn't been updated."));
+            } else if(newValue.equalsIgnoreCase("MD SUCCESS")){
+                Platform.runLater(()->showAlert(Alert.AlertType.CONFIRMATION, null, "Success", "The conversation has been deleted."));
+            } else if(newValue.equalsIgnoreCase("MD FAILURE.")){
+                Platform.runLater(()->showAlert(Alert.AlertType.ERROR, null, "Failure", "The conversation cannot be deleted at this time."));
             }
         });
     }
@@ -447,7 +462,7 @@ public class StartUI extends UI {
                     superAdminUI.setDepartment(dep);
             });
 
-    }
+        }
     
     @Override
 	public void setUser(UserType user) {
@@ -457,12 +472,16 @@ public class StartUI extends UI {
     	});
 	}
 
+    @Override
+    public void getTeacher(List<TeacherType> teacher) {
+        Platform.runLater(() -> {
+            if(adminUI != null)
+                adminUI.setTeacher(teacher);
+            else if(superAdminUI != null)
+                superAdminUI.setTeacher(teacher);
+        });
 
-	@Override
-	public void displayMessage(MessageType message) {
-		// TODO Auto-generated method stub
-		
-	}
+    }
 
 }
 

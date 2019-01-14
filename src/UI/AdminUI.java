@@ -45,7 +45,7 @@ public class AdminUI extends TeacherUI {
     protected ObservableList<DepartmentType> depNames;
     protected ObservableList<PromotionType> promoNames;
     protected ObservableList<ClassType> classNames;
-    protected ObservableList<UserType> teacherNames;
+    protected ObservableList<TeacherType> teacherNames;
 
     /**
      * Default constructor
@@ -76,6 +76,9 @@ public class AdminUI extends TeacherUI {
         promoNames.setAll(promoList);
     }
 
+    public void setTeacher(List<TeacherType> teacherList) {
+        teacherNames.setAll(teacherList);
+    }
     /**
      * This method create the principal admin scene
      */
@@ -288,7 +291,7 @@ public class AdminUI extends TeacherUI {
         btnDeleteRoom.setOnAction(event -> {
             SelectionModel<RoomType> selectedDeleteRoom = list.getSelectionModel();
             if (selectedDeleteRoom.getSelectedItem() != null){
-                Alert alert = new Alert(Alert.AlertType.CONFIRMATION,"You are sure to delete a room", ButtonType.YES, ButtonType.NO);
+                Alert alert = new Alert(Alert.AlertType.CONFIRMATION,"Are you sure you want to delete the room?", ButtonType.YES, ButtonType.NO);
                 alert.setHeaderText("Confirmation delete");
                 Window win = gridRoomVisu.getScene().getWindow();
                 alert.initOwner(win);
@@ -331,6 +334,19 @@ public class AdminUI extends TeacherUI {
     }
 
     protected GridPane createTabRoom(Tab tabRoom){
+        //return button
+        Image returnRoom = new Image(getClass().getResourceAsStream("images/icons8-return.png"));
+        ImageView returnRoomView = new ImageView(returnRoom);
+        returnRoomView.setFitHeight(15);
+        returnRoomView.setFitWidth(15);
+
+        //create return button
+        Button btnReturnRoom = new Button();
+        btnReturnRoom.setGraphic(returnRoomView);//setting icon to button
+
+        HBox returnBox = new HBox();
+
+        returnBox.getChildren().add(btnReturnRoom);
         // labels
         Label nameLabel = new Label("Name of room : ");
         Label capacityLabel = new Label("Capacity : ");
@@ -399,6 +415,8 @@ public class AdminUI extends TeacherUI {
         descriptionRoom.getChildren().addAll(descLabel, descriptionField) ;
 
         //add hbox in gridpane
+        gridRoom.add(returnBox,2, 0);
+
         gridRoom.add(nameRoom, 1, 0);
         gridRoom.add(capacityRoom, 1, 2);
         gridRoom.add(buildingRoom, 1, 5);
@@ -426,6 +444,10 @@ public class AdminUI extends TeacherUI {
         gridRoom.add(cancelCreate, 2, 13, 1, 1);
         gridRoom.setHalignment(cancelCreate, HPos.RIGHT);
         gridRoom.setMargin(cancelCreate, new Insets(20, 0,20,0));
+
+        btnReturnRoom.setOnAction(event -> {
+            tabRoom.setContent(roomRead(tabRoom));
+        });
 
         okCreate.setOnAction(event -> {
             if (nameField.getText().isEmpty()) {
@@ -469,6 +491,20 @@ public class AdminUI extends TeacherUI {
     }
 
     protected GridPane updateTabRoom(Tab tabRoom, String name, int capacity, int building, boolean hasProjector, boolean hasComputer, String description, int id){
+
+        //return button
+        Image returnRoom = new Image(getClass().getResourceAsStream("images/icons8-return.png"));
+        ImageView returnRoomView = new ImageView(returnRoom);
+        returnRoomView.setFitHeight(15);
+        returnRoomView.setFitWidth(15);
+
+        //create return button
+        Button btnReturnRoom = new Button();
+        btnReturnRoom.setGraphic(returnRoomView);//setting icon to button
+
+        HBox returnBox = new HBox();
+
+        returnBox.getChildren().add(btnReturnRoom);
 
         // labels
         Label nameLabel = new Label("Name of room : ");
@@ -553,7 +589,9 @@ public class AdminUI extends TeacherUI {
         descriptionRoom.getChildren().addAll(descLabel, descriptionField) ;
 
         //add hbox in gridpane
-        gridUpadateRoom.add(nameRoom, 1, 0);
+        gridUpadateRoom.add(returnBox,2, 0);
+
+        gridUpadateRoom.add(nameRoom, 1, 1);
         gridUpadateRoom.add(capacityRoom, 1, 2);
         gridUpadateRoom.add(buildingRoom, 1, 5);
         gridUpadateRoom.add(projectorRoom, 1, 7);
@@ -580,6 +618,10 @@ public class AdminUI extends TeacherUI {
         gridUpadateRoom.add(cancelUpdate, 2, 13, 1, 1);
         gridUpadateRoom.setHalignment(cancelUpdate, HPos.RIGHT);
         gridUpadateRoom.setMargin(cancelUpdate, new Insets(20, 0,20,0));
+
+        btnReturnRoom.setOnAction(event -> {
+            tabRoom.setContent(roomRead(tabRoom));
+        });
 
         okUpdate.setOnAction(event -> {
             if (nameField.getText().isEmpty()) {
@@ -621,11 +663,8 @@ public class AdminUI extends TeacherUI {
         return gridUpadateRoom;
     }
 
-    protected void setRoomTab(){
-        SingleSelectionModel<Tab> selectionModel = tabPane.getSelectionModel();
-        selectionModel.select(tabRoom());
-
-
+    public GridPane setRoomTab(){
+        return roomRead(tabRoom);
     }
 
 
@@ -1013,19 +1052,19 @@ public class AdminUI extends TeacherUI {
 
         // Add text Field
         TextField nameField = new TextField();
-        TextField teacherField = new TextField();
+        //TextField teacherField = new TextField();
         TextArea descriptionField = new TextArea();
 
-        //client.getTeacher();
-        ListView<UserType> listT = new ListView<>();
+        client.getTeacher();
+        ListView<TeacherType> listT = new ListView<>();
         teacherNames = FXCollections.observableArrayList();
-        depNames.addListener((ListChangeListener<DepartmentType>) c -> {
+        teacherNames.addListener((ListChangeListener<TeacherType>) c -> {
             listT.setItems(teacherNames);
         });
-       // ObservableList<String> options =
-          //      FXCollections.observableArrayList(listT
-            //    );
-        //final ComboBox comboBox = new ComboBox(options);
+
+        ComboBox teacherComboBox = new ComboBox();
+        teacherComboBox.setItems(teacherNames);
+        teacherComboBox.getSelectionModel().select(1);
 
 
         //grid pane
@@ -1041,7 +1080,7 @@ public class AdminUI extends TeacherUI {
 
         // add form in hbox
         nameDep.getChildren().addAll(nameLabel, nameField);
-        teacherDep.getChildren().addAll(teacherLabel, teacherField);
+        teacherDep.getChildren().addAll(teacherLabel, teacherComboBox);
         descriptionDep.getChildren().addAll(descLabel, descriptionField);
 
         //add hbox in gridpane
@@ -1075,14 +1114,13 @@ public class AdminUI extends TeacherUI {
                 showAlert(Alert.AlertType.ERROR, gridDep.getScene().getWindow(), "Form Error!", "Please enter department name");
                 return;
             }
-            if (teacherField.getText().isEmpty()) {
+            if (teacherComboBox.getSelectionModel().isEmpty()) {
                 showAlert(Alert.AlertType.ERROR, gridDep.getScene().getWindow(), "Form Error!", "Please enter referent teacher");
                 return;
             }
 
-            client.handleCreateDepartment(nameField.getText(), Integer.parseInt(teacherField.getText()), descriptionField.getText());
+            client.handleCreateDepartment(nameField.getText(), Integer.parseInt(teacherComboBox.getId()), descriptionField.getText());
             nameField.setText("");
-            teacherField.setText("");
             descriptionField.setText("");
 
         });

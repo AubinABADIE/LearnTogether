@@ -1,13 +1,20 @@
 package Types;
 
-import java.util.ArrayList;
+import java.io.Serializable;
 
-public class TeacherType extends UserType {
-	
-	private ArrayList<CourseType> courseList;
 
-	public TeacherType(int id, String role, ArrayList<CourseType> courseList) {
-		super(id, role);
-	}
+public class TeacherType extends UserType implements Serializable {
 
+
+    public TeacherType(int id, String name, String firstName, String email, String birthDate, String role) {
+        super(id, name, firstName, email, birthDate, role);
+
+    }
+
+    @Override
+    public String toString() {
+        return getName() + " " + getFirstName()+ " "+ getId();
+    }
 }
+
+

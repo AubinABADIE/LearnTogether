@@ -3,10 +3,13 @@ package server.DAO;
 import Types.CourseType;
 import Types.PromotionType;
 import Types.UserType;
+import Types.TeacherType;
 
 import java.io.File;
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 /**
  * 
@@ -191,6 +194,36 @@ public class SQLServerDAOUser extends AbstractDAOUser {
         }
         return res == 1;
     }
+
+
+    /**
+     * This method return the departments list
+     */
+    @Override
+    public List<TeacherType> searchAllTeacher() {
+            ArrayList<TeacherType> teacher = new ArrayList();
+            Connection connection = getConnection();
+            if(connection != null){
+                try{
+                    PreparedStatement preparedStatement = connection.prepareStatement("SELECT * from GeneralUsers where role = 'TEACHER' ");
+                    ResultSet resultSet = preparedStatement.executeQuery();
+                    while (resultSet.next()){
+                        teacher.add(new TeacherType(resultSet.getInt("idUser"),
+                                resultSet.getString("name"),
+                                resultSet.getString("firstName"),
+                                resultSet.getString("email"),
+                                resultSet.getString("birthDate"),
+                                resultSet.getString("role")));
+                    }
+
+                }catch (SQLException e){e.printStackTrace();}
+                finally {
+                    closeConnection(connection);
+                }
+            }
+            return teacher;
+    }
+
 
 
 }
