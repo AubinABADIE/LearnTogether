@@ -162,4 +162,30 @@ public class SQLServerDAOConversation extends AbstractDAOConversation{
         }
         return new ArrayList<>(new HashSet<>(emails));
     }
+
+    @Override
+    public int deleteConversation(int askingID, String otherEmail) {
+        int res = 0;
+        Connection connection = getConnection();
+        if(connection!=null){
+            try {
+                PreparedStatement preparedStatement = connection.prepareStatement("delete from Messages where idMessage in (select idMessage\n" +
+                        "            from Messages\n" +
+                        "                 where idReceiver in(select idUser from GeneralUsers, Messages where email=? and idReceiver=idUser and idSender=?)\n" +
+                        "                 or idSender in(select idUser from GeneralUsers, Messages where email=? and idSender=idUser and idReceiver=?)\n" +
+                        "                 except (select idMessage from Messages where idReceiver != ? and idSender != ?)\n" +
+                        "                 )");
+                preparedStatement.setString(1, otherEmail);
+                preparedStatement.setInt(2, askingID);
+                preparedStatement.setString(3, otherEmail);
+                preparedStatement.setInt(4, askingID);
+                preparedStatement.setInt(5, askingID);
+                preparedStatement.setInt(6, askingID);
+                res = preparedStatement.executeUpdate();
+            }catch (SQLException e){
+                e.printStackTrace();
+            }
+        }
+        return res;
+    }
 }

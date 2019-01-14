@@ -24,6 +24,7 @@ public class Conversation {
     }
 
     /**
+     * This method creates a conversation between this client and anoth
      * @param receiverEmail: Creates a conversation with the other user by its email.
      */
     public void createConversation(String receiverEmail) {
@@ -43,10 +44,16 @@ public class Conversation {
     }
 
     /**
-     * @param conversation
+     * This method asks the server to delete a certain conversation between this client and another.
+     * @param askingID this client ID.
+     * @param conversationEmail the other person's email.
      */
-    public void deleteConversation(int conversation) {
-        // TODO implement here
+    public void deleteConversation(int askingID, String conversationEmail) {
+        try {
+            client.getConnection().sendToServer("#DELETECONVERSATION " + askingID + " " + conversationEmail);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -81,5 +88,17 @@ public class Conversation {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    /**
+     * This method handles the response from the server for a conversation deletion.
+     * @param msg: the message.
+     */
+    public void handleDeletedConversation(String msg) {
+        String[] args = msg.split(" ");
+        if(args[1].equalsIgnoreCase("SUCCESS"))
+            client.getDisplay().setState("MD SUCCESS");
+        else
+            client.getDisplay().setState("MD FAILURE");
     }
 }

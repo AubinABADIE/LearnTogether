@@ -106,6 +106,10 @@ public class CoreClient implements ClientIF {
             else if(((String) msg).startsWith("#UPDATEDPWD")) {
             	user.handleUpdatedPwd((String)msg);
             }
+            else if(((String) msg).startsWith("#DELETEDCONVERSATION")){
+                conversations.handleDeletedConversation((String)msg);
+            }
+
         } else if (msg instanceof List) {
             if (((List)msg).get(0) instanceof RoomType)
                 display.getRooms((List<RoomType>)msg);
@@ -254,15 +258,44 @@ public class CoreClient implements ClientIF {
         department.getDepartment();
     }
 
+    /***************
+     * Conversations
+     ***************/
+    /**
+     * This method delegates to the conversation Business Logic
+     * @param receiverEmail: The conversation you want to create.
+     */
     public void createConversation(String receiverEmail){conversations.createConversation(receiverEmail);}
 
+    /**
+     * This method delegates to the conversation Business Logic.
+     * @param id: the sender's id.
+     * @param receiverEmail: the receiver email.
+     * @param messageContent: the message content.
+     */
     public void sendMsgToClient(int id, String receiverEmail, String messageContent){conversations.sendMsgToClient(id, receiverEmail, messageContent);}
 
+    /**
+     * This method delegates to the conversation Business Logic.
+     * @param id: the asking ID.
+     * @param email: the other participant's email.
+     */
     public void  readConversation(int id, String email){conversations.readConversation(id, email);}
-    
+
+    /**
+     * This method delegates to the conversation Business Logic.
+     * @param userID: the asking ID.
+     */
     public void getConversationEmail(int userID) {
         conversations.getConversationEmail(userID);
     }
+
+    /**
+     * This method delegates to the conversation Business Logic.
+     * @param userID: the asking ID.
+     * @param conversationEmail: the conversation to delete.
+     */
+    public void deleteConversation(int userID, String conversationEmail){conversations.deleteConversation(userID, conversationEmail);}
     
     /**********************
      * Profile

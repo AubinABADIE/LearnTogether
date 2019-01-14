@@ -291,7 +291,7 @@ public class AdminUI extends TeacherUI {
         btnDeleteRoom.setOnAction(event -> {
             SelectionModel<RoomType> selectedDeleteRoom = list.getSelectionModel();
             if (selectedDeleteRoom.getSelectedItem() != null){
-                Alert alert = new Alert(Alert.AlertType.CONFIRMATION,"You are sure to delete a room", ButtonType.YES, ButtonType.NO);
+                Alert alert = new Alert(Alert.AlertType.CONFIRMATION,"Are you sure you want to delete the room?", ButtonType.YES, ButtonType.NO);
                 alert.setHeaderText("Confirmation delete");
                 Window win = gridRoomVisu.getScene().getWindow();
                 alert.initOwner(win);

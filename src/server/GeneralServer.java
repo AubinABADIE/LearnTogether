@@ -112,7 +112,6 @@ public class GeneralServer implements Observer {
         	System.out.println("ok4");
             handleListCoursesFromClient(client);
         }
-        
         else if(instruction.startsWith("SENDMSGTOCLIENT")){
             String[] attributes = instruction.split("-/-");
             handleSendMessageToClient(Integer.parseInt(attributes[1]), attributes[2],attributes[3], client);
@@ -137,7 +136,12 @@ public class GeneralServer implements Observer {
             System.out.println("jecherchelesteacher");
             handleListTeacherFromClient(client);
         }
+        else if(instruction.startsWith("DELETECONVERSATION")){
+            String[] attributes = instruction.split(" ");
+            handleDeleteConversation(Integer.parseInt(attributes[1]), attributes[2], client);
+        }
     }
+
 
 
 
@@ -438,7 +442,7 @@ public class GeneralServer implements Observer {
      * @param courseName : course name
      * @param courseDescription : small description of the course
      * @param nbHourTotal : number of total hour of the course
-     * @param id Teacher : the id of the referring Teacher
+     * @param idTeacher : the id of the referring Teacher
      * @param client : client who create the course
      */
     
@@ -503,7 +507,7 @@ public class GeneralServer implements Observer {
      * @param courseName : course name
      * @param courseDescription : small description of the course
      * @param nbHourTotal : number of total hour of the course
-     * @param id Teacher : the id of the referring Teacher
+     * @param idTeacher : the id of the referring Teacher
      * @param client : client who update the course
      */
     
@@ -573,6 +577,24 @@ public class GeneralServer implements Observer {
         try {
             client.sendToClient(emails);
         } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * This method deletes a certain conversation between two users.
+     * @param askingID: the asking ID
+     * @param otherEmail: the other participant's email.
+     * @param client: the demanding client.
+     */
+    private void handleDeleteConversation(int askingID, String otherEmail, ConnectionToClient client) {
+        int res = dao.getConversationDAO().deleteConversation(askingID, otherEmail);
+        try {
+            if(res == 0)
+                client.sendToClient("#DELETEDCONVERSATION FAILURE");
+            else if(res == 1)
+                client.sendToClient("#DELETEdCONVERSATION SUCCESS");
+        }catch (IOException e){
             e.printStackTrace();
         }
     }

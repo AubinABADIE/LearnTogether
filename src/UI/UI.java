@@ -12,6 +12,8 @@ import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
@@ -330,6 +332,7 @@ public abstract class UI extends Application implements DisplayIF {
         HBox newConv = new HBox();
         Label startConvLabel = new Label("Email for a new conversation: ");
         TextField startConvEmail = new TextField();
+        startConvEmail.setPrefWidth(200);
         Button startConvButton = new Button("New conversation");
         startConvButton.setOnAction(event -> {
             if(startConvEmail.getText()!=null){
@@ -339,9 +342,17 @@ public abstract class UI extends Application implements DisplayIF {
             }
 
         });
+        Image delConv = new Image(getClass().getResourceAsStream("images/icons8-annuler-208.png"));
+        ImageView delConvView = new ImageView(delConv);
+        delConvView.setFitHeight(12);
+        delConvView.setFitWidth(12);
+        Button btnDelConv = new Button("Delete this conversation...");
+        btnDelConv.setGraphic(delConvView);//setting icon to button
+
+
         newConv.setSpacing(20);
         newConv.setPadding(new Insets(15,12,15,12));
-        newConv.getChildren().addAll(startConvLabel, startConvEmail, startConvButton);
+        newConv.getChildren().addAll(startConvLabel, startConvEmail, startConvButton, btnDelConv);
 
         ScrollPane conversations = new ScrollPane();
         conversations.setFitToWidth(true);
@@ -374,15 +385,19 @@ public abstract class UI extends Application implements DisplayIF {
         msgInput.setOnKeyPressed(event -> {
             if(event.getCode().equals(KeyCode.ENTER)){
                 if(client!=null){
-                    client.sendMsgToClient(userID, convoNameList.getSelectionModel().getSelectedItem(),msgInput.getText());
-                    msgInput.setText("");
-                    client.readConversation(userID, convoNameList.getSelectionModel().getSelectedItem());
+                    String convEmail = convoNameList.getSelectionModel().getSelectedItem();
+                    if(convEmail != null) {
+                        client.sendMsgToClient(userID, convoNameList.getSelectionModel().getSelectedItem(), msgInput.getText());
+                        msgInput.setText("");
+                        client.readConversation(userID, convoNameList.getSelectionModel().getSelectedItem());
+                    }
                 }
             }
         });
         sendBtn.setOnAction(event -> {
-            if(client!=null){
-                client.sendMsgToClient(userID, convoNameList.getSelectionModel().getSelectedItem(),msgInput.getText());
+            String convEmail = convoNameList.getSelectionModel().getSelectedItem();
+            if(convEmail != null) {
+                client.sendMsgToClient(userID, convoNameList.getSelectionModel().getSelectedItem(), msgInput.getText());
                 msgInput.setText("");
                 client.readConversation(userID, convoNameList.getSelectionModel().getSelectedItem());
             }
@@ -395,6 +410,24 @@ public abstract class UI extends Application implements DisplayIF {
         chatPane.setLeft(conversationList);
         chatPane.setBottom(sendMsgBar);
         chatPane.setPadding(new Insets(10,10,10,10));
+
+        btnDelConv.setOnAction(event -> {
+            String emailConv = convoNameList.getSelectionModel().getSelectedItem();
+            if(emailConv != null) {
+                Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure you want to delete this conversation with " + emailConv + "?", ButtonType.YES, ButtonType.NO);
+                alert.setHeaderText("Confirmation delete");
+                Window win = chatPane.getScene().getWindow();
+                alert.initOwner(win);
+                alert.showAndWait();
+                if (alert.getResult() == ButtonType.NO) {
+                    return;
+                }
+                if (alert.getResult() == ButtonType.YES) {
+                    client.deleteConversation(userID, emailConv);
+                    client.getConversationEmail(userID);
+                }
+            }
+        });
 
         chatTab.setContent(chatPane);
         return chatTab;
