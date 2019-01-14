@@ -1,6 +1,8 @@
 package Types;
 
-public class DepartmentType {
+import java.io.Serializable;
+
+public class DepartmentType implements Serializable {
     private int idDepartment;
     private String nameDep;
     private int refTeacherId;
@@ -43,5 +45,11 @@ public class DepartmentType {
 
     public void setDescriptionDep(String descriptionDep) {
         this.descriptionDep = descriptionDep;
+    }
+
+
+    @Override
+    public String toString() {
+        return "Name: " + nameDep;
     }
 }

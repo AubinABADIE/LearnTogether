@@ -1,8 +1,6 @@
 package UI;
 
-import Types.ClassType;
-import Types.DepartmentType;
-import Types.PromotionType;
+import Types.*;
 import client.CoreClient;
 import client.Groups.Department;
 import client.Groups.Promotion;
@@ -21,7 +19,6 @@ import javafx.scene.layout.*;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import Types.RoomType;
 import javafx.stage.Window;
 
 import java.util.List;
@@ -48,6 +45,8 @@ public class AdminUI extends TeacherUI {
     protected ObservableList<DepartmentType> depNames;
     protected ObservableList<PromotionType> promoNames;
     protected ObservableList<ClassType> classNames;
+    protected ObservableList<UserType> teacherNames;
+
     /**
      * Default constructor
      */
@@ -720,6 +719,10 @@ public class AdminUI extends TeacherUI {
         hboxnameDepInfo.setAlignment(Pos.CENTER);
         hboxteacherDepInfo.setAlignment(Pos.CENTER);
         hboxdescDepInfo.setAlignment(Pos.CENTER);
+
+        VBox VBoxAffichageDep = new VBox();
+        VBoxAffichageDep.getChildren().addAll(hboxnameDepInfo,hboxteacherDepInfo,hboxdescDepInfo);
+        VBoxAffichageDep.setAlignment(Pos.CENTER_RIGHT);
         //
 
         /*add list of Promotion*/
@@ -1006,32 +1009,23 @@ public class AdminUI extends TeacherUI {
         // labels
         Label nameLabel = new Label("Name of departement : ");
         Label teacherLabel = new Label("Referent teacher : ");
-        Label descLabel = new Label("Department description : ");
+        Label descLabel = new Label("Description : ");
 
         // Add text Field
         TextField nameField = new TextField();
         TextField teacherField = new TextField();
-        teacherField.textProperty().addListener((observable, oldValue, newValue) -> {
-            if (!newValue.matches("\\d*"))
-                teacherField.setText(newValue.replaceAll("[^\\d]", ""));
-        });
-        nameField.textProperty().addListener((observable, oldValue, newValue) -> {
-            if (!newValue.matches("\\d*"))
-                nameField.setText(newValue.replaceAll("[^\\d]", ""));
-        });
-
         TextArea descriptionField = new TextArea();
 
-        RadioButton py = new RadioButton();
-        py.setText("Yes");
-        RadioButton pn = new RadioButton();
-        pn.setText("No");
-
-        ToggleGroup tp = new ToggleGroup();
-
-        py.setToggleGroup(tp);
-        pn.setToggleGroup(tp);
-        tp.selectToggle(py);
+        //client.getTeacher();
+        ListView<UserType> listT = new ListView<>();
+        teacherNames = FXCollections.observableArrayList();
+        depNames.addListener((ListChangeListener<DepartmentType>) c -> {
+            listT.setItems(teacherNames);
+        });
+       // ObservableList<String> options =
+          //      FXCollections.observableArrayList(listT
+            //    );
+        //final ComboBox comboBox = new ComboBox(options);
 
 
         //grid pane

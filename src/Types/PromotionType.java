@@ -55,4 +55,9 @@ public class PromotionType {
     public void setDescriptionPromo(String descriptionPromo) {
         this.descriptionPromo = descriptionPromo;
     }
+
+    @Override
+    public String toString() {
+        return "Name: " + namePromo;
+    }
 }
