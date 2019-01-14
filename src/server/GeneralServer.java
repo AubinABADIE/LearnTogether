@@ -42,6 +42,7 @@ public class GeneralServer implements Observer {
         dao.createDAOUser();
         dao.createDAODepartment();
         dao.createDAORoom();
+        dao.createDAOCourse();
         dao.createDAOConversation();
         display.display("Server is running on port " + port);
     }
@@ -98,6 +99,20 @@ public class GeneralServer implements Observer {
         } else if (instruction.startsWith("GETROOMS")){
             handleListRoomsFromClient(client);
         }
+        else if (instruction.startsWith("CREATECOURSE")){
+            String[] attributes = instruction.split("-/-");
+            handleCreateCourseFromClient(attributes[1], attributes[2], Integer.parseInt(attributes[3]), Integer.parseInt(attributes[4]), client);
+        }else if (instruction.startsWith("DELETECOURSE")){
+            String[] attributes = instruction.split("-/-");
+            handleDeleteCourseFromClient(Integer.parseInt(attributes[1]), client);
+        } else if(instruction.startsWith("UPDATECOURSE")){
+            String[] attributes = instruction.split("-/-");
+            handleUpdateCourseFromClient(Integer.parseInt(attributes[1]),attributes[2],attributes[3], Integer.parseInt(attributes[4]), Integer.parseInt(attributes[5]), client);
+        } else if (instruction.startsWith("GETCOURSES")){
+        	System.out.println("ok4");
+            handleListCoursesFromClient(client);
+        }
+        
         else if(instruction.startsWith("SENDMSGTOCLIENT")){
             String[] attributes = instruction.split("-/-");
             handleSendMessageToClient(Integer.parseInt(attributes[1]), attributes[2],attributes[3], client);
@@ -409,6 +424,97 @@ public class GeneralServer implements Observer {
             mess = "#UPDATEDROOM Success" ;
         } else{
             mess = "#UPDATEDROOM Failure";
+        }
+
+        try{
+            client.sendToClient(mess);
+        } catch(IOException e) {
+            e.printStackTrace();
+        }
+    }
+    
+    /**
+     * This method delegates to the dao the course creation and interprets the result of the insert. At the end, ta message is sending to the client.
+     * @param courseName : course name
+     * @param courseDescription : small description of the course
+     * @param nbHourTotal : number of total hour of the course
+     * @param id Teacher : the id of the referring Teacher
+     * @param client : client who create the course
+     */
+    
+    private void handleCreateCourseFromClient(String courseName, String courseDescription, int nbHourTotal, int idTeacher, ConnectionToClient client){
+        int result = dao.getCourseDAO().createCourse(courseName, courseDescription, nbHourTotal, idTeacher);
+
+        String mess;
+        if (result == 1){
+            mess = "#CREATEDCOURSE Success";
+        }
+        else{
+            mess = "#CREATEDCOURSE Failure";
+        }
+        try {
+            client.sendToClient(mess);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    
+    
+    /**
+     * This method delegates to the dao the research of the course
+     */
+    public void handleListCoursesFromClient(ConnectionToClient client){
+        List<CourseType> courses =  dao.getCourseDAO().searchAllCourses();
+
+         try {
+        	 System.out.println("ok5");
+             client.sendToClient(courses);
+         } catch (IOException e) {
+             e.printStackTrace();
+         }
+
+     }
+    
+    
+    /**
+     * This method delegates to the dao the deletion of course
+     * @param id : course id
+     * @param client : client who deletes the course
+     */
+    public void handleDeleteCourseFromClient(int id, ConnectionToClient client){
+        int result = dao.getCourseDAO().deleteCourse(id);
+
+        String mess;
+        if (result == 1){
+            mess = "#DELETEDCOURSE Success" ;
+        } else{
+            mess = "#DELETEDCOURSE Failure";
+        }
+
+        try{
+            client.sendToClient(mess);
+        } catch(IOException e) {
+            e.printStackTrace();
+        }
+    }
+    
+    /**
+     * This method delegates to the dao the course update
+     * @param courseName : course name
+     * @param courseDescription : small description of the course
+     * @param nbHourTotal : number of total hour of the course
+     * @param id Teacher : the id of the referring Teacher
+     * @param client : client who update the course
+     */
+    
+    public void handleUpdateCourseFromClient (int idCourse, String courseName, String courseDescription, int nbHourTotal, int idTeacher, ConnectionToClient client ){
+        int result = dao.getCourseDAO().updateCourse(idCourse, courseName, courseDescription, nbHourTotal, idTeacher);
+
+        String mess;
+        if (result == 1){
+            mess = "#UPDATEDCOURSE Success" ;
+        } else{
+            mess = "#UPDATEDCOURSE Failure";
         }
 
         try{

@@ -28,7 +28,7 @@ public class TeacherServices{
     /**
      * 
      */
-    private List<Course> courseList;
+    private List<CourseServices> courseList;
 
     /**
      * @return
@@ -41,14 +41,14 @@ public class TeacherServices{
     /**
      * @param course
      */
-    public void addCourse(Course course) {
+    public void addCourse(CourseServices course) {
         // TODO implement here
     }
 
     /**
      * @param courses
      */
-    public void addCourses(List<Course> courses) {
+    public void addCourses(List<CourseServices> courses) {
         // TODO implement here
     }
 

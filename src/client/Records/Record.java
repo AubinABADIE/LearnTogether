@@ -1,7 +1,7 @@
 package client.Records;
 
 
-import client.Courses.Course;
+import client.Courses.CourseServices;
 
 import java.time.Year;
 import java.util.*;
@@ -23,7 +23,7 @@ public class Record implements Observer {
      * @param course 
      * @param donatingUserID
      */
-    public void CreateRecord(Year recYear, Course course, int donatingUserID) {
+    public void CreateRecord(Year recYear, CourseServices course, int donatingUserID) {
         // TODO implement here
     }
 

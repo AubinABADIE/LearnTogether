@@ -66,7 +66,9 @@ public class SuperAdminUI extends AdminUI {
 
         tabRoom= tabRoom();
         
-        tabCourse = createTabCourse();
+        tabCourse = tabCourse();
+
+        tabDepartment =  tabDepartment();
 
         tabPane.getTabs().add(tabProfile);
         tabPane.getTabs().add(tabSchedule);
@@ -75,6 +77,7 @@ public class SuperAdminUI extends AdminUI {
         tabPane.getTabs().add(tabChat);
         tabPane.getTabs().add(tabRoom);
         tabPane.getTabs().add(tabCourse);
+        tabPane.getTabs().add(tabDepartment);
 
         HBox hbox = new HBox();
         hbox.getChildren().add(new Label("Tab" ));

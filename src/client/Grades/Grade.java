@@ -1,6 +1,6 @@
 package client.Grades;
 
-import client.Courses.Course;
+import client.Courses.CourseServices;
 
 import java.util.*;
 
@@ -23,7 +23,7 @@ public class Grade{
      * @param coeff 
      * @param teacherID
      */
-    public void createGrade(String description, List<Float> grades, List<Integer> studentsID, Course course, float coeff, int teacherID) {
+    public void createGrade(String description, List<Float> grades, List<Integer> studentsID, CourseServices course, float coeff, int teacherID) {
         // TODO implement here
     }
 
@@ -35,7 +35,7 @@ public class Grade{
      * @param coeff 
      * @param teacherID
      */
-    public void updateGrade(String description, List<Float> grades, List<Integer> studentsID, Course course, float coeff, int teacherID) {
+    public void updateGrade(String description, List<Float> grades, List<Integer> studentsID, CourseServices course, float coeff, int teacherID) {
         // TODO implement here
     }
 

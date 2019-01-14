@@ -14,3 +14,5 @@ public class TeacherType extends UserType implements Serializable {
     }
 }
 
+
+	private ArrayList<CourseType> courseList;

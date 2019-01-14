@@ -1,6 +1,7 @@
 package UI;
 
 import Types.DepartmentType;
+import Types.MessageType;
 import Types.TeacherType;
 import Types.UserType;
 import client.CoreClient;
@@ -13,6 +14,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import Types.CourseType;
 import Types.RoomType;
 
 import java.util.List;
@@ -100,10 +102,21 @@ public class StudentUI extends UI  {
 
     }
 
+	@Override
+	public void getCourses(List<CourseType> courses) {
+		
+	}
+
     @Override
     public void getDepartment(List<DepartmentType> dep) {
 
     }
+
+	@Override
+	public void displayMessage(MessageType message) {
+		// TODO Auto-generated method stub
+		
+	}
 
     @Override
     public void getTeacher(List<TeacherType> teacher) {

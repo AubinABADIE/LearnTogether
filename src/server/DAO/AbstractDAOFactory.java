@@ -12,6 +12,7 @@ public abstract class AbstractDAOFactory{
     private AbstractDAOUser userDAO;
     private AbstractDAODepartment departmentDAO;
     private AbstractDAORoom roomDAO;
+    private AbstractDAOCourse courseDAO;
     private AbstractDAOConversation conversationDAO;
 
 
@@ -55,6 +56,14 @@ public abstract class AbstractDAOFactory{
     public void setConversationDAO(AbstractDAOConversation conversationDAO) {
         this.conversationDAO = conversationDAO;
     }
+    
+    public AbstractDAOCourse getCourseDAO() {
+		return courseDAO;
+	}
+
+	public void setCourseDAO(AbstractDAOCourse courseDAO) {
+		this.courseDAO = courseDAO;
+	}
 
     public abstract void createDAOUser();
 
@@ -64,5 +73,5 @@ public abstract class AbstractDAOFactory{
 
     public abstract void createDAOConversation();
 
-
+	public abstract void createDAOCourse();
 }

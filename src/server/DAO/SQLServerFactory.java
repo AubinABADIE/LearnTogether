@@ -17,6 +17,7 @@ public class SQLServerFactory extends AbstractDAOFactory {
     private SQLServerDAODepartment departmentDAO;
     private SQLServerDAORoom roomDAO;
     private SQLServerDAOConversation conversationDAO;
+    private SQLServerDAOCourse courseDAO;
     /**
      * Default constructor
      */
@@ -59,7 +60,12 @@ public class SQLServerFactory extends AbstractDAOFactory {
     public void createDAOConversation() {
         this.conversationDAO = new SQLServerDAOConversation();
     }
-
+    
+    @Override
+    public void createDAOCourse() {
+        this.courseDAO = new SQLServerDAOCourse();
+    }
+    
     @Override
     public SQLServerDAOUser getUserDAO() {
         return userDAO;
@@ -98,12 +104,23 @@ public class SQLServerFactory extends AbstractDAOFactory {
     public int readDAOUserByLogin(String login, String password) {
         return userDAO.readDAOUserByLogin(login, password);
     }
+    
     public UserType readDAOUser(int id) {
         return userDAO.readDAOUser(id);
     }
+    
     public boolean isPdwNull(String login){return userDAO.isPdwNull(login);}
+    
     public boolean setNewPwd(String login, String password) {
         return userDAO.setNewPwd(login, password);
     }
+
+	public SQLServerDAOCourse getCourseDAO() {
+		return courseDAO;
+	}
+
+	public void setCourseDAO(SQLServerDAOCourse courseDAO) {
+		this.courseDAO = courseDAO;
+	}
 
 }
