@@ -1,6 +1,7 @@
 package UI;
 
 import Types.DepartmentType;
+import Types.MessageType;
 import client.CoreClient;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
@@ -406,6 +407,12 @@ public class TeacherUI extends UI {
 
 	@Override
 	public void getCourses(List<CourseType> courses) {
+		
+	}
+
+	@Override
+	public void displayMessage(MessageType message) {
+		// TODO Auto-generated method stub
 		
 	}
 }

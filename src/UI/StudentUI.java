@@ -1,6 +1,7 @@
 package UI;
 
 import Types.DepartmentType;
+import Types.MessageType;
 import client.CoreClient;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
@@ -108,4 +109,10 @@ public class StudentUI extends UI  {
     public void getDepartment(List<DepartmentType> dep) {
 
     }
+
+	@Override
+	public void displayMessage(MessageType message) {
+		// TODO Auto-generated method stub
+		
+	}
 }
