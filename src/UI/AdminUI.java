@@ -155,7 +155,7 @@ public class AdminUI extends TeacherUI {
         return tabRoom;
     }
 
-    private GridPane roomRead(Tab tabRoom){
+    protected GridPane roomRead(Tab tabRoom){
 
         /*add list of room*/
         client.getRooms();
@@ -330,7 +330,20 @@ public class AdminUI extends TeacherUI {
         return gridRoomVisu;
     }
 
-    private GridPane createTabRoom(Tab tabRoom){
+    protected GridPane createTabRoom(Tab tabRoom){
+        //return button
+        Image returnRoom = new Image(getClass().getResourceAsStream("images/icons8-return.png"));
+        ImageView returnRoomView = new ImageView(returnRoom);
+        returnRoomView.setFitHeight(15);
+        returnRoomView.setFitWidth(15);
+
+        //create return button
+        Button btnReturnRoom = new Button();
+        btnReturnRoom.setGraphic(returnRoomView);//setting icon to button
+
+        HBox returnBox = new HBox();
+
+        returnBox.getChildren().add(btnReturnRoom);
         // labels
         Label nameLabel = new Label("Name of room : ");
         Label capacityLabel = new Label("Capacity : ");
@@ -399,6 +412,8 @@ public class AdminUI extends TeacherUI {
         descriptionRoom.getChildren().addAll(descLabel, descriptionField) ;
 
         //add hbox in gridpane
+        gridRoom.add(returnBox,2, 0);
+
         gridRoom.add(nameRoom, 1, 0);
         gridRoom.add(capacityRoom, 1, 2);
         gridRoom.add(buildingRoom, 1, 5);
@@ -426,6 +441,10 @@ public class AdminUI extends TeacherUI {
         gridRoom.add(cancelCreate, 2, 13, 1, 1);
         gridRoom.setHalignment(cancelCreate, HPos.RIGHT);
         gridRoom.setMargin(cancelCreate, new Insets(20, 0,20,0));
+
+        btnReturnRoom.setOnAction(event -> {
+            tabRoom.setContent(roomRead(tabRoom));
+        });
 
         okCreate.setOnAction(event -> {
             if (nameField.getText().isEmpty()) {
@@ -468,7 +487,21 @@ public class AdminUI extends TeacherUI {
         return gridRoom;
     }
 
-    private GridPane updateTabRoom(Tab tabRoom, String name, int capacity, int building, boolean hasProjector, boolean hasComputer, String description, int id){
+    protected GridPane updateTabRoom(Tab tabRoom, String name, int capacity, int building, boolean hasProjector, boolean hasComputer, String description, int id){
+
+        //return button
+        Image returnRoom = new Image(getClass().getResourceAsStream("images/icons8-return.png"));
+        ImageView returnRoomView = new ImageView(returnRoom);
+        returnRoomView.setFitHeight(15);
+        returnRoomView.setFitWidth(15);
+
+        //create return button
+        Button btnReturnRoom = new Button();
+        btnReturnRoom.setGraphic(returnRoomView);//setting icon to button
+
+        HBox returnBox = new HBox();
+
+        returnBox.getChildren().add(btnReturnRoom);
 
         // labels
         Label nameLabel = new Label("Name of room : ");
@@ -553,7 +586,9 @@ public class AdminUI extends TeacherUI {
         descriptionRoom.getChildren().addAll(descLabel, descriptionField) ;
 
         //add hbox in gridpane
-        gridUpadateRoom.add(nameRoom, 1, 0);
+        gridUpadateRoom.add(returnBox,2, 0);
+
+        gridUpadateRoom.add(nameRoom, 1, 1);
         gridUpadateRoom.add(capacityRoom, 1, 2);
         gridUpadateRoom.add(buildingRoom, 1, 5);
         gridUpadateRoom.add(projectorRoom, 1, 7);
@@ -580,6 +615,10 @@ public class AdminUI extends TeacherUI {
         gridUpadateRoom.add(cancelUpdate, 2, 13, 1, 1);
         gridUpadateRoom.setHalignment(cancelUpdate, HPos.RIGHT);
         gridUpadateRoom.setMargin(cancelUpdate, new Insets(20, 0,20,0));
+
+        btnReturnRoom.setOnAction(event -> {
+            tabRoom.setContent(roomRead(tabRoom));
+        });
 
         okUpdate.setOnAction(event -> {
             if (nameField.getText().isEmpty()) {
@@ -621,11 +660,8 @@ public class AdminUI extends TeacherUI {
         return gridUpadateRoom;
     }
 
-    protected void setRoomTab(){
-        SingleSelectionModel<Tab> selectionModel = tabPane.getSelectionModel();
-        selectionModel.select(tabRoom());
-
-
+    public GridPane setRoomTab(){
+        return roomRead(tabRoom);
     }
 
 
@@ -649,7 +685,7 @@ public class AdminUI extends TeacherUI {
         return tabDepartment;
     }
 
-    private GridPane departmentRead(Tab tabDepartment) {
+    protected GridPane departmentRead(Tab tabDepartment) {
 
         /*add list of Department*/
         client.getDepartment();
@@ -1005,7 +1041,7 @@ public class AdminUI extends TeacherUI {
         return gridDepV;
     }
 
-    private GridPane createTabDepartment(Tab tabDepartment) {
+    protected GridPane createTabDepartment(Tab tabDepartment) {
         // labels
         Label nameLabel = new Label("Name of departement : ");
         Label teacherLabel = new Label("Referent teacher : ");

@@ -410,7 +410,6 @@ public abstract class UI extends Application implements DisplayIF {
             }
             convo.setText(sb.toString());
         }
-
     }
 
     @Override

@@ -163,16 +163,31 @@ public class StartUI extends UI {
             }
             else if (newValue.equalsIgnoreCase("RC SUCCESS")) {
                 Platform.runLater(()->showAlert(Alert.AlertType.CONFIRMATION, null, "Success", "You have created the room."));
+                if (adminUI != null){
+                    Platform.runLater(()->adminUI.tabRoom.setContent(adminUI.setRoomTab()));
+                } else if (superAdminUI != null){
+                    Platform.runLater(()->superAdminUI.tabRoom.setContent(superAdminUI.setRoomTab()));
+                }
             } else if (newValue.equalsIgnoreCase("RC FAILURE")) {
                 Platform.runLater(()->showAlert(Alert.AlertType.CONFIRMATION, null, "Failure", "Error: Room hasn't been created."));
             } else if (newValue.equalsIgnoreCase("RD SUCCESS")){
                 Platform.runLater(()->showAlert(Alert.AlertType.CONFIRMATION, null, "Success", "You have deleted the room."));
-                Platform.runLater(()->adminUI.client.getRooms());
+                if (adminUI != null){
+                    Platform.runLater(()->adminUI.client.getRooms());
+                }else if (superAdminUI != null){
+                    Platform.runLater(()->superAdminUI.client.getRooms());
+                }
             } else if (newValue.equalsIgnoreCase("RD FAILURE")){
                 Platform.runLater(()->showAlert(Alert.AlertType.CONFIRMATION, null, "Failure", "Error: Room hasn't been deleted."));
             } else if (newValue.equalsIgnoreCase("RU SUCCESS")){
                 showAlert(Alert.AlertType.CONFIRMATION, null, "Success", "You have update the room.");
-                Platform.runLater(()->Platform.runLater(()->adminUI.client.getRooms()));
+                if (adminUI != null){
+                    Platform.runLater(()->Platform.runLater(()->adminUI.client.getRooms()));
+                    Platform.runLater(()->adminUI.tabRoom.setContent(adminUI.setRoomTab()));
+                } else if (superAdminUI != null){
+                    Platform.runLater(()->Platform.runLater(()->superAdminUI.client.getRooms()));
+                    Platform.runLater(()->superAdminUI.tabRoom.setContent(superAdminUI.setRoomTab()));
+                }
             } else if (newValue.equalsIgnoreCase("RU FAILURE")){
                 Platform.runLater(()->showAlert(Alert.AlertType.CONFIRMATION, null, "Failure", "Error: Room hasn't been updated."));
             }
@@ -439,7 +454,12 @@ public class StartUI extends UI {
     @Override
     public void getDepartment(List<DepartmentType> dep)
         {
-            Platform.runLater(() -> adminUI.setDepartment(dep));
+            Platform.runLater(() -> {
+                if (adminUI != null)
+                    adminUI.setDepartment(dep);
+                else if (superAdminUI != null)
+                    superAdminUI.setDepartment(dep);
+            });
 
     }
 
