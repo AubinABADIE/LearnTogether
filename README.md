@@ -98,7 +98,7 @@ Arguments :
 
 *Usage*: `#CREATEDROOM {mess}`
 
- ## \#DELETEROOM
+ ## #DELETEROOM
  The server responds to a #DELETEROOM from the client by sending this.
  Arguments:
  - mess : String with the result of the action.

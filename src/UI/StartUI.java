@@ -138,7 +138,7 @@ public class StartUI extends UI {
             else if(newValue.equalsIgnoreCase("ADMIN")){
                 Platform.runLater(this::setPrincipalSceneAsAdmin);
             }
-            else if(newValue.equalsIgnoreCase("SUPER ADMIN")){
+            else if(newValue.equalsIgnoreCase("SUPERADMIN")){
                 Platform.runLater(this::setPrincipalSceneAsSuperAdmin);
             }
             else if(newValue.equalsIgnoreCase("CONNECTION ERROR")){
@@ -383,7 +383,12 @@ public class StartUI extends UI {
     }
     @Override
     public void getRooms(List<RoomType> rooms){
-        Platform.runLater(() -> adminUI.setRooms(rooms));
+        Platform.runLater(() -> {
+            if(adminUI != null)
+                adminUI.setRooms(rooms);
+            else if(superAdminUI != null)
+                superAdminUI.setRooms(rooms);
+        });
     }
 
     @Override
