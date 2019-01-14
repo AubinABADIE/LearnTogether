@@ -546,7 +546,6 @@ public class TeacherUI extends UI {
 		
 	}
 
-	@Override
 	public void displayMessage(MessageType message) {
 		// TODO Auto-generated method stub
 		
