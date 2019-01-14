@@ -132,12 +132,15 @@ public class TeacherUI extends UI {
 	}
 
 	private GridPane courseRead(Tab tabCourse){
-
+		System.out.println("ok1");
         /*add list of Course*/
         client.getCourses();
         ListView<CourseType> list = new ListView<>();
+        CourseType ct = new CourseType(1,"course1","communication course",1,2);
         courseNames = FXCollections.observableArrayList();
+        courseNames.add(ct);
         courseNames.addListener((ListChangeListener<CourseType>) c -> {
+        	
             list.setItems(courseNames);
         });
 
@@ -286,80 +289,106 @@ public class TeacherUI extends UI {
         return gridCourseVisu;
 }
 
-	protected Tab createTabCourse(Tab TabCourse){
-    	Tab tabCourse = new Tab();
-        tabCourse.setText("Course");
-        tabCourse.setClosable(false);
+	private GridPane createTabCourse(Tab tabCourse){
+	      
+	       // labels
+	        Label nameCourseLabel = new Label("Name of course : ");
+	        Label descriptionCourseLabel = new Label("Description : ");
+	        Label nbTotalHourLabel = new Label("Total hours : ");
+	        Label referingTeacherLabel = new Label ("Refering teacher : ");
 
-        // labels
-        Label nameLabel = new Label("Name of course : ");
-        Label descriptionLabel = new Label("Description : ");
-        Label totalHoursLabel = new Label("Total hours : ");
-        Label promotionLabel = new Label ("Promotion : ");
-        Label referingTeacherLabel = new Label ("Refering teacher : ");
+	        // Add text Field
+	        TextField nameCourseField = new TextField();
+	        TextArea descriptionCourseField = new TextArea();
+	        TextField nbTotalHourField = new TextField();
+	        nbTotalHourField.textProperty().addListener((observable, oldValue, newValue) -> {
+	            if(!newValue.matches("\\d*"))
+	                nbTotalHourField.setText(newValue.replaceAll("[^\\d]", ""));
+	        });
+	        TextField referingTeacherField = new TextField();
+	        referingTeacherField.textProperty().addListener((observable, oldValue, newValue) -> {
+	            if(!newValue.matches("\\d*"))
+	                referingTeacherField.setText(newValue.replaceAll("[^\\d]", ""));
+	        });
 
-        // Add text Field
-        TextField nameField = new TextField();
-        TextField totalHoursField = new TextField();
-        TextField promotionField = new TextField();
-        TextField referingTeacherField = new TextField();
-        
-        //Add text Area
-        TextArea descriptionField = new TextArea();
+	        //grid pane
+	        GridPane gridCourse = new GridPane();
+	        gridCourse.setHgap(10);
+	        gridCourse.setVgap(10);
+	        gridCourse.setPadding(new Insets(10,10,10,10));
 
-        //grid pane
-        GridPane gridCourse = new GridPane();
-        gridCourse.setHgap(10);
-        gridCourse.setVgap(10);
-        gridCourse.setPadding(new Insets(10,10,10,10));
+	        //Hbox
+	        HBox nameCourse = new HBox();
+	        HBox descriptionCourse = new HBox();
+	        HBox nbTotalHourCourse = new HBox();
+	        HBox referingTeacherCourse = new HBox();
 
-        //Hbox
-        HBox nameCourse = new HBox();
-        HBox descriptionCourse = new HBox();
-        HBox totalHoursCourse = new HBox();
-        HBox promotionCourse = new HBox();
-        HBox referingTeacherCourse = new HBox();
-        
+	        // add form in hbox
+	        nameCourse.getChildren().addAll(nameCourseLabel, nameCourseField);
+	        descriptionCourse.getChildren().addAll(descriptionCourseLabel, descriptionCourseField) ;
+	        nbTotalHourCourse.getChildren().addAll(nbTotalHourLabel, nbTotalHourField) ;
+	        referingTeacherCourse.getChildren().addAll(referingTeacherLabel, referingTeacherField) ;
 
-         // add form in hbox
-        nameCourse.getChildren().addAll(nameLabel, nameField);
-        descriptionCourse.getChildren().addAll(descriptionLabel, descriptionField) ;
-        totalHoursCourse.getChildren().addAll(totalHoursLabel, totalHoursField) ;
-        promotionCourse.getChildren().addAll(promotionLabel, promotionField) ;
-        referingTeacherCourse.getChildren().addAll(referingTeacherLabel, referingTeacherField) ;
+	        //add hbox in gridpane
+	        gridCourse.add(nameCourse, 1, 1);
+	        gridCourse.add(descriptionCourse, 1, 2);
+	        gridCourse.add(nbTotalHourCourse, 1, 3);
+	        gridCourse.add(referingTeacherCourse, 1, 4);
 
-        //add gridpane in tab
-        tabCourse.setContent(gridCourse);
-        
-      //add hbox in gridpane
-        gridCourse.add(nameCourse, 1, 1);
-        gridCourse.add(descriptionCourse, 1, 2);
-        gridCourse.add(totalHoursCourse, 1, 3);
-        gridCourse.add(promotionCourse, 1, 4);
-        gridCourse.add(referingTeacherCourse, 1, 5);
+	        //add gridpane in tab
+	        tabCourse.setContent(gridCourse);
 
-        //add button
-        Button okCreate = new Button("Validate");
-        okCreate.setPrefHeight(40);
-        okCreate.setDefaultButton(true);
-        okCreate.setPrefWidth(100);
-        
-        gridCourse.add(okCreate, 0, 6, 1, 1);
-        gridCourse.setHalignment(okCreate, HPos.RIGHT);
-        gridCourse.setMargin(okCreate, new Insets(20, 0,20,0));
+	        //add button
 
-        Button cancelCreate = new Button("Cancel");
-        cancelCreate.setPrefHeight(40);
-        cancelCreate.setDefaultButton(false);
-        cancelCreate.setPrefWidth(100);
-        
-        gridCourse.add(cancelCreate, 2, 6, 1, 1);
-        gridCourse.setHalignment(cancelCreate, HPos.RIGHT);
-        gridCourse.setMargin(cancelCreate, new Insets(20, 0,20,0));
-        
-        
-        return tabCourse;
-    }
+	        Button okCreate = new Button("Create");
+	        okCreate.setPrefHeight(40);
+	        okCreate.setDefaultButton(true);
+	        okCreate.setPrefWidth(100);
+	        gridCourse.add(okCreate, 0, 13, 1, 1);
+	        gridCourse.setHalignment(okCreate, HPos.RIGHT);
+	        gridCourse.setMargin(okCreate, new Insets(20, 0, 20, 0));
+
+	        Button cancelCreate = new Button("Cancel");
+	        cancelCreate.setPrefHeight(40);
+	        cancelCreate.setDefaultButton(false);
+	        cancelCreate.setPrefWidth(100);
+	        gridCourse.add(cancelCreate, 2, 13, 1, 1);
+	        gridCourse.setHalignment(cancelCreate, HPos.RIGHT);
+	        gridCourse.setMargin(cancelCreate, new Insets(20, 0, 20, 0));
+
+	        okCreate.setOnAction(event -> {
+	            if (nameCourseField.getText().isEmpty()) {
+	                showAlert(Alert.AlertType.ERROR, gridCourse.getScene().getWindow(), "Form Error!", "Please enter course name");
+	                return;
+	            }
+	            if (descriptionCourseField.getText().isEmpty()) {
+	                showAlert(Alert.AlertType.ERROR, gridCourse.getScene().getWindow(), "Form Error!", "Please enter course description");
+	                return;
+	            }
+	            if (nbTotalHourField.getText().isEmpty()) {
+	                showAlert(Alert.AlertType.ERROR, gridCourse.getScene().getWindow(), "Form Error!", "Please enter course total number of hour");
+	                return;
+	            }
+	            if (referingTeacherField.getText().isEmpty()) {
+	                showAlert(Alert.AlertType.ERROR, gridCourse.getScene().getWindow(), "Form Error!", "Please enter course refering teacher");
+	                return;
+	            }
+
+	            client.handleCreateCourse(nameCourseField.getText(), descriptionCourseField.getText(), Integer.parseInt(nbTotalHourField.getText()),Integer.parseInt(referingTeacherField.getText()));
+	            nameCourseField.setText("");
+	            descriptionCourseField.setText("");
+	            nbTotalHourField.setText("");
+	            referingTeacherField.setText("");
+
+	        });
+
+	        cancelCreate.setOnAction(event -> {
+	            tabCourse.setContent(courseRead(tabCourse));
+	        });
+
+
+	        return gridCourse;
+	    }
 	
 	protected void setCourseTab(){
         SingleSelectionModel<Tab> selectionModel = tabPane.getSelectionModel();
@@ -368,11 +397,110 @@ public class TeacherUI extends UI {
 
     }
 	
-	private void updateTabCourse(Tab tabCourse2, String name, String description, int nbTotalHour, int idTeacher,
-			int id) {
-		// TODO Auto-generated method stub
-		
-	}
+	private GridPane updateTabCourse(Tab tabCourse, String nameCourse, String descriptionCourse, int nbTotalHourCourse, int referingTeacherCourse, int idCourse){
+        // labels
+        Label nameCourseLabel = new Label("Name of course : ");
+        Label descriptionCourseLabel = new Label("Description : ");
+        Label nbTotalHourLabel = new Label("Total hours : ");
+        Label referingTeacherLabel = new Label ("Refering teacher : ");
+
+        // Add text Field
+        TextField nameCourseField = new TextField();
+        nameCourseField.setText(nameCourse);
+        TextArea descriptionCourseField = new TextArea();
+        descriptionCourseField.setText(descriptionCourse);
+        TextField capacityField = new TextField();
+        TextField nbTotalHourField = new TextField();
+        nbTotalHourField.setText(Integer.toString(nbTotalHourCourse));
+        nbTotalHourField.textProperty().addListener((observable, oldValue, newValue) -> {
+            if(!newValue.matches("\\d*"))
+                nbTotalHourField.setText(newValue.replaceAll("[^\\d]", ""));
+        });
+        TextField referingTeacherField = new TextField();
+        referingTeacherField.setText(Integer.toString(referingTeacherCourse));
+        referingTeacherField.textProperty().addListener((observable, oldValue, newValue) -> {
+            if(!newValue.matches("\\d*"))
+                referingTeacherField.setText(newValue.replaceAll("[^\\d]", ""));
+        });
+        
+        //grid pane
+        GridPane gridUpdateCourse = new GridPane();
+        gridUpdateCourse.setHgap(10);
+        gridUpdateCourse.setVgap(10);
+        gridUpdateCourse.setPadding(new Insets(10,10,10,10));
+
+        //Hbox
+        HBox nameCourseHb = new HBox();
+        HBox descriptionCourseHb = new HBox();
+        HBox nbTotalHourCourseHb = new HBox();
+        HBox referingTeacherCourseHb = new HBox();
+
+        // add form in hbox
+        nameCourseHb.getChildren().addAll(nameCourseLabel, nameCourseField);
+        descriptionCourseHb.getChildren().addAll(descriptionCourseLabel, descriptionCourseField) ;
+        nbTotalHourCourseHb.getChildren().addAll(nbTotalHourLabel, nbTotalHourField) ;
+        referingTeacherCourseHb.getChildren().addAll(referingTeacherLabel, referingTeacherField) ;
+
+         //add hbox in gridpane
+        gridUpdateCourse.add(nameCourseHb, 1, 1);
+        gridUpdateCourse.add(descriptionCourseHb, 1, 2);
+        gridUpdateCourse.add(nbTotalHourCourseHb, 1, 3);
+        gridUpdateCourse.add(referingTeacherCourseHb, 1, 5);
+
+        //add gridpane in tab
+        tabCourse.setContent(gridUpdateCourse);
+
+        //add button
+
+        Button okUpdate = new Button("Update");
+        okUpdate.setPrefHeight(40);
+        okUpdate.setDefaultButton(true);
+        okUpdate.setPrefWidth(100);
+        gridUpdateCourse.add(okUpdate, 0, 13, 1, 1);
+        gridUpdateCourse.setHalignment(okUpdate, HPos.RIGHT);
+        gridUpdateCourse.setMargin(okUpdate, new Insets(20, 0,20,0));
+
+        Button cancelUpdate = new Button("Cancel");
+        cancelUpdate.setPrefHeight(40);
+        cancelUpdate.setDefaultButton(false);
+        cancelUpdate.setPrefWidth(100);
+        gridUpdateCourse.add(cancelUpdate, 2, 13, 1, 1);
+        gridUpdateCourse.setHalignment(cancelUpdate, HPos.RIGHT);
+        gridUpdateCourse.setMargin(cancelUpdate, new Insets(20, 0,20,0));
+
+        okUpdate.setOnAction(event -> {
+            if (nameCourseField.getText().isEmpty()) {
+                showAlert(Alert.AlertType.ERROR, gridUpdateCourse.getScene().getWindow(), "Form Error!", "Please enter a course name");
+                return;
+            }
+            if (descriptionCourseField.getText().isEmpty()) {
+                showAlert(Alert.AlertType.ERROR, gridUpdateCourse.getScene().getWindow(), "Form Error!", "Please enter a course name");
+                return;
+            }
+            if (nbTotalHourField.getText().isEmpty()) {
+                showAlert(Alert.AlertType.ERROR, gridUpdateCourse.getScene().getWindow(), "Form Error!", "Please enter a course capacity");
+                return;
+            }
+            if (referingTeacherField.getText().isEmpty()) {
+                showAlert(Alert.AlertType.ERROR, gridUpdateCourse.getScene().getWindow(), "Form Error!", "Please enter a course building");
+                return;
+            }
+
+            client.handleCreateCourse(nameCourseField.getText(), descriptionCourseField.getText(), Integer.parseInt(nbTotalHourField.getText()),Integer.parseInt(referingTeacherField.getText()));
+            nameCourseField.setText("");
+            descriptionCourseField.setText("");
+            nbTotalHourField.setText("");
+            referingTeacherField.setText("");
+
+        });
+
+        cancelUpdate.setOnAction(event -> {
+            tabCourse.setContent(courseRead(tabCourse));
+        });
+
+
+        return gridUpdateCourse;
+    }
 
 	public void addUIControls(BorderPane borderPane){
 

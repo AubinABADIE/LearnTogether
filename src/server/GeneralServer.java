@@ -108,6 +108,7 @@ public class GeneralServer implements Observer {
             String[] attributes = instruction.split("-/-");
             handleUpdateCourseFromClient(Integer.parseInt(attributes[1]),attributes[2],attributes[3], Integer.parseInt(attributes[4]), Integer.parseInt(attributes[5]), client);
         } else if (instruction.startsWith("GETCOURSES")){
+        	System.out.println("ok4");
             handleListCoursesFromClient(client);
         }
         
@@ -447,6 +448,7 @@ public class GeneralServer implements Observer {
         List<CourseType> courses =  dao.getCourseDAO().searchAllCourses();
 
          try {
+        	 System.out.println("ok5");
              client.sendToClient(courses);
          } catch (IOException e) {
              e.printStackTrace();

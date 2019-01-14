@@ -235,7 +235,9 @@ public class CoreClient implements ClientIF {
      * @return a room list
      */
     public void getCourses() {
+    	System.out.println("ok2");
         course.getCourses();
+        
     }
 
     /**
