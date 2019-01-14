@@ -1,5 +1,6 @@
 package UI;
 
+import Types.DepartmentType;
 import client.CoreClient;
 import javafx.collections.ObservableList;
 import javafx.geometry.HPos;
@@ -196,7 +197,12 @@ public class TeacherUI extends UI {
 
 	}
 
-	@Override
+    @Override
+    public void getDepartment(List<DepartmentType> dep) {
+
+    }
+
+    @Override
 	public void start(Stage arg0) throws Exception {
 		// TODO Auto-generated method stub
 		

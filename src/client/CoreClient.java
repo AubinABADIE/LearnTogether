@@ -3,6 +3,7 @@ package client;
 import java.io.IOException;
 import java.util.List;
 
+import Types.DepartmentType;
 import com.lloseng.ocsf.client.AdaptableClient;
 
 import Types.RoomType;
@@ -102,6 +103,9 @@ public class CoreClient implements ClientIF {
                 if(((String) ((List) msg).get(0)).equalsIgnoreCase("CONVERSATION EMAILS"))
                     display.setConversationEmails((List<String>) msg);
             }
+            else if (((List)msg).get(0) instanceof DepartmentType)
+                display.getDepartment((List<DepartmentType>)msg);
+
         }
     }
 
@@ -178,6 +182,14 @@ public class CoreClient implements ClientIF {
      */
     public void getRooms() {
         room.getRooms();
+    }
+
+    /**
+     * This method delegates getDepartment to Department class
+     * @return a department list
+     */
+    public void getDepartment() {
+        department.getDepartment();
     }
 
     public void createConversation(String receiverEmail){conversations.createConversation(receiverEmail);}

@@ -1,5 +1,6 @@
 package UI;
 
+import Types.DepartmentType;
 import Types.MessageType;
 import client.CoreClient;
 import javafx.application.Application;
@@ -404,6 +405,13 @@ public class StartUI extends UI {
         if (emails.size() != 0) {
             Platform.runLater(() ->  getCurrentUI().setReceiversEmail(emails));
         }
+    }
+
+    @Override
+    public void getDepartment(List<DepartmentType> dep)
+        {
+            Platform.runLater(() -> adminUI.setDepartment(dep));
+
     }
 
 

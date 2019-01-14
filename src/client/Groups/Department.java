@@ -2,16 +2,12 @@ package client.Groups;
 
 
 import client.CoreClient;
-import client.Users.TeacherServices;
-
 import java.io.IOException;
 
 /**
  * 
  */
 public class Department {
-
-    private CoreClient client;
 
     /**
      * Attributes
@@ -108,24 +104,38 @@ public class Department {
     public void handleCreatedDepartment(String msg){
         String args[] = msg.split(" ");
         if(args[1].equalsIgnoreCase("SUCCESS"))
-            client.getDisplay().setState("DC SUCCESS");
+            coreClient.getDisplay().setState("DC SUCCESS");
         else
-            client.getDisplay().setState("DC FAILURE");
+            coreClient.getDisplay().setState("DC FAILURE");
     }
 
     public void handleUpdatedDepartment(String msg){
         String args[] = msg.split(" ");
         if(args[1].equalsIgnoreCase("SUCCESS"))
-            client.getDisplay().setState("DU SUCCESS");
+            coreClient.getDisplay().setState("DU SUCCESS");
         else
-            client.getDisplay().setState("DU FAILURE");
+            coreClient.getDisplay().setState("DU FAILURE");
     }
 
     public void handleDeletedDepartment(String msg){
         String args[] = msg.split(" ");
         if(args[1].equalsIgnoreCase("SUCCESS"))
-            client.getDisplay().setState("DD SUCCESS");
+            coreClient.getDisplay().setState("DD SUCCESS");
         else
-            client.getDisplay().setState("DD FAILURE");
+            coreClient.getDisplay().setState("DD FAILURE");
+    }
+
+    /**
+     * This method send a message to the server to have the departments list
+     */
+    public void getDepartment() {
+        try {
+            System.out.println("ok1");
+            coreClient.getConnection().sendToServer("#GETDEPARTMENT" );
+            System.out.println("ok2");
+        }catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
 }

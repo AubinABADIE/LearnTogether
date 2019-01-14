@@ -1,6 +1,9 @@
 package server.DAO;
 
+import Types.DepartmentType;
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class SQLServerDAODepartment extends AbstractDAODepartment{
 
@@ -131,31 +134,30 @@ public class SQLServerDAODepartment extends AbstractDAODepartment{
     }
 
     /**
-     * @param cred
-     * @param cred1
-     * @param cred2
+     * This method return the departments list
      */
-    public void createDAODepartment(String cred, String cred1, String cred2){
+    @Override
+    public List<DepartmentType> searchAllDepartment() {
 
+        ArrayList dep = new ArrayList();
+        Connection connection = getConnection();
+        if(connection != null){
+            try{
+                PreparedStatement preparedStatement = connection.prepareStatement("SELECT * from Departments");
+                ResultSet resultSet = preparedStatement.executeQuery();
+                while (resultSet.next()){
+                    dep.add(new DepartmentType(resultSet.getInt(1),
+                            resultSet.getString(2),
+                            resultSet.getInt("refTeacher"),
+                            resultSet.getString("descriptionDep")));
+                }
+            }catch (SQLException e){e.printStackTrace();}
+            finally {
+                closeConnection(connection);
+            }
+        }
+        return dep;
     }
 
-    /**
-     * @param cred
-     * @param cred1
-     * @param cred2
-     */
-    public void updateDAODepartment(String cred, String cred1, String cred2){
 
-    }
-
-    /**
-     * @param cred
-     */
-    public void deleteDAODepartment(String cred){
-
-    }
-
-    public void readDAODepartment(int iddep){
-
-    }
 }

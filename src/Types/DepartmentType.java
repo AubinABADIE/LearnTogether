@@ -1,24 +1,24 @@
 package Types;
 
 public class DepartmentType {
-    private int idDeppartment;
+    private int idDepartment;
     private String nameDep;
     private int refTeacherId;
     private String descriptionDep;
 
-    public DepartmentType(int idDeppartment, String nameDep, int refTeacherId, String descriptionDep){
-        this.idDeppartment=idDeppartment;
+    public DepartmentType(int idDepartment, String nameDep, int refTeacherId, String descriptionDep){
+        this.idDepartment=idDepartment;
         this.nameDep=nameDep;
         this.refTeacherId=refTeacherId;
         this.descriptionDep=descriptionDep;
     }
 
-    public int getIdDeppartment(){
-        return idDeppartment;
+    public int getIdDepartment(){
+        return idDepartment;
     }
 
-    public void setIdDeppartment(int idDeppartment) {
-        this.idDeppartment = idDeppartment;
+    public void setIdDepartment(int idDepartment) {
+        this.idDepartment = idDepartment;
     }
 
     public String getNameDep() {
@@ -29,11 +29,11 @@ public class DepartmentType {
         this.nameDep = nameDep;
     }
 
-    public int getRefTeacherId() {
+    public int getRefTeacher() {
         return refTeacherId;
     }
 
-    public void setRefTeacherId(int refTeacherId) {
+    public void setRefTeacher(int refTeacherId) {
         this.refTeacherId = refTeacherId;
     }
 

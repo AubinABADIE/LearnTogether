@@ -1,5 +1,6 @@
 package UI;
 
+import Types.DepartmentType;
 import client.CoreClient;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
@@ -94,6 +95,11 @@ public class StudentUI extends UI  {
 
     @Override
     public void getRooms(List<RoomType> rooms) {
+
+    }
+
+    @Override
+    public void getDepartment(List<DepartmentType> dep) {
 
     }
 }
