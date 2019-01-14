@@ -113,9 +113,9 @@ public class UserServices{
     public void handleUpdatedPwd(String msg) {
         String[] args = msg.split(" ");
         if(args[1].equalsIgnoreCase("SUCCESS"))
-            coreClient.getDisplay().setState("FC SUCCESS");
+            coreClient.getDisplay().setState("UP SUCCESS");
         else
-            coreClient.getDisplay().setState("FC FAILURE");
+            coreClient.getDisplay().setState("UP FAILURE");
     }
     
     /**

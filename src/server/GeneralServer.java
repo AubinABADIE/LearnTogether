@@ -617,9 +617,9 @@ public class GeneralServer implements Observer {
     	boolean result = dao.getUserDAO().setNewPwd(login, pwd);
     	String msg;
         if (result == true){
-        	msg = "#UPDATEDPWD Success" ;
+        	msg = "#UPDATEDPWD SUCCESS" ;
         } else{
-        	msg = "#UPDATEDPWD Failure";
+        	msg = "#UPDATEDPWD FAILURE";
         }
     	try {
             client.sendToClient(msg);
