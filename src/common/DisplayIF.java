@@ -2,6 +2,10 @@ package common;
 
 import Types.*;
 
+import Types.RoomType;
+import Types.UserType;
+import Types.CourseType;
+
 import java.util.List;
 
 public interface DisplayIF {
@@ -17,6 +21,7 @@ public interface DisplayIF {
     void getCourses(List<CourseType> courses);
     void setConversationMessages(List<MessageType> conversationMessages);
     void setConversationEmails(List<String> emails);
+    void setUser(UserType user);
 	
     void getDepartment(List<DepartmentType> dep);
     void getTeacher(List<TeacherType> teacher);

@@ -35,6 +35,7 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.stage.Window;
 import Types.RoomType;
+import Types.UserType;
 import Types.CourseType;
 
 import java.util.List;
@@ -545,4 +546,15 @@ public class TeacherUI extends UI {
 		
 	}
 
+	@Override
+	public void displayMessage(MessageType message) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void setUser(UserType user) {
+		this.user = user;
+		
+	}
 }

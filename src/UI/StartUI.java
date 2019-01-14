@@ -18,6 +18,7 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import Types.RoomType;
+import Types.UserType;
 import Types.CourseType;
 
 import java.io.IOException;
@@ -462,6 +463,14 @@ public class StartUI extends UI {
             });
 
         }
+    
+    @Override
+	public void setUser(UserType user) {
+    	Platform.runLater(() -> {
+    		getCurrentUI().setUser(user);
+    		getCurrentUI().setHasClient(true);
+    	});
+	}
 
     @Override
     public void getTeacher(List<TeacherType> teacher) {
@@ -473,7 +482,6 @@ public class StartUI extends UI {
         });
 
     }
-
 
 }
 

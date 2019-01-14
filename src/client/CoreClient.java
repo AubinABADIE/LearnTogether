@@ -100,9 +100,6 @@ public class CoreClient implements ClientIF {
             else if  (((String) msg).startsWith("#DELETEDDEPARTMENT")){
                 department.handleDeletedDepartment((String) msg);
             }
-            else if(((String) msg).startsWith("#READUSER")) {
-            	user.handleReadUser((String)msg);
-            }
             else if(((String) msg).startsWith("#UPDATEDPWD")) {
             	user.handleUpdatedPwd((String)msg);
             }
@@ -125,8 +122,8 @@ public class CoreClient implements ClientIF {
                 display.getTeacher((List<TeacherType>)msg);}
 
         }
-        else if(msg instanceof UserType){
-            //TODO
+        else if(msg instanceof UserType) {
+        	display.setUser((UserType)msg);
         }
     }
 
