@@ -1,7 +1,5 @@
 package UI;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.util.List;
 
 import Types.MessageType;
@@ -14,8 +12,6 @@ import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
@@ -188,6 +184,7 @@ public abstract class UI extends Application implements DisplayIF {
     }
     
     public GridPane readProfile(Tab tabProfile) {
+        
     	// Labels
     	Label name = new Label(login);
     	name.setFont(Font.font("Cambria", FontWeight.BOLD, 30));
@@ -195,8 +192,7 @@ public abstract class UI extends Application implements DisplayIF {
     	Label email = new Label("Email: ");
     	Label birthdate = new Label("Birthdate: ");
     	Label id = new Label("ID: ");
-    	Label nameDB = new Label();
-    	Label emailDB = new Label();
+    	Label emailDB = new Label(login);
     	Label birthdateDB = new Label();
     	Label idDB = new Label();
     	
@@ -207,7 +203,7 @@ public abstract class UI extends Application implements DisplayIF {
     	changePwdButton.setDefaultButton(true);
     	
     	// Photo
-    	Image image = new Image(getClass().getResourceAsStream("images/profilePhoto.png"));
+    	Image image = null; //new Image(getClass().getResourceAsStream("images/profilePhoto.png"));
         //Setting the image view 
         ImageView imageView = new ImageView(image); 
         //Setting the position of the image 
@@ -237,7 +233,7 @@ public abstract class UI extends Application implements DisplayIF {
         // Fill box
         photoBox.getChildren().addAll(photo,changePhotoButton);
         photoBox.setAlignment(Pos.CENTER);
-        nameBox.getChildren().addAll(name, nameDB);
+        nameBox.getChildren().addAll(name);
         emailBox.getChildren().addAll(email, emailDB);
         birthdateBox.getChildren().addAll(birthdate, birthdateDB);
         idBox.getChildren().addAll(id, idDB);
@@ -267,39 +263,18 @@ public abstract class UI extends Application implements DisplayIF {
     	Label newPwd = new Label("New password: ");
     	Label newPwdConfirm = new Label("Confirm new password: ");
     	
-    	// Text fields
-    	TextField oldTF = new TextField();
-    	TextField newPwdTF = new TextField();
-    	TextField newPwdConfirmTF = new TextField();
+    	// Password fields
+    	PasswordField oldTF = new PasswordField();
+    	PasswordField newPwdTF = new PasswordField();
+    	PasswordField newPwdConfirmTF = new PasswordField();
     	
     	// Buttons
     	Button updateButton = new Button("Update");
     	Button cancelButton = new Button("Cancel");
     	updateButton.setPrefHeight(40);
     	updateButton.setDefaultButton(true);
-    	cancelButton.setPrefHeight(40);
+    	cancelButton.setPrefHeight(40); 
     	
-    	// Photo
-    	Image image = null;
-		/*try {
-			image = new Image(new FileInputStream("C:\\Users\\Aubin\\Pictures\\avatar.png"));
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}*/
-        //Setting the image view 
-        ImageView imageView = new ImageView(image); 
-        //Setting the position of the image 
-        imageView.setX(50); 
-        imageView.setY(25); 
-        //setting the fit height and width of the image view 
-        imageView.setFitHeight(150); 
-        imageView.setFitWidth(150); 
-        //Setting the preserve ratio of the image view 
-        imageView.setPreserveRatio(true);  
-        //Creating a Group object  
-        Group photo = new Group(imageView);  
-        
         // GridPane
         GridPane gridProfile = new GridPane();
         gridProfile.setHgap(10);
@@ -317,12 +292,13 @@ public abstract class UI extends Application implements DisplayIF {
         newPwdBox.getChildren().addAll(newPwd, newPwdTF);
         cNewPwdBox.getChildren().addAll(newPwdConfirm, newPwdConfirmTF);
         buttonBox.getChildren().addAll(updateButton, cancelButton);
+        buttonBox.setAlignment(Pos.CENTER);
         
         // Fill gridpane
-        gridProfile.add(oldPwdBox, 1, 0);
-        gridProfile.add(newPwdBox, 1, 2);
-        gridProfile.add(cNewPwdBox, 1, 4);
-        gridProfile.add(buttonBox, 1, 6);
+        gridProfile.add(oldPwdBox, 0, 0);
+        gridProfile.add(newPwdBox, 0, 1);
+        gridProfile.add(cNewPwdBox, 0, 2);
+        gridProfile.add(buttonBox, 0, 3);
 
         // Event
         cancelButton.setOnAction(event -> {
@@ -330,7 +306,16 @@ public abstract class UI extends Application implements DisplayIF {
         });
         
         updateButton.setOnAction(event -> {
-        	tabProfile.setContent(readProfile(tabProfile));
+        	if(oldTF.getText()!=null && newPwdTF.getText()!=null && newPwdConfirmTF.getText()!=null) {
+        		if(newPwdTF.getText().equals(newPwdConfirmTF.getText())) {
+        			client.handleUpdatePwd(login, newPwdTF.getText());
+                	tabProfile.setContent(readProfile(tabProfile));
+        		} else {
+        			showAlert(Alert.AlertType.ERROR, gridProfile.getScene().getWindow(), "Form Error!", "Password don't correspond");
+        		}
+        	} else {
+        		showAlert(Alert.AlertType.ERROR, gridProfile.getScene().getWindow(), "Form Error!", "Please enter all fields.");
+        	}
         });
         
         return gridProfile;

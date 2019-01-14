@@ -87,6 +87,12 @@ public class CoreClient implements ClientIF {
             else if  (((String) msg).startsWith("#DELETEDDEPARTMENT")){
                 department.handleDeletedDepartment((String) msg);
             }
+            else if(((String) msg).startsWith("#READUSER")) {
+            	user.handleReadUser((String)msg);
+            }
+            else if(((String) msg).startsWith("#UPDATEDPWD")) {
+            	user.handleUpdatedPwd((String)msg);
+            }
         } else if (msg instanceof List) {
             if (((List)msg).get(0) instanceof RoomType)
                 display.getRooms((List<RoomType>)msg);
@@ -180,27 +186,22 @@ public class CoreClient implements ClientIF {
 
     public void  readConversation(int id, String email){conversations.readConversation(id, email);}
     
+    public void getConversationEmail(int userID) {
+        conversations.getConversationEmail(userID);
+    }
+    
     /**********************
      * Profile
      **********************/
     
     public void handleCreateUser() {}
     
-    public void handleReadUser(String login) {
-    	user.readUser(login);
+    public void handleReadUser(int id) {
+    	user.readUser(id);
     }
     
-    public void handleUpdateUser(int id) {
-    	user.updatePhoto();
+    public void handleUpdatePwd(String login, String pwd) {
+    	user.updatePwd(login, pwd);
     }
     
-    public void handleUpdateUser(int id, Image img, String pwd) {
-    	user.updatePhoto();
-    }
-    
-    public void handleDeleteUser() {}
-
-    public void getConversationEmail(int userID) {
-        conversations.getConversationEmail(userID);
-    }
 }

@@ -100,12 +100,12 @@ public class SQLServerDAOUser extends AbstractDAOUser {
         Connection connection = getConnection();
         if(connection != null){
             try{
-                PreparedStatement preparedStatement = connection.prepareStatement("SELECT role from GeneralUsers WHERE idUser = ?");
+                PreparedStatement preparedStatement = connection.prepareStatement("SELECT * from GeneralUsers WHERE idUser = ?");
                 preparedStatement.setString(1, Integer.toString(id));
                 ResultSet resultSet = preparedStatement.executeQuery();
                 if(resultSet != null){
                     resultSet.next();
-                    user=new UserType(id, resultSet.getString("role"));
+                    user=new UserType(id, resultSet.getString("name"), resultSet.getString("firstname"), resultSet.getString("email"), resultSet.getString("birthdate"), resultSet.getString("role"));
                 }
             }catch (SQLException e){e.printStackTrace();}
             finally {
