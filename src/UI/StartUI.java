@@ -439,7 +439,12 @@ public class StartUI extends UI {
     @Override
     public void getDepartment(List<DepartmentType> dep)
         {
-            Platform.runLater(() -> adminUI.setDepartment(dep));
+            Platform.runLater(() -> {
+                if (adminUI != null)
+                    adminUI.setDepartment(dep);
+                else if (superAdminUI != null)
+                    superAdminUI.setDepartment(dep);
+            });
 
     }
 

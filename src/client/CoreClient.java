@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.List;
 
 import Types.DepartmentType;
+import Types.UserType;
 import com.lloseng.ocsf.client.AdaptableClient;
 
 import Types.RoomType;
@@ -114,7 +115,9 @@ public class CoreClient implements ClientIF {
             }
             else if (((List)msg).get(0) instanceof DepartmentType)
                 display.getDepartment((List<DepartmentType>)msg);
-
+        }
+        else if(msg instanceof UserType){
+            //TODO
         }
     }
 
@@ -178,8 +181,7 @@ public class CoreClient implements ClientIF {
      * @param name : room name
      * @param description : small description of the course
 	 * @param totalHours : the total hours of the course
-	 * @param promotion : the promotion related to the course
-	 * @param referingTeacher : the refering teacher of the course
+	 * @param idT: the referring teacher of the course
      */
     public void handleCreateCourse(String name, String description, int totalHours, int idT) {
         course.handleCreateCourse(name, description, totalHours, idT);
@@ -198,8 +200,7 @@ public class CoreClient implements ClientIF {
      * @param name : course name
      * @param description : small description of the course
 	 * @param totalHours : the total hours of the course
-	 * @param promotion : the promotion related to the course
-	 * @param referingTeacher : the refering teacher of the course
+	 * @param idT : the referring teacher of the course
      */
     public void handleUpdateCourse(int id, String name, String description, int totalHours, int idT){
         course.handleUpdateCourse(id, name, description, totalHours, idT);
