@@ -52,12 +52,11 @@ public class SQLServerDAODepartment extends AbstractDAODepartment{
         int result = 0;
         if(connection != null){
             try{
-                PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO Department() VALUES (? ,? ,?)");
+                PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO Departments(depatmentName,descriptionDep,refTeacher) VALUES (? ,? ,?)");
                 preparedStatement.setString(1, name);
-                preparedStatement.setString(2, refTeacherID);
-                preparedStatement.setString(3, descriptionDep);
+                preparedStatement.setString(3, refTeacherID);
+                preparedStatement.setString(2, descriptionDep);
                 result = preparedStatement.executeUpdate();
-
             }catch (SQLException e){
                 e.printStackTrace();
             }
@@ -94,13 +93,18 @@ public class SQLServerDAODepartment extends AbstractDAODepartment{
         return result;
     }
 
+    /**
+     * This methos delete a department. It return an int to specify to the server the state of the deletion
+     * @param idDep : department id
+     * @return int who give the state of the deletion in the data base
+     */
     @Override
     public int deleteDepartment(int idDep) {
         Connection connection = getConnection();
         int result = 0;
         if(connection != null){
             try{
-                PreparedStatement preparedStatement = connection.prepareStatement("DELETE FROM Department WHERE idDepartment = ? ");
+                PreparedStatement preparedStatement = connection.prepareStatement("DELETE FROM Departments WHERE idDepartment = ? ");
                 preparedStatement.setInt(1, idDep);
                 result = preparedStatement.executeUpdate();
 
