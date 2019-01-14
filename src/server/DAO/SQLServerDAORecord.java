@@ -1,6 +1,6 @@
 package server.DAO;
 
-import client.Courses.Course;
+import client.Courses.CourseServices;
 import client.Records.Record;
 import Types.UserType;
 
@@ -25,7 +25,7 @@ public class SQLServerDAORecord extends RecordsDAO{
      * @param record 
      * @param donatingUser
      */
-    public void createRecord(String name, Date year, Course course, File record, UserType donatingUser) {
+    public void createRecord(String name, Date year, CourseServices course, File record, UserType donatingUser) {
         // TODO implement here
     }
 

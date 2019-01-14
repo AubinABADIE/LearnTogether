@@ -10,6 +10,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import Types.CourseType;
 import Types.RoomType;
 
 import java.util.List;
@@ -96,4 +97,9 @@ public class StudentUI extends UI  {
     public void getRooms(List<RoomType> rooms) {
 
     }
+
+	@Override
+	public void getCourses(List<CourseType> courses) {
+		
+	}
 }

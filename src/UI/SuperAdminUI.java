@@ -66,7 +66,7 @@ public class SuperAdminUI extends AdminUI {
 
         tabRoom= tabRoom();
         
-        tabCourse = createTabCourse();
+        tabCourse = tabCourse();
 
         tabPane.getTabs().add(tabProfile);
         tabPane.getTabs().add(tabSchedule);
