@@ -5,6 +5,9 @@ import client.CoreClient;
 import javafx.scene.image.Image;
 
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 
 public class UserServices{
 
@@ -18,6 +21,29 @@ public class UserServices{
     }
 
     /**
+     * This method encrypts the password given by the user.
+     * @param pwd: the original password.
+     * @return the encrypted password.
+     */
+    private String encryptPwd(String pwd){
+        try {
+            MessageDigest digest = MessageDigest.getInstance("SHA-256");
+            byte[] hash = digest.digest(pwd.getBytes(StandardCharsets.UTF_8));
+            StringBuffer hexString = new StringBuffer();
+            for (int i = 0; i < hash.length; i++) {
+                String hex = Integer.toHexString(0xff & hash[i]);
+                if(hex.length() == 1) hexString.append('0');
+                hexString.append(hex);
+            }
+            return hexString.toString();
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+
+    /**
      * This method is called whenever the client wants to connect.
      * The display calls this function.
      * @param login: the email the client enters.
@@ -25,7 +51,7 @@ public class UserServices{
      */
     public void handleLogin(String login, String password){
         try {
-            coreClient.getConnection().sendToServer("#LOGIN " + login + " " + password);
+            coreClient.getConnection().sendToServer("#LOGIN " + login + " " + encryptPwd(password));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -39,7 +65,7 @@ public class UserServices{
      */
     public void setFirstPassword(String login, String password){
         try{
-            coreClient.getConnection().sendToServer("#FIRSTCONN " + login + " " + password);
+            coreClient.getConnection().sendToServer("#FIRSTCONN " + login + " " + encryptPwd(password));
         }catch (IOException e){
             e.printStackTrace();
         }
