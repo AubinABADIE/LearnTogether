@@ -606,7 +606,7 @@ public class AdminUI extends TeacherUI {
             else
                 hasComputerUp = false;
 
-            client.handleUpdateRoom(id, nameField.getText(), Integer.parseInt(capacityField.getText()),Integer.parseInt(buildingField.getText()), hasProjector, hasComputer, descriptionField.getText());
+            client.handleUpdateRoom(id, nameField.getText(), Integer.parseInt(capacityField.getText()),Integer.parseInt(buildingField.getText()), hasProjectorUp, hasComputerUp, descriptionField.getText());
             nameField.setText("");
             capacityField.setText("");
             buildingField.setText("");
