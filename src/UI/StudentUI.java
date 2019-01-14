@@ -111,13 +111,6 @@ public class StudentUI extends UI  {
     public void getDepartment(List<DepartmentType> dep) {
 
     }
-
-	@Override
-	public void displayMessage(MessageType message) {
-		// TODO Auto-generated method stub
-		
-	}
-
     @Override
     public void getTeacher(List<TeacherType> teacher) {
 
