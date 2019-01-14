@@ -2,22 +2,24 @@ package Types;
 
 public class UserType {
     private int id;
-    private String role;
     private String name;
     private String firstName;
+    private String email;
     private String birthDate;
+    private String role;
     
     public UserType(int id, String role) {
 		this.id = id;
 		this.role = role;
 	}
     
-	public UserType(int id, String role, String name, String firstName, String birthDate) {
+	public UserType(int id, String name, String firstName, String email, String birthDate, String role) {
 		this.id = id;
-		this.role = role;
 		this.name = name;
 		this.firstName = firstName;
+		this.email = email;
 		this.birthDate = birthDate;
+		this.role = role;
 	}
 
 	public int getId() {
@@ -50,6 +52,14 @@ public class UserType {
 
 	public void setFirstName(String firstName) {
 		this.firstName = firstName;
+	}
+	
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
 	public String getBirthDate() {

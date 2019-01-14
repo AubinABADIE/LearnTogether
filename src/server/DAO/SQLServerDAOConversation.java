@@ -1,10 +1,12 @@
 package server.DAO;
 
 import Types.MessageType;
+import com.sun.org.apache.regexp.internal.RE;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashSet;
 import java.util.List;
 
 /**
@@ -95,32 +97,39 @@ public class SQLServerDAOConversation extends AbstractDAOConversation{
         List<MessageType> conversationMessages = new ArrayList<>();
         if(connection != null){
             try {
-                PreparedStatement getOtherById = connection.prepareStatement("select idUser from GeneralUsers where email=?");
-                getOtherById.setString(1, otherEmail);
-                ResultSet rs = getOtherById.executeQuery();
-                rs.next();
-                int otherID = rs.getInt("idUser");
-                if (otherID != 0){
-                    PreparedStatement getAskingMail = connection.prepareStatement("select email from GeneralUsers where idUser=?");
-                    getAskingMail.setInt(1, askingID);
-                    ResultSet askingMail = getAskingMail.executeQuery();
-                    askingMail.next();
-                    String askMail = askingMail.getString(1);
-                   PreparedStatement retrieveConv = connection.prepareStatement("select * from Messages where (idReceiver=? and idSender=?) or (idSender = ? and idReceiver=?) order by messageDate");
-                   retrieveConv.setInt(1, askingID);
-                   retrieveConv.setInt(2, otherID);
-                   retrieveConv.setInt(3, askingID);
-                   retrieveConv.setInt(4, otherID);
+                   PreparedStatement retrieveConv = connection.prepareStatement("select idMessage, content, messageDate, idSender, idReceiver\n" +
+                           "from Messages\n" +
+                           "where idReceiver in(select idUser from GeneralUsers, Messages where email=? and idReceiver=idUser and idSender=?)\n" +
+                           "or idSender in(select idUser from GeneralUsers, Messages where email=? and idSender=idUser and idReceiver=?)\n" +
+                           "except (select idMessage,content, messageDate, idSender, idReceiver from Messages where idReceiver != ? and idSender != ?)\n" +
+                           "order by idMessage");
+                   retrieveConv.setString(1, otherEmail);
+                   retrieveConv.setInt(2, askingID);
+                   retrieveConv.setString(3, otherEmail);
+                   retrieveConv.setInt(4, askingID);
+                   retrieveConv.setInt(5, askingID);
+                   retrieveConv.setInt(6, askingID);
                    ResultSet messages = retrieveConv.executeQuery();
+                   PreparedStatement getSenderEmails;
+                   PreparedStatement getReceiverEmails;
+                   ResultSet senderEmails, receiverEmails;
                    while (messages.next()){
+                       getSenderEmails = connection.prepareStatement("select email from GeneralUsers, Messages where idSender=? and idUser=idSender and idMessage=? ");
+                       getSenderEmails.setInt(1, messages.getInt("idSender"));
+                       getSenderEmails.setInt(2, messages.getInt("idMessage"));
+                       getReceiverEmails = connection.prepareStatement("select email from GeneralUsers, Messages where idReceiver=? and idUser=idReceiver and idMessage=?");
+                       getReceiverEmails.setInt(1, messages.getInt("idReceiver"));
+                       getReceiverEmails.setInt(2, messages.getInt("idMessage"));
+                       senderEmails = getSenderEmails.executeQuery();
+                       senderEmails.next();
+                       receiverEmails = getReceiverEmails.executeQuery();
+                       receiverEmails.next();
                        conversationMessages.add(new MessageType(messages.getInt(1),
                                messages.getString(2),
                                messages.getTime(3),
-                               askMail,
-                               otherEmail));
+                               senderEmails.getString(1),
+                               receiverEmails.getString(1)));
                    }
-                }
-
             } catch (SQLException e) {
                 e.printStackTrace();
             }
@@ -137,17 +146,12 @@ public class SQLServerDAOConversation extends AbstractDAOConversation{
         List<String> emails = new ArrayList<>();
         if(connection!=null){
             try {
-                PreparedStatement getIds = connection.prepareStatement("select distinct idReceiver, idMessage from Messages where idSender=? order by idMessage");
+                PreparedStatement getIds = connection.prepareStatement("select distinct email from Messages, GeneralUsers where idSender=? and idUser=idReceiver or idUser in(select idUser from GeneralUsers, Messages where idReceiver=? and idSender=idUser)");
                 getIds.setInt(1, askingID);
+                getIds.setInt(2, askingID);
                 ResultSet ids = getIds.executeQuery();
-                PreparedStatement retrieveMail;
-                ResultSet email;
                 while (ids.next()){
-                    retrieveMail = connection.prepareStatement("select email from GeneralUsers where idUser=?");
-                    retrieveMail.setInt(1, ids.getInt(1));
-                    email = retrieveMail.executeQuery();
-                    email.next();
-                    emails.add(email.getString(1));
+                    emails.add(ids.getString(1));
                 }
             } catch (SQLException e) {
                 e.printStackTrace();
@@ -156,6 +160,6 @@ public class SQLServerDAOConversation extends AbstractDAOConversation{
                 closeConnection(connection);
             }
         }
-        return emails;
+        return new ArrayList<>(new HashSet<>(emails));
     }
 }

@@ -3,6 +3,7 @@ package client;
 import java.io.IOException;
 import java.util.List;
 
+import Types.DepartmentType;
 import com.lloseng.ocsf.client.AdaptableClient;
 
 import Types.RoomType;
@@ -96,8 +97,12 @@ public class CoreClient implements ClientIF {
             else if  (((String) msg).startsWith("#DELETEDDEPARTMENT")){
                 department.handleDeletedDepartment((String) msg);
             }
-            else if(((String) msg).startsWith("#MSGFORYOU"))
-                conversations.handleReceivedMessage((String)msg);
+            else if(((String) msg).startsWith("#READUSER")) {
+            	user.handleReadUser((String)msg);
+            }
+            else if(((String) msg).startsWith("#UPDATEDPWD")) {
+            	user.handleUpdatedPwd((String)msg);
+            }
         } else if (msg instanceof List) {
             if (((List)msg).get(0) instanceof RoomType)
                 display.getRooms((List<RoomType>)msg);
@@ -107,6 +112,9 @@ public class CoreClient implements ClientIF {
                 if(((String) ((List) msg).get(0)).equalsIgnoreCase("CONVERSATION EMAILS"))
                     display.setConversationEmails((List<String>) msg);
             }
+            else if (((List)msg).get(0) instanceof DepartmentType)
+                display.getDepartment((List<DepartmentType>)msg);
+
         }
     }
 
@@ -230,11 +238,23 @@ public class CoreClient implements ClientIF {
         course.getCourses();
     }
 
+    /**
+     * This method delegates getDepartment to Department class
+     * @return a department list
+     */
+    public void getDepartment() {
+        department.getDepartment();
+    }
+
     public void createConversation(String receiverEmail){conversations.createConversation(receiverEmail);}
 
     public void sendMsgToClient(int id, String receiverEmail, String messageContent){conversations.sendMsgToClient(id, receiverEmail, messageContent);}
 
     public void  readConversation(int id, String email){conversations.readConversation(id, email);}
+    
+    public void getConversationEmail(int userID) {
+        conversations.getConversationEmail(userID);
+    }
     
     /**********************
      * Profile
@@ -242,21 +262,12 @@ public class CoreClient implements ClientIF {
     
     public void handleCreateUser() {}
     
-    public void handleReadUser(String login) {
-    	user.readUser(login);
+    public void handleReadUser(int id) {
+    	user.readUser(id);
     }
     
-    public void handleUpdateUser(int id) {
-    	user.updatePhoto();
+    public void handleUpdatePwd(String login, String pwd) {
+    	user.updatePwd(login, pwd);
     }
     
-    public void handleUpdateUser(int id, Image img, String pwd) {
-    	user.updatePhoto();
-    }
-    
-    public void handleDeleteUser() {}
-
-    public void getConversationEmail(int userID) {
-        conversations.getConversationEmail(userID);
-    }
 }

@@ -1,5 +1,6 @@
 package UI;
 
+import Types.DepartmentType;
 import Types.MessageType;
 import client.CoreClient;
 import javafx.application.Application;
@@ -138,7 +139,7 @@ public class StartUI extends UI {
             else if(newValue.equalsIgnoreCase("ADMIN")){
                 Platform.runLater(this::setPrincipalSceneAsAdmin);
             }
-            else if(newValue.equalsIgnoreCase("SUPER ADMIN")){
+            else if(newValue.equalsIgnoreCase("SUPERADMIN")){
                 Platform.runLater(this::setPrincipalSceneAsSuperAdmin);
             }
             else if(newValue.equalsIgnoreCase("CONNECTION ERROR")){
@@ -171,7 +172,7 @@ public class StartUI extends UI {
                 Platform.runLater(()->showAlert(Alert.AlertType.CONFIRMATION, null, "Failure", "Error: Room hasn't been deleted."));
             } else if (newValue.equalsIgnoreCase("RU SUCCESS")){
                 showAlert(Alert.AlertType.CONFIRMATION, null, "Success", "You have update the room.");
-               // Platform.runLater(()->Platform.runLater(()->adminUI.client.getRooms()));
+                Platform.runLater(()->Platform.runLater(()->adminUI.client.getRooms()));
             } else if (newValue.equalsIgnoreCase("RU FAILURE")){
                 Platform.runLater(()->showAlert(Alert.AlertType.CONFIRMATION, null, "Failure", "Error: Room hasn't been updated."));
             }
@@ -399,7 +400,12 @@ public class StartUI extends UI {
     }
     @Override
     public void getRooms(List<RoomType> rooms){
-        Platform.runLater(() -> adminUI.setRooms(rooms));
+        Platform.runLater(() -> {
+            if(adminUI != null)
+                adminUI.setRooms(rooms);
+            else if(superAdminUI != null)
+                superAdminUI.setRooms(rooms);
+        });
     }
     
     @Override
@@ -428,6 +434,13 @@ public class StartUI extends UI {
         if (emails.size() != 0) {
             Platform.runLater(() ->  getCurrentUI().setReceiversEmail(emails));
         }
+    }
+
+    @Override
+    public void getDepartment(List<DepartmentType> dep)
+        {
+            Platform.runLater(() -> adminUI.setDepartment(dep));
+
     }
 
 

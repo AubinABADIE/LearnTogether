@@ -1,5 +1,6 @@
 package common;
 
+import Types.DepartmentType;
 import Types.MessageType;
 
 import Types.RoomType;
@@ -22,4 +23,5 @@ public interface DisplayIF {
     void setConversationMessages(List<MessageType> conversationMessages);
     void setConversationEmails(List<String> emails);
 	
+    void getDepartment(List<DepartmentType> dep);
 }

@@ -76,14 +76,15 @@ public class GeneralServer implements Observer {
         else if(instruction.startsWith("CREATEDEP")){
             String[] creds = instruction.split(" ");
             handleCreateDepartmentFromClient(creds[1], creds[2], creds[3], client);
-        }
-        else if(instruction.startsWith("UPDATEDEP")){
+        }else if(instruction.startsWith("UPDATEDEP")){
             String[] creds = instruction.split(" ");
             handleUpdateDepartmentFromClient(creds[1], creds[2], creds[3],creds[4], client);
-        }
-        else if(instruction.startsWith("DELETEDEP")){
+        }else if(instruction.startsWith("DELETEDEP")){
             String[] creds = instruction.split(" ");
             handleDeleteDepartmentFromClient(creds[1], client);
+        }else if (instruction.startsWith("GETDEPARTMENT")){
+            System.out.println("ok3");
+            handleListDepFromClient(client);
         }
         else if (instruction.startsWith("CREATEROOM")){
             String[] attributes = instruction.split("-/-");
@@ -120,7 +121,11 @@ public class GeneralServer implements Observer {
         }
         else if(instruction.startsWith("GETUSER")) {
         	String[] attributes = instruction.split(" ");
-        	
+        	handleReadUser(Integer.parseInt(attributes[1]), client);        	
+        }
+        else if(instruction.startsWith("UPDATEPWD")) {
+        	String[] attributes = instruction.split(" ");
+        	handleUpdatePwd(attributes[1], attributes[2], client);  
         }
         else if(instruction.startsWith("GETCONVEMAIL")){
             String[] attributes = instruction.split(" ");
@@ -301,6 +306,20 @@ public class GeneralServer implements Observer {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    /**
+     * This method delegates to the dao the research of the department
+     */
+
+    public void handleListDepFromClient(ConnectionToClient client){
+        List<DepartmentType> dep =  dao.getDepartmentDAO().searchAllDepartment();
+        try {
+            client.sendToClient(dep);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
 
     /**
@@ -497,14 +516,6 @@ public class GeneralServer implements Observer {
         try{
             if(res == 1){
                 client.sendToClient("#MESSAGE SENT");
-                Thread[] clients = comm.getClientConnections();
-                for(Thread cli : clients){
-                    if(((ConnectionToClient)cli).getInfo("email").equals(receiverEmail)) {
-                        ((ConnectionToClient) cli).sendToClient("#MSGFORYOU-/-" + client.getInfo("email")+"-/-"+receiverEmail + "-/-" +dateFormat.format(currentDate) + "-/-" + messageContent);
-                        continue;
-                    }
-                }
-                client.sendToClient("#MSGFORYOU-/-"+client.getInfo("email")+"-/-"+receiverEmail  + "-/-" + dateFormat.format(currentDate) + "-/-" + messageContent);
             }else {
                 client.sendToClient("#MESSAGE ERROR");
             }
@@ -545,8 +556,33 @@ public class GeneralServer implements Observer {
         }
     }
     
+    /**
+     * This method get the information from the user ID has. It then sends a message containing these information.
+     * @param idUser: the asking ID.
+     * @param client; the asking client.
+     */
     private void handleReadUser(int idUser, ConnectionToClient client) {
-    	
+    	UserType user = dao.getUserDAO().readDAOUser(idUser);
+    	try {
+            client.sendToClient("#READUSER " + user.getId() + " " + user.getName() + " " + user.getFirstName() + " " + user.getBirthDate() + " " + user.getEmail() + " " + user.getRole());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    
+    private void handleUpdatePwd(String login, String pwd, ConnectionToClient client) {
+    	boolean result = dao.getUserDAO().setNewPwd(login, pwd);
+    	String msg;
+        if (result == true){
+        	msg = "#UPDATEDPWD Success" ;
+        } else{
+        	msg = "#UPDATEDPWD Failure";
+        }
+    	try {
+            client.sendToClient(msg);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 
