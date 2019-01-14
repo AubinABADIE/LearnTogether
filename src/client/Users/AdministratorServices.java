@@ -2,7 +2,7 @@ package client.Users;
 
 import java.util.Date;
 import java.util.List;
-import client.Courses.Course;
+import client.Courses.CourseServices;
 
 /**
  * 
@@ -52,7 +52,7 @@ public class AdministratorServices extends UserServices {
      * @param birthDate 
      * @param courseList
      */
-    public void createTeacher(String name, String firstName, String email, Date birthDate, List<Course> courseList) {
+    public void createTeacher(String name, String firstName, String email, Date birthDate, List<CourseServices> courseList) {
         // TODO implement here
     }
 

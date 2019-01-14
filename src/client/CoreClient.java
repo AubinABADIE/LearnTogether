@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.List;
 
 import Types.DepartmentType;
+import Types.UserType;
 import com.lloseng.ocsf.client.AdaptableClient;
 
 import Types.RoomType;
@@ -12,6 +13,7 @@ import client.Chat.Conversation;
 import client.Groups.Department;
 import client.Room.RoomServices;
 import client.Users.UserServices;
+import client.Courses.CourseServices;
 import common.ClientIF;
 import common.DisplayIF;
 import javafx.scene.image.Image;
@@ -20,6 +22,7 @@ public class CoreClient implements ClientIF {
     //Business logics
     private UserServices user;
     private RoomServices room;
+    private CourseServices course;
     private Department department;
     private Conversation conversations;
 
@@ -59,6 +62,7 @@ public class CoreClient implements ClientIF {
         department = new Department( this);
         room = new RoomServices(this);
         conversations = new Conversation(this);
+        course = new CourseServices(this);
     }
 
     /**
@@ -78,6 +82,12 @@ public class CoreClient implements ClientIF {
             } else if (((String)msg).startsWith("#DELETEDROOM")){
                 room.handleDeletedRoom((String)msg);
             } else if (((String) msg).startsWith("#UPDATEDROOM")){
+                room.handleUpdatedRoom((String) msg);
+            } else if  (((String) msg).startsWith("#CREATEDCOURSE")){
+                room.handleCreatedRoom((String) msg);
+            } else if (((String)msg).startsWith("#DELETEDCOURSE")){
+                room.handleDeletedRoom((String)msg);
+            } else if (((String) msg).startsWith("#UPDATEDCOURSE")){
                 room.handleUpdatedRoom((String) msg);
             } else if  (((String) msg).startsWith("#CREATEDDEPARTMENT")){
                 department.handleCreatedDepartment((String) msg);
@@ -105,7 +115,9 @@ public class CoreClient implements ClientIF {
             }
             else if (((List)msg).get(0) instanceof DepartmentType)
                 display.getDepartment((List<DepartmentType>)msg);
-
+        }
+        else if(msg instanceof UserType){
+            //TODO
         }
     }
 
@@ -163,7 +175,40 @@ public class CoreClient implements ClientIF {
     public void handleUpdateRoom(int id, String name, int capacity, int building, boolean hasProjector, boolean hasComputer, String desc){
         room.handleUpdateRoom(id, name, capacity, building, hasProjector, hasComputer, desc);
     }
+    
+    /**
+     * This method delegates the management of the room creation to the roomservices
+     * @param name : room name
+     * @param description : small description of the course
+	 * @param totalHours : the total hours of the course
+	 * @param idT: the referring teacher of the course
+     */
+    public void handleCreateCourse(String name, String description, int totalHours, int idT) {
+        course.handleCreateCourse(name, description, totalHours, idT);
+    }
 
+    /**
+     * This method delegates the management of the room deletion to the courseservices
+     * @param id : room id
+     */
+    public void handleDeleteCourse(int id){
+        room.handleDeleteRoom(id);
+    }
+
+    /**
+     * This method delegates the management of the room update to the courseservices
+     * @param name : course name
+     * @param description : small description of the course
+	 * @param totalHours : the total hours of the course
+	 * @param idT : the referring teacher of the course
+     */
+    public void handleUpdateCourse(int id, String name, String description, int totalHours, int idT){
+        course.handleUpdateCourse(id, name, description, totalHours, idT);
+    }
+
+    
+    
+    
     public void handleCreateDepartment(String name, int refTeacherID, String descriptionDep){
         department.createDepartment(name, refTeacherID, descriptionDep);
     }
@@ -176,12 +221,22 @@ public class CoreClient implements ClientIF {
         department.deleteDepartment(departmentID);
     }
 
+    
+    
     /**
      * This method delegates getRooms to roomServices
      * @return a room list
      */
     public void getRooms() {
         room.getRooms();
+    }
+    
+    /**
+     * This method delegates getCourses to courseServices
+     * @return a room list
+     */
+    public void getCourses() {
+        course.getCourses();
     }
 
     /**

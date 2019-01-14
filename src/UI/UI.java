@@ -399,7 +399,7 @@ public abstract class UI extends Application implements DisplayIF {
         chatTab.setContent(chatPane);
         return chatTab;
     }
-    
+
     @Override
     public void setConversationMessages(List<MessageType> conversationMessages){
         if(convo != null){
@@ -410,7 +410,6 @@ public abstract class UI extends Application implements DisplayIF {
             }
             convo.setText(sb.toString());
         }
-
     }
 
     @Override

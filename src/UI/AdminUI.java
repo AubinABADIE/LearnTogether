@@ -112,7 +112,7 @@ public class AdminUI extends TeacherUI {
 
         tabRoom= tabRoom();
         
-        tabCourse = createTabCourse();
+        tabCourse = tabCourse();
 
         tabDepartment = tabDepartment();
 
@@ -155,7 +155,7 @@ public class AdminUI extends TeacherUI {
         return tabRoom;
     }
 
-    private GridPane roomRead(Tab tabRoom){
+    protected GridPane roomRead(Tab tabRoom){
 
         /*add list of room*/
         client.getRooms();
@@ -346,6 +346,7 @@ public class AdminUI extends TeacherUI {
 
         returnBox.getChildren().add(btnReturnRoom);
 
+    protected GridPane createTabRoom(Tab tabRoom){
         // labels
         Label nameLabel = new Label("Name of room : ");
         Label capacityLabel = new Label("Capacity : ");
@@ -489,7 +490,7 @@ public class AdminUI extends TeacherUI {
         return gridRoom;
     }
 
-    private GridPane updateTabRoom(Tab tabRoom, String name, int capacity, int building, boolean hasProjector, boolean hasComputer, String description, int id){
+    protected GridPane updateTabRoom(Tab tabRoom, String name, int capacity, int building, boolean hasProjector, boolean hasComputer, String description, int id){
 
         //return button
         Image returnRoom = new Image(getClass().getResourceAsStream("images/icons8-return.png"));
@@ -687,7 +688,7 @@ public class AdminUI extends TeacherUI {
         return tabDepartment;
     }
 
-    private GridPane departmentRead(Tab tabDepartment) {
+    protected GridPane departmentRead(Tab tabDepartment) {
 
         /*add list of Department*/
         client.getDepartment();
@@ -1043,7 +1044,7 @@ public class AdminUI extends TeacherUI {
         return gridDepV;
     }
 
-    private GridPane createTabDepartment(Tab tabDepartment) {
+    protected GridPane createTabDepartment(Tab tabDepartment) {
         // labels
         Label nameLabel = new Label("Name of departement : ");
         Label teacherLabel = new Label("Referent teacher : ");

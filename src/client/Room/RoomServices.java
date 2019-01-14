@@ -12,11 +12,11 @@ public class RoomServices {
     }
 
     /**
-     *  This method creates String with all room attributes and send it to the server to creat the room
+     *  This method creates String with all room attributes and send it to the server to create the room
      * @param name : room name
      * @param capacity : room capacity
      * @param building : room building number
-     * @param hasProjector : if there is a projeector in the room
+     * @param hasProjector : if there is a projector in the room
      * @param hasComputer : if there are computers in the room
      * @param description : small description of the room
      */
