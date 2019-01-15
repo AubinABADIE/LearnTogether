@@ -507,12 +507,12 @@ public class AdminUI extends TeacherUI {
         returnBox.getChildren().add(btnReturnRoom);
 
         // labels
-        Label nameLabel = new Label("Name of room : ");
-        Label capacityLabel = new Label("Capacity : ");
-        Label buildingLabel = new Label("Building : ");
-        Label projLabel = new Label("There is a projector : ");
-        Label compLabel = new Label("There are computers : ");
-        Label descLabel = new Label("Room description : ");
+        Label nameLabel = new Label("Name of room: ");
+        Label capacityLabel = new Label("Capacity: ");
+        Label buildingLabel = new Label("Building: ");
+        Label projLabel = new Label("There is a projector: ");
+        Label compLabel = new Label("There are computers: ");
+        Label descLabel = new Label("Room description: ");
 
         // Add text Field
         TextField nameField = new TextField();
