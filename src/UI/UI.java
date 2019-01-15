@@ -1,7 +1,10 @@
 package UI;
 
+import java.io.File;
+import java.util.Arrays;
 import java.util.List;
 
+import Types.CourseType;
 import Types.MessageType;
 import Types.UserType;
 import client.CoreClient;
@@ -30,6 +33,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.stage.Window;
@@ -47,6 +51,8 @@ public abstract class UI extends Application implements DisplayIF {
     ObservableList<String> receiversEmail;
     BooleanProperty hasClient = new SimpleBooleanProperty(false);
     TextArea convo;
+    private ObservableList<CourseType> courseNames;
+
 
     //Business logic
     CoreClient client;
@@ -105,7 +111,15 @@ public abstract class UI extends Application implements DisplayIF {
 		this.hasClient.setValue(hasClient);
 	}
 
-	/**
+    public ObservableList<CourseType> getCourseNames() {
+        return courseNames;
+    }
+
+    public void setCourseNames(List<CourseType> courseNames) {
+        this.courseNames.setAll(courseNames);
+    }
+
+    /**
 	 * Create the window with the two scene and set the first scene as main.
 	 * 
 	 * @param primaryStage Frame window.
@@ -462,6 +476,108 @@ public abstract class UI extends Application implements DisplayIF {
 
         chatTab.setContent(chatPane);
         return chatTab;
+    }
+
+    /**
+     * Create the record tab
+     * @return Tab which is the record tab
+     */
+    protected Tab createRecordTab (){
+
+        Tab tabRecords = new Tab();
+        tabRecords.setText("Record");
+        tabRecords.setClosable(false);
+
+        tabRecords.setContent(addRecord(tabRecords));
+
+        return tabRecords;
+
+    }
+
+    private GridPane addRecord(Tab tabRecords){
+
+        Text titleRecord = new Text("Add a Record :");
+
+        Label courseLab = new Label("Course : ");
+        Label dateLab = new Label("Exam date : ");
+
+        Image imageUp = new Image(getClass().getResourceAsStream("images/icons8-upload.png"), 15,15,true, false);
+        Label labelUp = new Label("Upload");
+        labelUp.setGraphic(new ImageView(imageUp));
+
+        client.getCourses();
+        ListView<CourseType> listC = new ListView<>();
+        courseNames = FXCollections.observableArrayList();
+        courseNames.addListener((ListChangeListener<CourseType>) c -> listC.setItems(courseNames));
+
+        //list of courses
+        ComboBox courseComboBox = new ComboBox();
+        courseComboBox.setItems(courseNames);
+        courseComboBox.getSelectionModel().select(1);
+
+        //date selector
+        DatePicker examDate = new DatePicker();
+
+        //upload file
+        Button uploadButton = new Button("Select Records");
+
+        final FileChooser fileChooser = new FileChooser();
+
+        HBox hboxCourses = new HBox();
+        HBox hboxDate = new HBox();
+        HBox hboxUpload= new HBox();
+        HBox hboxButtons = new HBox();
+        hboxCourses.setAlignment(Pos.CENTER);
+        hboxDate.setAlignment(Pos.CENTER);
+        hboxUpload.setAlignment(Pos.CENTER);
+        hboxButtons.setAlignment(Pos.CENTER);
+
+        //event to choose file and seethe result
+        uploadButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                File file = fileChooser.showOpenDialog(primaryStage);
+                if (file != null) {
+                   Text textOk = new Text(" Charged file");
+                   hboxUpload.getChildren().add(textOk);
+                } else {
+                    Text textNull = new Text(" File null");
+                    hboxUpload.getChildren().add(textNull);
+                }
+            }
+        });
+
+        // buttons
+        Button createB = new Button("Add");
+        Button cancelB = new Button("Cancel");
+
+        //add in hbox
+        hboxCourses.getChildren().addAll(courseLab, courseComboBox);
+        hboxDate.getChildren().addAll(dateLab,examDate);
+        hboxUpload.getChildren().addAll(labelUp, uploadButton);
+        hboxButtons.getChildren().addAll(createB, cancelB);
+
+        hboxCourses.setSpacing(10);
+        hboxDate.setSpacing(10);
+        hboxUpload.setSpacing(10);
+        hboxButtons.setSpacing(10);
+        hboxCourses.setPadding( new Insets(10, 0, 0, 175));
+        hboxDate.setPadding( new Insets(10, 0, 0, 175));
+        hboxUpload.setPadding( new Insets(10, 0, 0, 175));
+        hboxButtons.setPadding( new Insets(10, 0, 0, 175));
+
+        GridPane gridAddRec = new GridPane();
+        gridAddRec.setHgap(10);
+        gridAddRec.setVgap(10);
+        gridAddRec.setPadding(new Insets(10,10,10,10));
+
+        gridAddRec.add(titleRecord, 1, 0);
+        gridAddRec.add(hboxCourses, 1, 1);
+        gridAddRec.add(hboxDate, 1, 2);
+        gridAddRec.add(hboxUpload, 1, 3);
+        gridAddRec.add(hboxButtons, 1, 4);
+
+        return gridAddRec;
     }
 
     @Override

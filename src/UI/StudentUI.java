@@ -29,6 +29,7 @@ import java.util.List;
  */
 public class StudentUI extends UI  {
     private Scene principalStudentScene;
+    private Tab recordTab;
 
     public StudentUI(Stage primaryStage, String login, int id, CoreClient client){
         this.primaryStage = primaryStage;
@@ -70,9 +71,8 @@ public class StudentUI extends UI  {
         tabSchedule.setText("Schedule");
         tabSchedule.setClosable(false);
 
-        Tab tabRecords = new Tab();
-        tabRecords.setText("Record");
-        tabRecords.setClosable(false);
+        Tab tabRecords = createRecordTab();
+
 
         Tab tabDiary = new Tab();
         tabDiary.setText("Diary");
