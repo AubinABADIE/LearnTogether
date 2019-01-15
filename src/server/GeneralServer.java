@@ -24,6 +24,8 @@ public class GeneralServer implements Observer {
     private AbstractDAOFactory dao;
 
 
+
+
     /**
      * The useful constructor
      * @param port: the server address
@@ -145,8 +147,8 @@ public class GeneralServer implements Observer {
 
     /**
      * This method is used to send a client a response of a #LOGIN demand.
-     * @param isConnected : true if the connection succeeded, false otherwise
-     * @param id          : the user ID. value -1 if not connected.
+     * @param isConnected true if the connection succeeded, false otherwise
+     * @param id  the user ID. value -1 if not connected.
      * @param role        : the user role. Value null if not connected.
      * @param client : the original client.
      */
