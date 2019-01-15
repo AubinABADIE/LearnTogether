@@ -39,3 +39,5 @@ out/production/LearnTogether/META-INF/
 
 out/
 /bin/
+
+*.iml
