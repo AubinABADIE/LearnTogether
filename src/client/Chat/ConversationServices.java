@@ -1,25 +1,21 @@
 package client.Chat;
 
-import Types.MessageType;
 import client.CoreClient;
 
 import java.io.IOException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 
 
 /**
  * 
  */
-public class Conversation {
+public class ConversationServices {
 
     private CoreClient client;
     /**
      * Default constructor
      */
-    public Conversation(CoreClient client) {
+    public ConversationServices(CoreClient client) {
         this.client=client;
     }
 
@@ -60,7 +56,7 @@ public class Conversation {
      * @param conv 
      * @param members
      */
-    public void addMembers(Conversation conv, List<Integer> members) {
+    public void addMembers(ConversationServices conv, List<Integer> members) {
         // TODO implement here
     }
 

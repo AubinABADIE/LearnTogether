@@ -2,25 +2,16 @@ package client.ToDoList;
 
 import java.util.List;
 
-import client.ToDoList.Task;
-import common.DisplayIF;
-
 /**
  * 
  */
-public class ToDoList {
+public class ToDoListServices {
 
     /**
      * Default constructor
      */
-    public ToDoList() {
+    public ToDoListServices() {
     }
-
-    /**
-     * 
-     */
-    private List<Task> taskList;
-
 
 
 
@@ -33,25 +24,25 @@ public class ToDoList {
     }
 
     /**
-     * @param task
+     * @param taskID
      */
-    public void deleteTask(Task task) {
+    public void deleteTask(int taskID) {
         // TODO implement here
     }
 
     /**
-     * @param task 
+     * @param taskID
      * @param name 
      * @param description
      */
-    public void updateTask(Task task, String name, String description) {
+    public void updateTask(int taskID, String name, String description) {
         // TODO implement here
     }
 
     /**
      * @param task
      */
-    public void markDone(Task task) {
+    public void markDone(int taskID) {
         // TODO implement here
     }
 

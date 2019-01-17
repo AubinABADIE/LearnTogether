@@ -2,15 +2,12 @@ package UI;
 
 import Types.*;
 import client.CoreClient;
-import client.Groups.Department;
-import client.Groups.Promotion;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
@@ -693,7 +690,7 @@ public class AdminUI extends TeacherUI {
 
     protected GridPane departmentRead(Tab tabDepartment) {
 
-        /*add list of Department*/
+        /*add list of DepartmentServices*/
         client.getDepartment();
         ListView<DepartmentType> list = new ListView<>();
         depNames = FXCollections.observableArrayList();
@@ -728,7 +725,7 @@ public class AdminUI extends TeacherUI {
         // add in hbox buttons and title
         HBox hboxButtonDep = new HBox();
 
-        Text title = new Text("Department : ");
+        Text title = new Text("DepartmentServices : ");
         hboxButtonDep.getChildren().addAll(title,btnAddDep,btnDeleteDep,btnUpdateDep);
         hboxButtonDep.setSpacing(5);
 
@@ -743,7 +740,7 @@ public class AdminUI extends TeacherUI {
 
         //title of column
         HBox hboxDepInfo = new HBox();
-        Text titleInfo = new Text("Department information : ");
+        Text titleInfo = new Text("DepartmentServices information : ");
         titleInfo.setFont(Font.font(20));
         hboxDepInfo.getChildren().add(titleInfo);
         hboxDepInfo.setAlignment(Pos.CENTER);
@@ -754,7 +751,7 @@ public class AdminUI extends TeacherUI {
         HBox hboxdescDepInfo = new HBox();
         Label nameLabel = new Label("Name of Departement : ");
         Label teacherLabel = new Label( "Referent teacher: ");
-        Label descriptionLabel = new Label("Department description : ");
+        Label descriptionLabel = new Label("DepartmentServices description : ");
         Text name = new Text(" ");
         Text teacher = new Text(" ");
         Text description = new Text(" ");
@@ -774,7 +771,7 @@ public class AdminUI extends TeacherUI {
         //
 
         //PROMOTION
-        /*add list of Promotion*/
+        /*add list of PromotionServices*/
         client.getPromo();
         ListView<PromotionType> listPromo = new ListView<>();
         promoNames = FXCollections.observableArrayList();
@@ -805,7 +802,7 @@ public class AdminUI extends TeacherUI {
 
         // add in hbox buttons and title
         HBox hboxButtonPromo = new HBox();
-        Text titlePromo = new Text("Promotion : ");
+        Text titlePromo = new Text("PromotionServices : ");
         hboxButtonPromo.getChildren().addAll(titlePromo,btnAddPromo,btnDeletePromo);
         hboxButtonPromo.setSpacing(5);
 
@@ -822,7 +819,7 @@ public class AdminUI extends TeacherUI {
 
         //title of column
         HBox hboxPromoInfo = new HBox();
-        Text titleInfoPromo = new Text("Promotion information : ");
+        Text titleInfoPromo = new Text("PromotionServices information : ");
         titleInfoPromo.setFont(Font.font(20));
         hboxPromoInfo.getChildren().add(titleInfoPromo);
         hboxPromoInfo.setAlignment(Pos.CENTER);
@@ -832,10 +829,10 @@ public class AdminUI extends TeacherUI {
         HBox hboxnamePromoInfo = new HBox();
         HBox hboxgraduationPromoInfo = new HBox();
         HBox hboxdescPromoInfo = new HBox();
-        Label depLabelPromo = new Label("Referent Department : ");
-        Label nameLabelPromo = new Label("Name of Promotion : ");
+        Label depLabelPromo = new Label("Referent DepartmentServices : ");
+        Label nameLabelPromo = new Label("Name of PromotionServices : ");
         Label graduationLabelPromo = new Label( "Graduation: ");
-        Label descriptionLabelPromo = new Label("Promotion description : ");
+        Label descriptionLabelPromo = new Label("PromotionServices description : ");
         Text depPromo = new Text(" ");
         Text namePromo = new Text(" ");
         Text graduationPromo = new Text(" ");
@@ -866,7 +863,7 @@ public class AdminUI extends TeacherUI {
         addClassView.setFitWidth(15);
 
         //create button add
-        Button btnAddClass= new Button("Add-Class");
+        Button btnAddClass= new Button("Add-ClassServices");
         btnAddClass.setGraphic(addClassView);//setting icon to button
 
         //delete button
@@ -876,7 +873,7 @@ public class AdminUI extends TeacherUI {
         deleteClassView.setFitWidth(12);
 
         //create button delete
-        Button btnDeleteClass = new Button("Delete-Class");
+        Button btnDeleteClass = new Button("Delete-ClassServices");
         btnDeleteClass.setGraphic(deleteClassView);//setting icon to button
 
 
@@ -892,7 +889,7 @@ public class AdminUI extends TeacherUI {
 
         // add in hbox buttons and title
         HBox hboxButtonClass = new HBox();
-        Text titleClass = new Text("Class : ");
+        Text titleClass = new Text("ClassServices : ");
         hboxButtonClass.getChildren().addAll(titleClass,btnAddClass,btnDeleteClass);
         hboxButtonClass.setSpacing(5);
 
@@ -902,7 +899,7 @@ public class AdminUI extends TeacherUI {
 
         //title of column
         HBox hboxClassInfo = new HBox();
-        Text titleInfoClass = new Text("Class information : ");
+        Text titleInfoClass = new Text("ClassServices information : ");
         titleInfoClass.setFont(Font.font(20));
         hboxClassInfo.getChildren().add(titleInfoClass);
         hboxClassInfo.setAlignment(Pos.CENTER);
@@ -912,9 +909,9 @@ public class AdminUI extends TeacherUI {
         HBox hboxnameClassInfo = new HBox();
         HBox hboxgraduationClassInfo = new HBox();
         HBox hboxdescClassInfo = new HBox();
-        Label depLabelClass = new Label("Referent Promotion : ");
-        Label nameLabelClass = new Label("Name of Class : ");
-        Label descriptionLabelClass = new Label("Class description : ");
+        Label depLabelClass = new Label("Referent PromotionServices : ");
+        Label nameLabelClass = new Label("Name of ClassServices : ");
+        Label descriptionLabelClass = new Label("ClassServices description : ");
         Text DepClass = new Text(" ");
         Text nameClass = new Text(" ");
         Text graduationClass = new Text(" ");
@@ -1036,7 +1033,7 @@ public class AdminUI extends TeacherUI {
 
         });
 
-        //Class
+        //ClassServices
         btnAddClass.setOnAction(event -> {
             createTabDepartment(tabDepartment);
         });
@@ -1274,7 +1271,7 @@ public class AdminUI extends TeacherUI {
 
         // labels
         Label nameLabel = new Label("Name of promotion : ");
-        Label depLabel = new Label("Referent Department : ");
+        Label depLabel = new Label("Referent DepartmentServices : ");
         Label gradLabel = new Label("Promo's graduation : ");
         Label descLabel = new Label("Description : ");
 
@@ -1384,7 +1381,7 @@ public class AdminUI extends TeacherUI {
 
     protected GridPane showTabPromotion(Tab tabDepartment) {
 
-        /*add list of Promotion*/
+        /*add list of PromotionServices*/
         client.getPromo();
         ListView<PromotionType> listPromo = new ListView<>();
         promoNames = FXCollections.observableArrayList();
@@ -1419,7 +1416,7 @@ public class AdminUI extends TeacherUI {
 
         // add in hbox buttons and title
         HBox hboxButtonPromo = new HBox();
-        Text titlePromo = new Text("Promotion : ");
+        Text titlePromo = new Text("PromotionServices : ");
         hboxButtonPromo.getChildren().addAll(titlePromo, btnAddPromo, btnDeletePromo);
         hboxButtonPromo.setSpacing(5);
 
@@ -1436,7 +1433,7 @@ public class AdminUI extends TeacherUI {
 
         //title of column
         HBox hboxPromoInfo = new HBox();
-        Text titleInfoPromo = new Text("Promotion information : ");
+        Text titleInfoPromo = new Text("PromotionServices information : ");
         titleInfoPromo.setFont(Font.font(20));
         hboxPromoInfo.getChildren().add(titleInfoPromo);
         hboxPromoInfo.setAlignment(Pos.CENTER);
@@ -1446,10 +1443,10 @@ public class AdminUI extends TeacherUI {
         HBox hboxnamePromoInfo = new HBox();
         HBox hboxgraduationPromoInfo = new HBox();
         HBox hboxdescPromoInfo = new HBox();
-        Label depLabelPromo = new Label("Referent Department : ");
-        Label nameLabelPromo = new Label("Name of Promotion : ");
+        Label depLabelPromo = new Label("Referent DepartmentServices : ");
+        Label nameLabelPromo = new Label("Name of PromotionServices : ");
         Label graduationLabelPromo = new Label("Graduation: ");
-        Label descriptionLabelPromo = new Label("Promotion description : ");
+        Label descriptionLabelPromo = new Label("PromotionServices description : ");
         Text depPromo = new Text(" ");
         Text namePromo = new Text(" ");
         Text graduationPromo = new Text(" ");

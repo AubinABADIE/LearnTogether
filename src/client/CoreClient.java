@@ -1,35 +1,40 @@
 package client;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
 import Types.DepartmentType;
 import Types.UserType;
 import Types.*;
-import client.Groups.Class;
-import client.Groups.Promotion;
+import client.Groups.ClassServices;
+import client.Groups.DepartmentServices;
+import client.Groups.PromotionServices;
+import client.Records.RecordServices;
 import client.Users.TeacherServices;
 import com.lloseng.ocsf.client.AdaptableClient;
 
-import client.Chat.Conversation;
-import client.Groups.Department;
+import client.Chat.ConversationServices;
 import client.Room.RoomServices;
 import client.Users.UserServices;
 import client.Courses.CourseServices;
 import common.ClientIF;
 import common.DisplayIF;
-import javafx.scene.image.Image;
 
+/**
+ * Core business logic for the client side. Its main role is to dispatch commands received from the UI, and to communicate with the server.
+ */
 public class CoreClient implements ClientIF {
     //Business logics
     private UserServices user;
     private RoomServices room;
     private CourseServices course;
-    private Department department;
-    private Conversation conversations;
+    private DepartmentServices department;
+    private ConversationServices conversations;
     private TeacherServices teacher;
-    private Promotion promo;
-    private Class classes;
+    private PromotionServices promo;
+    private ClassServices classes;
+    private RecordServices records;
 
     //UI and Connections
     private AdaptableClient connection;
@@ -64,13 +69,14 @@ public class CoreClient implements ClientIF {
         this.display = display;
         connection.openConnection();
         user = new UserServices(this);
-        department = new Department( this);
+        department = new DepartmentServices( this);
         room = new RoomServices(this);
-        conversations = new Conversation(this);
+        conversations = new ConversationServices(this);
         course = new CourseServices(this);
         teacher = new TeacherServices(this);
-        promo = new Promotion(this);
-        classes = new Class(this);
+        promo = new PromotionServices(this);
+        classes = new ClassServices(this);
+        records = new RecordServices(this);
     }
 
     /**
@@ -285,7 +291,7 @@ public class CoreClient implements ClientIF {
     }
 
     /**
-     * This method delegates getDepartment to Department class
+     * This method delegates getDepartment to DepartmentServices class
      * @return a department list
      */
     public void getDepartment() {
@@ -365,7 +371,7 @@ public class CoreClient implements ClientIF {
     
 
     /**
-     * This method delegates getPromotion to Promotion class
+     * This method delegates getPromotion to PromotionServices class
      * @return a promotion list
      */
     public void getPromo() {
@@ -377,11 +383,19 @@ public class CoreClient implements ClientIF {
     }
 
     /**
-     * This method delegates getClasses to Class class
+     * This method delegates getClasses to ClassServices class
      * @return a class list
      */
     public void getClasses() {
         classes.getClasses();
+    }
+
+    /***************
+     * Records
+     ***************/
+    public void createRecord(int courseID, int examYear, File record, int donatingUser){
+        records.createRecord(courseID, examYear, record, donatingUser);
+
     }
     
 }
