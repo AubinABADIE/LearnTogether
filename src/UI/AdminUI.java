@@ -24,7 +24,13 @@ import java.util.List;
 //AdmStaff
 
 /**
- * 
+ * This UI is for when an Admin connects to this application.
+ *
+ * @author Aubin ABADIE
+ * @author Marie SALELLES
+ * @author Audrey SAMSON
+ * @author Yvan SANSON
+ * @author Solene SERAFIN
  */
 public class AdminUI extends TeacherUI {
 

@@ -38,6 +38,15 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.stage.Window;
 
+/**
+ * Core UI from which inherits all the other.
+ * It contains the all the shared information and common methods.
+ * @author Aubin ABADIE
+ * @author Marie SALELLES
+ * @author Audrey SAMSON
+ * @author Yvan SANSON
+ * @author Solene SERAFIN
+ */
 public abstract class UI extends Application implements DisplayIF {
 
     //Scenes and other UI elements

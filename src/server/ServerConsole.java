@@ -6,6 +6,16 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
+/**
+ * This class is used to provide a UI to the server, as well as a way to enter potential commands.
+ * This is the entry point for the server side.
+ *
+ * @author Aubin ABADIE
+ * @author Marie SALELLES
+ * @author Audrey SAMSON
+ * @author Yvan SANSON
+ * @author Solene SERAFIN
+ */
 public class ServerConsole implements ChatIF {
 
     private static final int DEFAULT_PORT = 5555;

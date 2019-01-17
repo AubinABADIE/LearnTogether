@@ -23,6 +23,11 @@ import common.DisplayIF;
 
 /**
  * Core business logic for the client side. Its main role is to dispatch commands received from the UI, and to communicate with the server.
+ * @author Aubin ABADIE
+ * @author Marie SALELLES
+ * @author Audrey SAMSON
+ * @author Yvan SANSON
+ * @author Solene SERAFIN
  */
 public class CoreClient implements ClientIF {
     //Business logics

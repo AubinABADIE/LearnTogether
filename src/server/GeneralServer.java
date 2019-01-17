@@ -12,7 +12,12 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 
 /**
- * 
+ * Main Business logic for the server side. It contains everything that the server needs to run properly.
+ * @author Aubin ABADIE
+ * @author Marie SALELLES
+ * @author Audrey SAMSON
+ * @author Yvan SANSON
+ * @author Solene SERAFIN
  */
 public class GeneralServer implements Observer {
 

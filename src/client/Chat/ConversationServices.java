@@ -7,7 +7,12 @@ import java.util.List;
 
 
 /**
- * 
+ * This is the business logic related to the conversations on the client side.
+ * @author Aubin ABADIE
+ * @author Marie SALELLES
+ * @author Audrey SAMSON
+ * @author Yvan SANSON
+ * @author Solene SERAFIN
  */
 public class ConversationServices {
 
