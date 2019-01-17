@@ -140,11 +140,14 @@ public class CoreClient implements ClientIF {
                 display.getPromo((List<PromotionType>) msg);
             }else if (((List) msg).get(0) instanceof ClassType) {
                 display.getClasses((List<ClassType>) msg);
+            } else if (((List)msg).get(0) instanceof DepartmentType){
+                display.getDepartment((List<DepartmentType>)msg);
+            } else if (((List)msg).get(0) instanceof TeacherType) {
+            	display.getTeacher((List<TeacherType>)msg);
             }
-            else if (((List)msg).get(0) instanceof DepartmentType){
-                display.getDepartment((List<DepartmentType>)msg);}
-            else if (((List)msg).get(0) instanceof TeacherType)
-                display.getTeacher((List<TeacherType>)msg);
+        }
+        else if (msg instanceof UserType) {
+        	display.setUser((UserType) msg);
         }
     }
 
