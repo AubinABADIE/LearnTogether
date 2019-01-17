@@ -497,6 +497,7 @@ public abstract class UI extends Application implements DisplayIF {
     private GridPane addRecord(Tab tabRecords){
 
         Text titleRecord = new Text("Add a Record :");
+        titleRecord.setFont(Font.font(20));
 
         Label courseLab = new Label("Course : ");
         Label dateLab = new Label("Exam date : ");
@@ -522,6 +523,7 @@ public abstract class UI extends Application implements DisplayIF {
         Button uploadButton = new Button("Select Records");
 
         final FileChooser fileChooser = new FileChooser();
+        fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("PDF Files", "*.pdf"));
 
         HBox hboxCourses = new HBox();
         HBox hboxDate = new HBox();

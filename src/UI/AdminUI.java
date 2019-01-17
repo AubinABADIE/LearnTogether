@@ -106,7 +106,7 @@ public class AdminUI extends TeacherUI {
         tabSchedule.setText("Schedule");
         tabSchedule.setClosable(false);
 
-        tabRecords = new Tab();
+        tabRecords = createRecordTab();
         tabRecords.setText("Record");
         tabRecords.setClosable(false);
 

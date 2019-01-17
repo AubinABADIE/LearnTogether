@@ -89,7 +89,7 @@ public class TeacherUI extends UI {
         tabSchedule.setText("Schedule");
         tabSchedule.setClosable(false);
 
-        Tab tabRecords = new Tab();
+        tabRecords = createRecordTab();
         tabRecords.setText("Record");
         tabRecords.setClosable(false);
 
