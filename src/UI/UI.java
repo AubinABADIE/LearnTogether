@@ -1,9 +1,10 @@
 package UI;
 
 import java.io.File;
-import java.util.Arrays;
-import java.util.Calendar;
+import java.sql.Date;
+import java.time.ZoneId;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicReference;
 
 import Types.CourseType;
 import Types.MessageType;
@@ -19,8 +20,6 @@ import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
@@ -39,6 +38,15 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.stage.Window;
 
+/**
+ * Core UI from which inherits all the other.
+ * It contains the all the shared information and common methods.
+ * @author Aubin ABADIE
+ * @author Marie SALELLES
+ * @author Audrey SAMSON
+ * @author Yvan SANSON
+ * @author Solene SERAFIN
+ */
 public abstract class UI extends Application implements DisplayIF {
 
     //Scenes and other UI elements
@@ -63,6 +71,7 @@ public abstract class UI extends Application implements DisplayIF {
     protected String password;
     protected int userID;
     protected UserType user;
+    protected File recordFile;
 
     public String getConnectionStatus() {
         return connectionStatus.get();
@@ -118,6 +127,14 @@ public abstract class UI extends Application implements DisplayIF {
 
     public void setCourseNames(List<CourseType> courseNames) {
         this.courseNames.setAll(courseNames);
+    }
+
+    public File getRecordFile() {
+        return recordFile;
+    }
+
+    public void setRecordFile(File recordFile) {
+        this.recordFile = recordFile;
     }
 
     /**
@@ -536,17 +553,19 @@ public abstract class UI extends Application implements DisplayIF {
         hboxButtons.setAlignment(Pos.CENTER);
 
        final Text textFile = new Text("");
+       
 
-
+        //AtomicReference<File> record = null;
 
         //event to choose file and seethe result
         uploadButton.setOnAction(event -> {
-            File file = fileChooser.showOpenDialog(primaryStage);
+            File record = fileChooser.showOpenDialog(primaryStage);
             
-            if (file != null) {
+            if (record != null) {
                 textFile.setText(" Charged file");
+                setRecordFile(record);
             } else {
-                textFile.setText(" You haven't a file charged ");
+                textFile.setText(" You don't have a file charged currently");
             }
             hboxUpload.getChildren().add(textFile);
         });
@@ -590,12 +609,15 @@ public abstract class UI extends Application implements DisplayIF {
                 showAlert(Alert.AlertType.ERROR, gridAddRec.getScene().getWindow(), "Form Error!", "Please enter an exam date");
                 return;
             }
-            if (textFile.getText() != "File charged") {
+            if (!textFile.getText().equals("File charged")) {
                 showAlert(Alert.AlertType.ERROR, gridAddRec.getScene().getWindow(), "Form Error!", "Please upload a pdf file");
                 return;
             }
-
-            //client.handleCreateRoom(courseComboBox.getValue(), examDate.getValue(),);
+            if(recordFile != null){
+                showAlert(Alert.AlertType.ERROR, gridAddRec.getScene().getWindow(), "Form Error!", "Please upload a pdf file");
+                return;
+            }
+            client.createRecord(((CourseType)courseComboBox.getValue()).getId(), examDate.getValue().getYear(), recordFile, userID);
             courseComboBox.setValue(null);
 
         });
@@ -606,6 +628,7 @@ public abstract class UI extends Application implements DisplayIF {
 
         return gridAddRec;
     }
+
 
     @Override
     public void setConversationMessages(List<MessageType> conversationMessages){

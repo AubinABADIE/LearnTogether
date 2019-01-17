@@ -1,7 +1,5 @@
 package server.DAO;
 
-import client.Chat.Conversation;
-
 import java.sql.Connection;
 
 /**

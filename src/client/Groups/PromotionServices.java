@@ -6,55 +6,18 @@ import java.io.IOException;
 /**
  * 
  */
-public class Promotion {
+public class PromotionServices {
 
     private CoreClient coreClient;
-    private String promotionName;
-    private String descriptionPromo;
-    private int graduationYear;
-    private int idDepartment;
 
     /**
      * Default constructor
      */
-    public Promotion() {
+    public PromotionServices() {
     }
 
-    public Promotion(CoreClient coreClient) {
+    public PromotionServices(CoreClient coreClient) {
         this.coreClient = coreClient;
-    }
-
-
-    public String getPromotionName() {
-        return promotionName;
-    }
-
-    public void setPromotionName(String promotionName) {
-        this.promotionName = promotionName;
-    }
-
-    public String getDescriptionPromo() {
-        return descriptionPromo;
-    }
-
-    public void setDescriptionPromo(String descriptionPromo) {
-        this.descriptionPromo = descriptionPromo;
-    }
-
-    public int getGraduationYear() {
-        return graduationYear;
-    }
-
-    public void setGraduationYear(int graduationYear) {
-        this.graduationYear = graduationYear;
-    }
-
-    public int getIdDepartment() {
-        return idDepartment;
-    }
-
-    public void setIdDepartment(int idDepartment) {
-        this.idDepartment = idDepartment;
     }
 
 
@@ -67,11 +30,6 @@ public class Promotion {
      * @param
      */
     public void createPromotion(String promotionName, String descriptionPromo, int graduationYear, int idDepartment) {
-       this.promotionName=promotionName;
-       this.descriptionPromo=descriptionPromo;
-       this.graduationYear=graduationYear;
-       this.idDepartment=idDepartment;
-
         try {
             coreClient.getConnection().sendToServer("#CREATEPROMOTION-/-" + promotionName + "-/-" + descriptionPromo + "-/-" + graduationYear + "-/-" + idDepartment);
         } catch (IOException e) {
@@ -82,10 +40,6 @@ public class Promotion {
     /**
      */
     public void updatePromotion(int id, String promotionName, String descriptionPromo, int graduationYear, int idDepartment) {
-        setPromotionName(promotionName);
-        setDescriptionPromo(descriptionPromo);
-        setGraduationYear(graduationYear);
-        setIdDepartment(idDepartment);
         try {
             coreClient.getConnection().sendToServer("#UPDATEPROMOTION-/-" + id + "-/" + promotionName + "-/-" + descriptionPromo + "-/-" + graduationYear + "-/-" + idDepartment);
         } catch (IOException e) {
@@ -94,9 +48,9 @@ public class Promotion {
     }
 
     /**
-     * @param promo
+     * @param promoID
      */
-    public void deletePromotion(Promotion promo) {
+    public void deletePromotion(int promoID) {
         // TODO implement here
     }
 

@@ -23,7 +23,7 @@ public class Grade{
      * @param coeff 
      * @param teacherID
      */
-    public void createGrade(String description, List<Float> grades, List<Integer> studentsID, CourseServices course, float coeff, int teacherID) {
+    public void createGrade(String description, List<Float> grades, List<Integer> studentsID, int course, float coeff, int teacherID) {
         // TODO implement here
     }
 
@@ -35,15 +35,15 @@ public class Grade{
      * @param coeff 
      * @param teacherID
      */
-    public void updateGrade(String description, List<Float> grades, List<Integer> studentsID, CourseServices course, float coeff, int teacherID) {
+    public void updateGrade(String description, List<Float> grades, List<Integer> studentsID, int course, float coeff, int teacherID) {
         // TODO implement here
     }
 
     /**
-     * @param grade 
+     * @param gradeID
      * @param teacherID
      */
-    public void deleteGrade(Grade grade, int teacherID) {
+    public void deleteGrade(int gradeID, int teacherID) {
         // TODO implement here
     }
 

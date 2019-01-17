@@ -1,35 +1,45 @@
 package client;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
 import Types.DepartmentType;
 import Types.UserType;
 import Types.*;
-import client.Groups.Class;
-import client.Groups.Promotion;
+import client.Groups.ClassServices;
+import client.Groups.DepartmentServices;
+import client.Groups.PromotionServices;
+import client.Records.RecordServices;
 import client.Users.TeacherServices;
 import com.lloseng.ocsf.client.AdaptableClient;
 
-import client.Chat.Conversation;
-import client.Groups.Department;
+import client.Chat.ConversationServices;
 import client.Room.RoomServices;
 import client.Users.UserServices;
 import client.Courses.CourseServices;
 import common.ClientIF;
 import common.DisplayIF;
-import javafx.scene.image.Image;
 
+/**
+ * Core business logic for the client side. Its main role is to dispatch commands received from the UI, and to communicate with the server.
+ * @author Aubin ABADIE
+ * @author Marie SALELLES
+ * @author Audrey SAMSON
+ * @author Yvan SANSON
+ * @author Solene SERAFIN
+ */
 public class CoreClient implements ClientIF {
     //Business logics
     private UserServices user;
     private RoomServices room;
     private CourseServices course;
-    private Department department;
-    private Conversation conversations;
+    private DepartmentServices department;
+    private ConversationServices conversations;
     private TeacherServices teacher;
-    private Promotion promo;
-    private Class classes;
+    private PromotionServices promo;
+    private ClassServices classes;
+    private RecordServices records;
 
     //UI and Connections
     private AdaptableClient connection;
@@ -64,13 +74,14 @@ public class CoreClient implements ClientIF {
         this.display = display;
         connection.openConnection();
         user = new UserServices(this);
-        department = new Department( this);
+        department = new DepartmentServices( this);
         room = new RoomServices(this);
-        conversations = new Conversation(this);
+        conversations = new ConversationServices(this);
         course = new CourseServices(this);
         teacher = new TeacherServices(this);
-        promo = new Promotion(this);
-        classes = new Class(this);
+        promo = new PromotionServices(this);
+        classes = new ClassServices(this);
+        records = new RecordServices(this);
     }
 
     /**
@@ -106,17 +117,26 @@ public class CoreClient implements ClientIF {
             else if  (((String) msg).startsWith("#DELETEDDEPARTMENT")){
                 department.handleDeletedDepartment((String) msg);
             }
-         else if  (((String) msg).startsWith("#CREATEDPROMO")){
-            promo.handleCreatedPromo((String) msg);
-        }
-        else if  (((String) msg).startsWith("#UPDATEDPROMO")){
-            //promo.handleUpdatedPromo((String) msg);
-        }
-        else if  (((String) msg).startsWith("#DELETEDPROMO")){
-            //promo.handleDeletedPromo((String) msg);
-        }
+            else if  (((String) msg).startsWith("#CREATEDPROMO")){
+            	promo.handleCreatedPromo((String) msg);
+            }
+            else if  (((String) msg).startsWith("#UPDATEDPROMO")){
+            	//promo.handleUpdatedPromo((String) msg);
+            }
+            else if  (((String) msg).startsWith("#DELETEDPROMO")){
+            	//promo.handleDeletedPromo((String) msg);
+            }
+            else if(((String) msg).startsWith("#CREATEDUSER")) {
+            	user.handleCreatedUser((String)msg);
+            }
             else if(((String) msg).startsWith("#UPDATEDPWD")) {
             	user.handleUpdatedPwd((String)msg);
+            }
+            else if(((String) msg).startsWith("#UPDATEDUSER")) {
+            	user.handleUpdatedUser((String)msg);
+            }
+            else if(((String) msg).startsWith("#DELETEDUSER")) {
+            	user.handleDeletedUser((String)msg);
             }
             else if(((String) msg).startsWith("#DELETEDCONVERSATION")){
                 conversations.handleDeletedConversation((String)msg);
@@ -278,7 +298,7 @@ public class CoreClient implements ClientIF {
     }
 
     /**
-     * This method delegates getDepartment to Department class
+     * This method delegates getDepartment to DepartmentServices class
      * @return a department list
      */
     public void getDepartment() {
@@ -331,7 +351,9 @@ public class CoreClient implements ClientIF {
      * Profile
      **********************/
     
-    public void handleCreateUser() {}
+    public void handleCreateUser(String name, String firstname, String birthDate, String email, String password, String role) {
+    	user.createUser(name, firstname, birthDate, email, password, role);
+    }
     
     public void handleReadUser(int id) {
     	user.readUser(id);
@@ -340,14 +362,23 @@ public class CoreClient implements ClientIF {
     public void handleUpdatePwd(String login, String pwd) {
     	user.updatePwd(login, pwd);
     }
-
-
+    
+    public void handleUpdateUser(int id, String name, String firstname, String birthDate, String email, String password, String role) {
+    	user.updateUser(id, name, firstname, birthDate, email, password, role);
+    }
+    
+    public void handleDeleteUser(int id) {
+    	user.deleteUser(id);
+    }
+    
     public void getTeacher() {
         teacher.getTeacher();
     }
+    
+    
 
     /**
-     * This method delegates getPromotion to Promotion class
+     * This method delegates getPromotion to PromotionServices class
      * @return a promotion list
      */
     public void getPromo() {
@@ -359,11 +390,19 @@ public class CoreClient implements ClientIF {
     }
 
     /**
-     * This method delegates getClasses to Class class
+     * This method delegates getClasses to ClassServices class
      * @return a class list
      */
     public void getClasses() {
         classes.getClasses();
+    }
+
+    /***************
+     * Records
+     ***************/
+    public void createRecord(int courseID, int examYear, File record, int donatingUser){
+        records.createRecord(courseID, examYear, record, donatingUser);
+
     }
     
 }

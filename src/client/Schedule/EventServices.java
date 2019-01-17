@@ -5,6 +5,6 @@ import java.util.*;
 /**
  * 
  */
-public class Event {
+public class EventServices {
 
 }

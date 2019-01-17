@@ -1,7 +1,6 @@
 package server.DAO;
 
 import client.Courses.CourseServices;
-import client.Records.Record;
 import Types.UserType;
 
 import java.io.File;
@@ -33,7 +32,7 @@ public class SQLServerDAORecord extends RecordsDAO{
      * @param id 
      * @param donatingUser
      */
-   public void deleteRecord(Record id, UserType donatingUser) {
+   public void deleteRecord(int id, UserType donatingUser) {
         // TODO implement here
     }
 
@@ -41,7 +40,7 @@ public class SQLServerDAORecord extends RecordsDAO{
      * @param id
      */
 
-    public void readRecord(Record id) {
+    public void readRecord(int id) {
         // TODO implement here
     }
 

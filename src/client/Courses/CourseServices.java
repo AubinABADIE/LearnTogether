@@ -16,8 +16,7 @@ public class CourseServices {
 	 * @param name : course name
 	 * @param description : small description of the course
 	 * @param totalHours : the total hours of the course
-	 * @param promotion : the promotion related to the course
-	 * @param referingTeacher : the referring teacher of the course
+	 * @param idT : the referring teacher of the course
 	 */
 	public void handleCreateCourse (String name, String description, int totalHours, int idT){
 		String objConstruct = name + "-/-" + description + "-/-" + totalHours + "-/-" + idT;
@@ -33,8 +32,7 @@ public class CourseServices {
      * @param name : course name
 	 * @param description : small description of the course
 	 * @param totalHours : the total hours of the course
-	 * @param promotion : the promotion related to the course
-	 * @param referingTeacher : the referring teacher of the course
+	 * @param idT : the referring teacher of the course
      */
     public void handleUpdateCourse (int id, String name, String description, int totalHours, int idT){
         String objConstruct = id + "-/-" + name + "-/-" + description + "-/-" + totalHours + "-/-" + idT;

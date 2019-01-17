@@ -8,7 +8,6 @@ import javafx.collections.ObservableList;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
@@ -36,15 +35,18 @@ import javafx.stage.Window;
 import java.util.List;
 
 /**
- * 
+ * This UI is for when a teacher wants to use this application.
+ * @author Aubin ABADIE
+ * @author Marie SALELLES
+ * @author Audrey SAMSON
+ * @author Yvan SANSON
+ * @author Solene SERAFIN
  */
 public class TeacherUI extends UI {
 
 	private Scene principalTeacherScene;
-	private Scene principalAdminScene;
 	private TabPane tabPane;
 	private Tab tabProfile, tabSchedule, tabRecords, tabDiary, tabChat, tabCourse, tabRoom;
-	private ObservableList<RoomType> roomNames;
 	private ObservableList<CourseType> courseNames;
 	protected ObservableList<TeacherType> teacherNames;
 	
