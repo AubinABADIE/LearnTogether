@@ -6,6 +6,8 @@ import java.util.List;
 import Types.DepartmentType;
 import Types.UserType;
 import Types.*;
+import client.Groups.Class;
+import client.Groups.Promotion;
 import client.Users.TeacherServices;
 import com.lloseng.ocsf.client.AdaptableClient;
 
@@ -26,6 +28,8 @@ public class CoreClient implements ClientIF {
     private Department department;
     private Conversation conversations;
     private TeacherServices teacher;
+    private Promotion promo;
+    private Class classes;
 
     //UI and Connections
     private AdaptableClient connection;
@@ -65,6 +69,8 @@ public class CoreClient implements ClientIF {
         conversations = new Conversation(this);
         course = new CourseServices(this);
         teacher = new TeacherServices(this);
+        promo = new Promotion(this);
+        classes = new Class(this);
     }
 
     /**
@@ -100,6 +106,15 @@ public class CoreClient implements ClientIF {
             else if  (((String) msg).startsWith("#DELETEDDEPARTMENT")){
                 department.handleDeletedDepartment((String) msg);
             }
+         else if  (((String) msg).startsWith("#CREATEDPROMO")){
+            promo.handleCreatedPromo((String) msg);
+        }
+        else if  (((String) msg).startsWith("#UPDATEDPROMO")){
+            //promo.handleUpdatedPromo((String) msg);
+        }
+        else if  (((String) msg).startsWith("#DELETEDPROMO")){
+            //promo.handleDeletedPromo((String) msg);
+        }
             else if(((String) msg).startsWith("#UPDATEDPWD")) {
             	user.handleUpdatedPwd((String)msg);
             }
@@ -108,24 +123,27 @@ public class CoreClient implements ClientIF {
             }
 
         } else if (msg instanceof List) {
-            if (((List)msg).get(0) instanceof RoomType)
-                display.getRooms((List<RoomType>)msg);
-            else if(((List)msg).get(0) instanceof MessageType)
-                display.setConversationMessages((List<MessageType>)msg);
-            else if(((List)msg).get(0) instanceof String){
-                if(((String) ((List) msg).get(0)).equalsIgnoreCase("CONVERSATION EMAILS"))
+            if (((List) msg).get(0) instanceof RoomType)
+                display.getRooms((List<RoomType>) msg);
+            else if (((List) msg).get(0) instanceof MessageType)
+                display.setConversationMessages((List<MessageType>) msg);
+            else if (((List) msg).get(0) instanceof String) {
+                if (((String) ((List) msg).get(0)).equalsIgnoreCase("CONVERSATION EMAILS"))
                     display.setConversationEmails((List<String>) msg);
+            } else if (((List) msg).get(0) instanceof DepartmentType) {
+                display.getDepartment((List<DepartmentType>) msg);
+            } else if (((List) msg).get(0) instanceof TeacherType) {
+                display.getTeacher((List<TeacherType>) msg);
+            } else if (msg instanceof UserType) {
+                display.setUser((UserType) msg);
+            } else if (((List) msg).get(0) instanceof PromotionType) {
+                display.getPromo((List<PromotionType>) msg);
+            }else if (((List) msg).get(0) instanceof ClassType) {
+                display.getClasses((List<ClassType>) msg);
             }
-            else if (((List)msg).get(0) instanceof DepartmentType){
-                display.getDepartment((List<DepartmentType>)msg);}
-            else if (((List)msg).get(0) instanceof TeacherType){
-                display.getTeacher((List<TeacherType>)msg);}
-
-        }
-        else if(msg instanceof UserType) {
-        	display.setUser((UserType)msg);
         }
     }
+
 
     @Override
     public void connectionClosed() {
@@ -258,6 +276,9 @@ public class CoreClient implements ClientIF {
         department.getDepartment();
     }
 
+
+
+
     /***************
      * Conversations
      ***************/
@@ -314,6 +335,26 @@ public class CoreClient implements ClientIF {
 
     public void getTeacher() {
         teacher.getTeacher();
+    }
+
+    /**
+     * This method delegates getPromotion to Promotion class
+     * @return a promotion list
+     */
+    public void getPromo() {
+        promo.getPromotion();
+    }
+
+    public void handleCreatePromotion(String name, String descriptionPromo, int graduationPromo, int refDep){
+        promo.createPromotion(name, descriptionPromo,graduationPromo,refDep);
+    }
+
+    /**
+     * This method delegates getClasses to Class class
+     * @return a class list
+     */
+    public void getClasses() {
+        classes.getClasses();
     }
     
 }

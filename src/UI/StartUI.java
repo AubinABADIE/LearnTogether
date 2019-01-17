@@ -483,5 +483,24 @@ public class StartUI extends UI {
 
     }
 
+    @Override
+    public void getPromo(List<PromotionType> promo) {
+        Platform.runLater(() -> {
+            if(adminUI != null)
+                adminUI.setPromo(promo);
+            else if(superAdminUI != null)
+                superAdminUI.setPromo(promo);
+        });
+    }
+
+    @Override
+    public void getClasses(List<ClassType> classes) {
+        Platform.runLater(() -> {
+            if(adminUI != null)
+                adminUI.setClasses(classes);
+            else if(superAdminUI != null)
+                superAdminUI.setClasses(classes);
+        });
+    }
 }
 

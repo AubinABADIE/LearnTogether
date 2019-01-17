@@ -43,6 +43,8 @@ public class GeneralServer implements Observer {
         dao.createDAORoom();
         dao.createDAOCourse();
         dao.createDAOConversation();
+        dao.createDAOPromotion();
+        dao.createDAOClass();
         display.display("Server is running on port " + port);
     }
 
@@ -84,6 +86,30 @@ public class GeneralServer implements Observer {
             handleDeleteDepartmentFromClient(Integer.parseInt(creds[1]), client);
         }else if (instruction.startsWith("GETDEPARTMENT")){
             handleListDepFromClient(client);
+        }
+        else if(instruction.startsWith("CREATEPROMOTION")){
+            String[] creds = instruction.split("-/-");
+            handleCreatePromotionFromClient(creds[1], creds[2], creds[3],creds[4], client);
+        }else if(instruction.startsWith("UPDATEPROMOTION")){
+            String[] creds = instruction.split("-/-");
+            //handleUpdateDepartmentFromClient(creds[1], creds[2], creds[3],creds[4], client);
+        }else if(instruction.startsWith("DELETEPROMOTION")){
+            String[] creds = instruction.split("-/-");
+            //handleDeleteDepartmentFromClient(Integer.parseInt(creds[1]), client);
+        }else if (instruction.startsWith("GETPROMOTION")){
+            handleListPromoFromClient(client);
+        }
+        else if(instruction.startsWith("CREATECLASS")){
+            String[] creds = instruction.split("-/-");
+            //handleCreatePromotionFromClient(creds[1], creds[2], creds[3],creds[4], client);
+        }else if(instruction.startsWith("UPDATECLASS")){
+            String[] creds = instruction.split("-/-");
+            //handleUpdateDepartmentFromClient(creds[1], creds[2], creds[3],creds[4], client);
+        }else if(instruction.startsWith("DELETECLASS")){
+            String[] creds = instruction.split("-/-");
+            //handleDeleteDepartmentFromClient(Integer.parseInt(creds[1]), client);
+        }else if (instruction.startsWith("GETCLASS")){
+            handleListClassFromClient(client);
         }
         else if (instruction.startsWith("CREATEROOM")){
             String[] attributes = instruction.split("-/-");
@@ -627,6 +653,62 @@ public class GeneralServer implements Observer {
         }
     }
 
+
+
+    /**
+     * This method delegates to the dao the research of the department
+     */
+
+    public void handleListPromoFromClient(ConnectionToClient client){
+
+        List<PromotionType> promo =  dao.getPromotionDAO().searchAllPromotion();
+        try {
+            client.sendToClient(promo);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    /**
+     * @param name
+     * @param descriptionPromo
+     * @param graduationYear
+     * @param idDepartment
+     * @param client
+     */
+    public void handleCreatePromotionFromClient(String name, String descriptionPromo, String graduationYear, String idDepartment, ConnectionToClient client) {
+        int g=Integer.parseInt(graduationYear);
+        int id=Integer.parseInt(idDepartment);
+        int result = dao.getPromotionDAO().createPromotion(name,descriptionPromo,g,id);
+
+        String mess;
+        if (result == 1){
+            mess = "#CREATEDPROMO Success";
+        }
+        else{
+            mess = "#CREATEDEDPROMO Failure";
+        }
+        try {
+            client.sendToClient(mess);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * This method delegates to the dao the research of the classes
+     */
+
+    public void handleListClassFromClient(ConnectionToClient client){
+        List<ClassType> cl =  dao.getClassDAO().searchAllClasses();
+        System.out.print("taille:"+cl.size());
+        try {
+            client.sendToClient(cl);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
 
     /**

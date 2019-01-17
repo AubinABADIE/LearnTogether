@@ -14,7 +14,8 @@ public abstract class AbstractDAOFactory{
     private AbstractDAORoom roomDAO;
     private AbstractDAOCourse courseDAO;
     private AbstractDAOConversation conversationDAO;
-
+    private AbstractDAOPromotion promotionDAO;
+    private AbstractDAOClass classDAO;
 
     /**
      * Default constructor
@@ -74,4 +75,24 @@ public abstract class AbstractDAOFactory{
     public abstract void createDAOConversation();
 
 	public abstract void createDAOCourse();
+
+    public abstract void createDAOPromotion();
+
+    public abstract void createDAOClass();
+
+    public AbstractDAOPromotion getPromotionDAO() {
+        return promotionDAO;
+    }
+
+    public void setPromotionDAO(AbstractDAOPromotion promotionDAO) {
+        this.promotionDAO = promotionDAO;
+    }
+
+    public AbstractDAOClass getClassDAO() {
+        return classDAO;
+    }
+
+    public void setClassDAO(AbstractDAOClass classDAO) {
+        this.classDAO = classDAO;
+    }
 }

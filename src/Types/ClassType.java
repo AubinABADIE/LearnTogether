@@ -4,18 +4,17 @@ import java.io.Serializable;
 
 public class ClassType implements Serializable {
     private int idClass;
-    private String nameClass;
-    private int refPromo;
-    private String descriptionClass;
+    private String className;
+    private String classDescription;
+    private int idPromotion;
 
-    public ClassType(int idClass, String nameClass, int refPromo,  String graduationClass){
+    public ClassType(int idClass, String className, String classDescription,  int idPromotion){
         this.idClass=idClass;
-        this.nameClass=nameClass;
-        this.refPromo=refPromo;
-        this.descriptionClass=descriptionClass;
+        this.className=className;
+        this.classDescription=classDescription;
+        this.idPromotion=idPromotion;
 
     }
-
 
     public int getIdClass() {
         return idClass;
@@ -25,28 +24,31 @@ public class ClassType implements Serializable {
         this.idClass = idClass;
     }
 
-    public String getNameClass() {
-        return nameClass;
+    public String getClassName() {
+        return className;
     }
 
-    public void setNameClass(String nameClass) {
-        this.nameClass = nameClass;
+    public void setClassName(String className) {
+        this.className = className;
     }
 
-    public int getRefDep() {
-        return refPromo;
+    public String getClassDescription() {
+        return classDescription;
     }
 
-    public void setRefDep(int refPromo) {
-        this.refPromo = refPromo;
+    public void setClassDescription(String descClass) {
+        this.classDescription = descClass;
     }
 
-    public String getDescriptionClass() {
-        return descriptionClass;
+    public int getIdPromotion() {
+        return idPromotion;
     }
 
-    public void setDescriptionClass(String descriptionClass) {
-        this.descriptionClass = descriptionClass;
+    public void setIdPromotion(int idPromotion) {
+        this.idPromotion = idPromotion;
     }
-
+    @Override
+    public String toString() {
+        return "Name: " + className;
+    }
 }

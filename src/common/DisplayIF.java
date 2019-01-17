@@ -25,4 +25,6 @@ public interface DisplayIF {
 	
     void getDepartment(List<DepartmentType> dep);
     void getTeacher(List<TeacherType> teacher);
+    void getPromo(List<PromotionType> promo);
+    void getClasses(List<ClassType> classes);
 }

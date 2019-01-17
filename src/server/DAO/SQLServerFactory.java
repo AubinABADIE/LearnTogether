@@ -18,6 +18,10 @@ public class SQLServerFactory extends AbstractDAOFactory {
     private SQLServerDAORoom roomDAO;
     private SQLServerDAOConversation conversationDAO;
     private SQLServerDAOCourse courseDAO;
+    private SQLServerDAOPromotion promotionDAO;
+    private SQLServerDAOClass classDAO;
+
+
     /**
      * Default constructor
      */
@@ -65,7 +69,15 @@ public class SQLServerFactory extends AbstractDAOFactory {
     public void createDAOCourse() {
         this.courseDAO = new SQLServerDAOCourse();
     }
-    
+
+    @Override
+    public void createDAOPromotion() {
+        this.promotionDAO = new SQLServerDAOPromotion();
+    }
+
+    @Override
+    public void createDAOClass() { this.classDAO = new SQLServerDAOClass(); }
+
     @Override
     public SQLServerDAOUser getUserDAO() {
         return userDAO;
@@ -123,4 +135,21 @@ public class SQLServerFactory extends AbstractDAOFactory {
 		this.courseDAO = courseDAO;
 	}
 
+    @Override
+    public SQLServerDAOPromotion getPromotionDAO() {
+        return promotionDAO;
+    }
+
+    public void setPromotionDAO(SQLServerDAOPromotion promotionDAO) {
+        this.promotionDAO = promotionDAO;
+    }
+
+    @Override
+    public SQLServerDAOClass getClassDAO() {
+        return classDAO;
+    }
+
+    public void setClassDAO(SQLServerDAOClass classDAO) {
+        this.classDAO = classDAO;
+    }
 }

@@ -75,6 +75,9 @@ public class AdminUI extends TeacherUI {
     public void setPromo(List<PromotionType> promoList) {
         promoNames.setAll(promoList);
     }
+    public void setClasses(List<ClassType> classes) {
+        classNames.setAll(classes);
+    }
 
     public void setTeacher(List<TeacherType> teacherList) {
         teacherNames.setAll(teacherList);
@@ -118,6 +121,7 @@ public class AdminUI extends TeacherUI {
         tabCourse = tabCourse();
 
         tabDepartment = tabDepartment();
+
 
         tabPane.getTabs().add(tabProfile);
         tabPane.getTabs().add(tabSchedule);
@@ -770,13 +774,15 @@ public class AdminUI extends TeacherUI {
         VBoxAffichageDep.setAlignment(Pos.CENTER_RIGHT);
         //
 
+        //PROMOTION
         /*add list of Promotion*/
-        //client.getPromo();
+        client.getPromo();
         ListView<PromotionType> listPromo = new ListView<>();
         promoNames = FXCollections.observableArrayList();
         promoNames.addListener((ListChangeListener<PromotionType>) c -> {
             listPromo.setItems(promoNames);
         });
+
 
         Image addPromo = new Image(getClass().getResourceAsStream("images/icons8-plus-208.png"));
         ImageView addPromoView = new ImageView(addPromo);
@@ -796,6 +802,7 @@ public class AdminUI extends TeacherUI {
         //create button delete
         Button btnDeletePromo = new Button("Delete-Promo");
         btnDeletePromo.setGraphic(deletePromoView);//setting icon to button
+
 
         // add in hbox buttons and title
         HBox hboxButtonPromo = new HBox();
@@ -830,7 +837,7 @@ public class AdminUI extends TeacherUI {
         Label nameLabelPromo = new Label("Name of Promotion : ");
         Label graduationLabelPromo = new Label( "Graduation: ");
         Label descriptionLabelPromo = new Label("Promotion description : ");
-        Text DepPromo = new Text(" ");
+        Text depPromo = new Text(" ");
         Text namePromo = new Text(" ");
         Text graduationPromo = new Text(" ");
         Text descriptionPromo = new Text(" ");
@@ -847,7 +854,7 @@ public class AdminUI extends TeacherUI {
         //
 
         /*add list of Classes*/
-        //client.getClass();
+        client.getClasses();
         ListView<ClassType> listClass = new ListView<>();
         classNames = FXCollections.observableArrayList();
         classNames.addListener((ListChangeListener<ClassType>) c -> {
@@ -894,7 +901,6 @@ public class AdminUI extends TeacherUI {
         HBox hboxListDep = new HBox();
         hboxListDep.getChildren().addAll(vboxListDep,vboxListPromo,vboxListClass);
 
-
         //title of column
         HBox hboxClassInfo = new HBox();
         Text titleInfoClass = new Text("Class information : ");
@@ -931,18 +937,25 @@ public class AdminUI extends TeacherUI {
         gridDepV.setVgap(10);
         gridDepV.setPadding(new Insets(10,10,10,10));
 
-        gridDepV.add(hboxButtonDep, 1, 0);
-        gridDepV.add(hboxButtonPromo, 1, 2);
-        gridDepV.add(hboxButtonClass, 1, 3);
-        gridDepV.add(hboxListDep, 1, 4);
+        //gridDepV.add(vboxListPromo,1,0);
+        gridDepV.add(hboxButtonDep, 1, 2);
+        gridDepV.add(hboxButtonPromo, 1, 3);
+        gridDepV.add(hboxButtonClass, 1, 4);
+        gridDepV.add(hboxListDep, 1, 5);
+
 
 
         /*creation of the info vbox of one department*/
         VBox vboxInfoDep = new VBox();
-
         vboxInfoDep.getChildren().addAll(hboxDepInfo, hboxnameDepInfo,hboxteacherDepInfo,hboxdescDepInfo);
         vboxInfoDep.setSpacing(10);
         vboxInfoDep.setPadding( new Insets(100, 0, 0, 75));
+
+        /*creation of the info vbox of one promotion*/
+        VBox vboxInfoPromo = new VBox();
+        vboxInfoPromo.getChildren().addAll(hboxPromoInfo, hboxnamePromoInfo,hboxgraduationPromoInfo,hboxdescPromoInfo);
+        vboxInfoPromo.setSpacing(10);
+        vboxInfoPromo.setPadding( new Insets(100, 0, 0, 75));
 
         //Dep
         btnAddDep.setOnAction(event -> {
@@ -988,7 +1001,7 @@ public class AdminUI extends TeacherUI {
 
         //Promo
         btnAddPromo.setOnAction(event -> {
-            createTabDepartment(tabDepartment);
+            createTabPromotion(tabDepartment);
         });
 
 
@@ -1010,13 +1023,17 @@ public class AdminUI extends TeacherUI {
 
         });
 
-        listClass.setOnMouseClicked(event -> {
-            gridDepV.getChildren().remove(vboxInfoDep);
-            gridDepV.add(vboxInfoDep, 2, 2);
+
+
+        listPromo.setOnMouseClicked(event -> {
+            gridDepV.getChildren().remove(vboxInfoPromo);
+            gridDepV.add(vboxInfoPromo, 2, 2);
             System.out.println("clicked on " + listPromo.getSelectionModel().getSelectedItem());
             SelectionModel<PromotionType> selectedClass = listPromo.getSelectionModel();
             namePromo.setText(selectedClass.getSelectedItem().getNamePromo());
+            graduationPromo.setText(Integer.toString(selectedClass.getSelectedItem().getGraduationPromo()));
             descriptionPromo.setText(selectedClass.getSelectedItem().getDescriptionPromo());
+            depPromo.setText(Integer.toString(selectedClass.getSelectedItem().getRefDep()));
 
         });
 
@@ -1049,9 +1066,8 @@ public class AdminUI extends TeacherUI {
             gridDepV.add(vboxInfoDep, 2, 2);
             System.out.println("clicked on " + listClass.getSelectionModel().getSelectedItem());
             SelectionModel<ClassType> selectedClass = listClass.getSelectionModel();
-            namePromo.setText(selectedClass.getSelectedItem().getNameClass());
-            descriptionPromo.setText(selectedClass.getSelectedItem().getDescriptionClass());
-
+            nameClass.setText(selectedClass.getSelectedItem().getClassName());
+            descriptionClass.setText(selectedClass.getSelectedItem().getClassDescription());
         });
 
         return gridDepV;
@@ -1065,7 +1081,6 @@ public class AdminUI extends TeacherUI {
 
         // Add text Field
         TextField nameField = new TextField();
-        //TextField teacherField = new TextField();
         TextArea descriptionField = new TextArea();
 
         client.getTeacher();
@@ -1254,6 +1269,235 @@ public class AdminUI extends TeacherUI {
 
 
         return gridDep;
+    }
+
+    protected GridPane createTabPromotion(Tab tabDepartment) {
+
+        // labels
+        Label nameLabel = new Label("Name of promotion : ");
+        Label depLabel = new Label("Referent Department : ");
+        Label gradLabel = new Label("Promo's graduation : ");
+        Label descLabel = new Label("Description : ");
+
+        // Add text Field
+        TextField nameField = new TextField();
+        TextField gradField = new TextField();
+        TextArea descriptionField = new TextArea();
+
+        client.getDepartment();
+        ListView<DepartmentType> listT = new ListView<>();
+        depNames = FXCollections.observableArrayList();
+        depNames.addListener((ListChangeListener<DepartmentType>) c -> {
+            listT.setItems(depNames);
+        });
+
+        ComboBox depComboBox = new ComboBox();
+        depComboBox.setItems(depNames);
+        depComboBox.getSelectionModel().select(1);
+
+
+        //grid pane
+        GridPane gridPromo = new GridPane();
+        gridPromo.setHgap(10);
+        gridPromo.setVgap(10);
+        gridPromo.setPadding(new Insets(10, 10, 10, 10));
+
+        //Hbox
+        HBox namePromo = new HBox();
+        HBox refDep = new HBox();
+        HBox gradPromo = new HBox();
+        HBox descriptionPromo = new HBox();
+
+        // add form in hbox
+        namePromo.getChildren().addAll(nameLabel, nameField);
+        refDep.getChildren().addAll(depLabel,depComboBox);
+        gradPromo.getChildren().addAll(gradLabel,gradField);
+        descriptionPromo.getChildren().addAll(descLabel, descriptionField);
+
+        //add hbox in gridpane
+        gridPromo.add(namePromo, 1, 0);
+        gridPromo.add(refDep, 1, 2);
+        gridPromo.add(gradPromo, 1, 5);
+        gridPromo.add(descriptionPromo, 1, 7);
+
+        //add gridpane in tab
+        tabDepartment.setContent(gridPromo);
+
+        //add button
+
+        Button okCreate = new Button("Create");
+        okCreate.setPrefHeight(40);
+        okCreate.setDefaultButton(true);
+        okCreate.setPrefWidth(100);
+        gridPromo.add(okCreate, 0, 13, 1, 1);
+        gridPromo.setHalignment(okCreate, HPos.RIGHT);
+        gridPromo.setMargin(okCreate, new Insets(20, 0, 20, 0));
+
+        Button cancelCreate = new Button("Cancel");
+        cancelCreate.setPrefHeight(40);
+        cancelCreate.setDefaultButton(false);
+        cancelCreate.setPrefWidth(100);
+        gridPromo.add(cancelCreate, 2, 13, 1, 1);
+        gridPromo.setHalignment(cancelCreate, HPos.RIGHT);
+        gridPromo.setMargin(cancelCreate, new Insets(20, 0, 20, 0));
+
+        okCreate.setOnAction(event -> {
+            if (nameField.getText().isEmpty()) {
+                showAlert(Alert.AlertType.ERROR, gridPromo.getScene().getWindow(), "Form Error!", "Please enter promotion name");
+                return;
+            }
+            if (gradField.getText().isEmpty()) {
+                showAlert(Alert.AlertType.ERROR, gridPromo.getScene().getWindow(), "Form Error!", "Please enter graduation");
+                return;
+            }
+            if (descriptionField.getText().isEmpty()) {
+                showAlert(Alert.AlertType.ERROR, gridPromo.getScene().getWindow(), "Form Error!", "Please enter descritpion");
+                return;
+            }
+            if (depComboBox.getSelectionModel().isEmpty()) {
+                showAlert(Alert.AlertType.ERROR, gridPromo.getScene().getWindow(), "Form Error!", "Please enter referent department");
+                return;
+            }
+
+            DepartmentType dep= (DepartmentType) depComboBox.getSelectionModel().getSelectedItem();
+            client.handleCreatePromotion(nameField.getText(),descriptionField.getText(),Integer.parseInt(gradField.getText()),dep.getIdDepartment());
+            nameField.setText("");
+            gradField.setText("");
+            descriptionField.setText("");
+
+        });
+
+        cancelCreate.setOnAction(event -> {
+            tabDepartment.setContent(departmentRead(tabDepartment));
+        });
+
+
+        return gridPromo;
+    }
+
+    protected Tab tabPromo(){
+
+        Tab tabPromo = new Tab();
+        tabPromo.setClosable(false);
+        tabPromo.setContent(showTabPromotion(tabPromo));
+        return tabPromo;
+    }
+
+    protected GridPane showTabPromotion(Tab tabDepartment) {
+
+        /*add list of Promotion*/
+        client.getPromo();
+        ListView<PromotionType> listPromo = new ListView<>();
+        promoNames = FXCollections.observableArrayList();
+        promoNames.addListener((ListChangeListener<PromotionType>) c -> {
+            listPromo.setItems(promoNames);
+        });
+
+        Image addPromo = new Image(getClass().getResourceAsStream("images/icons8-plus-208.png"));
+        ImageView addPromoView = new ImageView(addPromo);
+        addPromoView.setFitHeight(15);
+        addPromoView.setFitWidth(15);
+
+        //create button add
+        Button btnAddPromo = new Button("Add-Promo");
+        btnAddPromo.setGraphic(addPromoView);//setting icon to button
+
+        //delete button
+        Image deletePromo = new Image(getClass().getResourceAsStream("images/icons8-annuler-208.png"));
+        ImageView deletePromoView = new ImageView(deletePromo);
+        deletePromoView.setFitHeight(12);
+        deletePromoView.setFitWidth(12);
+
+        //create button delete
+        Button btnDeletePromo = new Button("Delete-Promo");
+        btnDeletePromo.setGraphic(deletePromoView);//setting icon to button
+
+        //create button add
+        Button btnShowPromo = new Button("Show-Promo");
+
+        //create button add
+        Button btnReturnPromo = new Button("Cancel");
+
+        // add in hbox buttons and title
+        HBox hboxButtonPromo = new HBox();
+        Text titlePromo = new Text("Promotion : ");
+        hboxButtonPromo.getChildren().addAll(titlePromo, btnAddPromo, btnDeletePromo);
+        hboxButtonPromo.setSpacing(5);
+
+
+        listPromo.setItems(promoNames);
+        System.out.println(promoNames);
+        listPromo.setPrefWidth(300);
+        listPromo.setPrefHeight(500);
+
+        // left vbox
+        VBox vboxListPromo = new VBox();
+        vboxListPromo.getChildren().add(listPromo);
+
+
+        //title of column
+        HBox hboxPromoInfo = new HBox();
+        Text titleInfoPromo = new Text("Promotion information : ");
+        titleInfoPromo.setFont(Font.font(20));
+        hboxPromoInfo.getChildren().add(titleInfoPromo);
+        hboxPromoInfo.setAlignment(Pos.CENTER);
+
+        // initialisation label and input
+        HBox hboxdepPromoInfo = new HBox();
+        HBox hboxnamePromoInfo = new HBox();
+        HBox hboxgraduationPromoInfo = new HBox();
+        HBox hboxdescPromoInfo = new HBox();
+        Label depLabelPromo = new Label("Referent Department : ");
+        Label nameLabelPromo = new Label("Name of Promotion : ");
+        Label graduationLabelPromo = new Label("Graduation: ");
+        Label descriptionLabelPromo = new Label("Promotion description : ");
+        Text depPromo = new Text(" ");
+        Text namePromo = new Text(" ");
+        Text graduationPromo = new Text(" ");
+        Text descriptionPromo = new Text(" ");
+
+        hboxdepPromoInfo.getChildren().add(depLabelPromo);
+        hboxnamePromoInfo.getChildren().add(nameLabelPromo);
+        hboxgraduationPromoInfo.getChildren().add(graduationLabelPromo);
+        hboxdescPromoInfo.getChildren().add(descriptionLabelPromo);
+
+        hboxdepPromoInfo.setAlignment(Pos.CENTER);
+        hboxnamePromoInfo.setAlignment(Pos.CENTER);
+        hboxgraduationPromoInfo.setAlignment(Pos.CENTER);
+        hboxdescPromoInfo.setAlignment(Pos.CENTER);
+
+        /*creation of the info vbox of one promotion*/
+        VBox vboxInfoPromo = new VBox();
+        vboxInfoPromo.getChildren().addAll(hboxPromoInfo, hboxnamePromoInfo, hboxgraduationPromoInfo, hboxdescPromoInfo);
+        vboxInfoPromo.setSpacing(10);
+        vboxInfoPromo.setPadding(new Insets(100, 0, 0, 75));
+
+
+        //grid pane
+        GridPane gridPromoV = new GridPane();
+        gridPromoV.setHgap(10);
+        gridPromoV.setVgap(10);
+        gridPromoV.setPadding(new Insets(10, 10, 10, 10));
+
+        gridPromoV.add(hboxButtonPromo, 1, 2);
+        gridPromoV.add(vboxListPromo, 1, 4);
+
+        listPromo.setOnMouseClicked(event -> {
+        gridPromoV.getChildren().remove(vboxInfoPromo);
+        gridPromoV.add(vboxInfoPromo, 2, 2);
+        System.out.println("clicked on " + listPromo.getSelectionModel().getSelectedItem());
+        SelectionModel<PromotionType> selectedClass = listPromo.getSelectionModel();
+        namePromo.setText(selectedClass.getSelectedItem().getNamePromo());
+        graduationPromo.setText(Integer.toString(selectedClass.getSelectedItem().getGraduationPromo()));
+        descriptionPromo.setText(selectedClass.getSelectedItem().getDescriptionPromo());
+        depPromo.setText(Integer.toString(selectedClass.getSelectedItem().getRefDep()));});
+
+        //Promo
+        btnReturnPromo.setOnAction(event -> {
+            createTabDepartment(tabDepartment);
+        });
+
+        return gridPromoV;
     }
 
     }

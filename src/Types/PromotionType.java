@@ -5,11 +5,12 @@ import java.io.Serializable;
 public class PromotionType implements Serializable {
     private int idPromo;
     private String namePromo;
-    private String graduationPromo;
-    private int refDep;
     private String descriptionPromo;
+    private int graduationPromo;
+    private int refDep;
 
-    public PromotionType(int idPromo, String namePromo, int refDep, String descriptionPromo, String graduationPromo){
+
+    public PromotionType(int idPromo, String namePromo,  String descriptionPromo, int graduationPromo, int refDep){
         this.idPromo=idPromo;
         this.namePromo=namePromo;
         this.graduationPromo=graduationPromo;
@@ -18,11 +19,11 @@ public class PromotionType implements Serializable {
 
     }
 
-    public String getGraduationPromo() {
+    public int getGraduationPromo() {
         return graduationPromo;
     }
 
-    public void setGraduationPromo(String graduationPromo) {
+    public void setGraduationPromo(int graduationPromo) {
         this.graduationPromo = graduationPromo;
     }
 

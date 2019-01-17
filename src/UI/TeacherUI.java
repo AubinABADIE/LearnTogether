@@ -1,9 +1,6 @@
 package UI;
 
-import Types.DepartmentType;
-import Types.TeacherType;
-import Types.UserType;
-import Types.MessageType;
+import Types.*;
 import client.CoreClient;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
@@ -34,9 +31,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.stage.Window;
-import Types.RoomType;
 import Types.UserType;
-import Types.CourseType;
 
 import java.util.List;
 
@@ -532,6 +527,16 @@ public class TeacherUI extends UI {
 
     @Override
     public void getTeacher(List<TeacherType> teacher) {
+
+    }
+
+    @Override
+    public void getPromo(List<PromotionType> promo) {
+
+    }
+
+    @Override
+    public void getClasses(List<ClassType> classes) {
 
     }
 
