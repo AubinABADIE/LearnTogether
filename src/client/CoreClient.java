@@ -144,6 +144,8 @@ public class CoreClient implements ClientIF {
                 display.getDepartment((List<DepartmentType>)msg);
             } else if (((List)msg).get(0) instanceof TeacherType) {
             	display.getTeacher((List<TeacherType>)msg);
+            } else if (((List)msg).get(0) instanceof CourseType) {
+            	display.getCourses((List<CourseType>)msg);
             }
         }
         else if (msg instanceof UserType) {
@@ -226,7 +228,7 @@ public class CoreClient implements ClientIF {
      * @param id : room id
      */
     public void handleDeleteCourse(int id){
-        room.handleDeleteRoom(id);
+        course.handleDeleteCourse(id);
     }
 
 

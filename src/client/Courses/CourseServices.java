@@ -100,7 +100,6 @@ public class CourseServices {
      */
     public void getCourses() {
         try {
-        	System.out.println("ok3");
             client.getConnection().sendToServer("#GETCOURSES" );
         } catch (IOException e) {
             e.printStackTrace();

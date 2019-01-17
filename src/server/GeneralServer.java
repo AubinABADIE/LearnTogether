@@ -127,7 +127,7 @@ public class GeneralServer implements Observer {
         }
         else if (instruction.startsWith("CREATECOURSE")){
             String[] attributes = instruction.split("-/-");
-            handleCreateCourseFromClient(attributes[1], attributes[2], Integer.parseInt(attributes[3]), Integer.parseInt(attributes[4]), client);
+            handleCreateCourseFromClient(attributes[1], attributes[2], Integer.parseInt(attributes[3]), attributes[4], client);
         }else if (instruction.startsWith("DELETECOURSE")){
             String[] attributes = instruction.split("-/-");
             handleDeleteCourseFromClient(Integer.parseInt(attributes[1]), client);
@@ -135,7 +135,6 @@ public class GeneralServer implements Observer {
             String[] attributes = instruction.split("-/-");
             handleUpdateCourseFromClient(Integer.parseInt(attributes[1]),attributes[2],attributes[3], Integer.parseInt(attributes[4]), Integer.parseInt(attributes[5]), client);
         } else if (instruction.startsWith("GETCOURSES")){
-        	System.out.println("ok4");
             handleListCoursesFromClient(client);
         }
         else if(instruction.startsWith("SENDMSGTOCLIENT")){
@@ -473,8 +472,9 @@ public class GeneralServer implements Observer {
      * @param client : client who create the course
      */
     
-    private void handleCreateCourseFromClient(String courseName, String courseDescription, int nbHourTotal, int idTeacher, ConnectionToClient client){
-        int result = dao.getCourseDAO().createCourse(courseName, courseDescription, nbHourTotal, idTeacher);
+    private void handleCreateCourseFromClient(String courseName, String courseDescription, int nbHourTotal, String idTeacher, ConnectionToClient client){
+    	int idTeacherRef = Integer.parseInt(idTeacher);
+    	int result = dao.getCourseDAO().createCourse(courseName, courseDescription, nbHourTotal, idTeacherRef);
 
         String mess;
         if (result == 1){
@@ -498,7 +498,6 @@ public class GeneralServer implements Observer {
         List<CourseType> courses =  dao.getCourseDAO().searchAllCourses();
 
          try {
-        	 System.out.println("ok5");
              client.sendToClient(courses);
          } catch (IOException e) {
              e.printStackTrace();
