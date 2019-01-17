@@ -22,7 +22,7 @@ import java.net.*;
 
 public class ObservableServer extends Observable
 {
-  // Class variables ************************************************
+  // ClassServices variables ************************************************
 
   /**
    * The string sent to the observers when a client has connected.

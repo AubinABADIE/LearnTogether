@@ -7,51 +7,20 @@ import java.io.IOException;
 /**
  * 
  */
-public class Department {
+public class DepartmentServices {
 
     /**
      * Attributes
      */
     private CoreClient coreClient;
-    private String name;
-    private int refTeacherID;
-    private String descDep;
-
     /**
      * Default constructor
      */
-    public Department() {
+    public DepartmentServices() {
     }
 
-    public Department(CoreClient coreClient) {
+    public DepartmentServices(CoreClient coreClient) {
         this.coreClient = coreClient;
-    }
-
-    /**
-     * Getter and Setter
-     */
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public int getRefTeacherID() {
-        return refTeacherID;
-    }
-
-    public void setRefTeacherID(int refTeacherID) {
-        this.refTeacherID = refTeacherID;
-    }
-
-    public String getDescDep() {
-        return descDep;
-    }
-
-    public void setDescDep(String descDep) {
-        this.descDep = descDep;
     }
 
     /**
@@ -59,14 +28,12 @@ public class Department {
      */
 
     /**
-     * @param name 
-     * @param refTeacherID
-     * @param descDep
+     * This method asks the server to create a department with the following attributes.
+     * @param name is the department name.
+     * @param refTeacherID is the referring teacher of this department, recognized by its ID.
+     * @param descDep is the description of the department.
      */
     public void createDepartment(String name, int refTeacherID, String descDep) {
-        this.name=name;
-        this.refTeacherID=refTeacherID;
-        this.descDep=descDep;
         try {
             coreClient.getConnection().sendToServer("#CREATEDEP-/-" + name + "-/-" + refTeacherID + "-/-" + descDep);
         } catch (IOException e) {
@@ -75,14 +42,12 @@ public class Department {
     }
 
     /**
-     * @param name 
-     * @param refTeacherID
-     * @param descDep
+     * This method asks the server to update an existing department with the following attributes.
+     * @param name is the department name.
+     * @param refTeacherID is the referring teacher of this department, recognized by its ID.
+     * @param descDep is the description of the department.
      */
     public void updateDepartment(int idDep,String name, int refTeacherID, String descDep) {
-        setName(name);
-        setRefTeacherID(refTeacherID);
-        setDescDep(descDep);
         try {
             coreClient.getConnection().sendToServer("#UPDATEDEP-/-" + idDep + "-/-" + name + "-/-" + refTeacherID + "-/-" + descDep);
         } catch (IOException e) {
