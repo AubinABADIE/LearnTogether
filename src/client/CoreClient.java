@@ -106,17 +106,26 @@ public class CoreClient implements ClientIF {
             else if  (((String) msg).startsWith("#DELETEDDEPARTMENT")){
                 department.handleDeletedDepartment((String) msg);
             }
-         else if  (((String) msg).startsWith("#CREATEDPROMO")){
-            promo.handleCreatedPromo((String) msg);
-        }
-        else if  (((String) msg).startsWith("#UPDATEDPROMO")){
-            //promo.handleUpdatedPromo((String) msg);
-        }
-        else if  (((String) msg).startsWith("#DELETEDPROMO")){
-            //promo.handleDeletedPromo((String) msg);
-        }
+            else if  (((String) msg).startsWith("#CREATEDPROMO")){
+            	promo.handleCreatedPromo((String) msg);
+            }
+            else if  (((String) msg).startsWith("#UPDATEDPROMO")){
+            	//promo.handleUpdatedPromo((String) msg);
+            }
+            else if  (((String) msg).startsWith("#DELETEDPROMO")){
+            	//promo.handleDeletedPromo((String) msg);
+            }
+            else if(((String) msg).startsWith("#CREATEDUSER")) {
+            	user.handleCreatedUser((String)msg);
+            }
             else if(((String) msg).startsWith("#UPDATEDPWD")) {
             	user.handleUpdatedPwd((String)msg);
+            }
+            else if(((String) msg).startsWith("#UPDATEDUSER")) {
+            	user.handleUpdatedUser((String)msg);
+            }
+            else if(((String) msg).startsWith("#DELETEDUSER")) {
+            	user.handleDeletedUser((String)msg);
             }
             else if(((String) msg).startsWith("#DELETEDCONVERSATION")){
                 conversations.handleDeletedConversation((String)msg);
@@ -329,7 +338,9 @@ public class CoreClient implements ClientIF {
      * Profile
      **********************/
     
-    public void handleCreateUser() {}
+    public void handleCreateUser(String name, String firstname, String birthDate, String email, String password, String role) {
+    	user.createUser(name, firstname, birthDate, email, password, role);
+    }
     
     public void handleReadUser(int id) {
     	user.readUser(id);
@@ -338,11 +349,20 @@ public class CoreClient implements ClientIF {
     public void handleUpdatePwd(String login, String pwd) {
     	user.updatePwd(login, pwd);
     }
-
-
+    
+    public void handleUpdateUser(int id, String name, String firstname, String birthDate, String email, String password, String role) {
+    	user.updateUser(id, name, firstname, birthDate, email, password, role);
+    }
+    
+    public void handleDeleteUser(int id) {
+    	user.deleteUser(id);
+    }
+    
     public void getTeacher() {
         teacher.getTeacher();
     }
+    
+    
 
     /**
      * This method delegates getPromotion to Promotion class

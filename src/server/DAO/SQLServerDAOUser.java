@@ -57,42 +57,23 @@ public class SQLServerDAOUser extends AbstractDAOUser {
 
 
     /**
-     * @param name 
-     * @param firstname 
-     * @param login 
-     * @param birthDate 
-     * @param courses 
-     * @param promotions 
-     * @param typeJob 
-     * @param studentGroup
+     * Reads the DB and create the user
+     * @param name
+     * @param firstname
+     * @param login
+     * @param birthDate
+     * @param courses
+     * @param promotions
+     * @param typeJob
+     * @param studentGrouString
      */
-    public void createDAOUser(String name, String firstname, String login, Date birthDate, CourseType courses, PromotionType promotions, String typeJob, Class studentGroup) {
-        // TODO implement here
-    }
-
-    /**
-     * @param name 
-     * @param firstname 
-     * @param login 
-     * @param birthDate 
-     * @param courses 
-     * @param promotions 
-     * @param typeJob 
-     * @param studentGroup 
-     * @param password 
-     * @param picture
-     */
-    public void updateDAOUser(String name, String firstname, String login, Date birthDate, CourseType courses, PromotionType promotions, String typeJob, Class studentGroup, String password, File picture) {
-        // TODO implement here
-    }
-
-    /**
-     * @param id
-     */
-    public void deleteDAOUser(int id) {
-        // TODO implement here
-    }
-
+    @Override
+	public boolean createDAOUser(String name, String firstname, String birthDate, String email, String password,
+			String role) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+    
     /**
      * Reads the DB and retrieves the user by its ID
      * @param id the user ID in the DB
@@ -117,6 +98,34 @@ public class SQLServerDAOUser extends AbstractDAOUser {
         }
         return user;
     }
+
+    /**
+     * Reads the DB and update the user
+     * @param id
+     * @param name
+     * @param firstname
+     * @param login
+     * @param birthDate
+     * @param email
+     * @param password
+     * @param role
+     */
+    @Override
+	public boolean updateDAOUser(int id, String name, String firstname, String birthDate, String email, String password, String role) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+    /**
+     * Reads the DB and delete the user.
+     * @param id
+     */
+    @Override
+    public boolean deleteDAOUser(int id) {
+    	 return true;
+    }
+
+    
 
     /**
      * Reads the DB and retrieves the user by its login and password.
@@ -223,7 +232,5 @@ public class SQLServerDAOUser extends AbstractDAOUser {
             }
             return teacher;
     }
-
-
 
 }

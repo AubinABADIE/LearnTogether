@@ -41,11 +41,13 @@ public class AdminUI extends TeacherUI {
 	protected Tab tabCourse;
 	protected Tab tabRoom;
 	protected Tab tabDepartment;
+	protected Tab tabUser;
 	protected ObservableList<RoomType> roomNames;
     protected ObservableList<DepartmentType> depNames;
     protected ObservableList<PromotionType> promoNames;
     protected ObservableList<ClassType> classNames;
     protected ObservableList<TeacherType> teacherNames;
+    protected ObservableList<UserType> userNames;
 
     /**
      * Default constructor
@@ -115,13 +117,10 @@ public class AdminUI extends TeacherUI {
         tabDiary.setClosable(false);
 
         tabChat = createChatTab();
-
         tabRoom= tabRoom();
-        
         tabCourse = tabCourse();
-
         tabDepartment = tabDepartment();
-
+        tabUser = createTabUser();
 
         tabPane.getTabs().add(tabProfile);
         tabPane.getTabs().add(tabSchedule);
@@ -1499,5 +1498,193 @@ public class AdminUI extends TeacherUI {
 
         return gridPromoV;
     }
+    
+    /**
+     * 
+     * @return
+     */
+    protected Tab createTabUser(){
 
+        Tab tabUser = new Tab();
+        tabUser.setText("Room");
+        tabUser.setClosable(false);
+
+
+        tabUser.setContent(roomUser(tabUser));
+        return tabUser;
     }
+
+    /**
+     * 
+     * @param tabUser
+     * @return
+     */
+    protected GridPane roomUser(Tab tabUser){
+
+        /*add list of users*/
+        //client.getRooms();
+        ListView<UserType> list = new ListView<>();
+        userNames = FXCollections.observableArrayList();
+        userNames.addListener((ListChangeListener<UserType>) c -> {
+            list.setItems(userNames);
+        });
+
+        Image addUser = new Image(getClass().getResourceAsStream("images/icons8-plus-208.png"));
+        ImageView addUserView = new ImageView(addUser);
+        addUserView.setFitHeight(15);
+        addUserView.setFitWidth(15);
+
+        //create button add
+        Button btnAddUser = new Button("Add");
+        btnAddUser.setGraphic(addUserView);//setting icon to button
+
+        //delete button
+        Image deleteUser = new Image(getClass().getResourceAsStream("images/icons8-annuler-208.png"));
+        ImageView deleteUserView = new ImageView(deleteUser);
+        deleteUserView.setFitHeight(12);
+        deleteUserView.setFitWidth(12);
+
+        //create button delete
+        Button btnDeleteUser = new Button("Delete");
+        btnDeleteUser.setGraphic(deleteUserView);//setting icon to button
+
+        // add in hbox buttons and title
+        HBox hboxButtonUser = new HBox();
+
+        Text title = new Text("Room : ");
+        title.setFont(Font.font(20));
+        hboxButtonUser.getChildren().add(title);
+        hboxButtonUser.getChildren().add(btnAddUser);
+        hboxButtonUser.getChildren().add(btnDeleteUser);
+        hboxButtonUser.setSpacing(5);
+
+        list.setItems(userNames);
+        System.out.println(userNames);
+        list.setPrefWidth(350);
+        list.setPrefHeight(500);
+
+        // left vbox
+        VBox vboxListUser = new VBox();
+        vboxListUser.getChildren().add(list);
+
+        //grid pane
+        GridPane gridUserVisu = new GridPane();
+        gridUserVisu.setHgap(10);
+        gridUserVisu.setVgap(10);
+        gridUserVisu.setPadding(new Insets(10,10,10,10));
+
+        gridUserVisu.add(hboxButtonUser, 1, 0);
+        gridUserVisu.add(vboxListUser, 1, 2);
+
+        /*creation of the info vbox of one user*/
+        VBox vboxInfoUser = new VBox();
+
+        //title of column
+        HBox hboxUserInfo = new HBox();
+        Text titleInfo = new Text("User information : ");
+        titleInfo.setFont(Font.font(20));
+        hboxUserInfo.getChildren().add(titleInfo);
+        hboxUserInfo.setAlignment(Pos.CENTER);
+
+        // initialisation label and input
+        HBox hboxnameUserInfo = new HBox();
+        HBox hboxbirthdateUserInfo = new HBox();
+        HBox hboxemailUserInfo = new HBox();
+        HBox hboxidUserInfo = new HBox();
+        HBox hboxroleUserInfo = new HBox();
+        Label nameLabel = new Label("Name: ");
+        Label birthdateLabel = new Label( "Birthdate: ");
+        Label emailLabel = new Label("Email: ");
+        Label idLabel = new Label("ID: ");
+        Label roleLabel = new Label("Role: ");
+        Text name = new Text(" ");
+        Text birthdate = new Text(" ");
+        Text email = new Text(" ");
+        Text id = new Text(" ");
+        Text role = new Text(" ");
+
+
+        hboxnameUserInfo.getChildren().add(nameLabel);
+        hboxnameUserInfo.getChildren().add(name);
+        hboxbirthdateUserInfo.getChildren().add(birthdateLabel);
+        hboxbirthdateUserInfo.getChildren().add(birthdate);
+        hboxemailUserInfo.getChildren().add(emailLabel);
+        hboxemailUserInfo.getChildren().add(email);
+        hboxidUserInfo.getChildren().add(idLabel);
+        hboxidUserInfo.getChildren().add(id);
+        hboxroleUserInfo.getChildren().add(roleLabel);
+        hboxroleUserInfo.getChildren().add(role);
+
+        hboxnameUserInfo.setAlignment(Pos.CENTER);
+        hboxbirthdateUserInfo.setAlignment(Pos.CENTER);
+        hboxemailUserInfo.setAlignment(Pos.CENTER);
+        hboxidUserInfo.setAlignment(Pos.CENTER);
+        hboxroleUserInfo.setAlignment(Pos.CENTER);
+
+        //create update button
+        HBox hboxupdateButton = new HBox();
+        Button btnUpdateUser = new Button("Update");
+        hboxupdateButton.getChildren().add(btnUpdateUser);
+        hboxupdateButton.setAlignment(Pos.CENTER);
+
+        vboxInfoUser.getChildren().addAll(hboxUserInfo, hboxnameUserInfo,hboxnameUserInfo,hboxbirthdateUserInfo,hboxemailUserInfo, hboxidUserInfo, hboxroleUserInfo, hboxupdateButton);
+        vboxInfoUser.setSpacing(10);
+        vboxInfoUser.setPadding( new Insets(100, 0, 0, 75));
+
+
+        btnAddUser.setOnAction(event -> {
+            createUser(tabUser);
+        });
+
+        btnUpdateUser.setOnAction(event ->{
+            SelectionModel<UserType> selectedDeleteUser = list.getSelectionModel();
+            if (selectedDeleteUser.getSelectedItem() != null) {
+                updateUser(tabUser, selectedDeleteUser.getSelectedItem().getName(), selectedDeleteUser.getSelectedItem().getBirthDate(),selectedDeleteUser.getSelectedItem().getEmail(), selectedDeleteUser.getSelectedItem().getId(), selectedDeleteUser.getSelectedItem().getRole());
+            }
+        });
+
+        btnDeleteUser.setOnAction(event -> {
+            SelectionModel<UserType> selectedDeleteUser = list.getSelectionModel();
+            if (selectedDeleteUser.getSelectedItem() != null){
+                Alert alert = new Alert(Alert.AlertType.CONFIRMATION,"Are you sure you want to delete the user?", ButtonType.YES, ButtonType.NO);
+                alert.setHeaderText("Confirmation delete");
+                Window win = gridUserVisu.getScene().getWindow();
+                alert.initOwner(win);
+                alert.showAndWait();
+                if (alert.getResult() == ButtonType.NO) {
+                    return;
+                }
+                if (alert.getResult() == ButtonType.YES) {
+                    client.handleDeleteRoom(selectedDeleteUser.getSelectedItem().getId());
+                }
+            }
+
+        });
+
+        list.setOnMouseClicked(event -> {
+            gridUserVisu.getChildren().remove(vboxInfoUser);
+            gridUserVisu.add(vboxInfoUser, 2, 2);
+            System.out.println("clicked on " + list.getSelectionModel().getSelectedItem());
+            SelectionModel<UserType> selectedUser = list.getSelectionModel();
+            name.setText(selectedUser.getSelectedItem().getName());
+            birthdate.setText(selectedUser.getSelectedItem().getName());
+            email.setText(selectedUser.getSelectedItem().getEmail());
+            id.setText(Integer.toString(selectedUser.getSelectedItem().getId()));
+            role.setText(selectedUser.getSelectedItem().getRole());
+
+        });
+
+        return gridUserVisu;
+    }
+
+	private void createUser(Tab tabUser) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	private void updateUser(Tab tabUser, String name, String birthDate, String email, int id, String role) {
+		// TODO Auto-generated method stub
+		
+	}
+
+ }

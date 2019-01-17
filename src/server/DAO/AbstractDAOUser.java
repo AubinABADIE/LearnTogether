@@ -19,11 +19,13 @@ public abstract class AbstractDAOUser {
     public abstract Connection getConnection();
 
 
-
+    public abstract boolean createDAOUser(String name, String firstname, String birthDate, String email, String password, String role);
     public abstract int readDAOUserByLogin(String login, String password);
     public abstract UserType readDAOUser(int id);
     public abstract boolean isPdwNull(String login);
+    public abstract boolean updateDAOUser(int id, String name, String firstname, String birthDate, String email, String password, String role);
     public abstract boolean setNewPwd(String login, String password);
+    public abstract boolean deleteDAOUser(int id);
     public abstract List<TeacherType> searchAllTeacher();
 
 }
