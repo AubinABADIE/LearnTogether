@@ -2,6 +2,7 @@ package UI;
 
 import java.io.File;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.List;
 
 import Types.CourseType;
@@ -534,19 +535,20 @@ public abstract class UI extends Application implements DisplayIF {
         hboxUpload.setAlignment(Pos.CENTER);
         hboxButtons.setAlignment(Pos.CENTER);
 
+       final Text textFile = new Text("");
+
+
+
         //event to choose file and seethe result
-        uploadButton.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                File file = fileChooser.showOpenDialog(primaryStage);
-                if (file != null) {
-                   Text textOk = new Text(" Charged file");
-                   hboxUpload.getChildren().add(textOk);
-                } else {
-                    Text textNull = new Text(" File null");
-                    hboxUpload.getChildren().add(textNull);
-                }
+        uploadButton.setOnAction(event -> {
+            File file = fileChooser.showOpenDialog(primaryStage);
+            
+            if (file != null) {
+                textFile.setText(" Charged file");
+            } else {
+                textFile.setText(" You haven't a file charged ");
             }
+            hboxUpload.getChildren().add(textFile);
         });
 
         // buttons
@@ -578,6 +580,29 @@ public abstract class UI extends Application implements DisplayIF {
         gridAddRec.add(hboxDate, 1, 2);
         gridAddRec.add(hboxUpload, 1, 3);
         gridAddRec.add(hboxButtons, 1, 4);
+
+        createB.setOnAction(event -> {
+            if (courseComboBox.getValue() == null) {
+                showAlert(Alert.AlertType.ERROR, gridAddRec.getScene().getWindow(), "Form Error!", "Please select a course name");
+                return;
+            }
+            if (examDate.getValue() == null) {
+                showAlert(Alert.AlertType.ERROR, gridAddRec.getScene().getWindow(), "Form Error!", "Please enter an exam date");
+                return;
+            }
+            if (textFile.getText() != "File charged") {
+                showAlert(Alert.AlertType.ERROR, gridAddRec.getScene().getWindow(), "Form Error!", "Please upload a pdf file");
+                return;
+            }
+
+            //client.handleCreateRoom(courseComboBox.getValue(), examDate.getValue(),);
+            courseComboBox.setValue(null);
+
+        });
+
+        cancelB.setOnAction(event -> {
+            //tabRecords.setContent(recordRead(tabRecords));
+        });
 
         return gridAddRec;
     }
