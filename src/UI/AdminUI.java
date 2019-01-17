@@ -133,11 +133,7 @@ public class AdminUI extends TeacherUI {
         tabPane.getTabs().add(tabRoom);
         tabPane.getTabs().add(tabCourse);
         tabPane.getTabs().add(tabDepartment);
-
-        HBox hbox = new HBox();
-        hbox.getChildren().add(new Label("Tab" ));
-        hbox.setAlignment(Pos.CENTER);
-        tabProfile.setContent(hbox);
+        tabPane.getTabs().add(tabUser);
 
         topBar.getChildren().addAll(titleBar, tabPane);
         adminScene.setTop(topBar);
@@ -1509,11 +1505,11 @@ public class AdminUI extends TeacherUI {
     protected Tab createTabUser(){
 
         Tab tabUser = new Tab();
-        tabUser.setText("Room");
+        tabUser.setText("User");
         tabUser.setClosable(false);
 
 
-        tabUser.setContent(roomUser(tabUser));
+        tabUser.setContent(readUser(tabUser));
         return tabUser;
     }
 
@@ -1522,10 +1518,10 @@ public class AdminUI extends TeacherUI {
      * @param tabUser
      * @return
      */
-    protected GridPane roomUser(Tab tabUser){
+    protected GridPane readUser(Tab tabUser){
 
         /*add list of users*/
-        //client.getRooms();
+        //client.getUsers();
         ListView<UserType> list = new ListView<>();
         userNames = FXCollections.observableArrayList();
         userNames.addListener((ListChangeListener<UserType>) c -> {
@@ -1630,7 +1626,7 @@ public class AdminUI extends TeacherUI {
         hboxupdateButton.getChildren().add(btnUpdateUser);
         hboxupdateButton.setAlignment(Pos.CENTER);
 
-        vboxInfoUser.getChildren().addAll(hboxUserInfo, hboxnameUserInfo,hboxnameUserInfo,hboxbirthdateUserInfo,hboxemailUserInfo, hboxidUserInfo, hboxroleUserInfo, hboxupdateButton);
+        vboxInfoUser.getChildren().addAll(hboxnameUserInfo,hboxbirthdateUserInfo,hboxemailUserInfo, hboxidUserInfo, hboxroleUserInfo, hboxupdateButton);
         vboxInfoUser.setSpacing(10);
         vboxInfoUser.setPadding( new Insets(100, 0, 0, 75));
 
