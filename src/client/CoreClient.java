@@ -388,7 +388,6 @@ public class CoreClient implements ClientIF {
 
     /**
      * This method delegates getPromotion to PromotionServices class
-     * @return a promotion list
      */
     public void getPromo() {
         promo.getPromotion();
@@ -424,6 +423,7 @@ public class CoreClient implements ClientIF {
     }
 
 
-
-
+    public void createRecord(int courseId, int year, File recordFile, int userID) {
+        records.createRecord(courseId, year, recordFile, userID);
+    }
 }
