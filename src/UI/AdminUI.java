@@ -1662,11 +1662,11 @@ public class AdminUI extends TeacherUI {
         returnDepView.setFitHeight(15);
         returnDepView.setFitWidth(15);
         //create return button
-        Button btnReturnPromo = new Button();
-        btnReturnPromo.setGraphic(returnDepView);//setting icon to button
+        Button btnReturnClass = new Button();
+        btnReturnClass.setGraphic(returnDepView);//setting icon to button
 
         HBox returnBox = new HBox();
-        returnBox.getChildren().add(btnReturnPromo);
+        returnBox.getChildren().add(btnReturnClass);
 
         //grid pane
         GridPane gridClassUp = new GridPane();
@@ -1735,6 +1735,9 @@ public class AdminUI extends TeacherUI {
         });
 
         cancelCreate.setOnAction(event -> {
+            tabDepartment.setContent(departmentRead(tabDepartment));
+        });
+        btnReturnClass.setOnAction(event -> {
             tabDepartment.setContent(departmentRead(tabDepartment));
         });
 
