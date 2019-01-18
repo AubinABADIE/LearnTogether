@@ -29,6 +29,7 @@ import java.util.List;
  * UI used to start the client application.
  * It contains everything related to this stage.
  * It the starts UIs according to the information received from the server.
+ *
  * @author Aubin ABADIE
  * @author Marie SALELLES
  * @author Audrey SAMSON
