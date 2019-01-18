@@ -7,24 +7,25 @@ import java.io.Serializable;
  * This class is used to model the Record found in the database.
  * It implements Serializable to allow a RacordType object to go through sockets.
  *
- * @author Aubin ABADIE
  * @author Marie SALELLES
- * @author Audrey SAMSON
  * @author Yvan SANSON
- * @author Solene SERAFIN
  */
 public class RecordType implements Serializable {
     private int courseID;
     private int examYear;
-    private File recordFile;
+    private byte[] record;
+    private String name;
     private int donatingUser;
 
-    public RecordType(int courseID, int examYear, File recordFile, int donatingUser) {
+    public RecordType(String name, int courseID, int examYear, byte[] recordFile, int donatingUser) {
+        this.name = name;
         this.courseID = courseID;
         this.examYear = examYear;
-        this.recordFile = recordFile;
+        this.record = recordFile;
         this.donatingUser = donatingUser;
     }
+
+
 
     public int getCourseID() {
         return courseID;
@@ -42,12 +43,12 @@ public class RecordType implements Serializable {
         this.examYear = examYear;
     }
 
-    public File getRecordFile() {
-        return recordFile;
+    public byte[] getRecord() {
+        return record;
     }
 
-    public void setRecordFile(File recordFile) {
-        this.recordFile = recordFile;
+    public void setRecord(byte[] record) {
+        this.record = record;
     }
 
     public int getDonatingUser() {
@@ -56,5 +57,13 @@ public class RecordType implements Serializable {
 
     public void setDonatingUser(int donatingUser) {
         this.donatingUser = donatingUser;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }

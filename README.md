@@ -5,15 +5,15 @@ This readme is used to provide a better understanding of the different commands 
 
 # FROM the client
 
-## \#LOGIN
+## #LOGIN
 Used when the client wants to connect to the server. With this command, the server checks the database to find the user's credentials and whether grand or not the access.
 *Usage*: `#LOGIN {email} {password}`
 
-## \#FIRSTPWD
+## #FIRSTPWD
 Used when the client wants to change its password **for the first time** (he hasn't yet connected, and in the DB, the password is blank).
 *Usage*: `#FIRSTCONN {email} {password}`
 
-## \#CREATEROOM
+## #CREATEROOM
 Used when the client wants to create a room into the database. The parse method for the different parameters is "-/-"  
 Arguments:
 - name: String
@@ -25,14 +25,14 @@ Arguments:
 
 *Usage*: `#CREATEROOM-/-{name}-/-{capacity}-/-{building}-/-{hasProjector}-/-{hasComputer}-/-{description}`
 
-##\ #DELETEROOM
+## #DELETEROOM
 Used when the client wants to delete a room. The parse method for the different parameters is "-/-"
 Arguments:
 - id : int
 
 *Usage*: `#CRATEROOM-/-{id}`
 
-##\ #UPDATEROOM
+## #UPDATEROOM
 Used when the client wants to update a room into the database. The parce method for the different parameters is "-/-"
 Arguments:
 - id : int
@@ -45,11 +45,11 @@ Arguments:
 
 *Usage* : `#UPDATEROOM-/-{id}-/-{name}-/-{capacity}-/-{building}-/-{hasProjector}-/-{hasComputer}-/-{description}`
 
-## \#GETROOMS
+## #GETROOMS
 Used when the client wants the list of all rooms.
 No parameters.
 
-## \#SENDMSGTOCLIENT
+## #SENDMSGTOCLIENT
 Used when the client wants to send a message to another user through the server. The parse method for the different parameters is "-/-"  
 Arguments:
 - id: the sender's id.
@@ -57,20 +57,20 @@ Arguments:
 - message: the message sent.
  *Usage*: `#LOGIN {id} {email} {message}`
  
- ## \#RETRIEVECONVERSATION
+ ## #RETRIEVECONVERSATION
  Used when the client wants to retrieve all of the conversation between him and another client.  
  Arguments:
  - id: int, the client id
  - email: String, the other person's email.
  *Usage*: `#RETRIEVECONVERSATION {id} {email}`
  
- ## \#GETCONVEMAIL
+ ## #GETCONVEMAIL
  Used when the client wants to get all its discussions.
  Arguments:
  - id: int the asking ID  
  *Usage*:`#GETCONVEMAIL {id}`
  
- ## \#DELETECONVERSATION
+ ## #DELETECONVERSATION
  The client asks to delete a conversation with this command.
  Arguments: 
  - id: int, the asking ID

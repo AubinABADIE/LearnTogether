@@ -27,6 +27,7 @@ public class GeneralServer implements Observer {
     private Date currentDate;
     private SimpleDateFormat dateFormat;
     private AbstractDAOFactory dao;
+    private FileStorageHandler fileStorageHandler;
 
 
 
@@ -37,7 +38,7 @@ public class GeneralServer implements Observer {
      * @param display: the server display
      * @throws IOException
      */
-    public GeneralServer(int port, ChatIF display) throws IOException {
+    public GeneralServer(int port, ChatIF display) throws Exception {
         comm = new ObservableOriginatorServer(port);
         comm.addObserver(this);
         comm.listen();
@@ -52,6 +53,7 @@ public class GeneralServer implements Observer {
         dao.createDAOConversation();
         dao.createDAOPromotion();
         dao.createDAOClass();
+        fileStorageHandler = new FileStorageHandler();
         display.display("Server is running on port " + port);
     }
 
@@ -192,8 +194,12 @@ public class GeneralServer implements Observer {
      */
 
     public void handleRecordFromClient(RecordType record, ConnectionToClient client){
-
-        //recordStoreId=
+        fileStorageHandler.insertFile(record.getName(), record.getRecord());
+        try {
+            client.sendToClient(record);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
         //handleAddRecord(record.getExamYear(), record.getCourseID(), recordSoreId,client);
 
