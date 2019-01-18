@@ -94,22 +94,22 @@ public class GeneralServer implements Observer {
             handleCreatePromotionFromClient(creds[1], creds[2], creds[3],creds[4], client);
         }else if(instruction.startsWith("UPDATEPROMOTION")){
             String[] creds = instruction.split("-/-");
-            //handleUpdateDepartmentFromClient(creds[1], creds[2], creds[3],creds[4], client);
+            handleUpdatePromotionFromClient(creds[1], creds[2], creds[3],creds[4],creds[5],  client);
         }else if(instruction.startsWith("DELETEPROMOTION")){
             String[] creds = instruction.split("-/-");
-            //handleDeleteDepartmentFromClient(Integer.parseInt(creds[1]), client);
+            handleDeletePromotionFromClient(Integer.parseInt(creds[1]), client);
         }else if (instruction.startsWith("GETPROMOTION")){
             handleListPromoFromClient(client);
         }
         else if(instruction.startsWith("CREATECLASS")){
             String[] creds = instruction.split("-/-");
-            //handleCreatePromotionFromClient(creds[1], creds[2], creds[3],creds[4], client);
+            handleCreateClassFromClient(creds[1], creds[2], creds[3], client);
         }else if(instruction.startsWith("UPDATECLASS")){
             String[] creds = instruction.split("-/-");
-            //handleUpdateDepartmentFromClient(creds[1], creds[2], creds[3],creds[4], client);
+            handleUpdateClassFromClient(creds[1], creds[2], creds[3],creds[4], client);
         }else if(instruction.startsWith("DELETECLASS")){
             String[] creds = instruction.split("-/-");
-            //handleDeleteDepartmentFromClient(Integer.parseInt(creds[1]), client);
+            handleDeleteClassFromClient(Integer.parseInt(creds[1]), client);
         }else if (instruction.startsWith("GETCLASS")){
             handleListClassFromClient(client);
         }
@@ -689,6 +689,53 @@ public class GeneralServer implements Observer {
             mess = "#CREATEDPROMO Success";
         }
         else{
+            mess = "#CREATEDPROMO Failure";
+        }
+        try {
+            client.sendToClient(mess);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void handleDeletePromotionFromClient(int idPromo, ConnectionToClient client) {
+
+        int result = dao.getPromotionDAO().deletePromotion(idPromo);
+
+        String mess;
+        if (result == 1){
+            mess = "#DELETEDPROMOTION Success";
+        }
+        else{
+            mess = "#DELETEDPROMOTION Failure";
+        }
+        try {
+            client.sendToClient(mess);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * @param id
+     * @param name
+     * @param descriptionPromo
+     * @param graduationYear
+     * @param idDepartment
+     * @param client
+     */
+    public void handleUpdatePromotionFromClient(String id,String name, String descriptionPromo, String graduationYear, String idDepartment, ConnectionToClient client) {
+        int idP=Integer.parseInt(id);
+        int g=Integer.parseInt(graduationYear);
+        int idD=Integer.parseInt(idDepartment);
+
+        int result = dao.getPromotionDAO().updatePromotion(idP,name,descriptionPromo,g,idD);
+
+        String mess;
+        if (result == 1){
+            mess = "#CREATEDPROMO Success";
+        }
+        else{
             mess = "#CREATEDEDPROMO Failure";
         }
         try {
@@ -704,13 +751,82 @@ public class GeneralServer implements Observer {
 
     public void handleListClassFromClient(ConnectionToClient client){
         List<ClassType> cl =  dao.getClassDAO().searchAllClasses();
-        System.out.print("taille:"+cl.size());
         try {
             client.sendToClient(cl);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
+
+
+    /**
+     * @param nameClass
+     * @param descClass
+     * @param refPromo
+     * @param client
+     */
+    public void handleCreateClassFromClient( String nameClass,String descClass,String refPromo, ConnectionToClient client) {
+        int rp=Integer.parseInt(refPromo);
+        int result = dao.getClassDAO().createClass(nameClass,descClass,rp);
+
+        String mess;
+        if (result == 1){
+            mess = "#CREATEDCLASS Success";
+        }
+        else{
+            mess = "#CREATEDCLASS Failure";
+        }
+        try {
+            client.sendToClient(mess);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void handleDeleteClassFromClient(int idClass, ConnectionToClient client) {
+
+        int result = dao.getClassDAO().deleteClass(idClass);
+
+        String mess;
+        if (result == 1){
+            mess = "#DELETEDCLASS Success";
+        }
+        else{
+            mess = "#DELETEDCLASS Failure";
+        }
+        try {
+            client.sendToClient(mess);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * @param idC
+     * @param nameClass
+     * @param descClass
+     * @param refPromo
+     * @param client
+     */
+    public void handleUpdateClassFromClient(String idC,String nameClass,String descClass,String refPromo,ConnectionToClient client){
+        int id=Integer.parseInt(idC);
+        int refP=Integer.parseInt(refPromo);
+        int result = dao.getClassDAO().updateClass(id,nameClass,descClass,refP);
+
+        String mess;
+        if (result == 1){
+            mess = "#CREATEDCLASS Success";
+        }
+        else{
+            mess = "#CREATECLASS Failure";
+        }
+        try {
+            client.sendToClient(mess);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 
 
     /**

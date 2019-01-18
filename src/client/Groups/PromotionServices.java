@@ -41,17 +41,22 @@ public class PromotionServices {
      */
     public void updatePromotion(int id, String promotionName, String descriptionPromo, int graduationYear, int idDepartment) {
         try {
-            coreClient.getConnection().sendToServer("#UPDATEPROMOTION-/-" + id + "-/" + promotionName + "-/-" + descriptionPromo + "-/-" + graduationYear + "-/-" + idDepartment);
+            coreClient.getConnection().sendToServer("#UPDATEPROMOTION-/-" + id + "-/-" + promotionName + "-/-" + descriptionPromo + "-/-" + graduationYear + "-/-" + idDepartment);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
     /**
-     * @param promoID
+     * @param idPromo
      */
-    public void deletePromotion(int promoID) {
-        // TODO implement here
+    public void deletePromotion(int idPromo) {
+        try {
+            coreClient.getConnection().sendToServer("#DELETEPROMOTION-/-" + idPromo);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
 
     /**

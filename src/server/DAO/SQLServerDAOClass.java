@@ -65,12 +65,44 @@ public class SQLServerDAOClass extends AbstractDAOClass {
 
     @Override
     public int updateClass(int idClass, String className, String descClass, int idPromotion) {
-        return 0;
+        Connection connection = getConnection();
+        int result = 0;
+        if(connection != null){
+            try{
+                PreparedStatement preparedStatement = connection.prepareStatement("UPDATE Classes SET className = ?,  classDescription = ?, idPromotion = ? WHERE idClass = ? ");
+                preparedStatement.setString(1, className);
+                preparedStatement.setString(2, descClass);
+                preparedStatement.setInt(3, idPromotion);
+                preparedStatement.setInt(4, idClass);
+                result = preparedStatement.executeUpdate();
+            }catch (SQLException e){
+                e.printStackTrace();
+            }
+            finally {
+                closeConnection(connection);
+            }
+        }
+        return result;
     }
 
     @Override
     public int deleteClass(int id) {
-        return 0;
+        Connection connection = getConnection();
+        int result = 0;
+        if(connection != null){
+            try{
+                PreparedStatement preparedStatement = connection.prepareStatement("DELETE FROM Classes WHERE idClass = ? ");
+                preparedStatement.setInt(1, id);
+                result = preparedStatement.executeUpdate();
+
+            }catch (SQLException e){
+                e.printStackTrace();
+            }
+            finally {
+                closeConnection(connection);
+            }
+        }
+        return result;
     }
 
     @Override

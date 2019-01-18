@@ -13,9 +13,9 @@ public class PromotionType implements Serializable {
     public PromotionType(int idPromo, String namePromo,  String descriptionPromo, int graduationPromo, int refDep){
         this.idPromo=idPromo;
         this.namePromo=namePromo;
+        this.descriptionPromo=descriptionPromo;
         this.graduationPromo=graduationPromo;
         this.refDep=refDep;
-        this.descriptionPromo=descriptionPromo;
 
     }
 

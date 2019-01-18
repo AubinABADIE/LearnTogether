@@ -31,12 +31,12 @@ public abstract class AbstractDAOPromotion {
      * @param descriptionDep
      * @param refDep
      */
-    public abstract int updatePromotion(int idPromo, int refDep, String name, int graduationYear, String descriptionDep);
+    public abstract int updatePromotion(int idPromo, String name, String descriptionDep, int graduationYear, int refDep);
 
     /**
      * @param idPromo
      */
-    public abstract int deletePromotiont(int idPromo);
+    public abstract int deletePromotion(int idPromo);
 
     public abstract int readDepartment(int idDep);
 }

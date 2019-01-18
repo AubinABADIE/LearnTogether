@@ -91,13 +91,47 @@ public class SQLServerDAOPromotion extends AbstractDAOPromotion {
 
 
     @Override
-    public int updatePromotion(int idPromo, int refDep, String name, int graduationYear, String descriptionDep) {
-        return 0;
-    }
+    public int updatePromotion(int idPromo, String name,String descriptionDep, int graduationYear,int refDep) {
+        Connection connection = getConnection();
+            int result = 0;
+            if(connection != null){
+                try{
+                    PreparedStatement preparedStatement = connection.prepareStatement("UPDATE Promotions SET promotionName = ?,  descriptionPromo = ?, graduationYear = ?, idDepartment = ? WHERE idPromotion = ? ");
+                    preparedStatement.setString(1, name);
+                    preparedStatement.setString(2, descriptionDep);
+                    preparedStatement.setInt(3, graduationYear);
+                    preparedStatement.setInt(4, refDep);
+                    preparedStatement.setInt(5, idPromo);
+                    result = preparedStatement.executeUpdate();
+                }catch (SQLException e){
+                    e.printStackTrace();
+                }
+                finally {
+                    closeConnection(connection);
+                }
+            }
+            return result;
+        }
+
 
     @Override
-    public int deletePromotiont(int idPromo) {
-        return 0;
+    public int deletePromotion(int idPromotion) {
+        Connection connection = getConnection();
+        int result = 0;
+        if(connection != null){
+            try{
+                PreparedStatement preparedStatement = connection.prepareStatement("DELETE FROM Promotions WHERE idPromotion = ? ");
+                preparedStatement.setInt(1, idPromotion);
+                result = preparedStatement.executeUpdate();
+
+            }catch (SQLException e){
+                e.printStackTrace();
+            }
+            finally {
+                closeConnection(connection);
+            }
+        }
+        return result;
     }
 
     @Override
