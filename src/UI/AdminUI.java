@@ -139,11 +139,6 @@ public class AdminUI extends TeacherUI {
         tabPane.getTabs().add(tabDepartment);
         tabPane.getTabs().add(tabUser);
 
-        HBox hbox = new HBox();
-        hbox.getChildren().add(new Label("Tab"));
-        hbox.setAlignment(Pos.CENTER);
-        tabProfile.setContent(hbox);
-
         topBar.getChildren().addAll(titleBar, tabPane);
         adminScene.setTop(topBar);
         titleBar.setSpacing(20);
@@ -1794,7 +1789,7 @@ public class AdminUI extends TeacherUI {
         // add in hbox buttons and title
         HBox hboxButtonUser = new HBox();
 
-        Text title = new Text("Room : ");
+        Text title = new Text("User : ");
         title.setFont(Font.font(20));
         hboxButtonUser.getChildren().add(title);
         hboxButtonUser.getChildren().add(btnAddUser);
