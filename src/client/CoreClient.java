@@ -117,14 +117,23 @@ public class CoreClient implements ClientIF {
             else if  (((String) msg).startsWith("#DELETEDDEPARTMENT")){
                 department.handleDeletedDepartment((String) msg);
             }
-            else if  (((String) msg).startsWith("#CREATEDPROMO")){
-            	promo.handleCreatedPromo((String) msg);
+         else if  (((String) msg).startsWith("#CREATEDPROMOTION")){
+            promo.handleCreatedPromo((String) msg);
+        }
+        else if  (((String) msg).startsWith("#UPDATEDPROMOTION")){
+            promo.handleUpdatedPromo((String) msg);
+        }
+        else if  (((String) msg).startsWith("#DELETEDPROMOTION")){
+            promo.handleDeletedPromo((String) msg);
+        }
+            else if  (((String) msg).startsWith("#CREATEDCLASS")){
+                classes.handleCreatedClass((String) msg);
             }
-            else if  (((String) msg).startsWith("#UPDATEDPROMO")){
-            	//promo.handleUpdatedPromo((String) msg);
+            else if  (((String) msg).startsWith("#UPDATEDCLASS")){
+                classes.handleUpdatedClass((String) msg);
             }
-            else if  (((String) msg).startsWith("#DELETEDPROMO")){
-            	//promo.handleDeletedPromo((String) msg);
+            else if  (((String) msg).startsWith("#DELETEDCLASS")){
+                classes.handleDeletedClass((String) msg);
             }
             else if(((String) msg).startsWith("#CREATEDUSER")) {
             	user.handleCreatedUser((String)msg);
@@ -388,7 +397,13 @@ public class CoreClient implements ClientIF {
     public void handleCreatePromotion(String name, String descriptionPromo, int graduationPromo, int refDep){
         promo.createPromotion(name, descriptionPromo,graduationPromo,refDep);
     }
+    public void handleDeletePromotion(int idPromo){
+        promo.deletePromotion(idPromo);
+    }
 
+    public void handleUpdatePromotion(int idPromo,String name, String descriptionPromo, int graduationPromo, int refDep){
+        promo.updatePromotion(idPromo,name,descriptionPromo,graduationPromo,refDep);
+    }
     /**
      * This method delegates getClasses to ClassServices class
      * @return a class list
@@ -397,12 +412,18 @@ public class CoreClient implements ClientIF {
         classes.getClasses();
     }
 
-    /***************
-     * Records
-     ***************/
-    public void createRecord(int courseID, int examYear, File record, int donatingUser){
-        records.createRecord(courseID, examYear, record, donatingUser);
-
+    public void handleCreateClass(String nameClass, String descriptionClass,int refPromo){
+        classes.createClass(nameClass, descriptionClass,refPromo);
     }
-    
+    public void handleDeleteClass(int classId){
+        classes.deleteClass(classId);
+    }
+
+    public void handleUpdateClass(int idC,String nameClass, String descriptionClass, int refP){
+        classes.updateClass(idC,nameClass,descriptionClass,refP);
+    }
+
+
+
+
 }

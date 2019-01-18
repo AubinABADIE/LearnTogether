@@ -98,7 +98,6 @@ public class SQLServerDAODepartment extends AbstractDAODepartment{
      */
     @Override
     public int deleteDepartment(int idDep) {
-        System.out.println("erecu UPDATE");
         Connection connection = getConnection();
         int result = 0;
         if(connection != null){

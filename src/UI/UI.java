@@ -617,7 +617,7 @@ public abstract class UI extends Application implements DisplayIF {
                 showAlert(Alert.AlertType.ERROR, gridAddRec.getScene().getWindow(), "Form Error!", "Please upload a pdf file");
                 return;
             }
-            client.createRecord(((CourseType)courseComboBox.getValue()).getId(), examDate.getValue().getYear(), recordFile, userID);
+            //client.createRecord(((CourseType)courseComboBox.getValue()).getId(), examDate.getValue().getYear(), recordFile, userID);
             courseComboBox.setValue(null);
 
         });
