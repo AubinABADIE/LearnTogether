@@ -6,9 +6,7 @@ import java.time.ZoneId;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
 
-import Types.CourseType;
-import Types.MessageType;
-import Types.UserType;
+import Types.*;
 import client.CoreClient;
 import common.DisplayIF;
 import javafx.application.Application;
@@ -61,6 +59,7 @@ public abstract class UI extends Application implements DisplayIF {
     BooleanProperty hasClient = new SimpleBooleanProperty(false);
     TextArea convo;
     private ObservableList<CourseType> courseNames;
+    protected ObservableList<RecordType> recordNames;
 
 
     //Business logic
@@ -506,13 +505,13 @@ public abstract class UI extends Application implements DisplayIF {
         tabRecords.setText("Record");
         tabRecords.setClosable(false);
 
-        tabRecords.setContent(addRecord(tabRecords));
+        tabRecords.setContent(readRecords(tabRecords));
 
         return tabRecords;
 
     }
 
-    private GridPane addRecord(Tab tabRecords){
+    protected GridPane addRecord(Tab tabRecords){
 
         Text titleRecord = new Text("Add a Record :");
         titleRecord.setFont(Font.font(20));
@@ -628,6 +627,57 @@ public abstract class UI extends Application implements DisplayIF {
         return gridAddRec;
     }
 
+    protected GridPane readRecords(Tab tabRecords){
+        //add  records
+        //client.getRecords();
+        ListView<RecordType> list = new ListView<>();
+        recordNames = FXCollections.observableArrayList();
+        recordNames.addListener((ListChangeListener<RecordType>) c -> {
+            list.setItems(recordNames);
+        });
+
+
+        list.setItems(recordNames);
+
+        Image fileImg = new Image(getClass().getResourceAsStream("images/icons8-document-480.png"));
+
+        //add image on the items in the recordList
+        list.setCellFactory(param -> new ListCell<RecordType>() {
+            private ImageView imageView = new ImageView();
+            @Override
+            public void updateItem(RecordType nameR, boolean empty) {
+                super.updateItem(nameR, empty);
+                imageView.setImage(fileImg);
+                setGraphic(imageView);
+            }
+        });
+
+
+        // button add
+        Image addRec = new Image(getClass().getResourceAsStream("images/icons8-plus-208.png"));
+        ImageView addRecView = new ImageView(addRec);
+        addRecView.setFitHeight(15);
+        addRecView.setFitWidth(15);
+
+        //create button add
+        Button btnAddRec = new Button("Add");
+        btnAddRec.setGraphic(addRecView);//setting icon to button
+
+        // add in hbox
+        HBox hboxbutton = new HBox();
+        hboxbutton.getChildren().add(btnAddRec);
+
+        GridPane gridRecord = new GridPane();
+        gridRecord.setHgap(10);
+        gridRecord.setVgap(10);
+        gridRecord.add(list, 1, 1);
+        gridRecord.add(hboxbutton,1,0);
+
+        btnAddRec.setOnAction(event -> addRecord(tabRecords));
+
+
+        return gridRecord;
+    }
 
     @Override
     public void setConversationMessages(List<MessageType> conversationMessages){
