@@ -44,14 +44,6 @@ public class AdminUI extends TeacherUI {
     protected Tab tabCourse;
     protected Tab tabRoom;
     protected Tab tabDepartment;
-    protected ObservableList<RoomType> roomNames;
-	protected Tab tabSchedule;
-	protected Tab tabRecords;
-	protected Tab tabDiary;
-	protected Tab tabChat;
-	protected Tab tabCourse;
-	protected Tab tabRoom;
-	protected Tab tabDepartment;
 	protected Tab tabUser;
 	protected ObservableList<RoomType> roomNames;
     protected ObservableList<DepartmentType> depNames;
