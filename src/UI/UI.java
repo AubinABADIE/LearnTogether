@@ -18,6 +18,8 @@ import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
@@ -512,10 +514,127 @@ public abstract class UI extends Application implements DisplayIF {
 
     }
 
+    /**
+     * This method build the default record tab
+     * @param tabRecords : tab record
+     * @return : the gridPane which are displaying
+     */
+    protected GridPane readRecords(Tab tabRecords){
+        //add  records
+        //client.getRecords();
+        ListView<RecordType> list = new ListView<>();
+        recordNames = FXCollections.observableArrayList();
+        recordNames.addListener((ListChangeListener<RecordType>) c -> {
+            list.setItems(recordNames);
+        });
+
+
+        list.setItems(recordNames);
+
+        Image fileImg = new Image(getClass().getResourceAsStream("images/icons8-document-480.png"));
+        Image fileImgDown = new Image(getClass().getResourceAsStream("images/icons8-download-filled-100.png"));
+        ImageView downView = new ImageView(fileImgDown);
+
+        //add images on the items in the recordList
+        list.setCellFactory(param -> new ListCell<RecordType>() {
+            private ImageView imageView = new ImageView();
+            Button btnDown = new Button();
+            @Override
+            public void updateItem(RecordType nameR, boolean empty) {
+                super.updateItem(nameR, empty);
+                imageView.setImage(fileImg);
+                setGraphic(imageView);
+                btnDown.setGraphic(downView);//setting icon to button
+            }
+            //event download button
+
+
+
+
+        });
+
+        list.setPrefWidth(350);
+        list.setPrefHeight(500);
+
+        Image addRec = new Image(getClass().getResourceAsStream("images/icons8-plus-208.png"));
+        ImageView addRecView = new ImageView(addRec);
+        addRecView.setFitHeight(15);
+        addRecView.setFitWidth(15);
+
+        //create button add
+        Button btnAddRec = new Button("Add");
+        btnAddRec.setGraphic(addRecView);//setting icon to button
+        btnAddRec.setOnAction(event -> {
+            tabRecords.setContent(addRecord(tabRecords));
+        });
+
+
+        //delete button
+        Image deleteRec = new Image(getClass().getResourceAsStream("images/icons8-annuler-208.png"));
+        ImageView deleteRecView = new ImageView(deleteRec);
+        deleteRecView.setFitHeight(12);
+        deleteRecView.setFitWidth(12);
+
+        //create button delete
+        Button btnDeleteRec = new Button("Delete");
+        btnDeleteRec.setGraphic(deleteRecView);//setting icon to button
+        btnDeleteRec.setOnAction(event -> {
+            tabRecords.setContent(deleteRecord(tabRecords));
+                });
+
+
+        // add in hbox buttons and title
+        HBox hboxButtonRec = new HBox();
+        hboxButtonRec.setPadding(new Insets(5, 0, 0, 5));
+
+        Text title = new Text("Record : ");
+        title.setFont(Font.font(20));
+        hboxButtonRec.getChildren().add(title);
+        hboxButtonRec.getChildren().add(btnAddRec);
+        hboxButtonRec.getChildren().add(btnDeleteRec);
+        hboxButtonRec.setSpacing(5);
+
+
+        GridPane gridRecord = new GridPane();
+        gridRecord.setHgap(10);
+        gridRecord.setVgap(10);
+
+        gridRecord.add(hboxButtonRec,1,0);
+        gridRecord.add(list, 1, 1);
+
+
+        return gridRecord;
+    }
+
+    /**
+     * This method buils pane of add record.
+     * @param tabRecords : tab record
+     * @return return the gridPane with the form
+     */
     protected GridPane addRecord(Tab tabRecords){
 
+        //return button
+        Image returnRec = new Image(getClass().getResourceAsStream("images/icons8-return.png"));
+        ImageView returnRecView = new ImageView(returnRec);
+        returnRecView.setFitHeight(15);
+        returnRecView.setFitWidth(15);
+
+        //create return button
+        Button btnReturnRec = new Button();
+        btnReturnRec.setGraphic(returnRecView);//setting icon to button
+
+        btnReturnRec.setOnAction(event -> {
+            tabRecords.setContent(readRecords(tabRecords));
+        });
+
+        //form
         Text titleRecord = new Text("Add a Record :");
         titleRecord.setFont(Font.font(20));
+
+        HBox returnTitleBox = new HBox();
+
+        returnTitleBox.getChildren().addAll(titleRecord, btnReturnRec);
+        returnTitleBox.setSpacing(600);
 
         Label courseLab = new Label("Course : ");
         Label dateLab = new Label("Exam date : ");
@@ -597,11 +716,11 @@ public abstract class UI extends Application implements DisplayIF {
         gridAddRec.setVgap(10);
         gridAddRec.setPadding(new Insets(10,10,10,10));
 
-        gridAddRec.add(titleRecord, 1, 0);
-        gridAddRec.add(hboxCourses, 1, 1);
-        gridAddRec.add(hboxDate, 1, 2);
-        gridAddRec.add(hboxUpload, 1, 3);
-        gridAddRec.add(hboxButtons, 1, 4);
+        gridAddRec.add(returnTitleBox, 1, 1);
+        gridAddRec.add(hboxCourses, 1, 2);
+        gridAddRec.add(hboxDate, 1, 3);
+        gridAddRec.add(hboxUpload, 1, 4);
+        gridAddRec.add(hboxButtons, 1, 5);
 
         createB.setOnAction(event -> {
             if (courseComboBox.getValue() == null) {
@@ -622,62 +741,81 @@ public abstract class UI extends Application implements DisplayIF {
         });
 
         cancelB.setOnAction(event -> {
-            //tabRecords.setContent(recordRead(tabRecords));
+            tabRecords.setContent(readRecords(tabRecords));
         });
 
         return gridAddRec;
     }
 
-    protected GridPane readRecords(Tab tabRecords){
-        //add  records
-        //client.getRecords();
+    /**
+     * This method build the pane to delete a record
+     * @param tabRecords : the record tab
+     * @return the gridPane with the delete interface
+     */
+    protected GridPane deleteRecord(Tab tabRecords){
+
+        //return button
+        Image returnRec = new Image(getClass().getResourceAsStream("images/icons8-return.png"));
+        ImageView returnRecView = new ImageView(returnRec);
+        returnRecView.setFitHeight(15);
+        returnRecView.setFitWidth(15);
+
+        //create return button
+        Button btnReturnRecD = new Button();
+        btnReturnRecD.setGraphic(returnRecView);//setting icon to button
+
+        btnReturnRecD.setOnAction(event -> {
+            tabRecords.setContent(readRecords(tabRecords));
+        });
+
+        //title
+        Text titleDeleteRecord = new Text("Delete a Record :");
+        titleDeleteRecord.setFont(Font.font(20));
+
+        //record list
+
+        //client.getRecordsByUser();
         ListView<RecordType> list = new ListView<>();
         recordNames = FXCollections.observableArrayList();
         recordNames.addListener((ListChangeListener<RecordType>) c -> {
             list.setItems(recordNames);
         });
 
-
         list.setItems(recordNames);
+        list.setPrefWidth(350);
+        list.setPrefHeight(500);
 
-        Image fileImg = new Image(getClass().getResourceAsStream("images/icons8-document-480.png"));
+        Image deleteR = new Image(getClass().getResourceAsStream("images/icons8-annuler-208.png"));
 
-        //add image on the items in the recordList
+        //add images on the items in the recordList
         list.setCellFactory(param -> new ListCell<RecordType>() {
             private ImageView imageView = new ImageView();
+            Button deleteRB = new Button();
             @Override
             public void updateItem(RecordType nameR, boolean empty) {
                 super.updateItem(nameR, empty);
-                imageView.setImage(fileImg);
-                setGraphic(imageView);
+                imageView.setImage(deleteR);
+                deleteRB.setGraphic(imageView);
             }
+            //event delete
+
+
+
+
         });
 
 
-        // button add
-        Image addRec = new Image(getClass().getResourceAsStream("images/icons8-plus-208.png"));
-        ImageView addRecView = new ImageView(addRec);
-        addRecView.setFitHeight(15);
-        addRecView.setFitWidth(15);
+        HBox returnTitleBox = new HBox();
 
-        //create button add
-        Button btnAddRec = new Button("Add");
-        btnAddRec.setGraphic(addRecView);//setting icon to button
-
-        // add in hbox
-        HBox hboxbutton = new HBox();
-        hboxbutton.getChildren().add(btnAddRec);
-
-        GridPane gridRecord = new GridPane();
-        gridRecord.setHgap(10);
-        gridRecord.setVgap(10);
-        gridRecord.add(list, 1, 1);
-        gridRecord.add(hboxbutton,1,0);
-
-        btnAddRec.setOnAction(event -> addRecord(tabRecords));
+        returnTitleBox.getChildren().addAll(titleDeleteRecord, btnReturnRecD);
+        returnTitleBox.setSpacing(600);
 
 
-        return gridRecord;
+        GridPane deleteGrid = new GridPane();
+        deleteGrid.add(returnTitleBox, 1,0);
+        deleteGrid.add(list, 1,1);
+
+        return deleteGrid;
     }
 
     @Override
