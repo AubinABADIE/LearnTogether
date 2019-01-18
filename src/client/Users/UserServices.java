@@ -99,6 +99,31 @@ public class UserServices{
     }
     
     /**
+     * This method is called when the admin wants to create a new user.
+     * @param name
+     * @param firstname
+     * @param birthDate
+     * @param email
+     * @param password
+     * @param role
+     */
+    public void createUser(String name, String firstname, String birthDate, String email, String password, String role) {
+    	try {
+    		coreClient.getConnection().sendToServer("#CREATEUSER " + name + " " + firstname + " " + birthDate  + " " + email + " " + password + " " + role);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    
+    /**
+     * When the server responds to a CREATEUSER command sent by this client. This method interprets what is returned.
+     * @param msg: the response from the server.
+     */
+    public void handleCreatedUser(String msg) {
+    	String[] credentials = msg.split(" ");
+	}
+    
+    /**
      * This method is called when the client wants to get is information for his profile.
      * @param id: the user's id.
      */
@@ -116,7 +141,6 @@ public class UserServices{
      */
     public void handleReadUser(String msg) {
     	String[] credentials = msg.split(" ");
-		
 	}
     
     /**
@@ -185,6 +209,26 @@ public class UserServices{
      */
 	public void handleUpdatedPhoto(String msg) {
 		
+	}
+	
+	/**
+	 * This method is called when the admin wants to delete a user.
+	 * @param id
+	 */
+	public void deleteUser(int id) {
+    	try {
+    		coreClient.getConnection().sendToServer("#DELETEUSER " + id);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+	
+	/**
+     * When the server responds to a DELETEUSER command sent by this client. This method interprets what is returned.
+     * @param msg: the response from the server.
+     */
+    public void handleDeletedUser(String msg) {
+    	String[] credentials = msg.split(" ");
 	}
 
 }

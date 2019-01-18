@@ -15,7 +15,12 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 /**
- * 
+ * This UI is when a Super Admin wants to use this application.
+ * @author Aubin ABADIE
+ * @author Marie SALELLES
+ * @author Audrey SAMSON
+ * @author Yvan SANSON
+ * @author Solene SERAFIN
  */
 public class SuperAdminUI extends AdminUI {
     private Scene principalSuperAdminScene;

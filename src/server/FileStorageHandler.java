@@ -22,6 +22,12 @@ import java.io.InputStreamReader;
 import java.util.Collections;
 import java.util.List;
 
+/**
+ * This class gets and retrieves files from an external service (Google Drive in this case).
+ * 
+ * @author Marie SALELLES
+ * @author Yvan SANSON
+ */
 public class FileStorageHandler {
     private static final String APPLICATION_NAME = "Learn Together";
     private static final JsonFactory JSON_FACTORY = JacksonFactory.getDefaultInstance();

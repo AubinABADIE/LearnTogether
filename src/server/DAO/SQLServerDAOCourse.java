@@ -95,6 +95,25 @@ public class SQLServerDAOCourse extends AbstractDAOCourse{
         }
         return courses;
     }
+    
+    public int readCourse(int idCourse) {
+        Connection connection = getConnection();
+        int id = -1;
+        if(connection != null){
+            try{
+                PreparedStatement preparedStatement = connection.prepareStatement("SELECT * from Courses WHERE idDep = ? ");
+                preparedStatement.setInt(1,idCourse);
+                ResultSet resultSet = preparedStatement.executeQuery();
+                resultSet.next();
+                id = resultSet.getInt("idCourse");
+            }catch (Exception e){e.printStackTrace();}
+            finally {
+                closeConnection(connection);
+            }
+        }
+        return id;
+    }
+    
     /**
      * This methos delete a course. It return an int to specify to the server the state of the deletion
      * @param id : course id

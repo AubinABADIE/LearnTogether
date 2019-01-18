@@ -17,6 +17,7 @@ import java.util.List;
 
 
 /**
+ * This UI is for when a Student wants to use this application.
  * @author Yvan Sanson
  * @author Marie Salelles
  * @author Solene Serafin

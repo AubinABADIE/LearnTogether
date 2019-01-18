@@ -25,6 +25,16 @@ import java.io.IOException;
 import java.util.List;
 
 
+/**
+ * UI used to start the client application.
+ * It contains everything related to this stage.
+ * It the starts UIs according to the information received from the server.
+ * @author Aubin ABADIE
+ * @author Marie SALELLES
+ * @author Audrey SAMSON
+ * @author Yvan SANSON
+ * @author Solene SERAFIN
+ */
 public class StartUI extends UI {
     private AdminUI adminUI;
     private StudentUI studentUI;
@@ -426,7 +436,14 @@ public class StartUI extends UI {
     
     @Override
     public void getCourses(List<CourseType> courses){
-        Platform.runLater(() -> teacherUI.setCourses(courses));
+    	Platform.runLater(() -> {
+            if(adminUI != null)
+                adminUI.setCourses(courses);
+            else if(superAdminUI != null)
+                superAdminUI.setCourses(courses);
+            else if(teacherUI != null)
+                teacherUI.setCourses(courses);
+        });
     }
 
     @Override
@@ -479,6 +496,8 @@ public class StartUI extends UI {
                 adminUI.setTeacher(teacher);
             else if(superAdminUI != null)
                 superAdminUI.setTeacher(teacher);
+            else if(teacherUI != null)
+                teacherUI.setTeacher(teacher);
         });
 
     }

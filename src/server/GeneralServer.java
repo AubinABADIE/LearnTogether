@@ -12,7 +12,12 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 
 /**
- * 
+ * Main Business logic for the server side. It contains everything that the server needs to run properly.
+ * @author Aubin ABADIE
+ * @author Marie SALELLES
+ * @author Audrey SAMSON
+ * @author Yvan SANSON
+ * @author Solene SERAFIN
  */
 public class GeneralServer implements Observer {
 
@@ -127,7 +132,7 @@ public class GeneralServer implements Observer {
         }
         else if (instruction.startsWith("CREATECOURSE")){
             String[] attributes = instruction.split("-/-");
-            handleCreateCourseFromClient(attributes[1], attributes[2], Integer.parseInt(attributes[3]), Integer.parseInt(attributes[4]), client);
+            handleCreateCourseFromClient(attributes[1], attributes[2], Integer.parseInt(attributes[3]), attributes[4], client);
         }else if (instruction.startsWith("DELETECOURSE")){
             String[] attributes = instruction.split("-/-");
             handleDeleteCourseFromClient(Integer.parseInt(attributes[1]), client);
@@ -135,7 +140,6 @@ public class GeneralServer implements Observer {
             String[] attributes = instruction.split("-/-");
             handleUpdateCourseFromClient(Integer.parseInt(attributes[1]),attributes[2],attributes[3], Integer.parseInt(attributes[4]), Integer.parseInt(attributes[5]), client);
         } else if (instruction.startsWith("GETCOURSES")){
-        	System.out.println("ok4");
             handleListCoursesFromClient(client);
         }
         else if(instruction.startsWith("SENDMSGTOCLIENT")){
@@ -146,6 +150,10 @@ public class GeneralServer implements Observer {
             String[] attributes = instruction.split(" ");
             handleReadConversation(Integer.parseInt(attributes[1]), attributes[2], client);
         }
+        else if(instruction.startsWith("CREATEUSER")) {
+        	String[] attributes = instruction.split(" ");
+        	handleCreateUser(attributes[1], attributes[2], attributes[3], attributes[4], attributes[5], attributes[6], client);  
+        }
         else if(instruction.startsWith("GETUSER")) {
         	String[] attributes = instruction.split(" ");
         	handleReadUser(Integer.parseInt(attributes[1]), client);        	
@@ -153,6 +161,14 @@ public class GeneralServer implements Observer {
         else if(instruction.startsWith("UPDATEPWD")) {
         	String[] attributes = instruction.split(" ");
         	handleUpdatePwd(attributes[1], attributes[2], client);  
+        }
+        else if(instruction.startsWith("UPDATEUSER")) {
+        	String[] attributes = instruction.split(" ");
+        	handleUpdateUser(Integer.parseInt(attributes[1]), attributes[2], attributes[3], attributes[4], attributes[5], attributes[6], attributes[7], client);  
+        }
+        else if(instruction.startsWith("DELETEUSER")) {
+        	String[] attributes = instruction.split(" ");
+        	handleDeleteUser(Integer.parseInt(attributes[1]), client);  
         }
         else if(instruction.startsWith("GETCONVEMAIL")){
             String[] attributes = instruction.split(" ");
@@ -473,8 +489,9 @@ public class GeneralServer implements Observer {
      * @param client : client who create the course
      */
     
-    private void handleCreateCourseFromClient(String courseName, String courseDescription, int nbHourTotal, int idTeacher, ConnectionToClient client){
-        int result = dao.getCourseDAO().createCourse(courseName, courseDescription, nbHourTotal, idTeacher);
+    private void handleCreateCourseFromClient(String courseName, String courseDescription, int nbHourTotal, String idTeacher, ConnectionToClient client){
+    	int idTeacherRef = Integer.parseInt(idTeacher);
+    	int result = dao.getCourseDAO().createCourse(courseName, courseDescription, nbHourTotal, idTeacherRef);
 
         String mess;
         if (result == 1){
@@ -498,7 +515,6 @@ public class GeneralServer implements Observer {
         List<CourseType> courses =  dao.getCourseDAO().searchAllCourses();
 
          try {
-        	 System.out.println("ok5");
              client.sendToClient(courses);
          } catch (IOException e) {
              e.printStackTrace();
@@ -620,14 +636,37 @@ public class GeneralServer implements Observer {
             if(res == 0)
                 client.sendToClient("#DELETEDCONVERSATION FAILURE");
             else if(res == 1)
-                client.sendToClient("#DELETEdCONVERSATION SUCCESS");
+                client.sendToClient("#DELETEDCONVERSATION SUCCESS");
         }catch (IOException e){
             e.printStackTrace();
         }
     }
     
     /**
-     * This method get the information from the user ID has. It then sends a message containing these information.
+     * This method creates a new user based on the information. It then sends a message concerning the success or not.
+     * @param id
+     * @param name
+     * @param firstname
+     * @param birthDate
+     * @param email
+     * @param password
+     * @param role
+     * @param client
+     */
+    private void handleCreateUser(String name, String firstname, String birthDate, String email, String password, String role, ConnectionToClient client) {
+    	boolean res = dao.getUserDAO().createDAOUser(name, firstname, birthDate, email, password, role);
+        try {
+            if (res == false)
+                client.sendToClient("#CREATEDUSER FAILURE");
+            else if(res == true)
+                client.sendToClient("#CREATEDUSER SUCCESS");
+        }catch (IOException e){
+            e.printStackTrace();
+        }
+    }
+    
+    /**
+     * This method get the information from the user ID. It then sends a message containing these information.
      * @param idUser: the asking ID.
      * @param client; the asking client.
      */
@@ -640,6 +679,12 @@ public class GeneralServer implements Observer {
         }
     }
     
+    /**
+     * This method set a new password from the user ID. It then sends a message concerning the success or not.
+     * @param login
+     * @param pwd
+     * @param client
+     */
     private void handleUpdatePwd(String login, String pwd, ConnectionToClient client) {
     	boolean result = dao.getUserDAO().setNewPwd(login, pwd);
     	String msg;
@@ -655,8 +700,53 @@ public class GeneralServer implements Observer {
         }
     }
 
+    /**
+     * This method a user from the user ID. It then sends a message concerning the success or not.
+     * @param id
+     * @param name
+     * @param firstname
+     * @param birthDate
+     * @param email
+     * @param password
+     * @param role
+     * @param client
+     */
+    private void handleUpdateUser(int id, String name, String firstname, String birthDate, String email, String password, String role, ConnectionToClient client) {
+    	boolean result = dao.getUserDAO().updateDAOUser(id, name, firstname, birthDate, email, password, role);
+    	String msg;
+        if (result == true){
+        	msg = "#UPDATEDUSER SUCCESS" ;
+        } else{
+        	msg = "#UPDATEDUSER FAILURE";
+        }
+    	try {
+            client.sendToClient(msg);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
-
+    /**
+     * This method delete a user from the user ID. It then sends a message concerning the success or not.
+     * @param id
+     * @param client
+     */
+    private void handleDeleteUser(int id, ConnectionToClient client) {
+    	boolean result = dao.getUserDAO().deleteDAOUser(id);
+    	String msg;
+        if (result == true){
+        	msg = "#DELETEDUSER SUCCESS" ;
+        } else{
+        	msg = "#DELETEDUSER FAILURE";
+        }
+    	try {
+            client.sendToClient(msg);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    
+    
     /**
      * This method delegates to the dao the research of the department
      */

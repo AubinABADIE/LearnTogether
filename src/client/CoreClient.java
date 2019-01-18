@@ -23,6 +23,11 @@ import common.DisplayIF;
 
 /**
  * Core business logic for the client side. Its main role is to dispatch commands received from the UI, and to communicate with the server.
+ * @author Aubin ABADIE
+ * @author Marie SALELLES
+ * @author Audrey SAMSON
+ * @author Yvan SANSON
+ * @author Solene SERAFIN
  */
 public class CoreClient implements ClientIF {
     //Business logics
@@ -130,8 +135,17 @@ public class CoreClient implements ClientIF {
             else if  (((String) msg).startsWith("#DELETEDCLASS")){
                 classes.handleDeletedClass((String) msg);
             }
+            else if(((String) msg).startsWith("#CREATEDUSER")) {
+            	user.handleCreatedUser((String)msg);
+            }
             else if(((String) msg).startsWith("#UPDATEDPWD")) {
             	user.handleUpdatedPwd((String)msg);
+            }
+            else if(((String) msg).startsWith("#UPDATEDUSER")) {
+            	user.handleUpdatedUser((String)msg);
+            }
+            else if(((String) msg).startsWith("#DELETEDUSER")) {
+            	user.handleDeletedUser((String)msg);
             }
             else if(((String) msg).startsWith("#DELETEDCONVERSATION")){
                 conversations.handleDeletedConversation((String)msg);
@@ -159,6 +173,8 @@ public class CoreClient implements ClientIF {
                 display.getDepartment((List<DepartmentType>)msg);
             } else if (((List)msg).get(0) instanceof TeacherType) {
             	display.getTeacher((List<TeacherType>)msg);
+            } else if (((List)msg).get(0) instanceof CourseType) {
+            	display.getCourses((List<CourseType>)msg);
             }
         }
         else if (msg instanceof UserType) {
@@ -241,7 +257,7 @@ public class CoreClient implements ClientIF {
      * @param id : room id
      */
     public void handleDeleteCourse(int id){
-        room.handleDeleteRoom(id);
+        course.handleDeleteCourse(id);
     }
 
 
@@ -344,7 +360,9 @@ public class CoreClient implements ClientIF {
      * Profile
      **********************/
     
-    public void handleCreateUser() {}
+    public void handleCreateUser(String name, String firstname, String birthDate, String email, String password, String role) {
+    	user.createUser(name, firstname, birthDate, email, password, role);
+    }
     
     public void handleReadUser(int id) {
     	user.readUser(id);
@@ -353,11 +371,20 @@ public class CoreClient implements ClientIF {
     public void handleUpdatePwd(String login, String pwd) {
     	user.updatePwd(login, pwd);
     }
-
-
+    
+    public void handleUpdateUser(int id, String name, String firstname, String birthDate, String email, String password, String role) {
+    	user.updateUser(id, name, firstname, birthDate, email, password, role);
+    }
+    
+    public void handleDeleteUser(int id) {
+    	user.deleteUser(id);
+    }
+    
     public void getTeacher() {
         teacher.getTeacher();
     }
+    
+    
 
     /**
      * This method delegates getPromotion to PromotionServices class

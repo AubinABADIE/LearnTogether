@@ -8,11 +8,11 @@ import javafx.collections.ObservableList;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.SelectionModel;
@@ -31,21 +31,24 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.stage.Window;
-import Types.UserType;
 
 import java.util.List;
 
 /**
- * 
+ * This UI is for when a teacher wants to use this application.
+ * @author Aubin ABADIE
+ * @author Marie SALELLES
+ * @author Audrey SAMSON
+ * @author Yvan SANSON
+ * @author Solene SERAFIN
  */
 public class TeacherUI extends UI {
 
 	private Scene principalTeacherScene;
-	private Scene principalAdminScene;
 	private TabPane tabPane;
 	private Tab tabProfile, tabSchedule, tabRecords, tabDiary, tabChat, tabCourse, tabRoom;
-	private ObservableList<RoomType> roomNames;
 	private ObservableList<CourseType> courseNames;
+	protected ObservableList<TeacherType> teacherNames;
 	
     /**
      * Default constructor
@@ -67,6 +70,10 @@ public class TeacherUI extends UI {
 	
 	public void setCourses(List<CourseType> courseList) {
         courseNames.setAll(courseList);
+    }
+	
+	public void setTeacher(List<TeacherType> teacherList) {
+        teacherNames.setAll(teacherList);
     }
 
 	public Scene createPrincipalTeacherScene(){
@@ -293,7 +300,7 @@ public class TeacherUI extends UI {
 	        Label nameCourseLabel = new Label("Name of course : ");
 	        Label descriptionCourseLabel = new Label("Description : ");
 	        Label nbTotalHourLabel = new Label("Total hours : ");
-	        Label referingTeacherLabel = new Label ("Refering teacher : ");
+	        Label referentTeacherLabel = new Label ("Referent teacher : ");
 
 	        // Add text Field
 	        TextField nameCourseField = new TextField();
@@ -303,11 +310,25 @@ public class TeacherUI extends UI {
 	            if(!newValue.matches("\\d*"))
 	                nbTotalHourField.setText(newValue.replaceAll("[^\\d]", ""));
 	        });
-	        TextField referingTeacherField = new TextField();
-	        referingTeacherField.textProperty().addListener((observable, oldValue, newValue) -> {
-	            if(!newValue.matches("\\d*"))
-	                referingTeacherField.setText(newValue.replaceAll("[^\\d]", ""));
+	        
+	        client.getTeacher();
+	        ListView<TeacherType> listT = new ListView<>();
+	        teacherNames = FXCollections.observableArrayList();
+	        teacherNames.addListener((ListChangeListener<TeacherType>) c -> {
+	            listT.setItems(teacherNames);
 	        });
+	        
+	        
+
+	        ComboBox<TeacherType> teacherComboBox = new ComboBox<TeacherType>();
+	        teacherComboBox.setItems(teacherNames);
+	        teacherComboBox.getSelectionModel().select(1);
+	        
+	        /*TextField referentTeacherField = new TextField();
+	        referentTeacherField.textProperty().addListener((observable, oldValue, newValue) -> {
+	            if(!newValue.matches("\\d*"))
+	                referentTeacherField.setText(newValue.replaceAll("[^\\d]", ""));
+	        });*/
 
 	        //grid pane
 	        GridPane gridCourse = new GridPane();
@@ -319,19 +340,19 @@ public class TeacherUI extends UI {
 	        HBox nameCourse = new HBox();
 	        HBox descriptionCourse = new HBox();
 	        HBox nbTotalHourCourse = new HBox();
-	        HBox referingTeacherCourse = new HBox();
+	        HBox idReferentTeacherCourse = new HBox();
 
 	        // add form in hbox
 	        nameCourse.getChildren().addAll(nameCourseLabel, nameCourseField);
 	        descriptionCourse.getChildren().addAll(descriptionCourseLabel, descriptionCourseField) ;
 	        nbTotalHourCourse.getChildren().addAll(nbTotalHourLabel, nbTotalHourField) ;
-	        referingTeacherCourse.getChildren().addAll(referingTeacherLabel, referingTeacherField) ;
+	        idReferentTeacherCourse.getChildren().addAll(referentTeacherLabel, teacherComboBox) ;
 
 	        //add hbox in gridpane
 	        gridCourse.add(nameCourse, 1, 1);
 	        gridCourse.add(descriptionCourse, 1, 2);
 	        gridCourse.add(nbTotalHourCourse, 1, 3);
-	        gridCourse.add(referingTeacherCourse, 1, 4);
+	        gridCourse.add(idReferentTeacherCourse, 1, 4);
 
 	        //add gridpane in tab
 	        tabCourse.setContent(gridCourse);
@@ -343,7 +364,7 @@ public class TeacherUI extends UI {
 	        okCreate.setDefaultButton(true);
 	        okCreate.setPrefWidth(100);
 	        gridCourse.add(okCreate, 0, 13, 1, 1);
-	        gridCourse.setHalignment(okCreate, HPos.RIGHT);
+	        GridPane.setHalignment(okCreate, HPos.RIGHT);
 	        gridCourse.setMargin(okCreate, new Insets(20, 0, 20, 0));
 
 	        Button cancelCreate = new Button("Cancel");
@@ -367,16 +388,15 @@ public class TeacherUI extends UI {
 	                showAlert(Alert.AlertType.ERROR, gridCourse.getScene().getWindow(), "Form Error!", "Please enter course total number of hour");
 	                return;
 	            }
-	            if (referingTeacherField.getText().isEmpty()) {
-	                showAlert(Alert.AlertType.ERROR, gridCourse.getScene().getWindow(), "Form Error!", "Please enter course refering teacher");
+	            if (teacherComboBox.getSelectionModel().isEmpty()) {
+	                showAlert(Alert.AlertType.ERROR, gridCourse.getScene().getWindow(), "Form Error!", "Please enter course referent teacher");
 	                return;
 	            }
-
-	            client.handleCreateCourse(nameCourseField.getText(), descriptionCourseField.getText(), Integer.parseInt(nbTotalHourField.getText()),Integer.parseInt(referingTeacherField.getText()));
+	            TeacherType teach= (TeacherType) teacherComboBox.getSelectionModel().getSelectedItem();
+	            client.handleCreateCourse(nameCourseField.getText(), descriptionCourseField.getText(), Integer.parseInt(nbTotalHourField.getText()),teach.getId());
 	            nameCourseField.setText("");
 	            descriptionCourseField.setText("");
 	            nbTotalHourField.setText("");
-	            referingTeacherField.setText("");
 
 	        });
 
@@ -395,12 +415,12 @@ public class TeacherUI extends UI {
 
     }
 	
-	private GridPane updateTabCourse(Tab tabCourse, String nameCourse, String descriptionCourse, int nbTotalHourCourse, int referingTeacherCourse, int idCourse){
+	private GridPane updateTabCourse(Tab tabCourse, String nameCourse, String descriptionCourse, int nbTotalHourCourse, int referentTeacherCourse, int idCourse){
         // labels
         Label nameCourseLabel = new Label("Name of course : ");
         Label descriptionCourseLabel = new Label("Description : ");
         Label nbTotalHourLabel = new Label("Total hours : ");
-        Label referingTeacherLabel = new Label ("Refering teacher : ");
+        Label referentTeacherLabel = new Label ("Referent teacher : ");
 
         // Add text Field
         TextField nameCourseField = new TextField();
@@ -414,11 +434,11 @@ public class TeacherUI extends UI {
             if(!newValue.matches("\\d*"))
                 nbTotalHourField.setText(newValue.replaceAll("[^\\d]", ""));
         });
-        TextField referingTeacherField = new TextField();
-        referingTeacherField.setText(Integer.toString(referingTeacherCourse));
-        referingTeacherField.textProperty().addListener((observable, oldValue, newValue) -> {
+        TextField referentTeacherField = new TextField();
+        referentTeacherField.setText(Integer.toString(referentTeacherCourse));
+        referentTeacherField.textProperty().addListener((observable, oldValue, newValue) -> {
             if(!newValue.matches("\\d*"))
-                referingTeacherField.setText(newValue.replaceAll("[^\\d]", ""));
+                referentTeacherField.setText(newValue.replaceAll("[^\\d]", ""));
         });
         
         //grid pane
@@ -431,19 +451,19 @@ public class TeacherUI extends UI {
         HBox nameCourseHb = new HBox();
         HBox descriptionCourseHb = new HBox();
         HBox nbTotalHourCourseHb = new HBox();
-        HBox referingTeacherCourseHb = new HBox();
+        HBox referentTeacherCourseHb = new HBox();
 
         // add form in hbox
         nameCourseHb.getChildren().addAll(nameCourseLabel, nameCourseField);
         descriptionCourseHb.getChildren().addAll(descriptionCourseLabel, descriptionCourseField) ;
         nbTotalHourCourseHb.getChildren().addAll(nbTotalHourLabel, nbTotalHourField) ;
-        referingTeacherCourseHb.getChildren().addAll(referingTeacherLabel, referingTeacherField) ;
+        referentTeacherCourseHb.getChildren().addAll(referentTeacherLabel, referentTeacherField) ;
 
          //add hbox in gridpane
         gridUpdateCourse.add(nameCourseHb, 1, 1);
         gridUpdateCourse.add(descriptionCourseHb, 1, 2);
         gridUpdateCourse.add(nbTotalHourCourseHb, 1, 3);
-        gridUpdateCourse.add(referingTeacherCourseHb, 1, 5);
+        gridUpdateCourse.add(referentTeacherCourseHb, 1, 5);
 
         //add gridpane in tab
         tabCourse.setContent(gridUpdateCourse);
@@ -479,16 +499,16 @@ public class TeacherUI extends UI {
                 showAlert(Alert.AlertType.ERROR, gridUpdateCourse.getScene().getWindow(), "Form Error!", "Please enter a course capacity");
                 return;
             }
-            if (referingTeacherField.getText().isEmpty()) {
+            if (referentTeacherField.getText().isEmpty()) {
                 showAlert(Alert.AlertType.ERROR, gridUpdateCourse.getScene().getWindow(), "Form Error!", "Please enter a course building");
                 return;
             }
 
-            client.handleCreateCourse(nameCourseField.getText(), descriptionCourseField.getText(), Integer.parseInt(nbTotalHourField.getText()),Integer.parseInt(referingTeacherField.getText()));
+            client.handleCreateCourse(nameCourseField.getText(), descriptionCourseField.getText(), Integer.parseInt(nbTotalHourField.getText()),Integer.parseInt(referentTeacherField.getText()));
             nameCourseField.setText("");
             descriptionCourseField.setText("");
             nbTotalHourField.setText("");
-            referingTeacherField.setText("");
+            referentTeacherField.setText("");
 
         });
 
