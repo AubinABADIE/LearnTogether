@@ -535,7 +535,10 @@ public abstract class UI extends Application implements DisplayIF {
         courseComboBox.getSelectionModel().select(1);
 
         //date selector
-        DatePicker examDate = new DatePicker();
+        final Spinner<Integer> examDate = new Spinner<Integer>();
+
+        SpinnerValueFactory<Integer> examDateFact = new SpinnerValueFactory.IntegerSpinnerValueFactory(1900, 2100, 2018);
+        examDate.setValueFactory(examDateFact);
 
         //upload file
         Button uploadButton = new Button("Select Records");
@@ -609,15 +612,11 @@ public abstract class UI extends Application implements DisplayIF {
                 showAlert(Alert.AlertType.ERROR, gridAddRec.getScene().getWindow(), "Form Error!", "Please enter an exam date");
                 return;
             }
-            if (!textFile.getText().equals("File charged")) {
+            if(recordFile == null){
                 showAlert(Alert.AlertType.ERROR, gridAddRec.getScene().getWindow(), "Form Error!", "Please upload a pdf file");
                 return;
             }
-            if(recordFile != null){
-                showAlert(Alert.AlertType.ERROR, gridAddRec.getScene().getWindow(), "Form Error!", "Please upload a pdf file");
-                return;
-            }
-            client.createRecord(((CourseType)courseComboBox.getValue()).getId(), examDate.getValue().getYear(), recordFile, userID);
+            client.createRecord(((CourseType)courseComboBox.getValue()).getId(), examDate.getValue(), recordFile, userID);
             courseComboBox.setValue(null);
 
         });

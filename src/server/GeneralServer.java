@@ -64,6 +64,8 @@ public class GeneralServer implements Observer {
         if (msg instanceof String) {
             if (((String) msg).startsWith("#"))
                 handleInstrFromClient(((String) msg).substring(1), client);
+        } else if (msg instanceof RecordType){
+            handleRecordFromClient((RecordType)msg, client);
         }
     }
 
@@ -184,8 +186,18 @@ public class GeneralServer implements Observer {
         }
     }
 
+    /**
+     * This method handle when we receive a record from a client and try to upload it in an external storage and store the path in a data base
+     * @param record the record that we upload in the bd
+     */
 
+    public void handleRecordFromClient(RecordType record, ConnectionToClient client){
 
+        //recordStoreId=
+
+        //handleAddRecord(record.getExamYear(), record.getCourseID(), recordSoreId,client);
+
+    }
 
     /**
      * This method is used to send a client a response of a #LOGIN demand.
@@ -549,7 +561,7 @@ public class GeneralServer implements Observer {
      * This method delegates to the dao the course update
      * @param courseName : course name
      * @param courseDescription : small description of the course
-     * @param nbHourTotal : number of total hour of the course
+     * @param nbTotalHour : number of total hour of the course
      * @param idTeacher : the id of the referring Teacher
      * @param client : client who update the course
      */
@@ -644,7 +656,6 @@ public class GeneralServer implements Observer {
     
     /**
      * This method creates a new user based on the information. It then sends a message concerning the success or not.
-     * @param id
      * @param name
      * @param firstname
      * @param birthDate

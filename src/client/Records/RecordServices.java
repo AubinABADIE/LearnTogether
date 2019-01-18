@@ -1,10 +1,12 @@
 package client.Records;
 
 
+import Types.RecordType;
 import client.CoreClient;
 import client.Courses.CourseServices;
 
 import java.io.File;
+import java.io.IOException;
 import java.time.Year;
 import java.util.*;
 
@@ -30,6 +32,12 @@ public class RecordServices {
      */
     public void createRecord(int courseID, int examYear, File record, int donatingUser) {
         System.out.println("Records OK");
+        RecordType recordObj = new RecordType(courseID, examYear, record,donatingUser);
+        try {
+            client.getConnection().sendToServer(recordObj);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     /**

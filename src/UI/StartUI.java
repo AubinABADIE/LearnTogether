@@ -437,12 +437,7 @@ public class StartUI extends UI {
     @Override
     public void getCourses(List<CourseType> courses){
     	Platform.runLater(() -> {
-            if(adminUI != null)
-                adminUI.setCourses(courses);
-            else if(superAdminUI != null)
-                superAdminUI.setCourses(courses);
-            else if(teacherUI != null)
-                teacherUI.setCourses(courses);
+            getCurrentUI().setCourseNames(courses);
         });
     }
 
