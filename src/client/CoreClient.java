@@ -423,6 +423,9 @@ public class CoreClient implements ClientIF {
     }
 
 
+    /**********************
+     * Conversation
+     **********************/
     public void createRecord(int courseId, int year, File recordFile, int userID) {
         records.createRecord(courseId, year, recordFile, userID);
     }

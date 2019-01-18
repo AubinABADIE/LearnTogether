@@ -8,7 +8,9 @@ import java.util.*;
 
 
 /**
- * 
+ * This class handles all the business logic related to the teachers.
+ *
+ * @author Audrey SAMSON
  */
 public class TeacherServices{
 

@@ -3,7 +3,7 @@ package client.Users;
 import java.util.*;
 
 /**
- * 
+ * This class handles everything related to the  
  */
 public class SuperAdministratorServices extends AdministratorServices {
 
