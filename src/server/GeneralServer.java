@@ -53,7 +53,7 @@ public class GeneralServer implements Observer {
         dao.createDAOConversation();
         dao.createDAOPromotion();
         dao.createDAOClass();
-        fileStorageHandler = new FileStorageHandler();
+        //fileStorageHandler = new FileStorageHandler();
         display.display("Server is running on port " + port);
     }
 

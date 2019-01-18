@@ -41,8 +41,8 @@ public class FileStorageHandler {
     /**
      * This method tries to store a file (known as a byte array) into the storage.
      * It creates a container per file, to avoid name conflicts.
-     * @param fileName
-     * @param file
+     * @param fileName the name of the file to add to the storage.
+     * @param file the actual file.
      */
     public void insertFile(String fileName, byte[] file){
         fileName = fileName.replace(' ', '-');
