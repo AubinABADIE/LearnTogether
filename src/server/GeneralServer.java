@@ -554,8 +554,8 @@ public class GeneralServer implements Observer {
      * @param client : client who update the course
      */
     
-    public void handleUpdateCourseFromClient (int idCourse, String courseName, String courseDescription, int nbHourTotal, int idTeacher, ConnectionToClient client ){
-        int result = dao.getCourseDAO().updateCourse(idCourse, courseName, courseDescription, nbHourTotal, idTeacher);
+    public void handleUpdateCourseFromClient (int idCourse, String courseName, String courseDescription, int nbTotalHour, int idTeacher, ConnectionToClient client ){
+    	int result = dao.getCourseDAO().updateCourse(idCourse, courseName, courseDescription, nbTotalHour, idTeacher);
 
         String mess;
         if (result == 1){

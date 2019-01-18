@@ -434,12 +434,23 @@ public class TeacherUI extends UI {
             if(!newValue.matches("\\d*"))
                 nbTotalHourField.setText(newValue.replaceAll("[^\\d]", ""));
         });
-        TextField referentTeacherField = new TextField();
+        client.getTeacher();
+        ListView<TeacherType> listT = new ListView<>();
+        teacherNames = FXCollections.observableArrayList();
+        teacherNames.addListener((ListChangeListener<TeacherType>) c -> {
+            listT.setItems(teacherNames);
+        });
+
+        ComboBox teacherComboBox = new ComboBox();
+        teacherComboBox.setItems(teacherNames);
+        teacherComboBox.getSelectionModel().select(1);
+        
+        /*TextField referentTeacherField = new TextField();
         referentTeacherField.setText(Integer.toString(referentTeacherCourse));
         referentTeacherField.textProperty().addListener((observable, oldValue, newValue) -> {
             if(!newValue.matches("\\d*"))
                 referentTeacherField.setText(newValue.replaceAll("[^\\d]", ""));
-        });
+        });*/
         
         //grid pane
         GridPane gridUpdateCourse = new GridPane();
@@ -457,7 +468,7 @@ public class TeacherUI extends UI {
         nameCourseHb.getChildren().addAll(nameCourseLabel, nameCourseField);
         descriptionCourseHb.getChildren().addAll(descriptionCourseLabel, descriptionCourseField) ;
         nbTotalHourCourseHb.getChildren().addAll(nbTotalHourLabel, nbTotalHourField) ;
-        referentTeacherCourseHb.getChildren().addAll(referentTeacherLabel, referentTeacherField) ;
+        referentTeacherCourseHb.getChildren().addAll(referentTeacherLabel, teacherComboBox) ;
 
          //add hbox in gridpane
         gridUpdateCourse.add(nameCourseHb, 1, 1);
@@ -498,17 +509,21 @@ public class TeacherUI extends UI {
             if (nbTotalHourField.getText().isEmpty()) {
                 showAlert(Alert.AlertType.ERROR, gridUpdateCourse.getScene().getWindow(), "Form Error!", "Please enter a course capacity");
                 return;
-            }
-            if (referentTeacherField.getText().isEmpty()) {
-                showAlert(Alert.AlertType.ERROR, gridUpdateCourse.getScene().getWindow(), "Form Error!", "Please enter a course building");
+            }if (teacherComboBox.getSelectionModel().isEmpty()) {
+                showAlert(Alert.AlertType.ERROR, gridUpdateCourse.getScene().getWindow(), "Form Error!", "Please enter referent teacher");
                 return;
             }
-
-            client.handleCreateCourse(nameCourseField.getText(), descriptionCourseField.getText(), Integer.parseInt(nbTotalHourField.getText()),Integer.parseInt(referentTeacherField.getText()));
+            /*if (referentTeacherField.getText().isEmpty()) {
+                showAlert(Alert.AlertType.ERROR, gridUpdateCourse.getScene().getWindow(), "Form Error!", "Please enter a course building");
+                return;
+            }*/
+            
+            TeacherType teach= (TeacherType) teacherComboBox.getSelectionModel().getSelectedItem();
+            client.handleUpdateCourse(idCourse, nameCourseField.getText(), descriptionCourseField.getText(), Integer.parseInt(nbTotalHourField.getText()),teach.getId());
             nameCourseField.setText("");
             descriptionCourseField.setText("");
             nbTotalHourField.setText("");
-            referentTeacherField.setText("");
+            //referentTeacherField.setText("");
 
         });
 

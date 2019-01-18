@@ -139,17 +139,17 @@ public class SQLServerDAOCourse extends AbstractDAOCourse{
         return result;
     }
     
-    public int updateCourse(int idCourse, String name, String courseDescription, int nbHourTotal, int idTeacher){
+    public int updateCourse(int idCourse, String courseName, String courseDescription, int nbHourTotal, int idTeacher){
         Connection connection =getConnection();
         int result = 0;
         if(connection!= null){
             try{
                 PreparedStatement preparedStatement = connection.prepareStatement("UPDATE Courses SET courseName = ?, courseDescription = ?, nbHourTotal = ?, idTeacher = ?  WHERE idCourse = ?");
-                preparedStatement.setString(1, name);
-                preparedStatement.setString(2, courseDescription);
-                preparedStatement.setInt(3, nbHourTotal);
-                preparedStatement.setInt(4, idTeacher);
-                preparedStatement.setInt(7, idCourse);
+                preparedStatement.setInt(1, idCourse);
+                preparedStatement.setString(2, courseName);
+                preparedStatement.setString(3, courseDescription);
+                preparedStatement.setInt(4, nbHourTotal);
+                preparedStatement.setInt(5, idTeacher);
                 result = preparedStatement.executeUpdate();
             } catch(SQLException e){
                 e.printStackTrace();
