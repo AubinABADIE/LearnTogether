@@ -125,7 +125,8 @@ public abstract class UI extends Application implements DisplayIF {
     }
 
     public void setCourseNames(List<CourseType> courseNames) {
-        this.courseNames.setAll(courseNames);
+        if(this.courseNames != null)
+            this.courseNames.setAll(courseNames);
     }
 
     public File getRecordFile() {
