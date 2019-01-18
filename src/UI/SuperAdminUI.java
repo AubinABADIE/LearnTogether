@@ -84,11 +84,6 @@ public class SuperAdminUI extends AdminUI {
         tabPane.getTabs().add(tabCourse);
         tabPane.getTabs().add(tabDepartment);
 
-        HBox hbox = new HBox();
-        hbox.getChildren().add(new Label("Tab" ));
-        hbox.setAlignment(Pos.CENTER);
-        tabProfile.setContent(hbox);
-
         topBar.getChildren().addAll(titleBar, tabPane);
         adminScene.setTop(topBar);
         titleBar.setSpacing(20);
