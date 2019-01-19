@@ -88,7 +88,7 @@ public class FileStorageHandler {
         String containerName = refactorContainerName(fileName);
         containerURL = serviceURL.createContainerURL(containerName);
         BlockBlobURL blobURL = containerURL.createBlockBlobURL(name);
-        DownloadResponse downloadResponse = containerURL.create().flatMap(containerCreateResponse -> blobURL.download()).blockingGet();
+        DownloadResponse downloadResponse = blobURL.download().blockingGet();
         return FlowableUtil.collectBytesInArray(downloadResponse.body(null)).blockingGet();
     }
 
