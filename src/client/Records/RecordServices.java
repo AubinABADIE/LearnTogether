@@ -58,6 +58,17 @@ public class RecordServices {
         // TODO implement here
     }
 
+    /**
+     * This method send to server the request to have the records
+     */
+    public void getAllRecord(){
+        try {
+            client.getConnection().sendToServer("#GETRECORDS" );
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     public void handleReceivedRecord(RecordType record){
         try(FileOutputStream stream = new FileOutputStream(System.getProperty("user.home") +"/Downloads/"+ record.getName())) {
             stream.write(record.getRecord());

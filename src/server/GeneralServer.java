@@ -186,6 +186,9 @@ public class GeneralServer implements Observer {
             String[] attributes = instruction.split(" ");
             handleDeleteConversation(Integer.parseInt(attributes[1]), attributes[2], client);
         }
+        else if (instruction.startsWith("GETRECORDS")){
+            handleGetAllRecord(client);
+        }
     }
 
     /**
@@ -936,6 +939,18 @@ public class GeneralServer implements Observer {
 
     }
 
+    /**
+     * This method handle when the client wants the records list
+     * @param client : the client that sent the request
+     */
+    public void handleGetAllRecord(ConnectionToClient client){
+        List<RecordType> rec =  dao.getRecordsDAO().searchAllRecords();
+        try {
+            client.sendToClient(rec);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
     /**
      * @param message

@@ -24,6 +24,12 @@ public class RecordType implements Serializable {
         this.record = recordFile;
         this.donatingUser = donatingUser;
     }
+    public RecordType(String name, int courseID, int examYear, int donatingUser){
+        this.name = name;
+        this.courseID = courseID;
+        this.examYear = examYear;
+        this.donatingUser = donatingUser;
+    }
 
 
 

@@ -76,7 +76,11 @@ Arguments:
  - id: int, the asking ID
  - email: String, the other email.  
  *Usage*: `#DELETECONVERSATION {id} {email}`
- 
+
+ ## #GETRECORDS
+ The client send this to the server to receive the record list.
+ No arguments.
+ *Usage*: `#GETRECORDS`
 
 
 # FROM the server

@@ -3,6 +3,7 @@ package UI;
 import java.io.File;
 import java.sql.Date;
 import java.time.ZoneId;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
 
@@ -74,6 +75,9 @@ public abstract class UI extends Application implements DisplayIF {
     protected UserType user;
     protected File recordFile;
 
+
+
+
     public String getConnectionStatus() {
         return connectionStatus.get();
     }
@@ -137,6 +141,14 @@ public abstract class UI extends Application implements DisplayIF {
 
     public void setRecordFile(File recordFile) {
         this.recordFile = recordFile;
+    }
+
+    public ObservableList<RecordType> getRecordNames() {
+        return recordNames;
+    }
+
+    public void setRecordNames(List<RecordType> recordNames) {
+        this.recordNames.setAll(recordNames);
     }
 
     /**
@@ -521,7 +533,7 @@ public abstract class UI extends Application implements DisplayIF {
      */
     protected GridPane readRecords(Tab tabRecords){
         //add  records
-        //client.getRecords();
+        client.getAllRecords();
         ListView<RecordType> list = new ListView<>();
         recordNames = FXCollections.observableArrayList();
         recordNames.addListener((ListChangeListener<RecordType>) c -> {
@@ -838,4 +850,8 @@ public abstract class UI extends Application implements DisplayIF {
         }
     }
 
+    @Override
+    public void getRecords(List<RecordType>records){
+
+    }
 }

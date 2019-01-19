@@ -1,13 +1,11 @@
 package server.DAO;
 
+import Types.RecordType;
 import client.Courses.CourseServices;
 import Types.UserType;
 
 import java.io.File;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.*;
 
 /**
@@ -49,12 +47,12 @@ public class SQLServerDAORecord extends AbstractDAORecords{
         }
     }
 
-    /**
-     * @param name 
-     * @param year 
-     * @param courseID
-     * @param record 
-     * @param donatingUser
+    /** This method create in the data base a record
+     * @param name : record name
+     * @param year : exam year
+     * @param courseID : record course
+     * @param record
+     * @param donatingUser : user id who give the record
      */
     public int createRecord(String name, int year, int courseID, byte[] record, int donatingUser) {
         Connection connection = getConnection();
@@ -91,4 +89,29 @@ public class SQLServerDAORecord extends AbstractDAORecords{
         // TODO implement here
     }
 
+    /**
+     * This method search in the data base the record list
+     * @return : the record list
+     */
+    @Override
+    public List<RecordType> searchAllRecords(){
+        ArrayList<RecordType> records = new ArrayList();
+        Connection connection = getConnection();
+        if(connection != null){
+            try{
+                PreparedStatement preparedStatement = connection.prepareStatement("SELECT * from Records");
+                ResultSet resultSet = preparedStatement.executeQuery();
+                while (resultSet.next()){
+                    records.add(new RecordType(resultSet.getString("recordName"),
+                            resultSet.getInt("idCourse"),
+                            resultSet.getInt("recordYear"),
+                            resultSet.getInt("idUser")));
+                }
+            }catch (SQLException e){e.printStackTrace();}
+            finally {
+                closeConnection(connection);
+            }
+        }
+        return records;
+    }
 }

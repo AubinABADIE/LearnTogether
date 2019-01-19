@@ -462,7 +462,16 @@ public class StartUI extends UI {
                 superAdminUI.setRooms(rooms);
         });
     }
-    
+
+    @Override
+    public void getRecords(List<RecordType> records){
+        Platform.runLater(() -> {
+            getCurrentUI().setRecordNames(records);
+
+        });
+    }
+
+
     @Override
     public void getCourses(List<CourseType> courses){
     	Platform.runLater(() -> {

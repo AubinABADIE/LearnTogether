@@ -176,6 +176,9 @@ public class CoreClient implements ClientIF {
             } else if (((List)msg).get(0) instanceof CourseType) {
             	display.getCourses((List<CourseType>)msg);
             }
+            else if (((List)msg).get(0) instanceof RecordType){
+                display.getRecords((List<RecordType>)msg);
+            }
         }
         else if (msg instanceof UserType) {
         	display.setUser((UserType) msg);
@@ -317,7 +320,10 @@ public class CoreClient implements ClientIF {
     }
 
 
-
+    /**
+     * This metod delegates getAllRecords to RecordsServices class
+     */
+    public void getAllRecords(){records.getAllRecord();}
 
     /***************
      * Conversations
@@ -426,7 +432,7 @@ public class CoreClient implements ClientIF {
 
 
     /**********************
-     * Conversation
+     * Records
      **********************/
     public void createRecord(int courseId, int year, File recordFile, int userID) {
         records.createRecord(courseId, year, recordFile, userID);
