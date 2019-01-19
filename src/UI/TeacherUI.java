@@ -74,7 +74,7 @@ public class TeacherUI extends UI {
 	public void setCourses(List<CourseType> courseList) {
         courseNames.setAll(courseList);
     }
-
+	
 	public void setTeacher(List<TeacherType> teacherList) {
         teacherNames.setAll(teacherList);
     }
@@ -146,6 +146,7 @@ public class TeacherUI extends UI {
         courseNames = FXCollections.observableArrayList();
         courseNames.add(ct);
         courseNames.addListener((ListChangeListener<CourseType>) c -> list.setItems(courseNames));
+
         Image addCourse = new Image(getClass().getResourceAsStream("images/icons8-plus-208.png"));
         ImageView addCourseView = new ImageView(addCourse);
         addCourseView.setFitHeight(15);
@@ -286,6 +287,9 @@ public class TeacherUI extends UI {
             idTeacher.setText(Integer.toString(selectedCourse.getSelectedItem().getIdTeacher()));
 
         });
+
+
+
         return gridCourseVisu;
 	}
 

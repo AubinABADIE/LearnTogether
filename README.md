@@ -63,7 +63,7 @@ Used when the client wants to create a room into the database. The parse method 
 Arguments:  
 - name: String  
 - capacity: int  
--building: int  
+- building: int  
 - hasProjector: boolean  
 - hadComputer: boolean  
 - description: String  
@@ -75,15 +75,15 @@ Used when the client wants to delete a room. The parse method for the different 
 Arguments:  
 - id : int  
   
-*Usage*: `#CRATEROOM-/-{id}`  
+*Usage*: `#DELETEROOM-/-{id}`  
   
 ### #UPDATEROOM  
-Used when the client wants to update a room into the database. The parce method for the different parameters is "-/-"  
+Used when the client wants to update a room into the database. The parse method for the different parameters is "-/-"  
 Arguments:  
 - id : int  
 - name: String  
 - capacity: int  
--building: int  
+- building: int  
 - hasProjector: boolean  
 - hadComputer: boolean  
 - description: String  
@@ -93,6 +93,44 @@ Arguments:
 ### #GETROOMS  
 Used when the client wants the list of all rooms.  
 No parameters.  
+  
+### #CREATECOURSE
+Used when the client wants to create a course into the database. The parse method for the different parameters is "-/-"    
+Arguments:  
+- name: String  
+- description : String
+- nbTotalHour : int
+- idT : int  
+
+  
+*Usage*: `#CREATECOURSE-/-{name}-/-{description}-/-{nbTotalHour}-/-{idT}`  
+  
+### #DELETECOURSE  
+Used when the client wants to delete a course. The parse method for the different parameters is "-/-"  
+Arguments:  
+- id : int  
+  
+*Usage*: `#DELETECOURSE-/-{id}`  
+  
+### #UPDATECOURSE
+Used when the client wants to update a course into the database. The parse method for the different parameters is "-/-"  
+Arguments:  
+- name: String  
+- description : String
+- nbTotalHour : int
+- idT : int  
+  
+*Usage* : `#UPDATECOURSE--/-{name}-/-{description}-/-{nbTotalHour}-/-{idT}`  
+  
+### #GETCOURSES  
+Used when the client wants the list of all courses.  
+No parameters.  
+
+### ##GETCOURSET
+Used when the client want the list of his own courses.
+
+*Usage* : `#GETCOURSET--/-{userID}-
+  
   
 ### #SENDMSGTOCLIENT  
 Used when the client wants to send a message to another user through the server. The parse method for the different parameters is "-/-"    
@@ -165,7 +203,21 @@ Arguments :
  Arguments:  
  - mess : String with the result of the action.  
   
- *Usage*:  `#DELETEROOM {mess}`  
+ *Usage*:  `#DELETEROOM {mess}` 
+ 
+ ### \#CREATEDCOURSE
+The server responds to a #CREATECOURSE injonction from the client by sending this.  
+Arguments :  
+- mess : String with the result of the action.  
+  
+*Usage*: `#CREATEDCOURSE {mess}`  
+  
+ ### #DELETECOURSE
+ The server responds to a #DELETECOURSE from the client by sending this.  
+ Arguments:  
+ - mess : String with the result of the action.  
+  
+ *Usage*:  `#DELETECOURSE {mess}`  
   
 ### \#MESSAGE  
 The server responds to a #SENDMSGTOCLIENT demand with this. It has two states, either sent (the message is in the DB) or error (the message cannot be put into the DB)    
