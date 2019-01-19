@@ -440,4 +440,8 @@ public class CoreClient implements ClientIF {
     public void createRecord(int courseId, int year, File recordFile, int userID) {
         records.createRecord(courseId, year, recordFile, userID);
     }
+
+    public void downloadRec(int id){
+        records.downloadRec(id);
+    }
 }

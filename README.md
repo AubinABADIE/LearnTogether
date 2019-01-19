@@ -82,6 +82,12 @@ Arguments:
  No arguments.
  *Usage*: `#GETRECORDS`
 
+ ## #DOWNLOADRECORD
+ The client want to retrieve a record.
+ Argument :
+   - id: int, the record id
+   *Usage*: `#DDOWNLOADRECORD {id}`
+
 
 # FROM the server
 

@@ -2,6 +2,7 @@ package Types;
 
 import java.io.File;
 import java.io.Serializable;
+import java.util.Arrays;
 
 /**
  * This class is used to model the Record found in the database.
@@ -19,6 +20,7 @@ public class RecordType implements Serializable {
     private int donatingUser;
 
     public RecordType(String name, int courseID, int examYear, byte[] recordFile, int donatingUser) {
+        this.recordId=0;
         this.name = name;
         this.courseID = courseID;
         this.examYear = examYear;
@@ -26,13 +28,25 @@ public class RecordType implements Serializable {
         this.donatingUser = donatingUser;
     }
     public RecordType(int recordId, String name, int courseID, int examYear, int donatingUser){
+        this.recordId=recordId;
         this.name = name;
         this.courseID = courseID;
         this.examYear = examYear;
         this.donatingUser = donatingUser;
     }
 
+    public int getRecordId() {
+        return recordId;
+    }
 
+    public void setRecordId(int recordId) {
+        this.recordId = recordId;
+    }
+
+    @Override
+    public String toString() {
+        return "Record: '" + name + '\'';
+    }
 
     public int getCourseID() {
         return courseID;

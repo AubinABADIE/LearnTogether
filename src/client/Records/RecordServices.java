@@ -69,6 +69,14 @@ public class RecordServices {
         }
     }
 
+    public void downloadRec(int id){
+        try {
+            client.getConnection().sendToServer("#DOWNLOADRECORD" + id);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     public void handleReceivedRecord(RecordType record){
         try(FileOutputStream stream = new FileOutputStream(System.getProperty("user.home") +"/Downloads/"+ record.getName())) {
             stream.write(record.getRecord());

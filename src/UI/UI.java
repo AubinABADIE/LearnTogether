@@ -543,22 +543,12 @@ public abstract class UI extends Application implements DisplayIF {
 
         Image fileImg = new Image(getClass().getResourceAsStream("images/icons8-document-480.png"));
 
-        //add images on the items in the recordList
-        list.setCellFactory(param -> new ListCell<RecordType>() {
-            private ImageView imageView = new ImageView();
-            Button btnDown = new Button();
-            @Override
-            public void updateItem(RecordType nameR, boolean empty) {
-                super.updateItem(nameR, empty);
-                imageView.setImage(fileImg);
-                setGraphic(imageView);
-                imageView.setFitHeight(15);
-                imageView.setFitWidth(15);
-            }
-        });
 
         list.setPrefWidth(350);
         list.setPrefHeight(500);
+
+        VBox vboxListRec = new VBox();
+        vboxListRec.getChildren().add(list);
 
         Image addRec = new Image(getClass().getResourceAsStream("images/icons8-plus-208.png"));
         ImageView addRecView = new ImageView(addRec);
@@ -600,12 +590,18 @@ public abstract class UI extends Application implements DisplayIF {
 
         // add record info
 
+        Text titleInfo = new Text("Record information : ");
+        titleInfo.setFont(Font.font(20));
+        HBox hboxTitleInfo = new HBox();
+        hboxTitleInfo.getChildren().add(titleInfo);
+        hboxTitleInfo.setAlignment(Pos.CENTER);
+
         Image fileImgDown = new Image(getClass().getResourceAsStream("images/icons8-download-filled-100.png"));
         ImageView downView = new ImageView(fileImgDown);
         downView.setFitHeight(15);
         downView.setFitWidth(15);
 
-        Button downnBtn = new Button();
+        Button downnBtn = new Button("Download");
         downnBtn.setGraphic(downView);//setting icon to button
 
         //download button
@@ -613,6 +609,10 @@ public abstract class UI extends Application implements DisplayIF {
         hboxdown.getChildren().add(downnBtn);
         hboxdown.setAlignment(Pos.CENTER);
 
+        downnBtn.setOnAction(event -> {
+            SelectionModel<RecordType> selectedRecords = list.getSelectionModel();
+            client.downloadRec(selectedRecords.getSelectedItem().getRecordId());
+        });
 
         Label labelname = new Label("Record name : ");
         Text name = new Text(" ");
@@ -630,7 +630,7 @@ public abstract class UI extends Application implements DisplayIF {
 
 
         VBox vboxInfoRec = new VBox();
-        vboxInfoRec.getChildren().addAll(hboxname, hboxyear, hboxdown);
+        vboxInfoRec.getChildren().addAll(hboxTitleInfo, hboxname, hboxyear, hboxdown);
         vboxInfoRec.setSpacing(10);
         vboxInfoRec.setPadding(new Insets(100, 0, 0, 75));
 
@@ -641,12 +641,12 @@ public abstract class UI extends Application implements DisplayIF {
         gridRecord.setVgap(10);
 
         gridRecord.add(hboxButtonRec,1,0);
-        gridRecord.add(list, 1, 1);
+        gridRecord.add(vboxListRec, 1, 1);
 
         //display info of one record
         list.setOnMouseClicked(event -> {
             gridRecord.getChildren().remove(vboxInfoRec);
-            gridRecord.add(vboxInfoRec, 2, 2);
+            gridRecord.add(vboxInfoRec, 2, 1);
             System.out.println("clicked on " + list.getSelectionModel().getSelectedItem());
             SelectionModel<RecordType> selectedRec = list.getSelectionModel();
             name.setText(selectedRec.getSelectedItem().getName());
