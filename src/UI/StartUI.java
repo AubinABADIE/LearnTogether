@@ -247,7 +247,7 @@ public class StartUI extends UI {
                     Platform.runLater(()->superAdminUI.client.getCourses());
                     Platform.runLater(()->superAdminUI.tabCourse.setContent(superAdminUI.setCourseTab()));
                 }else if (teacherUI != null){
-                    Platform.runLater(()->Platform.runLater(()->teacherUI.client.getCourses()));
+                    Platform.runLater(()->Platform.runLater(()->teacherUI.client.getCourses(userID)));
                     Platform.runLater(()->teacherUI.tabCourse.setContent(teacherUI.setCourseTab()));
                 }
             } else if (newValue.equalsIgnoreCase("CU FAILURE")){

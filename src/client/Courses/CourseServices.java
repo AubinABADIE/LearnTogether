@@ -92,9 +92,22 @@ public class CourseServices {
             client.getDisplay().setState("CU FAILURE");
         }
     }
-
+    
     /**
-     * This method send a message to the server to have the courses list
+     * This method send a message to the server to have the courses list of the teacher (came from TeacherUI)
+     */
+    
+    public void getCourses(int userID) {
+        try {
+            client.getConnection().sendToServer("#GETCOURSET-/-"+ userID );
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+    
+    /**
+     * This method send a message to the server to have the courses list (came from adminUI)
      */
     public void getCourses() {
         try {

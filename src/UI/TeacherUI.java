@@ -49,6 +49,7 @@ public class TeacherUI extends UI {
 	private Tab tabProfile, tabSchedule, tabRecords, tabDiary, tabChat;
 	Tab tabCourse;
 	private Tab tabRoom;
+	protected ObservableList<CourseType> courseNames;
 	protected ObservableList<TeacherType> teacherNames;
 	//protected String teacherUpdateName;
 	
@@ -139,9 +140,7 @@ public class TeacherUI extends UI {
 	}
 
 	protected GridPane courseRead(Tab tabCourse){
-		System.out.println("ok1");
-        /*add list of Course*/
-        client.getCourses();
+        client.getCourses(userID);
         ListView<CourseType> list = new ListView<>();
         CourseType ct = new CourseType(1,"course1","communication course",1,2);
         courseNames = FXCollections.observableArrayList();
@@ -288,7 +287,7 @@ public class TeacherUI extends UI {
 
         });
         return gridCourseVisu;
-    }
+	}
 
 	private GridPane createTabCourse(Tab tabCourse){
 	      
@@ -296,7 +295,7 @@ public class TeacherUI extends UI {
 	        Label nameCourseLabel = new Label("Name of course : ");
 	        Label descriptionCourseLabel = new Label("Description : ");
 	        Label nbTotalHourLabel = new Label("Total hours : ");
-	        Label referentTeacherLabel = new Label ("Referent teacher : ");
+	        //Label referentTeacherLabel = new Label ("Referent teacher : ");
 
 	        // Add text Field
 	        TextField nameCourseField = new TextField();
@@ -306,6 +305,7 @@ public class TeacherUI extends UI {
 	            if(!newValue.matches("\\d*"))
 	                nbTotalHourField.setText(newValue.replaceAll("[^\\d]", ""));
 	        });
+	        TextField refT = new TextField();
 	        
 	        client.getTeacher();
 	        ListView<TeacherType> listT = new ListView<>();
@@ -314,9 +314,7 @@ public class TeacherUI extends UI {
 	            listT.setItems(teacherNames);
 	        });
 
-	        ComboBox<TeacherType> teacherComboBox = new ComboBox<TeacherType>();
-	        teacherComboBox.setItems(teacherNames);
-	        teacherComboBox.getSelectionModel().select(1);
+	        
 	        
 
 	        //grid pane
@@ -335,7 +333,7 @@ public class TeacherUI extends UI {
 	        nameCourse.getChildren().addAll(nameCourseLabel, nameCourseField);
 	        descriptionCourse.getChildren().addAll(descriptionCourseLabel, descriptionCourseField) ;
 	        nbTotalHourCourse.getChildren().addAll(nbTotalHourLabel, nbTotalHourField) ;
-	        idReferentTeacherCourse.getChildren().addAll(referentTeacherLabel, teacherComboBox) ;
+	        
 
 	        //add hbox in gridpane
 	        gridCourse.add(nameCourse, 1, 1);
@@ -377,12 +375,9 @@ public class TeacherUI extends UI {
 	                showAlert(Alert.AlertType.ERROR, gridCourse.getScene().getWindow(), "Form Error!", "Please enter course total number of hour");
 	                return;
 	            }
-	            if (teacherComboBox.getSelectionModel().isEmpty()) {
-	                showAlert(Alert.AlertType.ERROR, gridCourse.getScene().getWindow(), "Form Error!", "Please enter course referent teacher");
-	                return;
-	            }
-	            TeacherType teach= (TeacherType) teacherComboBox.getSelectionModel().getSelectedItem();
-	            client.handleCreateCourse(nameCourseField.getText(), descriptionCourseField.getText(), Integer.parseInt(nbTotalHourField.getText()),teach.getId());
+	            
+	            
+	            client.handleCreateCourse(nameCourseField.getText(), descriptionCourseField.getText(), Integer.parseInt(nbTotalHourField.getText()),userID);
 	            nameCourseField.setText("");
 	            descriptionCourseField.setText("");
 	            nbTotalHourField.setText("");
@@ -401,7 +396,7 @@ public class TeacherUI extends UI {
         return courseRead(tabCourse);
     }
 	
-	private GridPane updateTabCourse(Tab tabCourse, String nameCourse, String descriptionCourse, int nbTotalHourCourse, int referentTeacherCourse, int idCourse){
+	protected GridPane updateTabCourse(Tab tabCourse, String nameCourse, String descriptionCourse, int nbTotalHourCourse, int referentTeacherCourse, int idCourse){
         // labels
         Label nameCourseLabel = new Label("Name of course : ");
         Label descriptionCourseLabel = new Label("Description : ");
@@ -559,7 +554,7 @@ public class TeacherUI extends UI {
 
 	@Override
 	public void getCourses(List<CourseType> courses) {
-		
+
 	}
 
 

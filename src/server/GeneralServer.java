@@ -146,6 +146,9 @@ public class GeneralServer implements Observer {
             handleUpdateCourseFromClient(Integer.parseInt(attributes[1]),attributes[2],attributes[3], Integer.parseInt(attributes[4]), attributes[5], client);
         } else if (instruction.startsWith("GETCOURSES")){
             handleListCoursesFromClient(client);
+        } else if (instruction.startsWith("GETCOURSET")){
+            String[] attributes = instruction.split("-/-");
+            handleListCoursesFromClient(Integer.parseInt(attributes[1]), client);
         }
         else if(instruction.startsWith("SENDMSGTOCLIENT")){
             String[] attributes = instruction.split("-/-");
@@ -524,6 +527,22 @@ public class GeneralServer implements Observer {
         List<CourseType> courses =  dao.getCourseDAO().searchAllCourses();
 
          try {
+             client.sendToClient(courses);
+         } catch (IOException e) {
+             e.printStackTrace();
+         }
+
+     }
+    
+    /**
+     * This method delegates to the dao the research of the course
+     */
+    public void handleListCoursesFromClient(int userID, ConnectionToClient client){
+        List<CourseType> courses =  dao.getCourseDAO().searchAllCourses(userID);
+
+         try {
+        	 System.out.println("RECEPTION COURSE ");
+        	 System.out.println(courses instanceof CourseType);
              client.sendToClient(courses);
          } catch (IOException e) {
              e.printStackTrace();

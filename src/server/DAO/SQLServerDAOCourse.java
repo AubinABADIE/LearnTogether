@@ -95,22 +95,28 @@ public class SQLServerDAOCourse extends AbstractDAOCourse{
         return courses;
     }
     
-    public int readCourse(int idCourse) {
+    public List<CourseType> searchAllCourses(int userID){
+        ArrayList courses = new ArrayList();
         Connection connection = getConnection();
-        int id = -1;
         if(connection != null){
             try{
-                PreparedStatement preparedStatement = connection.prepareStatement("SELECT * from Courses WHERE idDep = ? ");
-                preparedStatement.setInt(1,idCourse);
+                PreparedStatement preparedStatement = connection.prepareStatement("SELECT * from Courses WHERE idTeacher = ?");
+                preparedStatement.setInt(1,userID);
                 ResultSet resultSet = preparedStatement.executeQuery();
-                resultSet.next();
-                id = resultSet.getInt("idCourse");
-            }catch (Exception e){e.printStackTrace();}
+                while (resultSet.next()){
+                    courses.add(new CourseType(
+                    		resultSet.getInt(1),
+                            resultSet.getString(2),
+                            resultSet.getString(3),
+                            resultSet.getInt(4),
+                            resultSet.getInt(5)));
+                }
+            }catch (SQLException e){e.printStackTrace();}
             finally {
                 closeConnection(connection);
             }
         }
-        return id;
+        return courses;
     }
     
     /**

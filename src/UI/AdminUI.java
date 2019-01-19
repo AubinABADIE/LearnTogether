@@ -49,7 +49,6 @@ public class AdminUI extends TeacherUI {
     protected ObservableList<DepartmentType> depNames;
     protected ObservableList<PromotionType> promoNames;
     protected ObservableList<ClassType> classNames;
-    protected ObservableList<TeacherType> teacherNames;
     protected ObservableList<UserType> userNames;
 
     /**
@@ -2029,6 +2028,161 @@ public class AdminUI extends TeacherUI {
 
 	        return gridCourse;
 	        }
+    
+    
+    protected GridPane courseRead(Tab tabCourse){
+        client.getCourses();
+        ListView<CourseType> list = new ListView<>();
+        CourseType ct = new CourseType(1,"course1","communication course",1,2);
+        courseNames = FXCollections.observableArrayList();
+        courseNames.add(ct);
+        courseNames.addListener((ListChangeListener<CourseType>) c -> list.setItems(courseNames));
+
+        Image addCourse = new Image(getClass().getResourceAsStream("images/icons8-plus-208.png"));
+        ImageView addCourseView = new ImageView(addCourse);
+        addCourseView.setFitHeight(15);
+        addCourseView.setFitWidth(15);
+
+        //create button add
+        Button btnAddCourse = new Button("Add");
+        btnAddCourse.setGraphic(addCourseView);//setting icon to button
+
+        //delete button
+        Image deleteCourse = new Image(getClass().getResourceAsStream("images/icons8-annuler-208.png"));
+        ImageView deleteCourseView = new ImageView(deleteCourse);
+        deleteCourseView.setFitHeight(12);
+        deleteCourseView.setFitWidth(12);
+
+        //create button delete
+        Button btnDeleteCourse = new Button("Delete");
+        btnDeleteCourse.setGraphic(deleteCourseView);//setting icon to button
+
+        // add in hbox buttons and title
+        HBox hboxButtonCourse = new HBox();
+
+        Text title = new Text("Course : ");
+        title.setFont(Font.font(20));
+        hboxButtonCourse.getChildren().add(title);
+        hboxButtonCourse.getChildren().add(btnAddCourse);
+        hboxButtonCourse.getChildren().add(btnDeleteCourse);
+        hboxButtonCourse.setSpacing(5);
+
+        list.setItems(courseNames);
+        System.out.println(courseNames);
+        list.setPrefWidth(350);
+        list.setPrefHeight(500);
+
+        // left vbox
+        VBox vboxListCourse = new VBox();
+        vboxListCourse.getChildren().add(list);
+
+        //grid pane
+        GridPane gridCourseVisu = new GridPane();
+        gridCourseVisu.setHgap(10);
+        gridCourseVisu.setVgap(10);
+        gridCourseVisu.setPadding(new Insets(10,10,10,10));
+
+        gridCourseVisu.add(hboxButtonCourse, 1, 0);
+        gridCourseVisu.add(vboxListCourse, 1, 2);
+
+        /*creation of the info vbox of one course*/
+        VBox vboxInfoCourse = new VBox();
+
+        //title of column
+        HBox hboxCourseInfo = new HBox();
+        Text titleInfo = new Text("Course information : ");
+        titleInfo.setFont(Font.font(20));
+        hboxCourseInfo.getChildren().add(titleInfo);
+        hboxCourseInfo.setAlignment(Pos.CENTER);
+
+        // initialisation label and input
+        HBox hboxnameCourseInfo = new HBox();
+        HBox hboxdescriptionCourseInfo = new HBox();
+        HBox hboxnbHourTotalCourseInfo = new HBox();
+        HBox hboxidTeacherCourseInfo = new HBox();
+
+        Label nameLabel = new Label("Name of course : ");
+        Label descriptionCourseLabel = new Label("Course description : ");
+        Label nbHourTotalLabel = new Label( "Number Total Hour course : ");
+        Label idTeacherLabel = new Label("Course idTeacher number : ");
+
+        Text name = new Text(" ");
+        Text descriptionCourse = new Text(" ");
+        Text nbHourTotal = new Text(" ");
+        Text idTeacher = new Text(" ");
+
+
+        hboxnameCourseInfo.getChildren().add(nameLabel);
+        hboxdescriptionCourseInfo.getChildren().add(descriptionCourseLabel);
+        hboxnbHourTotalCourseInfo.getChildren().add(nbHourTotalLabel);
+        hboxidTeacherCourseInfo.getChildren().add(idTeacherLabel);
+
+        hboxnameCourseInfo.getChildren().add(name);
+        hboxdescriptionCourseInfo.getChildren().add(descriptionCourse);
+        hboxnbHourTotalCourseInfo.getChildren().add(nbHourTotal);
+        hboxidTeacherCourseInfo.getChildren().add(idTeacher);
+
+        hboxnameCourseInfo.setAlignment(Pos.CENTER);
+        hboxdescriptionCourseInfo.setAlignment(Pos.CENTER);
+        hboxnbHourTotalCourseInfo.setAlignment(Pos.CENTER);
+        hboxidTeacherCourseInfo.setAlignment(Pos.CENTER);
+
+        //create update button
+        HBox hboxupdateButton = new HBox();
+        Button btnUpdateCourse = new Button("Update");
+        hboxupdateButton.getChildren().add(btnUpdateCourse);
+        hboxupdateButton.setAlignment(Pos.CENTER);
+
+        vboxInfoCourse.getChildren().addAll(hboxCourseInfo, hboxnameCourseInfo,hboxdescriptionCourseInfo,hboxnbHourTotalCourseInfo,hboxidTeacherCourseInfo, hboxupdateButton);
+        vboxInfoCourse.setSpacing(10);
+        vboxInfoCourse.setPadding( new Insets(100, 0, 0, 75));
+
+
+        btnAddCourse.setOnAction(event -> {
+            createTabCourse(tabCourse);
+        });
+
+        btnUpdateCourse.setOnAction(event ->{
+            SelectionModel<CourseType> selectedDeleteCourse = list.getSelectionModel();
+            if (selectedDeleteCourse.getSelectedItem() != null) {
+                updateTabCourse(tabCourse, selectedDeleteCourse.getSelectedItem().getName(),selectedDeleteCourse.getSelectedItem().getDescription(),selectedDeleteCourse.getSelectedItem().getNbTotalHour(),selectedDeleteCourse.getSelectedItem().getIdTeacher(), selectedDeleteCourse.getSelectedItem().getId());
+            }
+        });
+
+        btnDeleteCourse.setOnAction(event -> {
+            SelectionModel<CourseType> selectedDeleteCourse = list.getSelectionModel();
+            if (selectedDeleteCourse.getSelectedItem() != null){
+                Alert alert = new Alert(Alert.AlertType.CONFIRMATION,"You are sure to delete a course", ButtonType.YES, ButtonType.NO);
+                alert.setHeaderText("Confirmation delete");
+                Window win = gridCourseVisu.getScene().getWindow();
+                alert.initOwner(win);
+                alert.showAndWait();
+                if (alert.getResult() == ButtonType.NO) {
+                    return;
+                }
+                if (alert.getResult() == ButtonType.YES) {
+                    client.handleDeleteCourse(selectedDeleteCourse.getSelectedItem().getId());
+                }
+            }
+
+        });
+
+        list.setOnMouseClicked(event -> {
+            gridCourseVisu.getChildren().remove(vboxInfoCourse);
+            gridCourseVisu.add(vboxInfoCourse, 2, 2);
+            System.out.println("clicked on " + list.getSelectionModel().getSelectedItem());
+            SelectionModel<CourseType> selectedCourse = list.getSelectionModel();
+            name.setText(selectedCourse.getSelectedItem().getName());
+            descriptionCourse.setText(selectedCourse.getSelectedItem().getDescription());
+            nbHourTotal.setText(Integer.toString(selectedCourse.getSelectedItem().getNbTotalHour()));
+            idTeacher.setText(Integer.toString(selectedCourse.getSelectedItem().getIdTeacher()));
+
+        });
+
+
+
+        return gridCourseVisu;
+    }
 
 	private void createUser(Tab tabUser) {
 		// TODO Auto-generated method stub
