@@ -703,6 +703,8 @@ public class AdminUI extends TeacherUI {
             list.setItems(depNames);
         });
 
+
+
         Image addDepartment = new Image(getClass().getResourceAsStream("images/icons8-plus-208.png"));
         ImageView addDepView = new ImageView(addDepartment);
         addDepView.setFitHeight(15);
@@ -736,8 +738,9 @@ public class AdminUI extends TeacherUI {
         list.setPrefHeight(500);
 
         // left vbox
+        Text labelHeader = new Text("Departments");
         VBox vboxListDep = new VBox();
-        vboxListDep.getChildren().add(list);
+        vboxListDep.getChildren().addAll(labelHeader,list);
 
         //title of column
         HBox hboxDepInfo = new HBox();
@@ -811,8 +814,9 @@ public class AdminUI extends TeacherUI {
         listPromo.setPrefHeight(500);
 
         // left vbox
+        Text labelHeaderPromo = new Text("Promotions");
         VBox vboxListPromo = new VBox();
-        vboxListPromo.getChildren().add(listPromo);
+        vboxListPromo.getChildren().addAll(labelHeaderPromo,listPromo);
 
 
         //title of column
@@ -884,8 +888,9 @@ public class AdminUI extends TeacherUI {
         listClass.setPrefHeight(500);
 
         // left vbox
+        Text labelHeaderCl = new Text("Classes");
         VBox vboxListClass = new VBox();
-        vboxListClass.getChildren().add(listClass);
+        vboxListClass.getChildren().addAll(labelHeaderCl,listClass);
 
 
         // add in hbox buttons and title

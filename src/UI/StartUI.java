@@ -29,6 +29,7 @@ import java.util.List;
  * UI used to start the client application.
  * It contains everything related to this stage.
  * It the starts UIs according to the information received from the server.
+ *
  * @author Aubin ABADIE
  * @author Marie SALELLES
  * @author Audrey SAMSON
@@ -465,12 +466,7 @@ public class StartUI extends UI {
     @Override
     public void getCourses(List<CourseType> courses){
     	Platform.runLater(() -> {
-            if(adminUI != null)
-                adminUI.setCourses(courses);
-            else if(superAdminUI != null)
-                superAdminUI.setCourses(courses);
-            else if(teacherUI != null)
-                teacherUI.setCourses(courses);
+            getCurrentUI().setCourseNames(courses);
         });
     }
 

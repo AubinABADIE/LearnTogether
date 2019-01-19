@@ -179,6 +179,8 @@ public class CoreClient implements ClientIF {
         }
         else if (msg instanceof UserType) {
         	display.setUser((UserType) msg);
+        }else if(msg instanceof RecordType){
+            records.handleReceivedRecord((RecordType)msg);
         }
     }
 

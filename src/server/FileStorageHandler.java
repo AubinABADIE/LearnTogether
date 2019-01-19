@@ -1,96 +1,58 @@
 package server;
 
-
-import com.google.api.client.auth.oauth2.Credential;
-import com.google.api.client.googleapis.auth.oauth2.GoogleAuthorizationCodeFlow;
-import com.google.api.client.googleapis.auth.oauth2.GoogleClientSecrets;
-import com.google.api.client.googleapis.javanet.GoogleNetHttpTransport;
-import com.google.api.client.http.FileContent;
-import com.google.api.client.http.HttpTransport;
-import com.google.api.client.json.JsonFactory;
-import com.google.api.client.json.jackson2.JacksonFactory;
-import com.google.api.client.util.store.FileDataStoreFactory;
-import com.google.api.services.drive.Drive;
-import com.google.api.services.drive.DriveScopes;
-import com.google.api.client.extensions.jetty.auth.oauth2.LocalServerReceiver;
-import com.google.api.client.extensions.java6.auth.oauth2.AuthorizationCodeInstalledApp;
-import com.google.api.services.drive.model.File;
-
-
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.util.Collections;
-import java.util.List;
+import com.microsoft.azure.storage.blob.*;
+import com.microsoft.rest.v2.http.HttpPipeline;
+import io.reactivex.Flowable;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.nio.ByteBuffer;
+import java.security.InvalidKeyException;
+import java.text.Normalizer;
+import java.util.Locale;
 
 /**
- * This class gets and retrieves files from an external service (Google Drive in this case).
- * 
- * @author Marie SALELLES
+ * This class gets and retrieves files from an external service (Azure Cloud in this case).
+ *
  * @author Yvan SANSON
  */
 public class FileStorageHandler {
-    private static final String APPLICATION_NAME = "Learn Together";
-    private static final JsonFactory JSON_FACTORY = JacksonFactory.getDefaultInstance();
-    private static final String TOKENS_DIRECTORY_PATH = "tokens";
-    private static final List<String> SCOPES = Collections.singletonList(DriveScopes.DRIVE_METADATA_READONLY);
+    private String accountName ="learntogetherfiles";
+    private String accountKey="BI72gZagRw6dFddKVYKfb2raRNVWT3u20v2fss+0A/q6J0//cKhGnupI1pq2ycNVcYVa20Sa57XdsyprVTBagQ==";
+    private URL u;
+    private ServiceURL serviceURL;
 
-    private static final String CREDENTIALS_FILE_PATH = "/src/common/credentials.json";
-    /**
-     * Global instance of the DataStoreFactory. The best practice is to make it a single
-     * globally shared instance across your application.
-     */
-    private FileDataStoreFactory dataStoreFactory;
+    private SharedKeyCredentials sharedKeyCredentials;
+    private HttpPipeline httpPipeline;
+    private ContainerURL containerURL;
 
     /**
-     * Global instance of the HTTP transport.
+     * This constructor tries to connect to Azure Storage to store files.
+     * @throws InvalidKeyException
+     * @throws MalformedURLException
      */
-    private HttpTransport httpTransport;
+    public FileStorageHandler() throws InvalidKeyException, MalformedURLException {
+        sharedKeyCredentials = new SharedKeyCredentials(accountName, accountKey);
+        httpPipeline = StorageURL.createPipeline(sharedKeyCredentials, new PipelineOptions());
+        u = new URL(String.format(Locale.ROOT, "https://%s.blob.core.windows.net", accountName));
+        serviceURL = new ServiceURL(u, httpPipeline);
 
-
-    /**
-     * Global Drive API client.
-     */
-    private Drive drive;
-
-    /**
-     * Authorizes the installed application to access user's protected data.
-     */
-    private Credential authorize() throws Exception {
-        // load client secrets
-        GoogleClientSecrets clientSecrets = GoogleClientSecrets.load(JSON_FACTORY,
-                new InputStreamReader(FileStorageHandler.class.getResourceAsStream(CREDENTIALS_FILE_PATH)));
-        if (clientSecrets.getDetails().getClientId().startsWith("Enter") || clientSecrets.getDetails().getClientSecret().startsWith("Enter ")) {
-            System.out.println("Is this an error?");
-            System.exit(1);
-        }
-        // set up authorization code flow
-        GoogleAuthorizationCodeFlow flow = new GoogleAuthorizationCodeFlow.Builder(
-                httpTransport, JSON_FACTORY, clientSecrets,
-                Collections.singleton(DriveScopes.DRIVE_FILE)).setDataStoreFactory(dataStoreFactory)
-                .build();
-        // authorize
-        return new AuthorizationCodeInstalledApp(flow, new LocalServerReceiver()).authorize("user");
     }
 
-    public File insertFile(String name, String description, java.io.File file) {
-        File body = new File();
-        body.setMimeType("application/pdf");
-        body.setDescription(description);
-        FileContent mediaContent = new FileContent("application/pdf", file);
-        try {
-            return drive.files().create(body, mediaContent).execute();
-        } catch (IOException e) {
-            e.printStackTrace();
-            System.out.println("Error: " + e);
-            return null;
-        }
+    /**
+     * This method tries to store a file (known as a byte array) into the storage.
+     * It creates a container per file, to avoid name conflicts.
+     * @param fileName the name of the file to add to the storage.
+     * @param file the actual file.
+     */
+    public void insertFile(String fileName, byte[] file){
+        fileName = fileName.replace(' ', '-');
+        fileName = Normalizer.normalize(fileName, Normalizer.Form.NFD);
+        fileName = fileName.replaceAll("[\\p{InCombiningDiacriticalMarks}]", "");
+        containerURL = serviceURL.createContainerURL("learntogetherrecords");
+        BlockBlobURL blobURL = containerURL.createBlockBlobURL(fileName);
+        containerURL.create().flatMap(containerCreateResponse ->blobURL.upload(Flowable.just(ByteBuffer.wrap(file)), file.length));
     }
 
-    public FileStorageHandler() throws Exception {
-        httpTransport = GoogleNetHttpTransport.newTrustedTransport();
-        // authorization
-        Credential credential = authorize();
-        // set up the global Drive instance
-        drive = new Drive.Builder(httpTransport, JSON_FACTORY, credential).setApplicationName(APPLICATION_NAME).build();
-    }
+
+
 }

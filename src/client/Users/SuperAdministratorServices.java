@@ -1,43 +1,18 @@
 package client.Users;
 
+import client.CoreClient;
+
 import java.util.*;
 
 /**
- * This class handles everything related to the  
+ * This class handles everything related to the  super admin services.
  */
 public class SuperAdministratorServices extends AdministratorServices {
 
-    /**
-     * Default constructor
-     */
-    public SuperAdministratorServices() {
-    }
+    private CoreClient client;
 
-    /**
-     * 
-     */
-    private SuperAdministratorServices SuperAdminInstance;
-
-    /**
-     * @param user
-     */
-    public void createAdmin(UserServices user) {
-        // TODO implement here
-    }
-
-    /**
-     * @return
-     */
-    public SuperAdministratorServices getSupAdmin() {
-        // TODO implement here
-        return null;
-    }
-
-    /**
-     * 
-     */
-    private void SuperAdministrator() {
-        // TODO implement here
+    public SuperAdministratorServices(CoreClient client) {
+        this.client = client;
     }
 
 }

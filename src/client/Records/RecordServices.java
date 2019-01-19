@@ -1,18 +1,22 @@
 package client.Records;
 
 
+import Types.RecordType;
 import client.CoreClient;
-import client.Courses.CourseServices;
 
 import java.io.File;
-import java.time.Year;
-import java.util.*;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.nio.file.Files;
 
 /**
- * 
+ * This function handles ecverything related to the records on the client side.
+ * @author Marie SALELLES
+ * @author Yvan SANSON
  */
 public class RecordServices {
     private CoreClient client;
+
     /**
      * Default constructor
      */
@@ -30,6 +34,13 @@ public class RecordServices {
      */
     public void createRecord(int courseID, int examYear, File record, int donatingUser) {
         System.out.println("Records OK");
+        try {
+            byte[] recordToByteArray = Files.readAllBytes(record.toPath());
+            RecordType recordObj = new RecordType(record.getName(), courseID, examYear, recordToByteArray,donatingUser);
+            client.getConnection().sendToServer(recordObj);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -47,5 +58,12 @@ public class RecordServices {
         // TODO implement here
     }
 
+    public void handleReceivedRecord(RecordType record){
+        try(FileOutputStream stream = new FileOutputStream(System.getProperty("user.home") +"/Downloads/"+ record.getName())) {
+            stream.write(record.getRecord());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
 }

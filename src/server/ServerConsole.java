@@ -3,7 +3,6 @@ package server;
 import common.ChatIF;
 
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStreamReader;
 
 /**
@@ -24,7 +23,7 @@ public class ServerConsole implements ChatIF {
     public ServerConsole(int port){
         try {
             generalServer = new GeneralServer(port,this);
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }

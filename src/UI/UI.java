@@ -6,9 +6,7 @@ import java.time.ZoneId;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
 
-import Types.CourseType;
-import Types.MessageType;
-import Types.UserType;
+import Types.*;
 import client.CoreClient;
 import common.DisplayIF;
 import javafx.application.Application;
@@ -20,6 +18,8 @@ import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
@@ -61,6 +61,7 @@ public abstract class UI extends Application implements DisplayIF {
     BooleanProperty hasClient = new SimpleBooleanProperty(false);
     TextArea convo;
     private ObservableList<CourseType> courseNames;
+    protected ObservableList<RecordType> recordNames;
 
 
     //Business logic
@@ -126,7 +127,8 @@ public abstract class UI extends Application implements DisplayIF {
     }
 
     public void setCourseNames(List<CourseType> courseNames) {
-        this.courseNames.setAll(courseNames);
+        if(this.courseNames != null)
+            this.courseNames.setAll(courseNames);
     }
 
     public File getRecordFile() {
@@ -506,16 +508,133 @@ public abstract class UI extends Application implements DisplayIF {
         tabRecords.setText("Record");
         tabRecords.setClosable(false);
 
-        tabRecords.setContent(addRecord(tabRecords));
+        tabRecords.setContent(readRecords(tabRecords));
 
         return tabRecords;
 
     }
 
-    private GridPane addRecord(Tab tabRecords){
+    /**
+     * This method build the default record tab
+     * @param tabRecords : tab record
+     * @return : the gridPane which are displaying
+     */
+    protected GridPane readRecords(Tab tabRecords){
+        //add  records
+        //client.getRecords();
+        ListView<RecordType> list = new ListView<>();
+        recordNames = FXCollections.observableArrayList();
+        recordNames.addListener((ListChangeListener<RecordType>) c -> {
+            list.setItems(recordNames);
+        });
 
+
+        list.setItems(recordNames);
+
+        Image fileImg = new Image(getClass().getResourceAsStream("images/icons8-document-480.png"));
+        Image fileImgDown = new Image(getClass().getResourceAsStream("images/icons8-download-filled-100.png"));
+        ImageView downView = new ImageView(fileImgDown);
+
+        //add images on the items in the recordList
+        list.setCellFactory(param -> new ListCell<RecordType>() {
+            private ImageView imageView = new ImageView();
+            Button btnDown = new Button();
+            @Override
+            public void updateItem(RecordType nameR, boolean empty) {
+                super.updateItem(nameR, empty);
+                imageView.setImage(fileImg);
+                setGraphic(imageView);
+                btnDown.setGraphic(downView);//setting icon to button
+            }
+            //event download button
+
+
+
+
+        });
+
+        list.setPrefWidth(350);
+        list.setPrefHeight(500);
+
+        Image addRec = new Image(getClass().getResourceAsStream("images/icons8-plus-208.png"));
+        ImageView addRecView = new ImageView(addRec);
+        addRecView.setFitHeight(15);
+        addRecView.setFitWidth(15);
+
+        //create button add
+        Button btnAddRec = new Button("Add");
+        btnAddRec.setGraphic(addRecView);//setting icon to button
+        btnAddRec.setOnAction(event -> {
+            tabRecords.setContent(addRecord(tabRecords));
+        });
+
+
+        //delete button
+        Image deleteRec = new Image(getClass().getResourceAsStream("images/icons8-annuler-208.png"));
+        ImageView deleteRecView = new ImageView(deleteRec);
+        deleteRecView.setFitHeight(12);
+        deleteRecView.setFitWidth(12);
+
+        //create button delete
+        Button btnDeleteRec = new Button("Delete");
+        btnDeleteRec.setGraphic(deleteRecView);//setting icon to button
+        btnDeleteRec.setOnAction(event -> {
+            tabRecords.setContent(deleteRecord(tabRecords));
+                });
+
+
+        // add in hbox buttons and title
+        HBox hboxButtonRec = new HBox();
+        hboxButtonRec.setPadding(new Insets(5, 0, 0, 5));
+
+        Text title = new Text("Record : ");
+        title.setFont(Font.font(20));
+        hboxButtonRec.getChildren().add(title);
+        hboxButtonRec.getChildren().add(btnAddRec);
+        hboxButtonRec.getChildren().add(btnDeleteRec);
+        hboxButtonRec.setSpacing(5);
+
+
+        GridPane gridRecord = new GridPane();
+        gridRecord.setHgap(10);
+        gridRecord.setVgap(10);
+
+        gridRecord.add(hboxButtonRec,1,0);
+        gridRecord.add(list, 1, 1);
+
+
+        return gridRecord;
+    }
+
+    /**
+     * This method buils pane of add record.
+     * @param tabRecords : tab record
+     * @return return the gridPane with the form
+     */
+    protected GridPane addRecord(Tab tabRecords){
+
+        //return button
+        Image returnRec = new Image(getClass().getResourceAsStream("images/icons8-return.png"));
+        ImageView returnRecView = new ImageView(returnRec);
+        returnRecView.setFitHeight(15);
+        returnRecView.setFitWidth(15);
+
+        //create return button
+        Button btnReturnRec = new Button();
+        btnReturnRec.setGraphic(returnRecView);//setting icon to button
+
+        btnReturnRec.setOnAction(event -> {
+            tabRecords.setContent(readRecords(tabRecords));
+        });
+
+        //form
         Text titleRecord = new Text("Add a Record :");
         titleRecord.setFont(Font.font(20));
+
+        HBox returnTitleBox = new HBox();
+
+        returnTitleBox.getChildren().addAll(titleRecord, btnReturnRec);
+        returnTitleBox.setSpacing(600);
 
         Label courseLab = new Label("Course : ");
         Label dateLab = new Label("Exam date : ");
@@ -535,7 +654,10 @@ public abstract class UI extends Application implements DisplayIF {
         courseComboBox.getSelectionModel().select(1);
 
         //date selector
-        DatePicker examDate = new DatePicker();
+        final Spinner<Integer> examDate = new Spinner<Integer>();
+
+        SpinnerValueFactory<Integer> examDateFact = new SpinnerValueFactory.IntegerSpinnerValueFactory(1900, 2100, 2018);
+        examDate.setValueFactory(examDateFact);
 
         //upload file
         Button uploadButton = new Button("Select Records");
@@ -594,11 +716,11 @@ public abstract class UI extends Application implements DisplayIF {
         gridAddRec.setVgap(10);
         gridAddRec.setPadding(new Insets(10,10,10,10));
 
-        gridAddRec.add(titleRecord, 1, 0);
-        gridAddRec.add(hboxCourses, 1, 1);
-        gridAddRec.add(hboxDate, 1, 2);
-        gridAddRec.add(hboxUpload, 1, 3);
-        gridAddRec.add(hboxButtons, 1, 4);
+        gridAddRec.add(returnTitleBox, 1, 1);
+        gridAddRec.add(hboxCourses, 1, 2);
+        gridAddRec.add(hboxDate, 1, 3);
+        gridAddRec.add(hboxUpload, 1, 4);
+        gridAddRec.add(hboxButtons, 1, 5);
 
         createB.setOnAction(event -> {
             if (courseComboBox.getValue() == null) {
@@ -609,26 +731,92 @@ public abstract class UI extends Application implements DisplayIF {
                 showAlert(Alert.AlertType.ERROR, gridAddRec.getScene().getWindow(), "Form Error!", "Please enter an exam date");
                 return;
             }
-            if (!textFile.getText().equals("File charged")) {
+            if(recordFile == null){
                 showAlert(Alert.AlertType.ERROR, gridAddRec.getScene().getWindow(), "Form Error!", "Please upload a pdf file");
                 return;
             }
-            if(recordFile != null){
-                showAlert(Alert.AlertType.ERROR, gridAddRec.getScene().getWindow(), "Form Error!", "Please upload a pdf file");
-                return;
-            }
-            client.createRecord(((CourseType)courseComboBox.getValue()).getId(), examDate.getValue().getYear(), recordFile, userID);
+            client.createRecord(((CourseType)courseComboBox.getValue()).getId(), examDate.getValue(), recordFile, userID);
             courseComboBox.setValue(null);
 
         });
 
         cancelB.setOnAction(event -> {
-            //tabRecords.setContent(recordRead(tabRecords));
+            tabRecords.setContent(readRecords(tabRecords));
         });
 
         return gridAddRec;
     }
 
+    /**
+     * This method build the pane to delete a record
+     * @param tabRecords : the record tab
+     * @return the gridPane with the delete interface
+     */
+    protected GridPane deleteRecord(Tab tabRecords){
+
+        //return button
+        Image returnRec = new Image(getClass().getResourceAsStream("images/icons8-return.png"));
+        ImageView returnRecView = new ImageView(returnRec);
+        returnRecView.setFitHeight(15);
+        returnRecView.setFitWidth(15);
+
+        //create return button
+        Button btnReturnRecD = new Button();
+        btnReturnRecD.setGraphic(returnRecView);//setting icon to button
+
+        btnReturnRecD.setOnAction(event -> {
+            tabRecords.setContent(readRecords(tabRecords));
+        });
+
+        //title
+        Text titleDeleteRecord = new Text("Delete a Record :");
+        titleDeleteRecord.setFont(Font.font(20));
+
+        //record list
+
+        //client.getRecordsByUser();
+        ListView<RecordType> list = new ListView<>();
+        recordNames = FXCollections.observableArrayList();
+        recordNames.addListener((ListChangeListener<RecordType>) c -> {
+            list.setItems(recordNames);
+        });
+
+        list.setItems(recordNames);
+        list.setPrefWidth(350);
+        list.setPrefHeight(500);
+
+        Image deleteR = new Image(getClass().getResourceAsStream("images/icons8-annuler-208.png"));
+
+        //add images on the items in the recordList
+        list.setCellFactory(param -> new ListCell<RecordType>() {
+            private ImageView imageView = new ImageView();
+            Button deleteRB = new Button();
+            @Override
+            public void updateItem(RecordType nameR, boolean empty) {
+                super.updateItem(nameR, empty);
+                imageView.setImage(deleteR);
+                deleteRB.setGraphic(imageView);
+            }
+            //event delete
+
+
+
+
+        });
+
+
+        HBox returnTitleBox = new HBox();
+
+        returnTitleBox.getChildren().addAll(titleDeleteRecord, btnReturnRecD);
+        returnTitleBox.setSpacing(600);
+
+
+        GridPane deleteGrid = new GridPane();
+        deleteGrid.add(returnTitleBox, 1,0);
+        deleteGrid.add(list, 1,1);
+
+        return deleteGrid;
+    }
 
     @Override
     public void setConversationMessages(List<MessageType> conversationMessages){

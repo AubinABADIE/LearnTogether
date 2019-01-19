@@ -147,10 +147,7 @@ public class TeacherUI extends UI {
         CourseType ct = new CourseType(1,"course1","communication course",1,2);
         courseNames = FXCollections.observableArrayList();
         courseNames.add(ct);
-        courseNames.addListener((ListChangeListener<CourseType>) c -> {
-        	
-            list.setItems(courseNames);
-        });
+        courseNames.addListener((ListChangeListener<CourseType>) c -> list.setItems(courseNames));
 
         Image addCourse = new Image(getClass().getResourceAsStream("images/icons8-plus-208.png"));
         ImageView addCourseView = new ImageView(addCourse);
