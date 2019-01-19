@@ -35,7 +35,7 @@ public class FileStorageHandler {
         httpPipeline = StorageURL.createPipeline(sharedKeyCredentials, new PipelineOptions());
         u = new URL(String.format(Locale.ROOT, "https://%s.blob.core.windows.net", accountName));
         serviceURL = new ServiceURL(u, httpPipeline);
-
+        containerURL = serviceURL.createContainerURL("testcontainer");
     }
 
     /**
@@ -48,9 +48,10 @@ public class FileStorageHandler {
         fileName = fileName.replace(' ', '-');
         fileName = Normalizer.normalize(fileName, Normalizer.Form.NFD);
         fileName = fileName.replaceAll("[\\p{InCombiningDiacriticalMarks}]", "");
-        containerURL = serviceURL.createContainerURL("learntogetherrecords");
+
         BlockBlobURL blobURL = containerURL.createBlockBlobURL(fileName);
-        containerURL.create().flatMap(containerCreateResponse ->blobURL.upload(Flowable.just(ByteBuffer.wrap(file)), file.length));
+
+        containerURL.create().flatMap(containerCreateResponse ->blobURL.upload(Flowable.just(ByteBuffer.wrap(file)), file.length)).blockingGet();
     }
 
 
