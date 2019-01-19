@@ -2,7 +2,10 @@ package server;
 
 import com.microsoft.azure.storage.blob.*;
 import com.microsoft.rest.v2.http.HttpPipeline;
+import com.microsoft.rest.v2.util.FlowableUtil;
 import io.reactivex.Flowable;
+import io.reactivex.Single;
+
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.ByteBuffer;
@@ -75,12 +78,18 @@ public class FileStorageHandler {
         containerURL.create().flatMap(containerCreateResponse ->blobURL.upload(Flowable.just(ByteBuffer.wrap(file)), file.length)).blockingGet();
     }
 
+    /**
+     * This method tries to retrieve a file stored in the storage service.
+     * @param fileName the file name.
+     * @return a byte array representing the file.
+     */
     public byte[] downloadFile(String fileName){
         String name = refactorFileName(fileName);
         String containerName = refactorContainerName(fileName);
         containerURL = serviceURL.createContainerURL(containerName);
-        BlockBlobURL blobURL;
-        return null;
+        BlockBlobURL blobURL = containerURL.createBlockBlobURL(name);
+        DownloadResponse downloadResponse = containerURL.create().flatMap(containerCreateResponse -> blobURL.download()).blockingGet();
+        return FlowableUtil.collectBytesInArray(downloadResponse.body(null)).blockingGet();
     }
 
 
