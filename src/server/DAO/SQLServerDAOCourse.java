@@ -84,9 +84,9 @@ public class SQLServerDAOCourse extends AbstractDAOCourse{
                     courses.add(new CourseType(
                     		resultSet.getInt(1),
                             resultSet.getString(2),
-                            resultSet.getString("courseDescription"),
-                            resultSet.getInt("nbHourTotal"),
-                            resultSet.getInt("idTeacher")));
+                            resultSet.getString(3),
+                            resultSet.getInt(4),
+                            resultSet.getInt(5)));
                 }
             }catch (SQLException e){e.printStackTrace();}
             finally {
@@ -139,17 +139,17 @@ public class SQLServerDAOCourse extends AbstractDAOCourse{
         return result;
     }
     
-    public int updateCourse(int idCourse, String courseName, String courseDescription, int nbHourTotal, int idTeacher){
+    public int updateCourse(int idCourse, String courseName, String courseDescription, int nbHourTotal, String idTeacher){
         Connection connection =getConnection();
         int result = 0;
         if(connection!= null){
             try{
                 PreparedStatement preparedStatement = connection.prepareStatement("UPDATE Courses SET courseName = ?, courseDescription = ?, nbHourTotal = ?, idTeacher = ?  WHERE idCourse = ?");
-                preparedStatement.setInt(1, idCourse);
-                preparedStatement.setString(2, courseName);
-                preparedStatement.setString(3, courseDescription);
-                preparedStatement.setInt(4, nbHourTotal);
-                preparedStatement.setInt(5, idTeacher);
+                preparedStatement.setInt(5, idCourse);
+                preparedStatement.setString(1, courseName);
+                preparedStatement.setString(2, courseDescription);
+                preparedStatement.setInt(3, nbHourTotal);
+                preparedStatement.setString(4, idTeacher);
                 result = preparedStatement.executeUpdate();
             } catch(SQLException e){
                 e.printStackTrace();

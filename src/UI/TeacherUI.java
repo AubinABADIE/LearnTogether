@@ -46,9 +46,12 @@ public class TeacherUI extends UI {
 
 	private Scene principalTeacherScene;
 	private TabPane tabPane;
-	private Tab tabProfile, tabSchedule, tabRecords, tabDiary, tabChat, tabCourse, tabRoom;
+	private Tab tabProfile, tabSchedule, tabRecords, tabDiary, tabChat;
+	Tab tabCourse;
+	private Tab tabRoom;
 	private ObservableList<CourseType> courseNames;
 	protected ObservableList<TeacherType> teacherNames;
+	//protected String teacherUpdateName;
 	
     /**
      * Default constructor
@@ -136,7 +139,7 @@ public class TeacherUI extends UI {
         return tabCourse;
 	}
 
-	private GridPane courseRead(Tab tabCourse){
+	protected GridPane courseRead(Tab tabCourse){
 		System.out.println("ok1");
         /*add list of Course*/
         client.getCourses();
@@ -284,6 +287,7 @@ public class TeacherUI extends UI {
             descriptionCourse.setText(selectedCourse.getSelectedItem().getDescription());
             nbHourTotal.setText(Integer.toString(selectedCourse.getSelectedItem().getNbTotalHour()));
             idTeacher.setText(Integer.toString(selectedCourse.getSelectedItem().getIdTeacher()));
+
         });
 
 
@@ -314,18 +318,11 @@ public class TeacherUI extends UI {
 	        teacherNames.addListener((ListChangeListener<TeacherType>) c -> {
 	            listT.setItems(teacherNames);
 	        });
-	        
-	        
 
 	        ComboBox<TeacherType> teacherComboBox = new ComboBox<TeacherType>();
 	        teacherComboBox.setItems(teacherNames);
 	        teacherComboBox.getSelectionModel().select(1);
 	        
-	        /*TextField referentTeacherField = new TextField();
-	        referentTeacherField.textProperty().addListener((observable, oldValue, newValue) -> {
-	            if(!newValue.matches("\\d*"))
-	                referentTeacherField.setText(newValue.replaceAll("[^\\d]", ""));
-	        });*/
 
 	        //grid pane
 	        GridPane gridCourse = new GridPane();
@@ -403,13 +400,10 @@ public class TeacherUI extends UI {
 
 
 	        return gridCourse;
-	    }
+	        }
 	
-	protected void setCourseTab(){
-        SingleSelectionModel<Tab> selectionModel = tabPane.getSelectionModel();
-        selectionModel.select(tabCourse());
-
-
+	protected GridPane setCourseTab(){
+        return courseRead(tabCourse);
     }
 	
 	private GridPane updateTabCourse(Tab tabCourse, String nameCourse, String descriptionCourse, int nbTotalHourCourse, int referentTeacherCourse, int idCourse){
@@ -431,6 +425,7 @@ public class TeacherUI extends UI {
             if(!newValue.matches("\\d*"))
                 nbTotalHourField.setText(newValue.replaceAll("[^\\d]", ""));
         });
+        System.out.println("Si j'arrive ici je devrais renvoyer les teachers ");
         client.getTeacher();
         ListView<TeacherType> listT = new ListView<>();
         teacherNames = FXCollections.observableArrayList();
@@ -441,13 +436,7 @@ public class TeacherUI extends UI {
         ComboBox teacherComboBox = new ComboBox();
         teacherComboBox.setItems(teacherNames);
         teacherComboBox.getSelectionModel().select(1);
-        
-        /*TextField referentTeacherField = new TextField();
-        referentTeacherField.setText(Integer.toString(referentTeacherCourse));
-        referentTeacherField.textProperty().addListener((observable, oldValue, newValue) -> {
-            if(!newValue.matches("\\d*"))
-                referentTeacherField.setText(newValue.replaceAll("[^\\d]", ""));
-        });*/
+        teacherComboBox.setValue(referentTeacherCourse);
         
         //grid pane
         GridPane gridUpdateCourse = new GridPane();
@@ -463,9 +452,9 @@ public class TeacherUI extends UI {
 
         // add form in hbox
         nameCourseHb.getChildren().addAll(nameCourseLabel, nameCourseField);
-        descriptionCourseHb.getChildren().addAll(descriptionCourseLabel, descriptionCourseField) ;
-        nbTotalHourCourseHb.getChildren().addAll(nbTotalHourLabel, nbTotalHourField) ;
-        referentTeacherCourseHb.getChildren().addAll(referentTeacherLabel, teacherComboBox) ;
+        descriptionCourseHb.getChildren().addAll(descriptionCourseLabel, descriptionCourseField);
+        nbTotalHourCourseHb.getChildren().addAll(nbTotalHourLabel, nbTotalHourField);
+        referentTeacherCourseHb.getChildren().addAll(referentTeacherLabel, teacherComboBox);
 
          //add hbox in gridpane
         gridUpdateCourse.add(nameCourseHb, 1, 1);
@@ -510,17 +499,12 @@ public class TeacherUI extends UI {
                 showAlert(Alert.AlertType.ERROR, gridUpdateCourse.getScene().getWindow(), "Form Error!", "Please enter referent teacher");
                 return;
             }
-            /*if (referentTeacherField.getText().isEmpty()) {
-                showAlert(Alert.AlertType.ERROR, gridUpdateCourse.getScene().getWindow(), "Form Error!", "Please enter a course building");
-                return;
-            }*/
             
             TeacherType teach= (TeacherType) teacherComboBox.getSelectionModel().getSelectedItem();
             client.handleUpdateCourse(idCourse, nameCourseField.getText(), descriptionCourseField.getText(), Integer.parseInt(nbTotalHourField.getText()),teach.getId());
             nameCourseField.setText("");
             descriptionCourseField.setText("");
             nbTotalHourField.setText("");
-            //referentTeacherField.setText("");
 
         });
 

@@ -19,7 +19,7 @@ public abstract class AbstractDAOCourse{
     public abstract List<CourseType> searchAllCourses();
 
     public abstract int deleteCourse(int id);
-    public abstract int updateCourse(int idCourse, String courseName, String coursDescription, int nbTotalHours, int idT);
+    public abstract int updateCourse(int idCourse, String courseName, String coursDescription, int nbTotalHours, String idT);
 
 }
 

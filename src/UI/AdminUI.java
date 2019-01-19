@@ -1922,6 +1922,113 @@ public class AdminUI extends TeacherUI {
 
         return gridUserVisu;
     }
+    
+    private GridPane createTabCourse(Tab tabCourse){
+	      
+	       // labels
+	        Label nameCourseLabel = new Label("Name of course : ");
+	        Label descriptionCourseLabel = new Label("Description : ");
+	        Label nbTotalHourLabel = new Label("Total hours : ");
+	        Label referentTeacherLabel = new Label ("Referent teacher : ");
+
+	        // Add text Field
+	        TextField nameCourseField = new TextField();
+	        TextArea descriptionCourseField = new TextArea();
+	        TextField nbTotalHourField = new TextField();
+	        nbTotalHourField.textProperty().addListener((observable, oldValue, newValue) -> {
+	            if(!newValue.matches("\\d*"))
+	                nbTotalHourField.setText(newValue.replaceAll("[^\\d]", ""));
+	        });
+	        
+	        client.getTeacher();
+	        ListView<TeacherType> listT = new ListView<>();
+	        teacherNames = FXCollections.observableArrayList();
+	        teacherNames.addListener((ListChangeListener<TeacherType>) c -> {
+	            listT.setItems(teacherNames);
+	        });
+
+	        ComboBox<TeacherType> teacherComboBox = new ComboBox<TeacherType>();
+	        teacherComboBox.setItems(teacherNames);
+	        teacherComboBox.getSelectionModel().select(1);
+	        
+
+	        //grid pane
+	        GridPane gridCourse = new GridPane();
+	        gridCourse.setHgap(10);
+	        gridCourse.setVgap(10);
+	        gridCourse.setPadding(new Insets(10,10,10,10));
+
+	        //Hbox
+	        HBox nameCourse = new HBox();
+	        HBox descriptionCourse = new HBox();
+	        HBox nbTotalHourCourse = new HBox();
+	        HBox idReferentTeacherCourse = new HBox();
+
+	        // add form in hbox
+	        nameCourse.getChildren().addAll(nameCourseLabel, nameCourseField);
+	        descriptionCourse.getChildren().addAll(descriptionCourseLabel, descriptionCourseField) ;
+	        nbTotalHourCourse.getChildren().addAll(nbTotalHourLabel, nbTotalHourField) ;
+	        idReferentTeacherCourse.getChildren().addAll(referentTeacherLabel, teacherComboBox) ;
+
+	        //add hbox in gridpane
+	        gridCourse.add(nameCourse, 1, 1);
+	        gridCourse.add(descriptionCourse, 1, 2);
+	        gridCourse.add(nbTotalHourCourse, 1, 3);
+	        gridCourse.add(idReferentTeacherCourse, 1, 4);
+
+	        //add gridpane in tab
+	        tabCourse.setContent(gridCourse);
+
+	        //add button
+
+	        Button okCreate = new Button("Create");
+	        okCreate.setPrefHeight(40);
+	        okCreate.setDefaultButton(true);
+	        okCreate.setPrefWidth(100);
+	        gridCourse.add(okCreate, 0, 13, 1, 1);
+	        GridPane.setHalignment(okCreate, HPos.RIGHT);
+	        gridCourse.setMargin(okCreate, new Insets(20, 0, 20, 0));
+
+	        Button cancelCreate = new Button("Cancel");
+	        cancelCreate.setPrefHeight(40);
+	        cancelCreate.setDefaultButton(false);
+	        cancelCreate.setPrefWidth(100);
+	        gridCourse.add(cancelCreate, 2, 13, 1, 1);
+	        gridCourse.setHalignment(cancelCreate, HPos.RIGHT);
+	        gridCourse.setMargin(cancelCreate, new Insets(20, 0, 20, 0));
+
+	        okCreate.setOnAction(event -> {
+	            if (nameCourseField.getText().isEmpty()) {
+	                showAlert(Alert.AlertType.ERROR, gridCourse.getScene().getWindow(), "Form Error!", "Please enter course name");
+	                return;
+	            }
+	            if (descriptionCourseField.getText().isEmpty()) {
+	                showAlert(Alert.AlertType.ERROR, gridCourse.getScene().getWindow(), "Form Error!", "Please enter course description");
+	                return;
+	            }
+	            if (nbTotalHourField.getText().isEmpty()) {
+	                showAlert(Alert.AlertType.ERROR, gridCourse.getScene().getWindow(), "Form Error!", "Please enter course total number of hour");
+	                return;
+	            }
+	            if (teacherComboBox.getSelectionModel().isEmpty()) {
+	                showAlert(Alert.AlertType.ERROR, gridCourse.getScene().getWindow(), "Form Error!", "Please enter course referent teacher");
+	                return;
+	            }
+	            TeacherType teach= (TeacherType) teacherComboBox.getSelectionModel().getSelectedItem();
+	            client.handleCreateCourse(nameCourseField.getText(), descriptionCourseField.getText(), Integer.parseInt(nbTotalHourField.getText()),teach.getId());
+	            nameCourseField.setText("");
+	            descriptionCourseField.setText("");
+	            nbTotalHourField.setText("");
+
+	        });
+
+	        cancelCreate.setOnAction(event -> {
+	            tabCourse.setContent(courseRead(tabCourse));
+	        });
+
+
+	        return gridCourse;
+	        }
 
 	private void createUser(Tab tabUser) {
 		// TODO Auto-generated method stub

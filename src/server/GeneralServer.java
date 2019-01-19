@@ -142,7 +142,7 @@ public class GeneralServer implements Observer {
             handleDeleteCourseFromClient(Integer.parseInt(attributes[1]), client);
         } else if(instruction.startsWith("UPDATECOURSE")){
             String[] attributes = instruction.split("-/-");
-            handleUpdateCourseFromClient(Integer.parseInt(attributes[1]),attributes[2],attributes[3], Integer.parseInt(attributes[4]), Integer.parseInt(attributes[5]), client);
+            handleUpdateCourseFromClient(Integer.parseInt(attributes[1]),attributes[2],attributes[3], Integer.parseInt(attributes[4]), attributes[5], client);
         } else if (instruction.startsWith("GETCOURSES")){
             handleListCoursesFromClient(client);
         }
@@ -179,7 +179,6 @@ public class GeneralServer implements Observer {
             handleGetConversationEmails(Integer.parseInt(attributes[1]), client);
         }
         else if (instruction.startsWith("GETTEACHER")){
-            System.out.println("jecherchelesteacher");
             handleListTeacherFromClient(client);
         }
         else if(instruction.startsWith("DELETECONVERSATION")){
@@ -570,7 +569,7 @@ public class GeneralServer implements Observer {
      * @param client : client who update the course
      */
     
-    public void handleUpdateCourseFromClient (int idCourse, String courseName, String courseDescription, int nbTotalHour, int idTeacher, ConnectionToClient client ){
+    public void handleUpdateCourseFromClient (int idCourse, String courseName, String courseDescription, int nbTotalHour, String idTeacher, ConnectionToClient client ){
     	int result = dao.getCourseDAO().updateCourse(idCourse, courseName, courseDescription, nbTotalHour, idTeacher);
 
         String mess;
