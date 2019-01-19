@@ -142,5 +142,5 @@ When the server receives a RecordType to store in the database and storage servi
 | 6        | Teacher       |    PolyMtp | teacher@umontpellier.fr            |Teacher       |TEACHER   |
 | 8        | Staff         | PolyMtp    | StaffAdmin@umontpellier.fr         |AdmStaff      |ADMIN     |
 | 9        | SuperStaff    | PolyMtp    | SuperAdminAdmin@umontpellier.fr    |SuperAdmin    |SUPERADMIN|
-| 11       | Stratulat     | Tiberiu    | tibi.stratulat@umontpellier.fr     |Tibi          |TEACHER   |
+| 11       | Stratulat     | Tiberiu    | tibi.strat@umontpellier.fr         |Tibi          |TEACHER   |
     

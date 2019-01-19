@@ -177,6 +177,7 @@ public class CoreClient implements ClientIF {
             } else if (((List)msg).get(0) instanceof TeacherType) {
             	display.getTeacher((List<TeacherType>)msg);
             } else if (((List)msg).get(0) instanceof CourseType) {
+            	System.out.println("réception courses Core client ");
             	display.getCourses((List<CourseType>)msg);
             }
             else if (((List)msg).get(0) instanceof RecordType){
@@ -336,6 +337,10 @@ public class CoreClient implements ClientIF {
      * This method delegates getCourses to courseServices
      * @return a course list
      */
+    public void getCourses(int userID) {
+        course.getCourses(userID);
+    }
+    
     public void getCourses() {
         course.getCourses();
         
