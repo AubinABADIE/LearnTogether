@@ -14,7 +14,7 @@ public class CourseType implements Serializable {
         this.name = name;
         this.description = description;
         this.setNbTotalHour(totalHours);
-        
+        this.idTeacher=idTeacher;
     }
 
     public int getId() {
@@ -45,8 +45,6 @@ public class CourseType implements Serializable {
     public String toString() {
         return "Name: " + name;
     }
-
-	
 
 	public int getIdTeacher() {
 		return idTeacher;

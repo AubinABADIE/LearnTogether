@@ -200,19 +200,47 @@ public class StartUI extends UI {
                 }
             } else if (newValue.equalsIgnoreCase("RU FAILURE")){
                 Platform.runLater(()->showAlert(Alert.AlertType.CONFIRMATION, null, "Failure", "Error: Room hasn't been updated."));
-            } else if (newValue.equalsIgnoreCase("CC SUCCESS")) {
-                Platform.runLater(()->showAlert(Alert.AlertType.CONFIRMATION, null, "Success", "You have created the course."));
+            }
+            
+            else if (newValue.equalsIgnoreCase("CC SUCCESS")) {
+            	System.out.println("Si j'arrive ici je devrais renvoyer la liste des cours");
+            	Platform.runLater(()->showAlert(Alert.AlertType.CONFIRMATION, null, "Success", "You have created the course."));
+                if (adminUI != null){
+                    Platform.runLater(()->adminUI.tabCourse.setContent(adminUI.setCourseTab()));
+                } else if (superAdminUI != null){
+                    Platform.runLater(()->superAdminUI.tabCourse.setContent(superAdminUI.setCourseTab()));
+                }else if (teacherUI != null){
+                	System.out.println("Si j'arrive ici je devrais renvoyer la liste des cours");
+                    Platform.runLater(()->teacherUI.tabCourse.setContent(teacherUI.setCourseTab()));
+                }
             } else if (newValue.equalsIgnoreCase("CC FAILURE")) {
                 Platform.runLater(()->showAlert(Alert.AlertType.CONFIRMATION, null, "Failure", "Error: Course hasn't been created."));
             } else if (newValue.equalsIgnoreCase("CD SUCCESS")){
-                Platform.runLater(()->showAlert(Alert.AlertType.CONFIRMATION, null, "Success", "You have deleted the course."));
-                Platform.runLater(()->adminUI.client.getCourses());
+            	Platform.runLater(()->showAlert(Alert.AlertType.CONFIRMATION, null, "Success", "You have deleted the course."));
+                if (adminUI != null){
+                    Platform.runLater(()->adminUI.client.getCourses());
+                }else if (superAdminUI != null){
+                    Platform.runLater(()->superAdminUI.client.getCourses());
+                }else if (teacherUI != null){
+                    Platform.runLater(()->teacherUI.client.getCourses());
+                }
             } else if (newValue.equalsIgnoreCase("CD FAILURE")){
                 Platform.runLater(()->showAlert(Alert.AlertType.CONFIRMATION, null, "Failure", "Error: Course hasn't been deleted."));
             } else if (newValue.equalsIgnoreCase("CU SUCCESS")){
-                showAlert(Alert.AlertType.CONFIRMATION, null, "Success", "You have updated the course.");
+                showAlert(Alert.AlertType.CONFIRMATION, null, "Success", "You have update the course.");
+                if (adminUI != null){
+                    Platform.runLater(()->Platform.runLater(()->adminUI.client.getCourses()));
+                    Platform.runLater(()->adminUI.tabCourse.setContent(adminUI.setCourseTab()));
+                } else if (superAdminUI != null){
+                    Platform.runLater(()->Platform.runLater(()->superAdminUI.client.getCourses()));
+                    Platform.runLater(()->superAdminUI.tabCourse.setContent(superAdminUI.setCourseTab()));
+                }else if (teacherUI != null){
+                    Platform.runLater(()->Platform.runLater(()->teacherUI.client.getCourses()));
+                    Platform.runLater(()->teacherUI.tabCourse.setContent(teacherUI.setCourseTab()));
+                }
             } else if (newValue.equalsIgnoreCase("CU FAILURE")){
                 Platform.runLater(()->showAlert(Alert.AlertType.ERROR, null, "Failure", "Error: Course hasn't been updated."));
+            
             } else if(newValue.equalsIgnoreCase("MD SUCCESS")){
                 Platform.runLater(()->showAlert(Alert.AlertType.CONFIRMATION, null, "Success", "The conversation has been deleted."));
             } else if(newValue.equalsIgnoreCase("MD FAILURE.")){
@@ -426,7 +454,7 @@ public class StartUI extends UI {
     }
     @Override
     public void getRooms(List<RoomType> rooms){
-        Platform.runLater(() -> {
+    	Platform.runLater(() -> {
             if(adminUI != null)
                 adminUI.setRooms(rooms);
             else if(superAdminUI != null)
