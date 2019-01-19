@@ -544,6 +544,8 @@ public abstract class UI extends Application implements DisplayIF {
         Image fileImg = new Image(getClass().getResourceAsStream("images/icons8-document-480.png"));
         Image fileImgDown = new Image(getClass().getResourceAsStream("images/icons8-download-filled-100.png"));
         ImageView downView = new ImageView(fileImgDown);
+        downView.setFitHeight(15);
+        downView.setFitWidth(15);
 
         //add images on the items in the recordList
         list.setCellFactory(param -> new ListCell<RecordType>() {
@@ -554,6 +556,8 @@ public abstract class UI extends Application implements DisplayIF {
                 super.updateItem(nameR, empty);
                 imageView.setImage(fileImg);
                 setGraphic(imageView);
+                imageView.setFitHeight(15);
+                imageView.setFitWidth(15);
                 btnDown.setGraphic(downView);//setting icon to button
             }
             //event download button
