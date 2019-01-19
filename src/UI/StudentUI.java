@@ -128,4 +128,9 @@ public class StudentUI extends UI  {
     public void getClasses(List<ClassType> classes) {
 
     }
+
+	@Override
+	public void getUsers(List<UserType> users) {
+		
+	}
 }

@@ -136,12 +136,15 @@ public class UserServices{
     }
     
     /**
-     * When the server responds to a GETUSER command sent by this client. This method interprets what is returned.
-     * @param msg: the response from the server.
+     * This method send a message to the server to have the rooms list
      */
-    public void handleReadUser(String msg) {
-    	String[] credentials = msg.split(" ");
-	}
+    public void getUsers() {
+        try {
+            coreClient.getConnection().sendToServer("#GETUSERS");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
     
     /**
      * This method is called when the client wants to set a new password.
@@ -191,7 +194,11 @@ public class UserServices{
      * @param msg: the response from the server.
      */
     public void handleUpdatedUser(String msg) {
-    	
+    	String[] args = msg.split(" ");
+        if(args[1].equalsIgnoreCase("SUCCESS"))
+            coreClient.getDisplay().setState("UU SUCCESS");
+        else
+            coreClient.getDisplay().setState("UU FAILURE");
     }
     
     /**
@@ -228,7 +235,11 @@ public class UserServices{
      * @param msg: the response from the server.
      */
     public void handleDeletedUser(String msg) {
-    	String[] credentials = msg.split(" ");
+    	String[] args = msg.split(" ");
+        if(args[1].equalsIgnoreCase("SUCCESS"))
+            coreClient.getDisplay().setState("DU SUCCESS");
+        else
+            coreClient.getDisplay().setState("DU FAILURE");
 	}
 
 }

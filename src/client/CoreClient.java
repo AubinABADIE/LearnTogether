@@ -163,8 +163,6 @@ public class CoreClient implements ClientIF {
                 display.getDepartment((List<DepartmentType>) msg);
             } else if (((List) msg).get(0) instanceof TeacherType) {
                 display.getTeacher((List<TeacherType>) msg);
-            } else if (msg instanceof UserType) {
-                display.setUser((UserType) msg);
             } else if (((List) msg).get(0) instanceof PromotionType) {
                 display.getPromo((List<PromotionType>) msg);
             }else if (((List) msg).get(0) instanceof ClassType) {
@@ -175,6 +173,8 @@ public class CoreClient implements ClientIF {
             	display.getTeacher((List<TeacherType>)msg);
             } else if (((List)msg).get(0) instanceof CourseType) {
             	display.getCourses((List<CourseType>)msg);
+            } else if (((List)msg).get(0) instanceof UserType) {
+            	display.getUsers((List<UserType>) msg);
             }
         }
         else if (msg instanceof UserType) {
@@ -382,6 +382,10 @@ public class CoreClient implements ClientIF {
     
     public void getTeacher() {
         teacher.getTeacher();
+    }
+    
+    public void getUsers() {
+    	user.getUsers();
     }
     
     

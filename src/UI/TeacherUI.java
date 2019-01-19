@@ -585,11 +585,17 @@ public class TeacherUI extends UI {
 	public void getCourses(List<CourseType> courses) {
 		
 	}
-
+	
+	@Override
+	public void getUsers(List<UserType> users) {
+		
+	}
 
 	@Override
 	public void setUser(UserType user) {
 		this.user = user;
 		
 	}
+
+	
 }

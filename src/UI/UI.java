@@ -259,7 +259,7 @@ public abstract class UI extends Application implements DisplayIF {
     	changePwdButton.setDefaultButton(true);
     	
     	// Photo
-    	Image image = null; //new Image(getClass().getResourceAsStream("images/profilePhoto.png"));
+    	Image image = new Image(getClass().getResourceAsStream("images/profilePhoto.png"));
         //Setting the image view 
         ImageView imageView = new ImageView(image); 
         //Setting the position of the image 

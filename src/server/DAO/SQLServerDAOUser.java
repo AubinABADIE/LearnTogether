@@ -1,7 +1,5 @@
 package server.DAO;
 
-import Types.CourseType;
-import Types.PromotionType;
 import Types.UserType;
 import Types.TeacherType;
 
@@ -68,10 +66,29 @@ public class SQLServerDAOUser extends AbstractDAOUser {
      * @param studentGrouString
      */
     @Override
-	public boolean createDAOUser(String name, String firstname, String birthDate, String email, String password,
+	public int createDAOUser(String name, String firstname, String birthDate, String email, String password,
 			String role) {
-		// TODO Auto-generated method stub
-		return false;
+    	Connection connection = getConnection();
+        int result = 0;
+        if(connection != null){
+            try{
+                PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO GeneralUsers (name, firstname, birthDate, email, password, role) VALUES (? ,? ,? ,? ,?, ?)");
+                preparedStatement.setString(1, name);
+                preparedStatement.setString(2, firstname);
+                preparedStatement.setString(3, birthDate);
+                preparedStatement.setString(4, email);
+                preparedStatement.setString(5, password);
+                preparedStatement.setString(6, role);
+                result = preparedStatement.executeUpdate();
+
+            }catch (SQLException e){
+                e.printStackTrace();
+            }
+            finally {
+                closeConnection(connection);
+            }
+        }
+        return result;
 	}
     
     /**
@@ -111,9 +128,26 @@ public class SQLServerDAOUser extends AbstractDAOUser {
      * @param role
      */
     @Override
-	public boolean updateDAOUser(int id, String name, String firstname, String birthDate, String email, String password, String role) {
-		// TODO Auto-generated method stub
-		return false;
+	public int updateDAOUser(int id, String name, String firstname, String birthDate, String email, String password, String role) {
+    	Connection connection = getConnection();
+        int res = 0;
+        if(connection != null){
+            try{
+                PreparedStatement preparedStatement = connection.prepareStatement("UPDATE GeneralUsers SET name = ?, firstname = ?, birthdate = ?, email = ?, password = ?, role = ? WHERE idUser = ?");
+                preparedStatement.setString(1,name);
+                preparedStatement.setString(2,firstname);
+                preparedStatement.setString(3,birthDate);
+                preparedStatement.setString(4,email);
+                preparedStatement.setString(5,password);
+                preparedStatement.setString(6,role);
+                preparedStatement.setInt(7,id);
+                res = preparedStatement.executeUpdate();
+            }catch (SQLException e){e.printStackTrace();}
+            finally {
+                closeConnection(connection);
+            }
+        }
+        return res;
 	}
 
     /**
@@ -121,8 +155,23 @@ public class SQLServerDAOUser extends AbstractDAOUser {
      * @param id
      */
     @Override
-    public boolean deleteDAOUser(int id) {
-    	 return true;
+    public int deleteDAOUser(int id) {
+    	Connection connection = getConnection();
+        int result = 0;
+        if(connection != null){
+            try{
+                PreparedStatement preparedStatement = connection.prepareStatement("DELETE FROM GeneralUsers WHERE idUser = ?");
+                preparedStatement.setInt(1, id);
+                result = preparedStatement.executeUpdate();
+
+            }catch (SQLException e){
+                e.printStackTrace();
+            }
+            finally {
+                closeConnection(connection);
+            }
+        }
+        return result;
     }
 
     
@@ -206,7 +255,7 @@ public class SQLServerDAOUser extends AbstractDAOUser {
 
 
     /**
-     * This method return the departments list
+     * This method return the teachers list
      */
     @Override
     public List<TeacherType> searchAllTeacher() {
@@ -231,6 +280,34 @@ public class SQLServerDAOUser extends AbstractDAOUser {
                 }
             }
             return teacher;
+    }
+    
+    /**
+     * This method return the users list
+     */
+    @Override
+    public List<UserType> getAllUsers() {
+            List<UserType> users = new ArrayList();
+            Connection connection = getConnection();
+            if(connection != null){
+                try{
+                    PreparedStatement preparedStatement = connection.prepareStatement("SELECT * from GeneralUsers");
+                    ResultSet resultSet = preparedStatement.executeQuery();
+                    while (resultSet.next()){
+                        users.add(new TeacherType(resultSet.getInt("idUser"),
+                                resultSet.getString("name"),
+                                resultSet.getString("firstName"),
+                                resultSet.getString("email"),
+                                resultSet.getString("birthDate"),
+                                resultSet.getString("role")));
+                    }
+
+                }catch (SQLException e){e.printStackTrace();}
+                finally {
+                    closeConnection(connection);
+                }
+            }
+            return users;
     }
 
 }
