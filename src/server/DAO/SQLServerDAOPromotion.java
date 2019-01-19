@@ -8,6 +8,11 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * This class instantiate the method relative to the promotion in SQLServer data base
+ * @author Audrey SAMSON
+ */
+
 public class SQLServerDAOPromotion extends AbstractDAOPromotion {
 
     /**
@@ -17,6 +22,10 @@ public class SQLServerDAOPromotion extends AbstractDAOPromotion {
 
     }
 
+    /**
+     * This function create the connection with the data base
+     * @return : a connection
+     */
     public Connection getConnection() {
         {
             Connection connection = null;
@@ -43,6 +52,10 @@ public class SQLServerDAOPromotion extends AbstractDAOPromotion {
         }
     }
 
+    /**
+     * This method return all the promotion in the data base.
+     * @return int which returns the state of the selection.
+     */
     @Override
     public List<PromotionType> searchAllPromotion() {
         ArrayList promo = new ArrayList();
@@ -67,6 +80,14 @@ public class SQLServerDAOPromotion extends AbstractDAOPromotion {
         return promo;
     }
 
+    /**
+     * This method create a promotion in the data base.
+     * @param name : promotion name
+     * @param descriptionDep : promotion description
+     * @param graduationYear : promotion gradation year
+     * @param refDep : promotion department reference 
+     * @return int which give the state of the creation
+     */
     @Override
     public int createPromotion(String name, String descriptionDep,  int graduationYear,int refDep) {
             Connection connection = getConnection();

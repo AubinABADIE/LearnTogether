@@ -10,6 +10,11 @@ import java.util.List;
 
 import Types.CourseType;
 
+/**
+ * This class instantiate the method relative to the course in SQLServer data base
+ * @author Solene SERAFIN
+ */
+
 public class SQLServerDAOCourse extends AbstractDAOCourse{
 	public SQLServerDAOCourse (){}
 	

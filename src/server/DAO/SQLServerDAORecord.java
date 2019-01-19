@@ -8,7 +8,7 @@ import java.io.File;
 import java.sql.*;
 import java.util.*;
 
-/** This class is used to put and take retrieve in the data base
+/** This class instantiate the method relative to the record in SQLServer data base
  * @author Yvan SANSON
  * @author Marie SALELLES
  */
@@ -20,6 +20,10 @@ public class SQLServerDAORecord extends AbstractDAORecords{
     public SQLServerDAORecord() {
     }
 
+    /**
+     * This function create the connection with the data base
+     * @return : a connection
+     */
     @Override
     public Connection getConnection() {
         {

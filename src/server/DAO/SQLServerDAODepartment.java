@@ -5,6 +5,11 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * This class instantiate the method relative to the department in SQLServer data base
+ * @author Audery SAMSON
+ */
+
 public class SQLServerDAODepartment extends AbstractDAODepartment{
 
     /**

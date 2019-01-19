@@ -10,7 +10,8 @@ import java.util.HashSet;
 import java.util.List;
 
 /**
- *
+ *This class instantiate the method relative to the conversation in SQLServer data base
+ * @author Yvan SANSON
  */
 public class SQLServerDAOConversation extends AbstractDAOConversation{
 

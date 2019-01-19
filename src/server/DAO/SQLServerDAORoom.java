@@ -6,6 +6,11 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * This class instantiate the method relative to the room in SQLServer data base
+ * @author Marie SALELLES
+ */
+
 public class SQLServerDAORoom extends AbstractDAORoom{
 
     public SQLServerDAORoom(){
@@ -124,6 +129,17 @@ public class SQLServerDAORoom extends AbstractDAORoom{
         return result;
     }
 
+    /**
+     * This method update a room in the data base. It return an int to specify to the server the state of the updated.
+     * @param id : room id
+     * @param name : room name
+     * @param capacity : room capacity
+     * @param building : room building number
+     * @param projector : if the room has a projector
+     * @param computer : if the room has computers
+     * @param desc : room description
+     * @return int who give the state of the updated in the data base
+     */
     @Override
     public int updateRoom(int id, String name, int capacity, int building, boolean projector, boolean computer, String desc){
         Connection connection =getConnection();

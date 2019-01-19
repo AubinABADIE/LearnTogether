@@ -12,7 +12,9 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * 
+ * This class instantiate the method relative to the user in SQLServer data base
+ * @author Yvan SANSON
+ * @author Aubin ABADIE
  */
 public class SQLServerDAOUser extends AbstractDAOUser {
 
@@ -24,6 +26,10 @@ public class SQLServerDAOUser extends AbstractDAOUser {
     }
 
 
+    /**
+     * This function create the connection with the data base
+     * @return : a connection
+     */
     @Override
     public Connection getConnection() {
         {

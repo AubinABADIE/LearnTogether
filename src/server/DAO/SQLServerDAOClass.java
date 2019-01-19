@@ -6,6 +6,10 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * This class instantiate the method relative to the class in SQLServer data base
+ * @author Audrey SAMSON
+ */
 public class SQLServerDAOClass extends AbstractDAOClass {
 
     /**

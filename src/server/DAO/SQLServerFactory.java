@@ -9,7 +9,12 @@ import java.sql.SQLException;
 import java.util.List;
 
 /**
- * 
+ * Ths class create an SQLServer factory
+ * @author Aubin ABADIE
+ * @author Marie SALELLES
+ * @author Audrey SAMSON
+ * @author Yvan SANSON
+ * @author Solene SERFAFIN
  */
 public class SQLServerFactory extends AbstractDAOFactory {
 
