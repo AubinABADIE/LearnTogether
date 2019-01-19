@@ -53,6 +53,7 @@ public class GeneralServer implements Observer {
         dao.createDAOConversation();
         dao.createDAOPromotion();
         dao.createDAOClass();
+        dao.createDAORecords();
         fileStorageHandler = new FileStorageHandler();
         display.display("Server is running on port " + port);
     }
@@ -199,6 +200,8 @@ public class GeneralServer implements Observer {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        //handleAddRecord(record.getExamYear(), record.getCourseID(), recordSoreId,client);
 
     }
 
@@ -931,6 +934,24 @@ public class GeneralServer implements Observer {
         }
     }
 
+    /**
+     * This method handle when we receive a record from a client and try to upload it in an external storage and store the path in a data base
+     * @param record the record that we upload in the bd
+     * @param client the client that sent the report.
+     */
+
+    public void handleRecordFromClient(RecordType record, ConnectionToClient client){
+        fileStorageHandler.insertFile(record.getName(), record.getRecord());
+        try {
+            client.sendToClient(record);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        /*int result = dao.getRecordsDAO().createRecord(record.getName(), record.getExamYear(), record.getCourseID(), record.getRecord(), record.getDonatingUser());
+        System.out.println(result);*/
+
+    }
 
 
     /**

@@ -43,9 +43,8 @@ public class SQLServerDAOCourse extends AbstractDAOCourse{
      * this method create a course in the data base
      * @param name : course name
 	 * @param description : small description of the course
-	 * @param totalHours : the total hours of the course
-	 * @param promotion : the promotion related to the course
-	 * @param referingTeacher : the referring teacher of the course
+	 * @param nbHourTotal : the total hours of the course
+	 * @param idT : the referring teacher of the course
      */
     @Override
     public int createCourse(String name, String description, int nbHourTotal, int idT){
