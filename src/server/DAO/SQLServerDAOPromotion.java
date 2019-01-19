@@ -169,9 +169,4 @@ public class SQLServerDAOPromotion extends AbstractDAOPromotion {
         return result;
     }
 
-    @Override
-    public int readDepartment(int idDep) {
-        return 0;
-    }
-
 }

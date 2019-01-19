@@ -38,5 +38,4 @@ public abstract class AbstractDAOPromotion {
      */
     public abstract int deletePromotion(int idPromo);
 
-    public abstract int readDepartment(int idDep);
 }
