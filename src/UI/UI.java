@@ -556,11 +556,6 @@ public abstract class UI extends Application implements DisplayIF {
                 setGraphic(imageView);
                 btnDown.setGraphic(downView);//setting icon to button
             }
-            //event download button
-
-
-
-
         });
 
         list.setPrefWidth(350);
@@ -685,10 +680,6 @@ public abstract class UI extends Application implements DisplayIF {
         hboxButtons.setAlignment(Pos.CENTER);
 
        final Text textFile = new Text("");
-       
-
-        //AtomicReference<File> record = null;
-
         //event to choose file and seethe result
         uploadButton.setOnAction(event -> {
             File record = fileChooser.showOpenDialog(primaryStage);

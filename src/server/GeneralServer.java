@@ -934,8 +934,8 @@ public class GeneralServer implements Observer {
             e.printStackTrace();
         }
 
-        /*int result = dao.getRecordsDAO().createRecord(record.getName(), record.getExamYear(), record.getCourseID(), record.getRecord(), record.getDonatingUser());
-        System.out.println(result);*/
+        int result = dao.getRecordsDAO().createRecord(record.getName(), record.getExamYear(), record.getCourseID(), record.getDonatingUser());
+        display.display(Integer.toString(result));
 
     }
 
@@ -987,28 +987,15 @@ public class GeneralServer implements Observer {
 
     }
 
-    private void clientException(ConnectionToClient originator, Throwable message) {
-    }
-
-    private void clientDisconnected(ConnectionToClient originator) {
-    }
-    private void clientConnected(ConnectionToClient originator) {
-    }
-    private void listeningException(Object message) {
-    }
-
-    private void serverStopped() {
-    }
-
-    private void serverStarted() {
-    }
-    private void serverClosed() {
-    }
-
+    private void clientException(ConnectionToClient originator, Throwable message) { }
+    private void clientDisconnected(ConnectionToClient originator) { }
+    private void clientConnected(ConnectionToClient originator) { }
+    private void listeningException(Object message) { }
+    private void serverStopped() { }
+    private void serverStarted() { }
+    private void serverClosed() { }
 
     public void handleMessageFromServerUI(String message) {
         display.display("No commands have been implemented yet.");
     }
 }
-
-

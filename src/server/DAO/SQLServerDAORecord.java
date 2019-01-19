@@ -100,7 +100,8 @@ public class SQLServerDAORecord extends AbstractDAORecords{
                 PreparedStatement preparedStatement = connection.prepareStatement("SELECT * from Records");
                 ResultSet resultSet = preparedStatement.executeQuery();
                 while (resultSet.next()){
-                    records.add(new RecordType(resultSet.getString("recordName"),
+                    records.add(new RecordType(resultSet.getInt("idRecord"),
+                            resultSet.getString("recordName"),
                             resultSet.getInt("idCourse"),
                             resultSet.getInt("recordYear"),
                             resultSet.getInt("idUser")));

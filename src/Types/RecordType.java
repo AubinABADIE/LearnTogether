@@ -11,6 +11,7 @@ import java.io.Serializable;
  * @author Yvan SANSON
  */
 public class RecordType implements Serializable {
+    private int recordId;
     private int courseID;
     private int examYear;
     private byte[] record;
@@ -24,7 +25,7 @@ public class RecordType implements Serializable {
         this.record = recordFile;
         this.donatingUser = donatingUser;
     }
-    public RecordType(String name, int courseID, int examYear, int donatingUser){
+    public RecordType(int recordId, String name, int courseID, int examYear, int donatingUser){
         this.name = name;
         this.courseID = courseID;
         this.examYear = examYear;

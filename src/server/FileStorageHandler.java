@@ -35,7 +35,29 @@ public class FileStorageHandler {
         httpPipeline = StorageURL.createPipeline(sharedKeyCredentials, new PipelineOptions());
         u = new URL(String.format(Locale.ROOT, "https://%s.blob.core.windows.net", accountName));
         serviceURL = new ServiceURL(u, httpPipeline);
-        containerURL = serviceURL.createContainerURL("testtoutcourt");
+
+    }
+
+    /**
+     * This method refactors the file name in order to store it in the storage system.
+     * @param fileName the original file name.
+     * @return the refactored file name, without spaces, accents and special characters.
+     */
+    private String refactorFileName(String fileName){
+        fileName = fileName.replace(' ', '-');
+        fileName = Normalizer.normalize(fileName, Normalizer.Form.NFD);
+        return fileName.replaceAll("[\\p{InCombiningDiacriticalMarks}]", "");
+    }
+
+    /**
+     * This method refactors the container name in order to be accepted by the storage system.
+     * @param containerName the original container name.
+     * @return the refactored container name, without spaces, upper cases and special characters.
+     */
+    private String refactorContainerName(String containerName){
+        containerName = containerName.substring(0, containerName.indexOf('.'));
+        containerName = containerName.replaceAll("[^a-zA-Z0-9]", "");
+        return containerName.toLowerCase();
     }
 
     /**
@@ -45,15 +67,21 @@ public class FileStorageHandler {
      * @param file the actual file.
      */
     public void insertFile(String fileName, byte[] file){
-        fileName = fileName.replace(' ', '-');
-        fileName = Normalizer.normalize(fileName, Normalizer.Form.NFD);
-        fileName = fileName.replaceAll("[\\p{InCombiningDiacriticalMarks}]", "");
 
-        BlockBlobURL blobURL = containerURL.createBlockBlobURL(fileName);
-
+        String name = refactorFileName(fileName);
+        String containerName = refactorContainerName(fileName);
+        containerURL = serviceURL.createContainerURL(containerName);
+        BlockBlobURL blobURL = containerURL.createBlockBlobURL(name);
         containerURL.create().flatMap(containerCreateResponse ->blobURL.upload(Flowable.just(ByteBuffer.wrap(file)), file.length)).blockingGet();
     }
 
+    public byte[] downloadFile(String fileName){
+        String name = refactorFileName(fileName);
+        String containerName = refactorContainerName(fileName);
+        containerURL = serviceURL.createContainerURL(containerName);
+        BlockBlobURL blobURL;
+        return null;
+    }
 
 
 }
