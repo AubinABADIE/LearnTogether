@@ -77,4 +77,11 @@ public class RecordServices {
         }
     }
 
+    public void handleRecordUploaded(String msg) {
+        String state = msg.split(" ")[1];
+        if(state.equalsIgnoreCase("SUCCESS"))
+            client.getDisplay().setState("REC UPLOAD SUCCESS");
+        else
+            client.getDisplay().setState("REC UPLOAD FAILURE");
+    }
 }

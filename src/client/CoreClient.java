@@ -117,15 +117,15 @@ public class CoreClient implements ClientIF {
             else if  (((String) msg).startsWith("#DELETEDDEPARTMENT")){
                 department.handleDeletedDepartment((String) msg);
             }
-         else if  (((String) msg).startsWith("#CREATEDPROMOTION")){
-            promo.handleCreatedPromo((String) msg);
-        }
-        else if  (((String) msg).startsWith("#UPDATEDPROMOTION")){
-            promo.handleUpdatedPromo((String) msg);
-        }
-        else if  (((String) msg).startsWith("#DELETEDPROMOTION")){
-            promo.handleDeletedPromo((String) msg);
-        }
+            else if  (((String) msg).startsWith("#CREATEDPROMOTION")){
+                promo.handleCreatedPromo((String) msg);
+            }
+            else if  (((String) msg).startsWith("#UPDATEDPROMOTION")){
+                promo.handleUpdatedPromo((String) msg);
+            }
+            else if  (((String) msg).startsWith("#DELETEDPROMOTION")){
+                promo.handleDeletedPromo((String) msg);
+            }
             else if  (((String) msg).startsWith("#CREATEDCLASS")){
                 classes.handleCreatedClass((String) msg);
             }
@@ -149,6 +149,9 @@ public class CoreClient implements ClientIF {
             }
             else if(((String) msg).startsWith("#DELETEDCONVERSATION")){
                 conversations.handleDeletedConversation((String)msg);
+            }
+            else if(((String) msg).startsWith("#RECORDUPLOAD")){
+                records.handleRecordUploaded((String)msg);
             }
 
         } else if (msg instanceof List) {

@@ -246,6 +246,10 @@ public class StartUI extends UI {
                 Platform.runLater(()->showAlert(Alert.AlertType.CONFIRMATION, null, "Success", "The conversation has been deleted."));
             } else if(newValue.equalsIgnoreCase("MD FAILURE.")){
                 Platform.runLater(()->showAlert(Alert.AlertType.ERROR, null, "Failure", "The conversation cannot be deleted at this time."));
+            } else if (newValue.equalsIgnoreCase("REC UPLOAD SUCCESS")) {
+                Platform.runLater(()->showAlert(Alert.AlertType.CONFIRMATION, null, "Success", "The record has been added."));
+            } else if(newValue.equalsIgnoreCase("REC UPLOAD FAILURE")){
+                Platform.runLater(()->showAlert(Alert.AlertType.ERROR, null, "Failure", "The record cannot be uploaded at this time. Try another name?"));
             }
         });
     }

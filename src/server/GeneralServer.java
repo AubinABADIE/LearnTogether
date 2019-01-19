@@ -928,17 +928,31 @@ public class GeneralServer implements Observer {
 
     public void handleRecordFromClient(RecordType record, ConnectionToClient client){
         fileStorageHandler.insertFile(record.getName(), record.getRecord());
+        int result = dao.getRecordsDAO().createRecord(record.getName(), record.getExamYear(), record.getCourseID(), record.getDonatingUser());
+        String response;
+        if(result==1)
+            response="#RECORDUPLOAD SUCCESS";
+        else
+            response="#RECORDUPLOAD FAILURE";
         try {
-            client.sendToClient(record);
+            client.sendToClient(response);
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-        int result = dao.getRecordsDAO().createRecord(record.getName(), record.getExamYear(), record.getCourseID(), record.getDonatingUser());
-        display.display(Integer.toString(result));
-
+        sendRecordToClient(record, client);
     }
 
+    public void sendRecordToClient(RecordType record, ConnectionToClient client){
+        byte[] file = fileStorageHandler.downloadFile(record.getName());
+        if(file!=null){
+            record.setRecord(file);
+            try {
+                client.sendToClient(record);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
     /**
      * This method handle when the client wants the records list
      * @param client : the client that sent the request

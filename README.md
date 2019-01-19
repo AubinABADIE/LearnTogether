@@ -122,7 +122,11 @@ The server responds to a #SENDMSGTOCLIENT demand with this. It has two states, e
 
 ## \#DELETEDCONVERSATION
 The server responds to a #DELETECONVERSATION demand with this. it has two states, either success or failure.
-*Usage*:`{#DELETEDCONVERSATION} {state}
+*Usage*:`#DELETEDCONVERSATION {state}`
+
+## #RECORDUPLOAD
+When the server receives a RecordType to store in the database and storage service, it responds with this message. The message is either SUCCESS or FAILURE.  
+*Usage*:`#RECORDUPLOAD {state}`
 
 #Users in the DB
 | id       |      name     |  first name |           email                   |   password   | role     |
