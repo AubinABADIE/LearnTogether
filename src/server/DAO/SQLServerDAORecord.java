@@ -8,8 +8,9 @@ import java.io.File;
 import java.sql.*;
 import java.util.*;
 
-/**
- * 
+/** This class is used to put and take retrieve in the data base
+ * @author Yvan SANSON
+ * @author Marie SALELLES
  */
 public class SQLServerDAORecord extends AbstractDAORecords{
 

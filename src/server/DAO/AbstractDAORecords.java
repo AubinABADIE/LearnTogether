@@ -5,6 +5,10 @@ import Types.RecordType;
 import java.sql.Connection;
 import java.util.List;
 
+/**This class is the abstract class for the DAO record
+ * @author Yvan SANSON
+ * @author Marie SALELLES
+ */
 public abstract class AbstractDAORecords {
 
     public abstract Connection getConnection();

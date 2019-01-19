@@ -5,6 +5,9 @@ import Types.MessageType;
 import java.sql.Connection;
 import java.util.List;
 
+/**This class is the abstract class for the DAO conversation
+ * @author Yvan SANSON
+ */
 public abstract class AbstractDAOConversation {
     public abstract Connection getConnection();
     public abstract void closeConnection(Connection connection);

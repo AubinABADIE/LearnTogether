@@ -5,8 +5,8 @@ import Types.RoomType;
 import java.sql.Connection;
 import java.util.List;
 
-/**
- * 
+/**  This class is the abstract class for the DAO room
+ * @author Marie SALELLES
  */
 public abstract class AbstractDAORoom {
 

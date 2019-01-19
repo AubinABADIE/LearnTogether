@@ -2,8 +2,12 @@ package server.DAO;
 
 import java.sql.Connection;
 
-/**
- * 
+/** This class initialize the abstract factory
+ * @author Aubin ABADIE
+ * @author Marie SALELLES
+ * @author Audrey SAMSON
+ * @author  Yvan SANSON
+ * @author Solene SERAFIN
  */
 public abstract class AbstractDAOFactory{
 
