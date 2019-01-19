@@ -21,4 +21,6 @@ public abstract class AbstractDAORecords {
      */
     public abstract List<RecordType> searchAllRecords();
     public abstract int createRecord(String name, int year, int courseID, int donatingUser);
+
+    public abstract RecordType getRecord(int recordID);
 }

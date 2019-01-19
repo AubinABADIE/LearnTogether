@@ -189,7 +189,12 @@ public class GeneralServer implements Observer {
         else if (instruction.startsWith("GETRECORDS")){
             handleGetAllRecord(client);
         }
+        else if(instruction.startsWith("DOWNLOADRECORD")){
+            handleRecordDownloadRequest(Integer.parseInt(instruction.split(" ")[1]), client);
+        }
     }
+
+
 
     /**
      * This method is used to send a client a response of a #LOGIN demand.
@@ -941,19 +946,9 @@ public class GeneralServer implements Observer {
         }
     }
 
-    public void sendRecordToClient(RecordType record, ConnectionToClient client){
-        byte[] file = fileStorageHandler.downloadFile(record.getName());
-        if(file!=null){
-            record.setRecord(file);
-            try {
-                client.sendToClient(record);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-    }
+
     /**
-     * This method handle when the client wants the records list
+     * This method handles when the client wants the records list
      * @param client : the client that sent the request
      */
     public void handleGetAllRecord(ConnectionToClient client){
@@ -966,10 +961,21 @@ public class GeneralServer implements Observer {
     }
 
     /**
-     * @param message
+     * This method retrieves the record information from the database and the actual file from the storage service and sends it to the client.
+     * @param recordID the record ID in the database.
+     * @param client the client to send it to.
      */
-    public void checkSuccess(Boolean message) {
-        // TODO implement here
+    private void handleRecordDownloadRequest(int recordID, ConnectionToClient client) {
+        RecordType record = dao.getRecordsDAO().getRecord(recordID);
+        byte[] file = fileStorageHandler.downloadFile(record.getName());
+        if(file!=null){
+            record.setRecord(file);
+            try {
+                client.sendToClient(record);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     @Override
