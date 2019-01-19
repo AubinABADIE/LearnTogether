@@ -542,10 +542,6 @@ public abstract class UI extends Application implements DisplayIF {
         list.setItems(recordNames);
 
         Image fileImg = new Image(getClass().getResourceAsStream("images/icons8-document-480.png"));
-        Image fileImgDown = new Image(getClass().getResourceAsStream("images/icons8-download-filled-100.png"));
-        ImageView downView = new ImageView(fileImgDown);
-        downView.setFitHeight(15);
-        downView.setFitWidth(15);
 
         //add images on the items in the recordList
         list.setCellFactory(param -> new ListCell<RecordType>() {
@@ -558,13 +554,7 @@ public abstract class UI extends Application implements DisplayIF {
                 setGraphic(imageView);
                 imageView.setFitHeight(15);
                 imageView.setFitWidth(15);
-                btnDown.setGraphic(downView);//setting icon to button
             }
-            //event download button
-
-
-
-
         });
 
         list.setPrefWidth(350);
@@ -608,6 +598,43 @@ public abstract class UI extends Application implements DisplayIF {
         hboxButtonRec.getChildren().add(btnDeleteRec);
         hboxButtonRec.setSpacing(5);
 
+        // add record info
+
+        Image fileImgDown = new Image(getClass().getResourceAsStream("images/icons8-download-filled-100.png"));
+        ImageView downView = new ImageView(fileImgDown);
+        downView.setFitHeight(15);
+        downView.setFitWidth(15);
+
+        Button downnBtn = new Button();
+        downnBtn.setGraphic(downView);//setting icon to button
+
+        //download button
+        HBox hboxdown = new HBox();
+        hboxdown.getChildren().add(downnBtn);
+        hboxdown.setAlignment(Pos.CENTER);
+
+
+        Label labelname = new Label("Record name : ");
+        Text name = new Text(" ");
+        Label labelyear = new Label("Exam year : ");
+        Text year = new Text(" ");
+        HBox hboxname = new HBox();
+        HBox hboxyear = new HBox();
+
+        hboxname.getChildren().addAll(labelname,name);
+        hboxname.setAlignment(Pos.CENTER);
+
+        hboxyear.getChildren().addAll(labelyear,year);
+        hboxyear.setAlignment(Pos.CENTER);
+
+
+
+        VBox vboxInfoRec = new VBox();
+        vboxInfoRec.getChildren().addAll(hboxname, hboxyear, hboxdown);
+        vboxInfoRec.setSpacing(10);
+        vboxInfoRec.setPadding(new Insets(100, 0, 0, 75));
+
+
 
         GridPane gridRecord = new GridPane();
         gridRecord.setHgap(10);
@@ -615,6 +642,17 @@ public abstract class UI extends Application implements DisplayIF {
 
         gridRecord.add(hboxButtonRec,1,0);
         gridRecord.add(list, 1, 1);
+
+        //display info of one record
+        list.setOnMouseClicked(event -> {
+            gridRecord.getChildren().remove(vboxInfoRec);
+            gridRecord.add(vboxInfoRec, 2, 2);
+            System.out.println("clicked on " + list.getSelectionModel().getSelectedItem());
+            SelectionModel<RecordType> selectedRec = list.getSelectionModel();
+            name.setText(selectedRec.getSelectedItem().getName());
+            year.setText(Integer.toString(selectedRec.getSelectedItem().getExamYear()));
+        });
+
 
 
         return gridRecord;
