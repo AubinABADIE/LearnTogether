@@ -35,7 +35,7 @@ public class FileStorageHandler {
         httpPipeline = StorageURL.createPipeline(sharedKeyCredentials, new PipelineOptions());
         u = new URL(String.format(Locale.ROOT, "https://%s.blob.core.windows.net", accountName));
         serviceURL = new ServiceURL(u, httpPipeline);
-        containerURL = serviceURL.createContainerURL("testcontainer");
+        containerURL = serviceURL.createContainerURL("testtoutcourt");
     }
 
     /**

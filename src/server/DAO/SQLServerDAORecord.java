@@ -53,20 +53,18 @@ public class SQLServerDAORecord extends AbstractDAORecords{
      * @param name 
      * @param year 
      * @param courseID
-     * @param record 
      * @param donatingUser
      */
-    public int createRecord(String name, int year, int courseID, byte[] record, int donatingUser) {
+    public int createRecord(String name, int year, int courseID, int donatingUser) {
         Connection connection = getConnection();
         int result = 0;
         if(connection != null){
             try {
-                PreparedStatement preparedStatement = connection.prepareStatement("insert into Records(recordYear, idCourse, recordName, recordFile, idUser) values (?,?,?,?,?)");
+                PreparedStatement preparedStatement = connection.prepareStatement("insert into Records(recordYear, idCourse, recordName, idUser) values (?,?,?,?)");
                 preparedStatement.setInt(1, year);
                 preparedStatement.setInt(2, courseID);
                 preparedStatement.setString(3, name);
-                preparedStatement.setBytes(4, record);
-                preparedStatement.setInt(5, donatingUser);
+                preparedStatement.setInt(4, donatingUser);
                 result = preparedStatement.executeUpdate();
             } catch (SQLException e) {
                 e.printStackTrace();

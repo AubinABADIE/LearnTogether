@@ -60,7 +60,7 @@ public abstract class UI extends Application implements DisplayIF {
     ObservableList<String> receiversEmail;
     BooleanProperty hasClient = new SimpleBooleanProperty(false);
     TextArea convo;
-    private ObservableList<CourseType> courseNames;
+    protected ObservableList<CourseType> courseNames;
     protected ObservableList<RecordType> recordNames;
 
 
@@ -165,8 +165,6 @@ public abstract class UI extends Application implements DisplayIF {
         Text waitingText = new Text("Connecting... Please wait.");
         pane.setCenter(waitingText);
     }
-
-
 
     /**
      *  Create an instance of StackPane and apply format on it.
