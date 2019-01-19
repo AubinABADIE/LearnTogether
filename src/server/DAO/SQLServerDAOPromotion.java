@@ -23,7 +23,7 @@ public class SQLServerDAOPromotion extends AbstractDAOPromotion {
     }
 
     /**
-     * This function create the connection with the data base
+     * This method creates the connection with the data base
      * @return : a connection
      */
     public Connection getConnection() {
@@ -43,7 +43,9 @@ public class SQLServerDAOPromotion extends AbstractDAOPromotion {
             return connection;
         }
     }
-
+    /**
+     * This method closes the connection with the data base
+     */
     public void closeConnection(Connection connection){
         try {
             connection.close();
@@ -53,7 +55,7 @@ public class SQLServerDAOPromotion extends AbstractDAOPromotion {
     }
 
     /**
-     * This method return all the promotion in the data base.
+     * This method returns all the promotion in the data base.
      * @return int which returns the state of the selection.
      */
     @Override
@@ -81,11 +83,11 @@ public class SQLServerDAOPromotion extends AbstractDAOPromotion {
     }
 
     /**
-     * This method create a promotion in the data base.
+     * This method creates a promotion in the data base.
      * @param name : promotion name
      * @param descriptionDep : promotion description
      * @param graduationYear : promotion gradation year
-     * @param refDep : promotion department reference 
+     * @param refDep : promotion department reference
      * @return int which give the state of the creation
      */
     @Override
@@ -110,7 +112,15 @@ public class SQLServerDAOPromotion extends AbstractDAOPromotion {
             return result;
     }
 
-
+    /**
+     * This method updates the promotion in the data base.
+     * @param idPromo : promotion id
+     * @param name : promotion name
+     * @param descriptionDep : promotion description
+     * @param graduationYear : promotion graduation year
+     * @param refDep : promotion department id
+     * @return int which gives the state od the request
+     */
     @Override
     public int updatePromotion(int idPromo, String name,String descriptionDep, int graduationYear,int refDep) {
         Connection connection = getConnection();
@@ -134,7 +144,11 @@ public class SQLServerDAOPromotion extends AbstractDAOPromotion {
             return result;
         }
 
-
+    /**
+     * This method deletes the promotion in the data base
+     * @param idPromotion : promotion id
+     * @return int which gives the state od the request
+     */
     @Override
     public int deletePromotion(int idPromotion) {
         Connection connection = getConnection();

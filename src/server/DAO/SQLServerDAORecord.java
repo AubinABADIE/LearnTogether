@@ -21,7 +21,7 @@ public class SQLServerDAORecord extends AbstractDAORecords{
     }
 
     /**
-     * This function create the connection with the data base
+     * This method creates the connection with the data base
      * @return : a connection
      */
     @Override
@@ -43,6 +43,9 @@ public class SQLServerDAORecord extends AbstractDAORecords{
         }
     }
 
+    /**
+     * This method closes the connection with the data base
+     */
     @Override
     public void closeConnection(Connection connection){
         try {

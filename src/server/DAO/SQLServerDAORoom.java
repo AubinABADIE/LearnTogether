@@ -17,6 +17,10 @@ public class SQLServerDAORoom extends AbstractDAORoom{
 
     }
 
+    /**
+     * This method creates the connection with the data base
+     * @return : a connection
+     */
     public Connection getConnection() {
         {
             Connection connection = null;
@@ -35,6 +39,9 @@ public class SQLServerDAORoom extends AbstractDAORoom{
         }
     }
 
+    /**
+     * This method closes the connection with the data base
+     */
     public void closeConnection(Connection connection){
         try {
             connection.close();
@@ -44,7 +51,7 @@ public class SQLServerDAORoom extends AbstractDAORoom{
     }
 
     /**
-     * this method create a room in the data base
+     * This method creates a room in the data base
      * @param name : room name
      * @param capacity : room capacity
      * @param building : room building number
@@ -78,7 +85,7 @@ public class SQLServerDAORoom extends AbstractDAORoom{
     }
 
     /**
-     * This method return the rooms list
+     * This method returns the rooms list
      */
     public List<RoomType> searchAllRooms(){
         ArrayList rooms = new ArrayList();
@@ -105,7 +112,7 @@ public class SQLServerDAORoom extends AbstractDAORoom{
     }
 
     /**
-     * This methos delete a room. It return an int to specify to the server the state of the deletion
+     * This method deletes a room. It return an int to specify to the server the state of the deletion
      * @param id : room id
      * @return int who give the state of the deletion in the data base
      */
@@ -130,7 +137,7 @@ public class SQLServerDAORoom extends AbstractDAORoom{
     }
 
     /**
-     * This method update a room in the data base. It return an int to specify to the server the state of the updated.
+     * This method updates a room in the data base. It return an int to specify to the server the state of the updated.
      * @param id : room id
      * @param name : room name
      * @param capacity : room capacity

@@ -63,15 +63,14 @@ public class SQLServerDAOUser extends AbstractDAOUser {
 
 
     /**
-     * Reads the DB and create the user
-     * @param name
-     * @param firstname
-     * @param login
-     * @param birthDate
-     * @param courses
-     * @param promotions
-     * @param typeJob
-     * @param studentGrouString
+     * This method create a user in the data base
+     * @param name : user name
+     * @param firstname : user first name
+     * @param birthDate : user birth date
+     * @param email : user login
+     * @param password : user password
+     * @param role : user role
+     * @return
      */
     @Override
 	public boolean createDAOUser(String name, String firstname, String birthDate, String email, String password,
@@ -106,15 +105,15 @@ public class SQLServerDAOUser extends AbstractDAOUser {
     }
 
     /**
-     * Reads the DB and update the user
+     *
      * @param id
      * @param name
      * @param firstname
-     * @param login
      * @param birthDate
      * @param email
      * @param password
      * @param role
+     * @return
      */
     @Override
 	public boolean updateDAOUser(int id, String name, String firstname, String birthDate, String email, String password, String role) {
