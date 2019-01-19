@@ -203,10 +203,20 @@ public class CoreClient implements ClientIF {
     public void connectionEstablished() {
     }
 
+    /**
+     * This method delegates to userServices the login request
+     * @param login : login
+     * @param password : password
+     */
     public void handleLogin(String login, String password) {
         user.handleLogin(login, password);
     }
 
+    /**
+     * This method delegates to userServices the first password change request
+     * @param login : login
+     * @param password : password
+     */
     public void setFirstPassword(String login, String password) {
         user.setFirstPassword(login, password);
     }
@@ -248,7 +258,15 @@ public class CoreClient implements ClientIF {
     public void handleUpdateRoom(int id, String name, int capacity, int building, boolean hasProjector, boolean hasComputer, String desc){
         room.handleUpdateRoom(id, name, capacity, building, hasProjector, hasComputer, desc);
     }
-    
+
+    /**
+     * This method delegates getRooms to roomServices
+     * @return a room list
+     */
+    public void getRooms() {
+        room.getRooms();
+    }
+
     /**
      * This method delegates the management of the room creation to the roomservices
      * @param name : room name
@@ -270,14 +288,6 @@ public class CoreClient implements ClientIF {
 
 
     /**
-     * This method delegates getRooms to roomServices
-     * @return a room list
-     */
-    public void getRooms() {
-        room.getRooms();
-    }
-
-    /**
      * This method delegates the management of the room update to the courseservices
      * @param name : course name
      * @param description : small description of the course
@@ -291,15 +301,32 @@ public class CoreClient implements ClientIF {
     /**********************
      * Departments
      **********************/
-    
+
+    /**
+     * This method delegates to departmentServices the department creation request.
+     * @param name : department name
+     * @param refTeacherID : teacher in charge of the department
+     * @param descriptionDep : department description
+     */
     public void handleCreateDepartment(String name, int refTeacherID, String descriptionDep){
         department.createDepartment(name, refTeacherID, descriptionDep);
     }
 
+    /**
+     * This method delegates to departmentServices the department updated request
+     * @param idDep : department id
+     * @param name : department name
+     * @param refTeacherID : teacher who is in charge of the department
+     * @param descriptionDep : department description
+     */
     public void handleUpdateDepartment(int idDep,String name, int refTeacherID, String descriptionDep){
         department.updateDepartment(idDep,name, refTeacherID, descriptionDep);
     }
 
+    /**
+     * This method delegates the department deletion request
+     * @param departmentID : department id
+     */
     public void handleDeleteDepartment(int departmentID){
         department.deleteDepartment(departmentID);
     }
@@ -307,7 +334,7 @@ public class CoreClient implements ClientIF {
     
     /**
      * This method delegates getCourses to courseServices
-     * @return a room list
+     * @return a course list
      */
     public void getCourses() {
         course.getCourses();
@@ -322,11 +349,6 @@ public class CoreClient implements ClientIF {
         department.getDepartment();
     }
 
-
-    /**
-     * This metod delegates getAllRecords to RecordsServices class
-     */
-    public void getAllRecords(){records.getAllRecord();}
 
     /***************
      * Conversations
@@ -370,32 +392,64 @@ public class CoreClient implements ClientIF {
     /**********************
      * Profile
      **********************/
-    
+    /**
+     * This method delegates to userServices the user creation request
+     * @param name : user name
+     * @param firstname : user first name
+     * @param birthDate : user birth date
+     * @param email : user login
+     * @param password : user password
+     * @param role : user role
+     */
     public void handleCreateUser(String name, String firstname, String birthDate, String email, String password, String role) {
     	user.createUser(name, firstname, birthDate, email, password, role);
     }
-    
+
+    /**
+     * This method delegates to userServices the user reading request
+     * @param id : user id
+     */
     public void handleReadUser(int id) {
     	user.readUser(id);
     }
-    
+
+    /**
+     * This method delegates to userServices the password updated request
+     * @param login : user email
+     * @param pwd : user password
+     */
     public void handleUpdatePwd(String login, String pwd) {
     	user.updatePwd(login, pwd);
     }
-    
+
+    /**
+     * This method delegates to userServices the user updated request
+     * @param id : user id
+     * @param name : user name
+     * @param firstname : user first name
+     * @param birthDate : user birth date
+     * @param email : user login
+     * @param password : user password
+     * @param role : user role
+     */
     public void handleUpdateUser(int id, String name, String firstname, String birthDate, String email, String password, String role) {
     	user.updateUser(id, name, firstname, birthDate, email, password, role);
     }
-    
+
+    /**
+     * This method delegates to userServices the user deletion request
+     * @param id : user id
+     */
     public void handleDeleteUser(int id) {
     	user.deleteUser(id);
     }
-    
+
+    /**
+     * This method delegates to teacherServices the teachers' reading request
+     */
     public void getTeacher() {
         teacher.getTeacher();
     }
-    
-    
 
     /**
      * This method delegates getPromotion to PromotionServices class
@@ -404,13 +458,33 @@ public class CoreClient implements ClientIF {
         promo.getPromotion();
     }
 
+    /**
+     * This method delegates to promotionServices the promotion creation request
+     * @param name : promotion name
+     * @param descriptionPromo : promotion description
+     * @param graduationPromo : promotion graduation year
+     * @param refDep : promotion department
+     */
     public void handleCreatePromotion(String name, String descriptionPromo, int graduationPromo, int refDep){
         promo.createPromotion(name, descriptionPromo,graduationPromo,refDep);
     }
+
+    /**
+     * This method delegates to promotionServices the promotion deletion request
+     * @param idPromo : promotion id
+     */
     public void handleDeletePromotion(int idPromo){
         promo.deletePromotion(idPromo);
     }
 
+    /**
+     * This method delegates to promotionServices the promotion updated request
+     * @param idPromo : promotion id
+     * @param name : promotion name
+     * @param descriptionPromo : promotion description
+     * @param graduationPromo : promotion gradation year
+     * @param refDep : promotion department
+     */
     public void handleUpdatePromotion(int idPromo,String name, String descriptionPromo, int graduationPromo, int refDep){
         promo.updatePromotion(idPromo,name,descriptionPromo,graduationPromo,refDep);
     }
@@ -422,13 +496,31 @@ public class CoreClient implements ClientIF {
         classes.getClasses();
     }
 
+    /**
+     * This method delegates to classServices the class creation request
+     * @param nameClass : class name
+     * @param descriptionClass : class description
+     * @param refPromo : class promotion reference
+     */
     public void handleCreateClass(String nameClass, String descriptionClass,int refPromo){
         classes.createClass(nameClass, descriptionClass,refPromo);
     }
+
+    /**
+     * This method delegates to classServices the class deletion request
+     * @param classId : class id
+     */
     public void handleDeleteClass(int classId){
         classes.deleteClass(classId);
     }
 
+    /**
+     * This method delegates to classServices the class updated request
+     * @param idC : class id
+     * @param nameClass : class name
+     * @param descriptionClass : class description
+     * @param refP : class promotion reference
+     */
     public void handleUpdateClass(int idC,String nameClass, String descriptionClass, int refP){
         classes.updateClass(idC,nameClass,descriptionClass,refP);
     }
@@ -437,10 +529,26 @@ public class CoreClient implements ClientIF {
     /**********************
      * Records
      **********************/
+    /**
+     * This method delegates to recordServices the record creation request
+     * @param courseId : course id
+     * @param year : exam year
+     * @param recordFile : the file
+     * @param userID : user who put the record
+     */
     public void createRecord(int courseId, int year, File recordFile, int userID) {
         records.createRecord(courseId, year, recordFile, userID);
     }
 
+    /**
+     * This metod delegates getAllRecords to RecordsServices class
+     */
+    public void getAllRecords(){records.getAllRecord();}
+
+    /**
+     * This method delegates to the recordServices the download request
+     * @param id
+     */
     public void downloadRec(int id){
         records.downloadRec(id);
     }

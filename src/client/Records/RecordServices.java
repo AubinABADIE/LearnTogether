@@ -69,6 +69,10 @@ public class RecordServices {
         }
     }
 
+    /**
+     * This method send to the server the download request
+     * @param id : record id
+     */
     public void downloadRec(int id){
         try {
             client.getConnection().sendToServer("#DOWNLOADRECORD" + id);
