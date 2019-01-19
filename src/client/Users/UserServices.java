@@ -9,6 +9,13 @@ import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
+
+/**
+ * This class handles all the business logic related to the User (login, etc.)
+ *
+ * @author Aubin ABADIE for the profile
+ * @author Yvan SANSON for the login and password encryption.
+ */
 public class UserServices{
 
     private CoreClient coreClient;

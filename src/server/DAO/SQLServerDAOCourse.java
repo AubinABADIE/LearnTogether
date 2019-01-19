@@ -10,6 +10,11 @@ import java.util.List;
 
 import Types.CourseType;
 
+/**
+ * This class instantiate the method relative to the course in SQLServer data base
+ * @author Solene SERAFIN
+ */
+
 public class SQLServerDAOCourse extends AbstractDAOCourse{
 	public SQLServerDAOCourse (){}
 	
@@ -43,9 +48,8 @@ public class SQLServerDAOCourse extends AbstractDAOCourse{
      * this method create a course in the data base
      * @param name : course name
 	 * @param description : small description of the course
-	 * @param totalHours : the total hours of the course
-	 * @param promotion : the promotion related to the course
-	 * @param referingTeacher : the referring teacher of the course
+	 * @param nbHourTotal : the total hours of the course
+	 * @param idT : the referring teacher of the course
      */
     @Override
     public int createCourse(String name, String description, int nbHourTotal, int idT){
@@ -84,9 +88,9 @@ public class SQLServerDAOCourse extends AbstractDAOCourse{
                     courses.add(new CourseType(
                     		resultSet.getInt(1),
                             resultSet.getString(2),
-                            resultSet.getString("courseDescription"),
-                            resultSet.getInt("nbHourTotal"),
-                            resultSet.getInt("idTeacher")));
+                            resultSet.getString(3),
+                            resultSet.getInt(4),
+                            resultSet.getInt(5)));
                 }
             }catch (SQLException e){e.printStackTrace();}
             finally {
@@ -96,22 +100,28 @@ public class SQLServerDAOCourse extends AbstractDAOCourse{
         return courses;
     }
     
-    public int readCourse(int idCourse) {
+    public List<CourseType> searchAllCourses(int userID){
+        ArrayList courses = new ArrayList();
         Connection connection = getConnection();
-        int id = -1;
         if(connection != null){
             try{
-                PreparedStatement preparedStatement = connection.prepareStatement("SELECT * from Courses WHERE idDep = ? ");
-                preparedStatement.setInt(1,idCourse);
+                PreparedStatement preparedStatement = connection.prepareStatement("SELECT * from Courses WHERE idTeacher = ?");
+                preparedStatement.setInt(1,userID);
                 ResultSet resultSet = preparedStatement.executeQuery();
-                resultSet.next();
-                id = resultSet.getInt("idCourse");
-            }catch (Exception e){e.printStackTrace();}
+                while (resultSet.next()){
+                    courses.add(new CourseType(
+                    		resultSet.getInt(1),
+                            resultSet.getString(2),
+                            resultSet.getString(3),
+                            resultSet.getInt(4),
+                            resultSet.getInt(5)));
+                }
+            }catch (SQLException e){e.printStackTrace();}
             finally {
                 closeConnection(connection);
             }
         }
-        return id;
+        return courses;
     }
     
     /**
@@ -139,17 +149,17 @@ public class SQLServerDAOCourse extends AbstractDAOCourse{
         return result;
     }
     
-    public int updateCourse(int idCourse, String courseName, String courseDescription, int nbHourTotal, int idTeacher){
+    public int updateCourse(int idCourse, String courseName, String courseDescription, int nbHourTotal, String idTeacher){
         Connection connection =getConnection();
         int result = 0;
         if(connection!= null){
             try{
                 PreparedStatement preparedStatement = connection.prepareStatement("UPDATE Courses SET courseName = ?, courseDescription = ?, nbHourTotal = ?, idTeacher = ?  WHERE idCourse = ?");
-                preparedStatement.setInt(1, idCourse);
-                preparedStatement.setString(2, courseName);
-                preparedStatement.setString(3, courseDescription);
-                preparedStatement.setInt(4, nbHourTotal);
-                preparedStatement.setInt(5, idTeacher);
+                preparedStatement.setInt(5, idCourse);
+                preparedStatement.setString(1, courseName);
+                preparedStatement.setString(2, courseDescription);
+                preparedStatement.setInt(3, nbHourTotal);
+                preparedStatement.setString(4, idTeacher);
                 result = preparedStatement.executeUpdate();
             } catch(SQLException e){
                 e.printStackTrace();

@@ -7,8 +7,9 @@ import Types.UserType;
 import java.sql.Connection;
 import java.util.List;
 
-/**
- * 
+/**  This class is the abstract class for the DAO user
+ * @author Aubin ABADIE
+ * @author Yvan SANSON
  */
 public abstract class AbstractDAOUser {
 

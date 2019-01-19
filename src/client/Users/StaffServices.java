@@ -1,37 +1,22 @@
 package client.Users;
 
+import client.CoreClient;
+
 import java.util.*;
 
 /**
- * 
+ * This class handles everything related to the Staff services on the client side.
  */
 public class StaffServices{
 
-    /**
-     * Default constructor
-     */
-    public StaffServices() {
+    private CoreClient client;
+
+
+    public StaffServices(CoreClient client) {
+        this.client=client;
     }
 
-    /**
-     * 
-     */
-    private String jobType;
 
-    /**
-     * @return
-     */
-    public boolean isAdmin() {
-        // TODO implement here
-        return false;
-    }
 
-    /**
-     * @return
-     */
-    public boolean isSuperAdmin() {
-        // TODO implement here
-        return false;
-    }
 
 }

@@ -24,11 +24,11 @@ import Types.CourseType;
 import java.io.IOException;
 import java.util.List;
 
-
 /**
  * UI used to start the client application.
  * It contains everything related to this stage.
  * It the starts UIs according to the information received from the server.
+ *
  * @author Aubin ABADIE
  * @author Marie SALELLES
  * @author Audrey SAMSON
@@ -41,33 +41,47 @@ public class StartUI extends UI {
     private SuperAdminUI superAdminUI;
     private TeacherUI teacherUI;
 
-
-
     public static void main(String[] args) {
         Application.launch(StartUI.class, args);
     }
 
-
+    /**
+     * This method sets the principal scene for a student with the StudentUI class.
+     */
     private void setPrincipalSceneAsStudent(){
         studentUI = new StudentUI(primaryStage, login, userID, client);
         primaryStage.setScene(studentUI.createPrincipalStudentScene());
     }
 
+    /**
+     * This method sets the principal scene for a teacher, with the TeacherUI class.
+     */
     private void setPrincipalSceneAsTeacher(){
         teacherUI = new TeacherUI(primaryStage, login, userID, client);
         primaryStage.setScene(teacherUI.createPrincipalTeacherScene());
     }
 
+    /**
+     * This method sets the principal scene for an admin, with the AdminUI class.
+     */
     private void setPrincipalSceneAsAdmin(){
         adminUI = new AdminUI(primaryStage, login, userID, client);
         primaryStage.setScene(adminUI.createPrincipalAdminScene());
     }
 
+    /**
+     * This method sets the principal scene for a super admin, with the SuperAdminUI class.
+     */
     private void setPrincipalSceneAsSuperAdmin(){
         superAdminUI = new SuperAdminUI(primaryStage, login, userID, client);
         primaryStage.setScene(superAdminUI.createPrincipalSuperAdminScene());
     }
 
+    /**
+     * This method return the current instanciated UI.
+     * Since only one UI at a time is used, the others are null.
+     * @return the current UI.
+     */
     private UI getCurrentUI(){
         if(adminUI != null)
             return adminUI;
@@ -136,6 +150,10 @@ public class StartUI extends UI {
 
     }
 
+    /**
+     * This method setups the different listeners used in the UI.
+     * It mainly setups the connection status and the current state.
+     */
     @Override
     protected void setupListeners(){
         connectionStatus.addListener((observable, oldValue, newValue) -> {
@@ -159,7 +177,6 @@ public class StartUI extends UI {
             else if(newValue.equalsIgnoreCase("WAITING")){
                 Platform.runLater(() -> primaryStage.setScene(waitingScene));
             }
-
         });
 
         currentState.addListener((observable, oldValue, newValue) -> {
@@ -170,8 +187,7 @@ public class StartUI extends UI {
             else if(newValue.equalsIgnoreCase("FC FAILURE")){
                 Platform.runLater(() -> showAlert(Alert.AlertType.ERROR, null, "Failure", "Error: impossible to activate your account. Is it already activated? Otherwise, please check later."));
                 Platform.runLater(()->primaryStage.setScene(connectionScene));
-            }
-            else if (newValue.equalsIgnoreCase("RC SUCCESS")) {
+            } else if (newValue.equalsIgnoreCase("RC SUCCESS")) {
                 Platform.runLater(()->showAlert(Alert.AlertType.CONFIRMATION, null, "Success", "You have created the room."));
                 if (adminUI != null){
                     Platform.runLater(()->adminUI.tabRoom.setContent(adminUI.setRoomTab()));
@@ -201,16 +217,39 @@ public class StartUI extends UI {
             } else if (newValue.equalsIgnoreCase("RU FAILURE")){
                 Platform.runLater(()->showAlert(Alert.AlertType.CONFIRMATION, null, "Failure", "Error: Room hasn't been updated."));
             } else if (newValue.equalsIgnoreCase("CC SUCCESS")) {
-                Platform.runLater(()->showAlert(Alert.AlertType.CONFIRMATION, null, "Success", "You have created the course."));
+            	Platform.runLater(()->showAlert(Alert.AlertType.CONFIRMATION, null, "Success", "You have created the course."));
+                if (adminUI != null){
+                    Platform.runLater(()->adminUI.tabCourse.setContent(adminUI.setCourseTab()));
+                } else if (superAdminUI != null){
+                    Platform.runLater(()->superAdminUI.tabCourse.setContent(superAdminUI.setCourseTab()));
+                }else if (teacherUI != null){
+                    Platform.runLater(()->teacherUI.tabCourse.setContent(teacherUI.setCourseTab()));
+                }
             } else if (newValue.equalsIgnoreCase("CC FAILURE")) {
                 Platform.runLater(()->showAlert(Alert.AlertType.CONFIRMATION, null, "Failure", "Error: Course hasn't been created."));
             } else if (newValue.equalsIgnoreCase("CD SUCCESS")){
-                Platform.runLater(()->showAlert(Alert.AlertType.CONFIRMATION, null, "Success", "You have deleted the course."));
-                Platform.runLater(()->adminUI.client.getCourses());
+            	Platform.runLater(()->showAlert(Alert.AlertType.CONFIRMATION, null, "Success", "You have deleted the course."));
+                if (adminUI != null){
+                    Platform.runLater(()->adminUI.client.getCourses());
+                }else if (superAdminUI != null){
+                    Platform.runLater(()->superAdminUI.client.getCourses());
+                }else if (teacherUI != null){
+                    Platform.runLater(()->teacherUI.client.getCourses());
+                }
             } else if (newValue.equalsIgnoreCase("CD FAILURE")){
                 Platform.runLater(()->showAlert(Alert.AlertType.CONFIRMATION, null, "Failure", "Error: Course hasn't been deleted."));
             } else if (newValue.equalsIgnoreCase("CU SUCCESS")){
-                showAlert(Alert.AlertType.CONFIRMATION, null, "Success", "You have updated the course.");
+                showAlert(Alert.AlertType.CONFIRMATION, null, "Success", "You have update the course.");
+                if (adminUI != null){
+                    Platform.runLater(()->adminUI.client.getCourses());
+                    Platform.runLater(()->adminUI.tabCourse.setContent(adminUI.setCourseTab()));
+                } else if (superAdminUI != null){
+                    Platform.runLater(()->superAdminUI.client.getCourses());
+                    Platform.runLater(()->superAdminUI.tabCourse.setContent(superAdminUI.setCourseTab()));
+                }else if (teacherUI != null){
+                    Platform.runLater(()->Platform.runLater(()->teacherUI.client.getCourses(userID)));
+                    Platform.runLater(()->teacherUI.tabCourse.setContent(teacherUI.setCourseTab()));
+                }
             } else if (newValue.equalsIgnoreCase("CU FAILURE")){
                 Platform.runLater(()->showAlert(Alert.AlertType.ERROR, null, "Failure", "Error: Course hasn't been updated."));
             } else if(newValue.equalsIgnoreCase("MD SUCCESS")){
@@ -225,6 +264,14 @@ public class StartUI extends UI {
                 Platform.runLater(()->showAlert(Alert.AlertType.ERROR, null, "Success", "The user has been deleted."));
             } else if(newValue.equalsIgnoreCase("DU FAILURE.")){
                 Platform.runLater(()->showAlert(Alert.AlertType.ERROR, null, "Failure", "The user cannot be deleted at this time."));
+            } else if (newValue.equalsIgnoreCase("REC UPLOAD SUCCESS")) {
+                Platform.runLater(()->showAlert(Alert.AlertType.CONFIRMATION, null, "Success", "The record has been added."));
+            } else if(newValue.equalsIgnoreCase("REC UPLOAD FAILURE")){
+                Platform.runLater(()->showAlert(Alert.AlertType.ERROR, null, "Failure", "The record cannot be uploaded at this time. Try another name?"));
+            } else if(newValue.equalsIgnoreCase("RECORD DOWNLOADED")){
+                Platform.runLater(()->showAlert(Alert.AlertType.CONFIRMATION, null, "Success", "The record has been downloaded in the Downloads folder."));
+            } else if(newValue.equalsIgnoreCase("RECORD NOT DOWNLOADED")){
+                Platform.runLater(()->showAlert(Alert.AlertType.ERROR, null, "Failure", "The record cannot be downloaded at this time. Try again later?"));
             }
         });
     }
@@ -434,14 +481,23 @@ public class StartUI extends UI {
     }
     @Override
     public void getRooms(List<RoomType> rooms){
-        Platform.runLater(() -> {
+    	Platform.runLater(() -> {
             if(adminUI != null)
                 adminUI.setRooms(rooms);
             else if(superAdminUI != null)
                 superAdminUI.setRooms(rooms);
         });
     }
-    
+
+    @Override
+    public void getRecords(List<RecordType> records){
+        Platform.runLater(() -> {
+            getCurrentUI().setRecordNames(records);
+
+        });
+    }
+
+
     @Override
     public void getCourses(List<CourseType> courses){
     	Platform.runLater(() -> {

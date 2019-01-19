@@ -5,6 +5,11 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * This class instantiate the method relative to the department in SQLServer data base
+ * @author Audery SAMSON
+ */
+
 public class SQLServerDAODepartment extends AbstractDAODepartment{
 
     /**
@@ -14,6 +19,10 @@ public class SQLServerDAODepartment extends AbstractDAODepartment{
 
     }
 
+    /**
+     * This method creates the connection with the data base
+     * @return : a connection
+     */
     public Connection getConnection() {
         {
             Connection connection = null;
@@ -32,6 +41,9 @@ public class SQLServerDAODepartment extends AbstractDAODepartment{
         }
     }
 
+    /**
+     * This method closes the connection with the data base
+     */
     public void closeConnection(Connection connection){
         try {
             connection.close();
@@ -41,7 +53,7 @@ public class SQLServerDAODepartment extends AbstractDAODepartment{
     }
 
     /**
-     * this method create a department in the data base
+     * This method creates a department in the data base
      * @param name : department name
      * @param refTeacherID : department's referent teacher
      * @param descriptionDep : small department of the department
@@ -68,7 +80,14 @@ public class SQLServerDAODepartment extends AbstractDAODepartment{
     }
 
 
-
+    /**
+     * This method updates a department in the data base
+     * @param idDep : department id
+     * @param name : department name
+     * @param refTeacherID : teacher in chage od the department
+     * @param descriptionDep : department description
+     * @return int which is the state of the updated in the data base
+     */
     @Override
     public int updateDepartment(int idDep, String name, String refTeacherID, String descriptionDep) {
         Connection connection = getConnection();
@@ -92,7 +111,7 @@ public class SQLServerDAODepartment extends AbstractDAODepartment{
     }
 
     /**
-     * This methos delete a department. It return an int to specify to the server the state of the deletion
+     * This method deletes a department. It return an int to specify to the server the state of the deletion
      * @param idDep : department id
      * @return int who give the state of the deletion in the data base
      */
@@ -116,6 +135,11 @@ public class SQLServerDAODepartment extends AbstractDAODepartment{
         return result;
     }
 
+    /**
+     * This method selects a department in the data base.
+     * @param idDep : department id
+     * @return department id
+     */
     @Override
     public int readDepartment(int idDep) {
         Connection connection = getConnection();
@@ -136,7 +160,8 @@ public class SQLServerDAODepartment extends AbstractDAODepartment{
     }
 
     /**
-     * This method return the departments list
+     * This method returns the departments list
+     * @return a list of department
      */
     @Override
     public List<DepartmentType> searchAllDepartment() {

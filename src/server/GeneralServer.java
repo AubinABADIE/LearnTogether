@@ -27,6 +27,7 @@ public class GeneralServer implements Observer {
     private Date currentDate;
     private SimpleDateFormat dateFormat;
     private AbstractDAOFactory dao;
+    private FileStorageHandler fileStorageHandler;
 
 
 
@@ -37,7 +38,7 @@ public class GeneralServer implements Observer {
      * @param display: the server display
      * @throws IOException
      */
-    public GeneralServer(int port, ChatIF display) throws IOException {
+    public GeneralServer(int port, ChatIF display) throws Exception {
         comm = new ObservableOriginatorServer(port);
         comm.addObserver(this);
         comm.listen();
@@ -52,6 +53,8 @@ public class GeneralServer implements Observer {
         dao.createDAOConversation();
         dao.createDAOPromotion();
         dao.createDAOClass();
+        dao.createDAORecords();
+        fileStorageHandler = new FileStorageHandler();
         display.display("Server is running on port " + port);
     }
 
@@ -64,6 +67,8 @@ public class GeneralServer implements Observer {
         if (msg instanceof String) {
             if (((String) msg).startsWith("#"))
                 handleInstrFromClient(((String) msg).substring(1), client);
+        } else if (msg instanceof RecordType){
+            handleRecordFromClient((RecordType)msg, client);
         }
     }
 
@@ -138,9 +143,12 @@ public class GeneralServer implements Observer {
             handleDeleteCourseFromClient(Integer.parseInt(attributes[1]), client);
         } else if(instruction.startsWith("UPDATECOURSE")){
             String[] attributes = instruction.split("-/-");
-            handleUpdateCourseFromClient(Integer.parseInt(attributes[1]),attributes[2],attributes[3], Integer.parseInt(attributes[4]), Integer.parseInt(attributes[5]), client);
+            handleUpdateCourseFromClient(Integer.parseInt(attributes[1]),attributes[2],attributes[3], Integer.parseInt(attributes[4]), attributes[5], client);
         } else if (instruction.startsWith("GETCOURSES")){
             handleListCoursesFromClient(client);
+        } else if (instruction.startsWith("GETCOURSET")){
+            String[] attributes = instruction.split("-/-");
+            handleListCoursesFromClient(Integer.parseInt(attributes[1]), client);
         }
         else if(instruction.startsWith("SENDMSGTOCLIENT")){
             String[] attributes = instruction.split("-/-");
@@ -179,15 +187,19 @@ public class GeneralServer implements Observer {
             handleGetConversationEmails(Integer.parseInt(attributes[1]), client);
         }
         else if (instruction.startsWith("GETTEACHER")){
-            System.out.println("jecherchelesteacher");
             handleListTeacherFromClient(client);
         }
         else if(instruction.startsWith("DELETECONVERSATION")){
             String[] attributes = instruction.split(" ");
             handleDeleteConversation(Integer.parseInt(attributes[1]), attributes[2], client);
         }
+        else if (instruction.startsWith("GETRECORDS")){
+            handleGetAllRecord(client);
+        }
+        else if(instruction.startsWith("DOWNLOADRECORD")){
+            handleRecordDownloadRequest(Integer.parseInt(instruction.split(" ")[1]), client);
+        }
     }
-
 
 
 
@@ -526,6 +538,22 @@ public class GeneralServer implements Observer {
 
      }
     
+    /**
+     * This method delegates to the dao the research of the course
+     */
+    public void handleListCoursesFromClient(int userID, ConnectionToClient client){
+        List<CourseType> courses =  dao.getCourseDAO().searchAllCourses(userID);
+
+         try {
+        	 System.out.println("RECEPTION COURSE ");
+        	 System.out.println(courses instanceof CourseType);
+             client.sendToClient(courses);
+         } catch (IOException e) {
+             e.printStackTrace();
+         }
+
+     }
+    
     
     /**
      * This method delegates to the dao the deletion of course
@@ -553,12 +581,12 @@ public class GeneralServer implements Observer {
      * This method delegates to the dao the course update
      * @param courseName : course name
      * @param courseDescription : small description of the course
-     * @param nbHourTotal : number of total hour of the course
+     * @param nbTotalHour : number of total hour of the course
      * @param idTeacher : the id of the referring Teacher
      * @param client : client who update the course
      */
     
-    public void handleUpdateCourseFromClient (int idCourse, String courseName, String courseDescription, int nbTotalHour, int idTeacher, ConnectionToClient client ){
+    public void handleUpdateCourseFromClient (int idCourse, String courseName, String courseDescription, int nbTotalHour, String idTeacher, ConnectionToClient client ){
     	int result = dao.getCourseDAO().updateCourse(idCourse, courseName, courseDescription, nbTotalHour, idTeacher);
 
         String mess;
@@ -648,7 +676,6 @@ public class GeneralServer implements Observer {
     
     /**
      * This method creates a new user based on the information. It then sends a message concerning the success or not.
-     * @param id
      * @param name
      * @param firstname
      * @param birthDate
@@ -934,13 +961,57 @@ public class GeneralServer implements Observer {
         }
     }
 
+    /**
+     * This method handle when we receive a record from a client and try to upload it in an external storage and store the path in a data base
+     * @param record the record that we upload in the bd
+     * @param client the client that sent the report.
+     */
+
+    public void handleRecordFromClient(RecordType record, ConnectionToClient client){
+        fileStorageHandler.insertFile(record.getName(), record.getRecord());
+        int result = dao.getRecordsDAO().createRecord(record.getName(), record.getExamYear(), record.getCourseID(), record.getDonatingUser());
+        String response;
+        if(result==1)
+            response="#RECORDUPLOAD SUCCESS";
+        else
+            response="#RECORDUPLOAD FAILURE";
+        try {
+            client.sendToClient(response);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
 
     /**
-     * @param message
+     * This method handles when the client wants the records list
+     * @param client : the client that sent the request
      */
-    public void checkSuccess(Boolean message) {
-        // TODO implement here
+    public void handleGetAllRecord(ConnectionToClient client){
+        List<RecordType> rec =  dao.getRecordsDAO().searchAllRecords();
+        try {
+            client.sendToClient(rec);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * This method retrieves the record information from the database and the actual file from the storage service and sends it to the client.
+     * @param recordID the record ID in the database.
+     * @param client the client to send it to.
+     */
+    private void handleRecordDownloadRequest(int recordID, ConnectionToClient client) {
+        RecordType record = dao.getRecordsDAO().getRecord(recordID);
+        byte[] file = fileStorageHandler.downloadFile(record.getName());
+        if(file!=null){
+            record.setRecord(file);
+            try {
+                client.sendToClient(record);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     @Override
@@ -971,28 +1042,15 @@ public class GeneralServer implements Observer {
 
     }
 
-    private void clientException(ConnectionToClient originator, Throwable message) {
-    }
-
-    private void clientDisconnected(ConnectionToClient originator) {
-    }
-    private void clientConnected(ConnectionToClient originator) {
-    }
-    private void listeningException(Object message) {
-    }
-
-    private void serverStopped() {
-    }
-
-    private void serverStarted() {
-    }
-    private void serverClosed() {
-    }
-
+    private void clientException(ConnectionToClient originator, Throwable message) { }
+    private void clientDisconnected(ConnectionToClient originator) { }
+    private void clientConnected(ConnectionToClient originator) { }
+    private void listeningException(Object message) { }
+    private void serverStopped() { }
+    private void serverStarted() { }
+    private void serverClosed() { }
 
     public void handleMessageFromServerUI(String message) {
         display.display("No commands have been implemented yet.");
     }
 }
-
-

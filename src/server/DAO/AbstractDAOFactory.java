@@ -2,8 +2,12 @@ package server.DAO;
 
 import java.sql.Connection;
 
-/**
- * 
+/** This class initialize the abstract factory
+ * @author Aubin ABADIE
+ * @author Marie SALELLES
+ * @author Audrey SAMSON
+ * @author  Yvan SANSON
+ * @author Solene SERAFIN
  */
 public abstract class AbstractDAOFactory{
 
@@ -14,6 +18,7 @@ public abstract class AbstractDAOFactory{
     private AbstractDAOConversation conversationDAO;
     private AbstractDAOPromotion promotionDAO;
     private AbstractDAOClass classDAO;
+    private AbstractDAORecords recordsDAO;
 
     /**
      * Default constructor
@@ -78,6 +83,8 @@ public abstract class AbstractDAOFactory{
 
     public abstract void createDAOClass();
 
+    public abstract void createDAORecords();
+
     public AbstractDAOPromotion getPromotionDAO() {
         return promotionDAO;
     }
@@ -92,5 +99,13 @@ public abstract class AbstractDAOFactory{
 
     public void setClassDAO(AbstractDAOClass classDAO) {
         this.classDAO = classDAO;
+    }
+
+    public AbstractDAORecords getRecordsDAO() {
+        return recordsDAO;
+    }
+
+    public void setRecordsDAO(AbstractDAORecords recordsDAO) {
+        this.recordsDAO = recordsDAO;
     }
 }

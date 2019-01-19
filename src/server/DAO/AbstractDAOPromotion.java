@@ -4,8 +4,8 @@ import Types.PromotionType;
 
 import java.util.List;
 
-/**
- * 
+/** This class is the abstract class for the DAO promotion
+ * @author Audrey SAMSON
  */
 public abstract class AbstractDAOPromotion {
 
@@ -38,5 +38,4 @@ public abstract class AbstractDAOPromotion {
      */
     public abstract int deletePromotion(int idPromo);
 
-    public abstract int readDepartment(int idDep);
 }
