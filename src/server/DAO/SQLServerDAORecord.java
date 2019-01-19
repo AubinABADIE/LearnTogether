@@ -73,6 +73,33 @@ public class SQLServerDAORecord extends AbstractDAORecords{
     }
 
     /**
+     * This method retrieves all the information related to a record stored in the database.
+     * @param recordID the record ID in the database.
+     * @return a RecordType instance containing all the record metadata.
+     */
+    @Override
+    public RecordType getRecord(int recordID) {
+        Connection connection = getConnection();
+        RecordType record = null;
+        if(connection != null){
+            try{
+                PreparedStatement preparedStatement = connection.prepareStatement("select * from Records where idRecord=?");
+                preparedStatement.setInt(1, recordID);
+                ResultSet resultSet = preparedStatement.executeQuery();
+                resultSet.next();
+                record = new RecordType(resultSet.getInt(1),
+                        resultSet.getString("recordName"),
+                        resultSet.getInt("idCourse"),
+                        resultSet.getInt("recordYear"),
+                        resultSet.getInt("idUser"));
+            }catch (SQLException e){
+                e.printStackTrace();
+            }
+        }
+        return record;
+    }
+
+    /**
      * @param id 
      * @param donatingUser
      */
