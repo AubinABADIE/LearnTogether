@@ -1,6 +1,10 @@
 package server.DAO;
 
 import Types.RecordType;
+import client.Courses.CourseServices;
+import Types.UserType;
+
+import java.io.File;
 import java.sql.*;
 import java.util.*;
 
@@ -103,7 +107,15 @@ public class SQLServerDAORecord extends AbstractDAORecords{
      * @param id 
      * @param donatingUser
      */
-   public void deleteRecord(int id, int donatingUser) {
+   public void deleteRecord(int id, UserType donatingUser) {
+        // TODO implement here
+    }
+
+    /**
+     * @param id
+     */
+
+    public void readRecord(int id) {
         // TODO implement here
     }
 
