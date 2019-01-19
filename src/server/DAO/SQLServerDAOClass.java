@@ -18,7 +18,6 @@ public class SQLServerDAOClass extends AbstractDAOClass {
     public SQLServerDAOClass() {
 
     }
-
     public Connection getConnection() {
         {
             Connection connection = null;

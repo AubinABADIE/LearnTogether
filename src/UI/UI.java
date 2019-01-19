@@ -541,8 +541,6 @@ public abstract class UI extends Application implements DisplayIF {
 
         list.setItems(recordNames);
 
-        Image fileImg = new Image(getClass().getResourceAsStream("images/icons8-document-480.png"));
-
 
         list.setPrefWidth(350);
         list.setPrefHeight(500);
