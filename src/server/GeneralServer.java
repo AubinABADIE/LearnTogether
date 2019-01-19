@@ -189,23 +189,6 @@ public class GeneralServer implements Observer {
     }
 
     /**
-     * This method handle when we receive a record from a client and try to upload it in an external storage and store the path in a data base
-     * @param record the record that we upload in the bd
-     */
-
-    public void handleRecordFromClient(RecordType record, ConnectionToClient client){
-        fileStorageHandler.insertFile(record.getName(), record.getRecord());
-        try {
-            client.sendToClient(record);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        //handleAddRecord(record.getExamYear(), record.getCourseID(), recordSoreId,client);
-
-    }
-
-    /**
      * This method is used to send a client a response of a #LOGIN demand.
      * @param isConnected true if the connection succeeded, false otherwise
      * @param id  the user ID. value -1 if not connected.
