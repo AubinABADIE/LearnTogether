@@ -204,14 +204,14 @@ public class StartUI extends UI {
             }
             
             else if (newValue.equalsIgnoreCase("CC SUCCESS")) {
-            	System.out.println("Si j'arrive ici je devrais renvoyer la liste des cours");
             	Platform.runLater(()->showAlert(Alert.AlertType.CONFIRMATION, null, "Success", "You have created the course."));
                 if (adminUI != null){
+                	System.out.println("Si j'arrive ici je devrais renvoyer la liste des cours");
                     Platform.runLater(()->adminUI.tabCourse.setContent(adminUI.setCourseTab()));
                 } else if (superAdminUI != null){
                     Platform.runLater(()->superAdminUI.tabCourse.setContent(superAdminUI.setCourseTab()));
                 }else if (teacherUI != null){
-                	System.out.println("Si j'arrive ici je devrais renvoyer la liste des cours");
+                	
                     Platform.runLater(()->teacherUI.tabCourse.setContent(teacherUI.setCourseTab()));
                 }
             } else if (newValue.equalsIgnoreCase("CC FAILURE")) {
@@ -466,7 +466,12 @@ public class StartUI extends UI {
     @Override
     public void getCourses(List<CourseType> courses){
     	Platform.runLater(() -> {
-            getCurrentUI().setCourseNames(courses);
+            if(adminUI != null)
+                adminUI.setCourses(courses);
+            else if(superAdminUI != null)
+                superAdminUI.setCourses(courses);
+            else if(teacherUI != null)
+                teacherUI.setCourses(courses);
         });
     }
 

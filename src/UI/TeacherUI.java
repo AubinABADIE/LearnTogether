@@ -425,6 +425,7 @@ public class TeacherUI extends UI {
             if(!newValue.matches("\\d*"))
                 nbTotalHourField.setText(newValue.replaceAll("[^\\d]", ""));
         });
+        System.out.println("Si j'arrive ici je devrais renvoyer les teachers ");
         client.getTeacher();
         ListView<TeacherType> listT = new ListView<>();
         teacherNames = FXCollections.observableArrayList();
