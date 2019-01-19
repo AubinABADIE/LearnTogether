@@ -939,7 +939,6 @@ public class GeneralServer implements Observer {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        sendRecordToClient(record, client);
     }
 
     public void sendRecordToClient(RecordType record, ConnectionToClient client){
