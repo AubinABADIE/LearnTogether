@@ -4,6 +4,9 @@ import Types.ClassType;
 
 import java.util.List;
 
+/**This class is the abstract class which create the DAO for the classes
+ * @author Audrey SAMSON
+ */
 public abstract class AbstractDAOClass {
 
     /**

@@ -4,8 +4,8 @@ import Types.DepartmentType;
 
 import java.util.List;
 
-/**
- * 
+/** This class is the abstract class for the DAO department
+ * @author Audrey SAMSON
  */
 public abstract class AbstractDAODepartment{
 

@@ -6,8 +6,8 @@ import java.util.List;
 import Types.CourseType;
 import Types.RoomType;
 
-/**
- * 
+/** This class is the abstract class for the DAO course
+ * @author Audrey SAMSON
  */
 public abstract class AbstractDAOCourse{
     
