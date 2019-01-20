@@ -234,7 +234,7 @@ public class StartUI extends UI {
                 }else if (superAdminUI != null){
                     Platform.runLater(()->superAdminUI.client.getCourses());
                 }else if (teacherUI != null){
-                    Platform.runLater(()->teacherUI.client.getCourses());
+                    Platform.runLater(()->teacherUI.client.getCourses(userID));
                 }
             } else if (newValue.equalsIgnoreCase("CD FAILURE")){
                 Platform.runLater(()->showAlert(Alert.AlertType.CONFIRMATION, null, "Failure", "Error: Course hasn't been deleted."));
@@ -560,8 +560,6 @@ public class StartUI extends UI {
                 adminUI.setTeacher(teacher);
             else if(superAdminUI != null)
                 superAdminUI.setTeacher(teacher);
-            else if(teacherUI != null)
-                teacherUI.setTeacher(teacher);
         });
 
     }

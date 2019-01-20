@@ -52,16 +52,17 @@ public class SQLServerDAOCourse extends AbstractDAOCourse{
 	 * @param idT : the referring teacher of the course
      */
     @Override
-    public int createCourse(String name, String description, int nbHourTotal, int idT){
+    public int createCourse(String name, String description, int nbHourTotal, int idT, int promoId){
         Connection connection = getConnection();
         int result = 0;
         if(connection != null){
             try{
-                PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO Courses(courseName, courseDescription, nbHourTotal, idTeacher) VALUES (? ,? ,? ,?)");
+                PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO Courses(courseName, courseDescription, nbHourTotal, idTeacher, idPromo) VALUES (? ,? ,? ,?, ?)");
                 preparedStatement.setString(1, name);
                 preparedStatement.setString(2, description);
                 preparedStatement.setInt(3, nbHourTotal);
                 preparedStatement.setInt(4, idT);
+                preparedStatement.setInt(5, promoId);
                 result = preparedStatement.executeUpdate();
 
             }catch (SQLException e){
@@ -90,7 +91,8 @@ public class SQLServerDAOCourse extends AbstractDAOCourse{
                             resultSet.getString(2),
                             resultSet.getString(3),
                             resultSet.getInt(4),
-                            resultSet.getInt(5)));
+                            resultSet.getInt(5),
+                            resultSet.getInt(6)));
                 }
             }catch (SQLException e){e.printStackTrace();}
             finally {
@@ -114,7 +116,8 @@ public class SQLServerDAOCourse extends AbstractDAOCourse{
                             resultSet.getString(2),
                             resultSet.getString(3),
                             resultSet.getInt(4),
-                            resultSet.getInt(5)));
+                            resultSet.getInt(5),
+                            resultSet.getInt(6)));
                 }
             }catch (SQLException e){e.printStackTrace();}
             finally {
@@ -149,17 +152,18 @@ public class SQLServerDAOCourse extends AbstractDAOCourse{
         return result;
     }
     
-    public int updateCourse(int idCourse, String courseName, String courseDescription, int nbHourTotal, String idTeacher){
+    public int updateCourse(int idCourse, String courseName, String courseDescription, int nbHourTotal, String idTeacher, int promoId){
         Connection connection =getConnection();
         int result = 0;
         if(connection!= null){
             try{
-                PreparedStatement preparedStatement = connection.prepareStatement("UPDATE Courses SET courseName = ?, courseDescription = ?, nbHourTotal = ?, idTeacher = ?  WHERE idCourse = ?");
+                PreparedStatement preparedStatement = connection.prepareStatement("UPDATE Courses SET courseName = ?, courseDescription = ?, nbHourTotal = ?, idTeacher = ?, idPromo = ?  WHERE idCourse = ?");
                 preparedStatement.setInt(5, idCourse);
                 preparedStatement.setString(1, courseName);
                 preparedStatement.setString(2, courseDescription);
                 preparedStatement.setInt(3, nbHourTotal);
                 preparedStatement.setString(4, idTeacher);
+                preparedStatement.setInt(5, promoId);
                 result = preparedStatement.executeUpdate();
             } catch(SQLException e){
                 e.printStackTrace();

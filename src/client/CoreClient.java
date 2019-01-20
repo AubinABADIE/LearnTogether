@@ -173,9 +173,9 @@ public class CoreClient implements ClientIF {
             } else if (((List)msg).get(0) instanceof DepartmentType){
                 display.getDepartment((List<DepartmentType>)msg);
             } else if (((List)msg).get(0) instanceof TeacherType) {
+            	System.out.println("TEACHER");
             	display.getTeacher((List<TeacherType>)msg);
             } else if (((List)msg).get(0) instanceof CourseType) {
-            	System.out.println("réception courses Core client ");
             	display.getCourses((List<CourseType>)msg);
             } else if (((List)msg).get(0) instanceof UserType) {
             	display.getUsers((List<UserType>) msg);
@@ -275,8 +275,8 @@ public class CoreClient implements ClientIF {
 	 * @param totalHours : the total hours of the course
 	 * @param idT: the referring teacher of the course
      */
-    public void handleCreateCourse(String name, String description, int totalHours, int idT) {
-        course.handleCreateCourse(name, description, totalHours, idT);
+    public void handleCreateCourse(String name, String description, int totalHours, int idT, int promo) {
+        course.handleCreateCourse(name, description, totalHours, idT, promo);
     }
 
     /**
@@ -295,8 +295,8 @@ public class CoreClient implements ClientIF {
 	 * @param totalHours : the total hours of the course
 	 * @param idT : the referring teacher of the course
      */
-    public void handleUpdateCourse(int id, String name, String description, int totalHours, int idT){
-        course.handleUpdateCourse(id, name, description, totalHours, idT);
+    public void handleUpdateCourse(int id, String name, String description, int totalHours, int idT, int promoId){
+        course.handleUpdateCourse(id, name, description, totalHours, idT, promoId);
     }
 
     /**********************

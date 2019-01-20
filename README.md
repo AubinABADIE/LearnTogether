@@ -170,6 +170,9 @@ Arguments:
  Argument :  
    - id: int, the record id  
    *Usage*: `#DDOWNLOADRECORD {id}`  
+ 
+### ##GETTEACHER
+The client want to recover all the teachers 
   
   
 ## FROM the server  

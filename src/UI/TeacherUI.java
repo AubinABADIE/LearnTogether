@@ -50,7 +50,8 @@ public class TeacherUI extends UI {
 	Tab tabCourse;
 	private Tab tabRoom;
 	protected ObservableList<CourseType> courseNames;
-	protected ObservableList<TeacherType> teacherNames;
+	protected ObservableList<PromotionType> promoNames;
+	
 	//protected String teacherUpdateName;
 	
     /**
@@ -75,9 +76,7 @@ public class TeacherUI extends UI {
         courseNames.setAll(courseList);
     }
 	
-	public void setTeacher(List<TeacherType> teacherList) {
-        teacherNames.setAll(teacherList);
-    }
+	
 
 	public Scene createPrincipalTeacherScene(){
 		this.primaryStage.setTitle("LearnTogether for Teachers");
@@ -142,7 +141,7 @@ public class TeacherUI extends UI {
 	protected GridPane courseRead(Tab tabCourse){
         client.getCourses(userID);
         ListView<CourseType> list = new ListView<>();
-        CourseType ct = new CourseType(1,"course1","communication course",1,2);
+        CourseType ct = new CourseType(1,"course1","communication course",1,2, 5);
         courseNames = FXCollections.observableArrayList();
         courseNames.add(ct);
         courseNames.addListener((ListChangeListener<CourseType>) c -> list.setItems(courseNames));
@@ -208,33 +207,34 @@ public class TeacherUI extends UI {
         HBox hboxnameCourseInfo = new HBox();
         HBox hboxdescriptionCourseInfo = new HBox();
         HBox hboxnbHourTotalCourseInfo = new HBox();
-        HBox hboxidTeacherCourseInfo = new HBox();
+        HBox hbPromo = new HBox();
 
         Label nameLabel = new Label("Name of course : ");
         Label descriptionCourseLabel = new Label("Course description : ");
         Label nbHourTotalLabel = new Label( "Number Total Hour course : ");
-        Label idTeacherLabel = new Label("Course idTeacher number : ");
+        Label promoLabel = new Label(" Promotion identifiant : ");
 
         Text name = new Text(" ");
         Text descriptionCourse = new Text(" ");
         Text nbHourTotal = new Text(" ");
         Text idTeacher = new Text(" ");
+        Text idPromo = new Text ("");
 
 
         hboxnameCourseInfo.getChildren().add(nameLabel);
         hboxdescriptionCourseInfo.getChildren().add(descriptionCourseLabel);
         hboxnbHourTotalCourseInfo.getChildren().add(nbHourTotalLabel);
-        hboxidTeacherCourseInfo.getChildren().add(idTeacherLabel);
+        hbPromo.getChildren().add(promoLabel);
 
         hboxnameCourseInfo.getChildren().add(name);
         hboxdescriptionCourseInfo.getChildren().add(descriptionCourse);
         hboxnbHourTotalCourseInfo.getChildren().add(nbHourTotal);
-        hboxidTeacherCourseInfo.getChildren().add(idTeacher);
+        hbPromo.getChildren().add(idPromo);
 
         hboxnameCourseInfo.setAlignment(Pos.CENTER);
         hboxdescriptionCourseInfo.setAlignment(Pos.CENTER);
         hboxnbHourTotalCourseInfo.setAlignment(Pos.CENTER);
-        hboxidTeacherCourseInfo.setAlignment(Pos.CENTER);
+        hbPromo.setAlignment(Pos.CENTER);
 
         //create update button
         HBox hboxupdateButton = new HBox();
@@ -242,7 +242,7 @@ public class TeacherUI extends UI {
         hboxupdateButton.getChildren().add(btnUpdateCourse);
         hboxupdateButton.setAlignment(Pos.CENTER);
 
-        vboxInfoCourse.getChildren().addAll(hboxCourseInfo, hboxnameCourseInfo,hboxdescriptionCourseInfo,hboxnbHourTotalCourseInfo,hboxidTeacherCourseInfo, hboxupdateButton);
+        vboxInfoCourse.getChildren().addAll(hboxCourseInfo, hboxnameCourseInfo,hboxdescriptionCourseInfo,hboxnbHourTotalCourseInfo, hbPromo, hboxupdateButton);
         vboxInfoCourse.setSpacing(10);
         vboxInfoCourse.setPadding( new Insets(100, 0, 0, 75));
 
@@ -284,11 +284,8 @@ public class TeacherUI extends UI {
             name.setText(selectedCourse.getSelectedItem().getName());
             descriptionCourse.setText(selectedCourse.getSelectedItem().getDescription());
             nbHourTotal.setText(Integer.toString(selectedCourse.getSelectedItem().getNbTotalHour()));
-            idTeacher.setText(Integer.toString(selectedCourse.getSelectedItem().getIdTeacher()));
-
+            idPromo.setText(Integer.toString(selectedCourse.getSelectedItem().getIdPromo()));
         });
-
-
 
         return gridCourseVisu;
 	}
@@ -299,7 +296,7 @@ public class TeacherUI extends UI {
 	        Label nameCourseLabel = new Label("Name of course : ");
 	        Label descriptionCourseLabel = new Label("Description : ");
 	        Label nbTotalHourLabel = new Label("Total hours : ");
-	        //Label referentTeacherLabel = new Label ("Referent teacher : ");
+	        Label promoLabel = new Label("Promotion : ");
 
 	        // Add text Field
 	        TextField nameCourseField = new TextField();
@@ -309,34 +306,30 @@ public class TeacherUI extends UI {
 	            if(!newValue.matches("\\d*"))
 	                nbTotalHourField.setText(newValue.replaceAll("[^\\d]", ""));
 	        });
-	        TextField refT = new TextField();
+	        TextField promoField = new TextField();
 	        
-	        client.getTeacher();
-	        ListView<TeacherType> listT = new ListView<>();
-	        teacherNames = FXCollections.observableArrayList();
-	        teacherNames.addListener((ListChangeListener<TeacherType>) c -> {
-	            listT.setItems(teacherNames);
-	        });
-
-	        
-	        
-
 	        //grid pane
 	        GridPane gridCourse = new GridPane();
 	        gridCourse.setHgap(10);
 	        gridCourse.setVgap(10);
 	        gridCourse.setPadding(new Insets(10,10,10,10));
+	        
+	        ComboBox<PromotionType> promoComboBox = new ComboBox<PromotionType>();
+	        promoComboBox.setItems(promoNames);
+	        promoComboBox.getSelectionModel().select(1);
 
 	        //Hbox
 	        HBox nameCourse = new HBox();
 	        HBox descriptionCourse = new HBox();
 	        HBox nbTotalHourCourse = new HBox();
 	        HBox idReferentTeacherCourse = new HBox();
+	        HBox promoCourse = new HBox();
 
 	        // add form in hbox
 	        nameCourse.getChildren().addAll(nameCourseLabel, nameCourseField);
 	        descriptionCourse.getChildren().addAll(descriptionCourseLabel, descriptionCourseField) ;
 	        nbTotalHourCourse.getChildren().addAll(nbTotalHourLabel, nbTotalHourField) ;
+	        promoCourse.getChildren().addAll(promoLabel, promoComboBox);
 	        
 
 	        //add hbox in gridpane
@@ -344,6 +337,7 @@ public class TeacherUI extends UI {
 	        gridCourse.add(descriptionCourse, 1, 2);
 	        gridCourse.add(nbTotalHourCourse, 1, 3);
 	        gridCourse.add(idReferentTeacherCourse, 1, 4);
+	        gridCourse.add(promoCourse, 1, 5);
 
 	        //add gridpane in tab
 	        tabCourse.setContent(gridCourse);
@@ -378,21 +372,22 @@ public class TeacherUI extends UI {
 	            if (nbTotalHourField.getText().isEmpty()) {
 	                showAlert(Alert.AlertType.ERROR, gridCourse.getScene().getWindow(), "Form Error!", "Please enter course total number of hour");
 	                return;
+	            }if (promoComboBox.getSelectionModel().isEmpty()) {
+	                showAlert(Alert.AlertType.ERROR, gridCourse.getScene().getWindow(), "Form Error!", "Please enter course Promo");
+	                return;
 	            }
-	            
-	            
-	            client.handleCreateCourse(nameCourseField.getText(), descriptionCourseField.getText(), Integer.parseInt(nbTotalHourField.getText()),userID);
+	           
+	            PromotionType promo= (PromotionType) promoComboBox.getSelectionModel().getSelectedItem();
+	            client.handleCreateCourse(nameCourseField.getText(), descriptionCourseField.getText(), Integer.parseInt(nbTotalHourField.getText()),userID, promo.getIdPromo());
 	            nameCourseField.setText("");
 	            descriptionCourseField.setText("");
 	            nbTotalHourField.setText("");
-
-	        });
-
+	            });
+	        
 	        cancelCreate.setOnAction(event -> {
-	            tabCourse.setContent(courseRead(tabCourse));
+	        	tabCourse.setContent(courseRead(tabCourse));
 	        });
-
-
+	        
 	        return gridCourse;
 	        }
 	
@@ -405,7 +400,8 @@ public class TeacherUI extends UI {
         Label nameCourseLabel = new Label("Name of course : ");
         Label descriptionCourseLabel = new Label("Description : ");
         Label nbTotalHourLabel = new Label("Total hours : ");
-        Label referentTeacherLabel = new Label ("Referent teacher : ");
+        Label promoLabel = new Label("Promotion : ");
+       
 
         // Add text Field
         TextField nameCourseField = new TextField();
@@ -419,18 +415,10 @@ public class TeacherUI extends UI {
             if(!newValue.matches("\\d*"))
                 nbTotalHourField.setText(newValue.replaceAll("[^\\d]", ""));
         });
-        System.out.println("Si j'arrive ici je devrais renvoyer les teachers ");
-        client.getTeacher();
-        ListView<TeacherType> listT = new ListView<>();
-        teacherNames = FXCollections.observableArrayList();
-        teacherNames.addListener((ListChangeListener<TeacherType>) c -> {
-            listT.setItems(teacherNames);
-        });
-
-        ComboBox teacherComboBox = new ComboBox();
-        teacherComboBox.setItems(teacherNames);
-        teacherComboBox.getSelectionModel().select(1);
-        teacherComboBox.setValue(referentTeacherCourse);
+        
+        ComboBox<PromotionType> promoComboBox = new ComboBox<PromotionType>();
+        promoComboBox.setItems(promoNames);
+        promoComboBox.getSelectionModel().select(1);
         
         //grid pane
         GridPane gridUpdateCourse = new GridPane();
@@ -443,18 +431,21 @@ public class TeacherUI extends UI {
         HBox descriptionCourseHb = new HBox();
         HBox nbTotalHourCourseHb = new HBox();
         HBox referentTeacherCourseHb = new HBox();
+        HBox promoHb = new HBox();
+
 
         // add form in hbox
         nameCourseHb.getChildren().addAll(nameCourseLabel, nameCourseField);
         descriptionCourseHb.getChildren().addAll(descriptionCourseLabel, descriptionCourseField);
         nbTotalHourCourseHb.getChildren().addAll(nbTotalHourLabel, nbTotalHourField);
-        referentTeacherCourseHb.getChildren().addAll(referentTeacherLabel, teacherComboBox);
+        promoHb.getChildren().addAll(promoLabel, promoComboBox);
 
          //add hbox in gridpane
         gridUpdateCourse.add(nameCourseHb, 1, 1);
         gridUpdateCourse.add(descriptionCourseHb, 1, 2);
         gridUpdateCourse.add(nbTotalHourCourseHb, 1, 3);
-        gridUpdateCourse.add(referentTeacherCourseHb, 1, 5);
+        gridUpdateCourse.add(promoHb, 1, 4);
+       
 
         //add gridpane in tab
         tabCourse.setContent(gridUpdateCourse);
@@ -479,23 +470,22 @@ public class TeacherUI extends UI {
 
         okUpdate.setOnAction(event -> {
             if (nameCourseField.getText().isEmpty()) {
-                showAlert(Alert.AlertType.ERROR, gridUpdateCourse.getScene().getWindow(), "Form Error!", "Please enter a course name");
+                showAlert(Alert.AlertType.ERROR, gridUpdateCourse.getScene().getWindow(), "Form Error!", "Please enter a name ");
                 return;
             }
             if (descriptionCourseField.getText().isEmpty()) {
-                showAlert(Alert.AlertType.ERROR, gridUpdateCourse.getScene().getWindow(), "Form Error!", "Please enter a course name");
+                showAlert(Alert.AlertType.ERROR, gridUpdateCourse.getScene().getWindow(), "Form Error!", "Please enter a description");
                 return;
             }
             if (nbTotalHourField.getText().isEmpty()) {
-                showAlert(Alert.AlertType.ERROR, gridUpdateCourse.getScene().getWindow(), "Form Error!", "Please enter a course capacity");
+                showAlert(Alert.AlertType.ERROR, gridUpdateCourse.getScene().getWindow(), "Form Error!", "Please enter a total number of hour");
                 return;
-            }if (teacherComboBox.getSelectionModel().isEmpty()) {
-                showAlert(Alert.AlertType.ERROR, gridUpdateCourse.getScene().getWindow(), "Form Error!", "Please enter referent teacher");
+            }if (promoComboBox.getSelectionModel().isEmpty()) {
+                showAlert(Alert.AlertType.ERROR, gridUpdateCourse.getScene().getWindow(), "Form Error!", "Please enter a pormotion");
                 return;
             }
-            
-            TeacherType teach= (TeacherType) teacherComboBox.getSelectionModel().getSelectedItem();
-            client.handleUpdateCourse(idCourse, nameCourseField.getText(), descriptionCourseField.getText(), Integer.parseInt(nbTotalHourField.getText()),teach.getId());
+            PromotionType promo= (PromotionType) promoComboBox.getSelectionModel().getSelectedItem();
+            client.handleUpdateCourse(idCourse, nameCourseField.getText(), descriptionCourseField.getText(), Integer.parseInt(nbTotalHourField.getText()),userID, promo.getIdPromo());
             nameCourseField.setText("");
             descriptionCourseField.setText("");
             nbTotalHourField.setText("");
