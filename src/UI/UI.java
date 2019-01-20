@@ -64,7 +64,6 @@ public abstract class UI extends Application implements DisplayIF {
     protected ObservableList<CourseType> courseNames;
     protected ObservableList<RecordType> recordNames;
 
-
     //Business logic
     CoreClient client;
 
@@ -74,9 +73,6 @@ public abstract class UI extends Application implements DisplayIF {
     protected int userID;
     protected UserType user;
     protected File recordFile;
-
-
-
 
     public String getConnectionStatus() {
         return connectionStatus.get();

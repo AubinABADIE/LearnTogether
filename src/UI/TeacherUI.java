@@ -49,7 +49,6 @@ public class TeacherUI extends UI {
 	private Tab tabProfile, tabSchedule, tabRecords, tabDiary, tabChat;
 	Tab tabCourse;
 	private Tab tabRoom;
-	protected ObservableList<CourseType> courseNames;
 	protected ObservableList<PromotionType> promoNames;
 	
 	//protected String teacherUpdateName;

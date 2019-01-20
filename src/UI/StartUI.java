@@ -509,6 +509,14 @@ public class StartUI extends UI {
         });
     }
 
+    /**
+     * This method is triggered by the business logic.
+     * It changes the connection status according to the parameters.
+     * This connection status is then analysed by the listener, and the corresponding UI is started.
+     * @param isConnected is the user is connected
+     * @param id the ID of the user, corresponding to the DB.
+     * @param role the user role in the DB.
+     */
     @Override
     public void showLogin(boolean isConnected, int id, String role){
         if(isConnected){
