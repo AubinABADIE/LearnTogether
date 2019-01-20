@@ -456,6 +456,9 @@ public class CoreClient implements ClientIF {
         teacher.getTeacher();
     }
     
+    /**
+     * This method delegates to UserServices the users reading request
+     */
     public void getUsers() {
     	user.getUsers();
     }
