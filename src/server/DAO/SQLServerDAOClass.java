@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * This class instantiate the method relative to the class in SQLServer data base
+ * This class instantiates the methods relative to the class in SQLServer data base
  * @author Audrey SAMSON
  */
 public class SQLServerDAOClass extends AbstractDAOClass {
@@ -18,6 +18,11 @@ public class SQLServerDAOClass extends AbstractDAOClass {
     public SQLServerDAOClass() {
 
     }
+
+    /**
+     * This method creates the connection with the data base
+     * @return : a connection
+     */
     public Connection getConnection() {
         {
             Connection connection = null;
@@ -36,6 +41,10 @@ public class SQLServerDAOClass extends AbstractDAOClass {
         }
     }
 
+    /**
+     * This method closes the connection with the database.
+     * @param connection the active connection.
+     */
     public void closeConnection(Connection connection){
         try {
             connection.close();
@@ -44,7 +53,13 @@ public class SQLServerDAOClass extends AbstractDAOClass {
         }
     }
 
-
+    /**
+     * This method creates a class in the database.
+     * @param className the class name.
+     * @param classDescription the class description.
+     * @param idPromotion the promotion the class belongs to.
+     * @return 1 if the creation was successful, 0 otherwise.
+     */
     @Override
     public int createClass(String className, String classDescription, int idPromotion) {
         Connection connection = getConnection();
@@ -66,6 +81,14 @@ public class SQLServerDAOClass extends AbstractDAOClass {
         return result;
     }
 
+    /**
+     * This method updates an existing class in the database.
+     * @param idClass the class ID.
+     * @param className the new class name.
+     * @param descClass the new class description.
+     * @param idPromotion the new promotion the class belongs to.
+     * @return 1 if the update was successful, 0 otherwise.
+     */
     @Override
     public int updateClass(int idClass, String className, String descClass, int idPromotion) {
         Connection connection = getConnection();
@@ -88,6 +111,11 @@ public class SQLServerDAOClass extends AbstractDAOClass {
         return result;
     }
 
+    /**
+     * This method deletes a class in the database.
+     * @param id the id of the class to delete.
+     * @return 1 if the deletion was successful, 0 otherwise.
+     */
     @Override
     public int deleteClass(int id) {
         Connection connection = getConnection();
@@ -108,14 +136,13 @@ public class SQLServerDAOClass extends AbstractDAOClass {
         return result;
     }
 
-    @Override
-    public int readClass(int id) {
-        return 0;
-    }
-
+    /**
+     * This method searches for all classes in the database.
+     * @return a list of classes.
+     */
     @Override
     public List<ClassType> searchAllClasses() {
-        ArrayList cl = new ArrayList();
+        ArrayList<ClassType> cl = new ArrayList<>();
         Connection connection = getConnection();
         if(connection != null){
             try{
@@ -135,11 +162,14 @@ public class SQLServerDAOClass extends AbstractDAOClass {
         return cl;
     }
 
-
-
+    /**
+     * This method searches for all the classes belonging to a promotiion.
+     * @param idPromo the promotion ID.
+     * @return a list of classes.
+     */
     @Override
     public List<ClassType> searchAllClassesByPromo(int idPromo) {
-        ArrayList cl = new ArrayList();
+        ArrayList<ClassType> cl = new ArrayList<>();
         Connection connection = getConnection();
         if(connection != null){
             try{

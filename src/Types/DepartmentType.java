@@ -2,6 +2,10 @@ package Types;
 
 import java.io.Serializable;
 
+/**
+ * This class represents a department in the database.
+ * @author Audrey SAMSON
+ */
 public class DepartmentType implements Serializable {
     private int idDepartment;
     private String nameDep;

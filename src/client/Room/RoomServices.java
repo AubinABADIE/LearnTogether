@@ -4,6 +4,10 @@ import client.CoreClient;
 
 import java.io.IOException;
 
+/**
+ * This is the business logic related to the room on the client side.
+ * @author Marie SALELLES
+ */
 public class RoomServices {
     private CoreClient client;
 

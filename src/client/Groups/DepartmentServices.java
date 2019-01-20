@@ -5,7 +5,8 @@ import client.CoreClient;
 import java.io.IOException;
 
 /**
- * 
+ * This is the business logic related to the department on the client side.
+ * @author Audrey SAMSON
  */
 public class DepartmentServices {
 
@@ -43,6 +44,7 @@ public class DepartmentServices {
 
     /**
      * This method asks the server to update an existing department with the following attributes.
+     * @param idDep : the department ID.
      * @param name is the department name.
      * @param refTeacherID is the referring teacher of this department, recognized by its ID.
      * @param descDep is the description of the department.
@@ -55,8 +57,8 @@ public class DepartmentServices {
         }
     }
 
-    /**
-     * @param idDep
+    /**This method asks to the server to delete an existing department.
+     * @param idDep : department id
      */
     public void deleteDepartment(int idDep) {
         try {
@@ -66,6 +68,10 @@ public class DepartmentServices {
         }
     }
 
+    /**
+     * This method handles the server response when it created a department
+     * @param msg :String with the state of creation
+     */
     public void handleCreatedDepartment(String msg){
         String args[] = msg.split(" ");
         if(args[1].equalsIgnoreCase("SUCCESS"))
@@ -74,6 +80,10 @@ public class DepartmentServices {
             coreClient.getDisplay().setState("DC FAILURE");
     }
 
+    /**
+     * This method handles the server response when it updated a department
+     * @param msg : String with the state of updated
+     */
     public void handleUpdatedDepartment(String msg){
         String args[] = msg.split(" ");
         if(args[1].equalsIgnoreCase("SUCCESS"))
@@ -82,6 +92,10 @@ public class DepartmentServices {
             coreClient.getDisplay().setState("DEU FAILURE");
     }
 
+    /**
+     * This method handles the server response when it deleted a department
+     * @param msg : String with the state of deletion
+     */
     public void handleDeletedDepartment(String msg){
         String args[] = msg.split(" ");
         if(args[1].equalsIgnoreCase("SUCCESS"))

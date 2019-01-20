@@ -57,7 +57,11 @@ public class AdminUI extends TeacherUI {
     protected ObservableList<StaffType> staffNames;
 
     /**
-     * Default constructor
+     * Useful constructor.
+     * @param primaryStage the primary stage.
+     * @param login the client login.
+     * @param id the client ID.
+     * @param client the business logic.
      */
     public AdminUI(Stage primaryStage, String login, int id, CoreClient client) {
         super(primaryStage, login, id, client);
@@ -96,6 +100,7 @@ public class AdminUI extends TeacherUI {
 
     /**
      * This method create the principal admin scene
+     * @return the principal admin scene.
      */
 
     public Scene createPrincipalAdminScene() {
@@ -153,6 +158,7 @@ public class AdminUI extends TeacherUI {
 
     /**
      * This method create the room tab in the principal admin scene
+     * @return the room tab.
      */
     protected Tab tabRoom() {
 
@@ -702,6 +708,7 @@ public class AdminUI extends TeacherUI {
 
     /**
      * This method create the department tab in the principal admin scene
+     * @return the room department.
      */
 
     protected Tab tabDepartment() {

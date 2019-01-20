@@ -27,85 +27,60 @@ public abstract class AbstractDAOFactory{
 
     }
 
-    public abstract Connection getConnection();
 
-    public AbstractDAORoom getRoomDAO() {
-        return roomDAO;
-    }
+    public abstract AbstractDAORoom getRoomDAO();
 
-    public void setRoomDAO(AbstractDAORoom roomDAO) {
-        this.roomDAO = roomDAO;
-    }
+    public abstract AbstractDAOUser getUserDAO();
 
-    public AbstractDAOUser getUserDAO() {
-        return userDAO;
-    }
+    public abstract AbstractDAODepartment getDepartmentDAO();
 
-    public void setUserDAO(AbstractDAOUser userDAO) {
-        this.userDAO = userDAO;
-    }
-
-    public AbstractDAODepartment getDepartmentDAO() {
-        return departmentDAO;
-    }
-
-    public void setDepartmentDAO(AbstractDAODepartment departmentDAO) {
-        this.departmentDAO = departmentDAO;
-    }
-
-    public AbstractDAOConversation getConversationDAO() {
-        return conversationDAO;
-    }
-
-    public void setConversationDAO(AbstractDAOConversation conversationDAO) {
-        this.conversationDAO = conversationDAO;
-    }
+    public abstract AbstractDAOConversation getConversationDAO();
     
-    public AbstractDAOCourse getCourseDAO() {
-		return courseDAO;
-	}
+    public abstract AbstractDAOCourse getCourseDAO();
 
-	public void setCourseDAO(AbstractDAOCourse courseDAO) {
-		this.courseDAO = courseDAO;
-	}
+    public abstract AbstractDAOPromotion getPromotionDAO();
 
+    public abstract AbstractDAOClass getClassDAO();
+
+    public abstract AbstractDAORecords getRecordsDAO();
+
+    /**
+     * This method creates a User DAO.
+     */
     public abstract void createDAOUser();
 
+    /**
+     * This method creates a Department DAO.
+     */
     public abstract void createDAODepartment();
 
+    /**
+     * This method creates a Room DAO.
+     */
     public abstract void createDAORoom();
 
+    /**
+     * This method creates a Conversation DAO.
+     */
     public abstract void createDAOConversation();
 
+    /**
+     * This method creates a Course DAO.
+     */
 	public abstract void createDAOCourse();
 
+    /**
+     * This method creates a Promotion DAO.
+     */
     public abstract void createDAOPromotion();
 
+    /**
+     * This method creates a Class DAO.
+     */
     public abstract void createDAOClass();
 
+    /**
+     * This method creates a Records DAO.
+     */
     public abstract void createDAORecords();
-
-    public AbstractDAOPromotion getPromotionDAO() {
-        return promotionDAO;
-    }
-
-    public void setPromotionDAO(AbstractDAOPromotion promotionDAO) {
-        this.promotionDAO = promotionDAO;
-    }
-
-    public AbstractDAOClass getClassDAO() {
-        return classDAO;
-    }
-
-    public void setClassDAO(AbstractDAOClass classDAO) {
-        this.classDAO = classDAO;
-    }
-
-    public AbstractDAORecords getRecordsDAO() {
-        return recordsDAO;
-    }
-
-    public void setRecordsDAO(AbstractDAORecords recordsDAO) {
-        this.recordsDAO = recordsDAO;
-    }
 }

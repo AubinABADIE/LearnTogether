@@ -2,6 +2,10 @@ package Types;
 
 import java.io.Serializable;
 
+/**
+ * This class represents a class in the database.
+ * @author Audrey SAMSON
+ */
 public class ClassType implements Serializable {
     private int idClass;
     private String className;

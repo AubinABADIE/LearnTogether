@@ -33,7 +33,7 @@ public class GeneralServer implements Observer {
      * The useful constructor
      * @param port: the server address
      * @param display: the server display
-     * @throws IOException
+     * @throws IOException if the server can't be up.
      */
     public GeneralServer(int port, ChatIF display) throws Exception {
         comm = new ObservableOriginatorServer(port);
@@ -312,6 +312,7 @@ public class GeneralServer implements Observer {
     /**This method handles the department updated
      * @param idDep : department id
      * @param name : department name
+     * @param descriptionDep : the department description
      * @param refTeacherID : teacher who is in charge of department
      * @param client : client from which it originated
      */
@@ -599,10 +600,12 @@ public class GeneralServer implements Observer {
     
     /**
      * This method delegates to the dao the course update
+     * @param idCourse : the course ID
      * @param courseName : course name
      * @param courseDescription : small description of the course
      * @param nbTotalHour : number of total hour of the course
      * @param idTeacher : the id of the referring Teacher
+     * @param promoId : the promo ID
      * @param client : client who update the course
      */
     
@@ -852,6 +855,8 @@ public class GeneralServer implements Observer {
     }
     /**
      * This method delegates to the dao the research of the department
+     * @param idDep the department ID.
+     * @param client the asking client.
      */
 
     public void handleListPromoByDepFromClient(int idDep,ConnectionToClient client){
@@ -959,6 +964,8 @@ public class GeneralServer implements Observer {
 
     /**
      * This method delegates to the dao the research of the classes within an id of a promotion
+     * @param idPromo the promotion ID.
+     * @param client the client from which the demand originated.
      */
 
     public void handleListClassByPromoFromClient(int idPromo, ConnectionToClient client){

@@ -18,7 +18,8 @@ public class RecordServices {
     private CoreClient client;
 
     /**
-     * Default constructor
+     * Constructor
+     * @param client the main business logic.
      */
     public RecordServices(CoreClient client) {
         this.client=client;
@@ -41,21 +42,6 @@ public class RecordServices {
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
-
-    /**
-     * @param rec 
-     * @param donatingUserID
-     */
-    public void deleteRecord(int rec, int donatingUserID) {
-        // TODO implement here
-    }
-
-    /**
-     * @param id
-     */
-    public void readRecord(int id) {
-        // TODO implement here
     }
 
     /**

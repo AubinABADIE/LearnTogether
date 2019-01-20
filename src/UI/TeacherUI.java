@@ -48,9 +48,13 @@ public class TeacherUI extends UI {
 	private Tab  tabRecords;
 	Tab tabCourse;
 	protected ObservableList<PromotionType> promoNames;
-	
+
     /**
-     * Default constructor
+     * The useful construtor.
+     * @param primaryStage the primary stage.
+     * @param login the user login.
+     * @param id the user ID.
+     * @param client the business logic.
      */
     public TeacherUI(Stage primaryStage, String login, int id, CoreClient client) {
 		this.primaryStage = primaryStage;
@@ -238,10 +242,7 @@ public class TeacherUI extends UI {
         vboxInfoCourse.setSpacing(10);
         vboxInfoCourse.setPadding( new Insets(100, 0, 0, 75));
 
-
-        btnAddCourse.setOnAction(event -> {
-            createTabCourse(tabCourse);
-        });
+        btnAddCourse.setOnAction(event -> createTabCourse(tabCourse));
 
         btnUpdateCourse.setOnAction(event ->{
             SelectionModel<CourseType> selectedDeleteCourse = list.getSelectionModel();

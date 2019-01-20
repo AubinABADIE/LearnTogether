@@ -2,6 +2,10 @@ package Types;
 
 import java.io.Serializable;
 
+/**
+ * This class reprensents a promotion into the database.
+ * @author Audrey SAMSON
+ */
 public class PromotionType implements Serializable {
     private int idPromo;
     private String namePromo;

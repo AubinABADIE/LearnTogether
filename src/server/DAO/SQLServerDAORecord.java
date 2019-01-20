@@ -8,7 +8,8 @@ import java.io.File;
 import java.sql.*;
 import java.util.*;
 
-/** This class instantiate the method relative to the record in SQLServer data base
+/**
+ * This class instantiates the methods relative to the record in SQLServer data base
  * @author Yvan SANSON
  * @author Marie SALELLES
  */
@@ -55,7 +56,7 @@ public class SQLServerDAORecord extends AbstractDAORecords{
         }
     }
 
-    /** This method create in the data base a record
+    /** This method creates in the data base a record
      * @param name : record name
      * @param year : exam year
      * @param courseID : record course
@@ -107,23 +108,7 @@ public class SQLServerDAORecord extends AbstractDAORecords{
     }
 
     /**
-     * @param id 
-     * @param donatingUser
-     */
-   public void deleteRecord(int id, UserType donatingUser) {
-        // TODO implement here
-    }
-
-    /**
-     * @param id
-     */
-
-    public void readRecord(int id) {
-        // TODO implement here
-    }
-
-    /**
-     * This method search in the data base the record list
+     * This method retrieves all the records metadata from the database.
      * @return : the record list
      */
     @Override
@@ -149,6 +134,11 @@ public class SQLServerDAORecord extends AbstractDAORecords{
         return records;
     }
 
+    /**
+     * This method retrieves all the records that a specific user uploaded.
+     * @param id the user id
+     * @return a list of records.
+     */
     @Override
     public List<RecordType> searchRecordsByUser(int id) {
         ArrayList<RecordType> records = new ArrayList();
@@ -174,6 +164,11 @@ public class SQLServerDAORecord extends AbstractDAORecords{
         return records;
     }
 
+    /**
+     * This method deletes a record from the database.
+     * @param recordID the record ID.
+     * @return 1 if the deletion was successful, 0 otherwise.
+     */
     @Override
     public int deleteRecord(int recordID) {
         int result = 0;

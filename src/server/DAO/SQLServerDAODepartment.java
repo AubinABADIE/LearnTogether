@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * This class instantiate the method relative to the department in SQLServer data base
+ * This class instantiates the methods relative to the department in SQLServer data base
  * @author Audery SAMSON
  */
 
@@ -42,7 +42,8 @@ public class SQLServerDAODepartment extends AbstractDAODepartment{
     }
 
     /**
-     * This method closes the connection with the data base
+     * This method closes the connection with the data base.
+     * @param connection the active connection.
      */
     public void closeConnection(Connection connection){
         try {
@@ -57,6 +58,7 @@ public class SQLServerDAODepartment extends AbstractDAODepartment{
      * @param name : department name
      * @param refTeacherID : department's referent teacher
      * @param descriptionDep : small department of the department
+     * @return 1 if the creation was successful, 0 otherwise.
      */
     @Override
     public int createDepartment(String name, int refTeacherID, String descriptionDep) {
@@ -86,7 +88,7 @@ public class SQLServerDAODepartment extends AbstractDAODepartment{
      * @param name : department name
      * @param refTeacherID : teacher in chage od the department
      * @param descriptionDep : department description
-     * @return int which is the state of the updated in the data base
+     * @return 1 if the update was successful, 0 otherwise.
      */
     @Override
     public int updateDepartment(int idDep, String name, String refTeacherID, String descriptionDep) {
@@ -113,7 +115,7 @@ public class SQLServerDAODepartment extends AbstractDAODepartment{
     /**
      * This method deletes a department. It return an int to specify to the server the state of the deletion
      * @param idDep : department id
-     * @return int who give the state of the deletion in the data base
+     * @return 1 if the deletion was successful, 0 otherwise.
      */
     @Override
     public int deleteDepartment(int idDep) {
@@ -138,7 +140,7 @@ public class SQLServerDAODepartment extends AbstractDAODepartment{
     /**
      * This method selects a department in the data base.
      * @param idDep : department id
-     * @return department id
+     * @return department id, or -1 if it doesn't exist.
      */
     @Override
     public int readDepartment(int idDep) {
@@ -165,8 +167,7 @@ public class SQLServerDAODepartment extends AbstractDAODepartment{
      */
     @Override
     public List<DepartmentType> searchAllDepartment() {
-
-        ArrayList dep = new ArrayList();
+        ArrayList<DepartmentType> dep = new ArrayList<>();
         Connection connection = getConnection();
         if(connection != null){
             try{
@@ -185,6 +186,4 @@ public class SQLServerDAODepartment extends AbstractDAODepartment{
         }
         return dep;
     }
-
-
 }
