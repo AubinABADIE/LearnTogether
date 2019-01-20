@@ -2,6 +2,11 @@ package Types;
 
 import java.io.Serializable;
 
+/**
+ * This class represents a Staff in the DataBase
+ * @author Audrey SAMSON
+ */
+
 public class StaffType extends UserType implements Serializable {
 
     //role = "STAFF"

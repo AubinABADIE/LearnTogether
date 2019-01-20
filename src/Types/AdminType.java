@@ -5,7 +5,7 @@ import java.io.Serializable;
 public class AdminType extends UserType implements Serializable {
 /**
  * This class represents an admin in the database.
- * @author Aubin ABADIE
+ * @author Audrey SAMSON
  */
     //role = "ADMIN"
 

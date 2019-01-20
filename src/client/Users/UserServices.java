@@ -14,7 +14,8 @@ import java.security.NoSuchAlgorithmException;
  * This class handles all the business logic related to the User (login, etc.)
  *
  * @author Aubin ABADIE for the profile
- * @author Yvan SANSON for the login and password encryption.
+ * @author Yvan SANSON for the login and password encryption
+ * @author Audrey SAMSON for the admin management
  */
 public class UserServices{
 
