@@ -44,21 +44,6 @@ public class RecordServices {
     }
 
     /**
-     * @param rec 
-     * @param donatingUserID
-     */
-    public void deleteRecord(int rec, int donatingUserID) {
-        // TODO implement here
-    }
-
-    /**
-     * @param id
-     */
-    public void readRecord(int id) {
-        // TODO implement here
-    }
-
-    /**
      * This method send to server the request to have the records
      */
     public void getAllRecord(){

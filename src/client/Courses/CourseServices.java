@@ -3,7 +3,10 @@ package client.Courses;
 import client.CoreClient;
 import java.io.IOException;
 
-
+/**
+ * This is the business logic related to the courses on the client side.
+ * @author Solene SERAFIN
+ */
 public class CourseServices {
 	private CoreClient client;
 	
@@ -92,9 +95,10 @@ public class CourseServices {
             client.getDisplay().setState("CU FAILURE");
         }
     }
-    
+
     /**
-     * This method send a message to the server to have the courses list of the teacher (came from TeacherUI)
+     * This method sends a message to the server to have the courses list of the teacher (came from TeacherUI)
+     * @param userID : user id
      */
     
     public void getCourses(int userID) {
@@ -105,9 +109,9 @@ public class CourseServices {
         }
 
     }
-    
+
     /**
-     * This method send a message to the server to have the courses list (came from adminUI)
+     * This method sends a message to the server to have the courses list (came from adminUI)
      */
     public void getCourses() {
         try {

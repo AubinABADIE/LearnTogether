@@ -107,12 +107,12 @@ public class UserServices{
     
     /**
      * This method is called when the admin wants to create a new user.
-     * @param name
-     * @param firstname
-     * @param birthDate
-     * @param email
-     * @param password
-     * @param role
+     * @param name : user name
+     * @param firstname : user first name
+     * @param birthDate : user birth date
+     * @param email : user login
+     * @param password : user password
+     * @param role : user role
      */
     public void createUser(String name, String firstname, String birthDate, String email, String role, String password, String jobType) {
     	try {
@@ -159,8 +159,8 @@ public class UserServices{
     
     /**
      * This method is called when the client wants to set a new password.
-     * @param login
-     * @param pwd
+     * @param login : user login
+     * @param pwd : user password
      */
     public void updatePwd(String login, String pwd) {
     	try {
@@ -181,16 +181,15 @@ public class UserServices{
         else
             coreClient.getDisplay().setState("UP FAILURE");
     }
-    
+
     /**
      * This method is called when an admin wants to set different information of an user profile.
-     * @param id
-     * @param name
-     * @param firstname
-     * @param birthDate
-     * @param email
-     * @param password
-     * @param role
+     * @param id : user id
+     * @param name : user name
+     * @param firstname : user first name
+     * @param email : user email
+     * @param birthDate : user birth date
+     * @param role : user role
      */
     public void updateUser(int id, String name, String firstname, String email, String birthDate, String role) {
     	try {
@@ -214,8 +213,8 @@ public class UserServices{
     
     /**
      * This method is called when the client wants to set a different image.
-     * @param id
-     * @param photo
+     * @param id : user id
+     * @param photo : image
      */
     public void updatePhoto(int id, Image photo) {
     	
@@ -231,7 +230,7 @@ public class UserServices{
 	
 	/**
 	 * This method is called when the admin wants to delete a user.
-	 * @param id
+	 * @param id : user id
 	 */
 	public void deleteUser(int id, String role) {
     	try {

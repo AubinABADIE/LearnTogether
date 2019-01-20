@@ -5,6 +5,10 @@ import client.CoreClient;
 
 import java.io.IOException;
 
+/**
+ * This is the business logic related to the class on the client side.
+ * @author Audrey SAMSON
+ */
 public class ClassServices {
     private CoreClient coreClient;
 
@@ -13,7 +17,17 @@ public class ClassServices {
         this.coreClient = coreClient;
     }
 
+    public CoreClient getCoreClient() {
+        return coreClient;
+    }
 
+    public void setCoreClient(CoreClient coreClient) {
+        this.coreClient = coreClient;
+    }
+
+    /**
+     * This methods asks to the server to read all the classes
+     */
     public void getClasses() {
         try {
             coreClient.getConnection().sendToServer("#GETCLASS" );
@@ -22,6 +36,10 @@ public class ClassServices {
         }
     }
 
+    /**
+     * This method asks to the server to read all the classes in one promotion
+     * @param idPromo : promotion id
+     */
     public void getClassesByPromo(int idPromo) {
         try {
             coreClient.getConnection().sendToServer("#GETCLASSBYPROMO-/-" + idPromo);
@@ -60,7 +78,8 @@ public class ClassServices {
     }
 
     /**
-     * @param idC
+     * This method asks to the server to delete an existing class
+     * @param idC : class id
      */
     public void deleteClass(int idC) {
         try {
@@ -70,14 +89,10 @@ public class ClassServices {
         }
     }
 
-    public CoreClient getCoreClient() {
-        return coreClient;
-    }
-
-    public void setCoreClient(CoreClient coreClient) {
-        this.coreClient = coreClient;
-    }
-
+    /**
+     * This method handles the server response when it created a class
+     * @param msg : String with the state of creation
+     */
     public void handleCreatedClass(String msg){
         String args[] = msg.split(" ");
         if(args[1].equalsIgnoreCase("SUCCESS"))
@@ -86,6 +101,10 @@ public class ClassServices {
             coreClient.getDisplay().setState("CLC FAILURE");
     }
 
+    /**
+     * This method handles the server response when it updated a class
+     * @param msg : String with the state of updated
+     */
     public void handleUpdatedClass(String msg){
         String args[] = msg.split(" ");
         if(args[1].equalsIgnoreCase("SUCCESS"))
@@ -94,6 +113,10 @@ public class ClassServices {
             coreClient.getDisplay().setState("CLU FAILURE");
     }
 
+    /**
+     * This ethod handles the server response when ot deleted a class
+     * @param msg : String with the state of deletion
+     */
     public void handleDeletedClass(String msg){
         String args[] = msg.split(" ");
         if(args[1].equalsIgnoreCase("SUCCESS"))

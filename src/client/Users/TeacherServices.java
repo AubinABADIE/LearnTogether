@@ -54,6 +54,9 @@ public class TeacherServices{
         // TODO implement here
     }
 
+    /**
+     * This method asks to the server to have the teacher list
+     */
     public void getTeacher() {
         try {
             coreClient.getConnection().sendToServer("#GETTEACHER" );

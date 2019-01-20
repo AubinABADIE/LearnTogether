@@ -8,11 +8,7 @@ import java.util.List;
 
 /**
  * This is the business logic related to the conversations on the client side.
- * @author Aubin ABADIE
- * @author Marie SALELLES
- * @author Audrey SAMSON
  * @author Yvan SANSON
- * @author Solene SERAFIN
  */
 public class ConversationServices {
 
@@ -25,7 +21,7 @@ public class ConversationServices {
     }
 
     /**
-     * This method creates a conversation between this client and anoth
+     * This method creates a conversation between this client and another client
      * @param receiverEmail: Creates a conversation with the other user by its email.
      */
     public void createConversation(String receiverEmail) {
@@ -36,6 +32,12 @@ public class ConversationServices {
         }
     }
 
+    /**
+     * This method send the client message to the server.
+     * @param id : message id
+     * @param receiverEmail : mail of client receiver
+     * @param messageContent : message
+     */
     public void sendMsgToClient(int id, String receiverEmail, String messageContent){
         try {
             client.getConnection().sendToServer("#SENDMSGTOCLIENT-/-" + id + "-/-" + receiverEmail +"-/-"+messageContent);
@@ -55,14 +57,6 @@ public class ConversationServices {
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
-
-    /**
-     * @param conv 
-     * @param members
-     */
-    public void addMembers(ConversationServices conv, List<Integer> members) {
-        // TODO implement here
     }
 
     /**
