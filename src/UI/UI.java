@@ -861,14 +861,19 @@ public abstract class UI extends Application implements DisplayIF {
         Button btnD = new Button("Delete");
         btnD.setGraphic(deleteView);//setting icon to button
 
+        HBox hboxDButton = new HBox();
+        hboxDButton.getChildren().add(btnD);
+        hboxDButton.setAlignment(Pos.CENTER);
+
         //delete info
         Text titleDel = new Text(" ");
         Text nameDel = new Text(" ");
 
         VBox vboxButtonDelete = new VBox();
-        vboxButtonDelete.getChildren().addAll(titleDel,nameDel);
+        vboxButtonDelete.getChildren().addAll(titleDel,nameDel, hboxDButton);
         vboxButtonDelete.setAlignment(Pos.CENTER);
         vboxButtonDelete.setPadding(new Insets(0, 0, 0, 75));
+
 
 
         //add in the heaeder view
@@ -881,7 +886,7 @@ public abstract class UI extends Application implements DisplayIF {
         deleteGrid.add(returnTitleBox, 1,0);
         deleteGrid.add(btnReturnRecD, 2,0);
         deleteGrid.add(vboxlistDelete, 1,1);
-        deleteGrid.add(vboxButtonDelete, 2,1);
+        //deleteGrid.add(vboxButtonDelete, 2,1);
 
         btnD.setOnAction(event -> {
             SelectionModel<RecordType> selectedDeleteRoom = listD.getSelectionModel();
@@ -910,7 +915,6 @@ public abstract class UI extends Application implements DisplayIF {
             nameDel.setFont(Font.font(15));
             titleDel.setText("Delete this record : ");
             titleDel.setFont(Font.font(15));
-            vboxButtonDelete.getChildren().add(btnD);
         });
 
         return deleteGrid;
