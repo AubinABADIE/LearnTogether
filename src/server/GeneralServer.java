@@ -164,7 +164,11 @@ public class GeneralServer implements Observer {
         } else if(instruction.startsWith("UPDATEPWD")) {
         	String[] attributes = instruction.split(" ");
         	handleUpdatePwd(attributes[1], attributes[2], client);  
-        } else if(instruction.startsWith("UPDATEUSER")) {
+        } else if(instruction.startsWith("UPDATEADMINUSER")) {
+            String[] attributes = instruction.split(" ");
+            handleUpdateAdminUser(Integer.parseInt(attributes[1]), attributes[2], attributes[3], attributes[4], attributes[5], attributes[7],attributes[8], client);
+        }
+        else if(instruction.startsWith("UPDATEUSER")) {
         	String[] attributes = instruction.split(" ");
         	handleUpdateUser(Integer.parseInt(attributes[1]), attributes[2], attributes[3], attributes[4], attributes[5], attributes[7], client);  
         } else if(instruction.startsWith("DELETEUSER")) {
@@ -173,6 +177,8 @@ public class GeneralServer implements Observer {
         } else if(instruction.startsWith("GETCONVEMAIL")){
             String[] attributes = instruction.split(" ");
             handleGetConversationEmails(Integer.parseInt(attributes[1]), client);
+        } else if (instruction.startsWith("GETTEACHERNA")) {
+            handleListTeacherNAFromClient(client);
         } else if (instruction.startsWith("GETTEACHER")){
             handleListTeacherFromClient(client);
         } else if(instruction.startsWith("DELETECONVERSATION")){
@@ -182,10 +188,10 @@ public class GeneralServer implements Observer {
             handleGetAllRecord(client);
         } else if(instruction.startsWith("DOWNLOADRECORD")){
             handleRecordDownloadRequest(Integer.parseInt(instruction.split(" ")[1]), client);
-        } else if(instruction.startsWith("GETPADMIN")){
-            handleGetAllPossibleAdmin(client);
-        } else if(instruction.startsWith("GETADMIN")){
+        } else if(instruction.startsWith("GETADMIN")) {
             handleGetAllAdmin(client);
+        } else if(instruction.startsWith("GETSTAFFNA")){
+            handleGetAllStaffNotAdmin(client);
         } else if (instruction.startsWith("GETRECORDBYUSER")){
             handleGetRecordByUser(Integer.parseInt(instruction.split("-/-")[1]), client);
         } else if(instruction.startsWith("DELETERECORD")){
@@ -398,7 +404,20 @@ public class GeneralServer implements Observer {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+    /**
+     * This method delegates to the dao the research of the department
+     * @param client : the client from which it originated.
+     */
 
+    public void handleListTeacherNAFromClient(ConnectionToClient client){
+        List<TeacherType> teacher =  dao.getUserDAO().searchAllTeacherNA();
+        System.out.println(teacher.size());
+        try {
+            client.sendToClient(teacher);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -769,6 +788,31 @@ public class GeneralServer implements Observer {
             e.printStackTrace();
         }
     }
+    /**
+     * This method a user from the user ID. It then sends a message concerning the success or not.
+     * @param id : user id
+     * @param name : user name
+     * @param firstName : user first name
+     * @param birthDate : user birth date
+     * @param email : user login
+     * @param role : user role
+     * @param client : the client from which it originated.
+     */
+    private void handleUpdateAdminUser(int id, String name, String firstName, String email, String birthDate, String role, String isAdmin,ConnectionToClient client) {
+        int isAd= Integer.parseInt(isAdmin);
+        int result = dao.getUserDAO().updateDAOAdminUser(id, name, firstName, email, birthDate, role, isAd);
+        String msg;
+        if (result == 1){
+            msg = "#UPDATEDUSER SUCCESS" ;
+        } else{
+            msg = "#UPDATEDUSER FAILURE";
+        }
+        try {
+            client.sendToClient(msg);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
     /**
      * This method delete a user from the user ID. It then sends a message concerning the success or not.
@@ -1090,18 +1134,6 @@ public class GeneralServer implements Observer {
         }
     }
 
-    /**
-     * This method handles when the client wants the possible admins list
-     * @param client : the client that sent the request
-     */
-    public void handleGetAllPossibleAdmin(ConnectionToClient client){
-        List<UserType> adm =  dao.getUserDAO().getPossibleAdmin();
-        try {
-            client.sendToClient(adm);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
 
     /**
      * This method handles when the client wants the admins list
@@ -1111,6 +1143,20 @@ public class GeneralServer implements Observer {
         List<AdminType> adm =  dao.getUserDAO().getAllAdmin();
         try {
             client.sendToClient(adm);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * This method handles when the client wants the staffs list
+     * @param client : the client that sent the request
+     */
+    public void handleGetAllStaffNotAdmin(ConnectionToClient client){
+        List<StaffType> staff =  dao.getUserDAO().getAllStaffNotAdmin();
+        System.out.println(staff.size());
+        try {
+            client.sendToClient(staff);
         } catch (IOException e) {
             e.printStackTrace();
         }

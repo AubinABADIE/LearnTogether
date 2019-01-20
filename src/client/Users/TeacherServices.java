@@ -27,36 +27,17 @@ public class TeacherServices{
         this.coreClient = coreClient;
     }
 
-    /**
-     * 
-     */
-    private List<CourseServices> courseList;
-
-    /**
-     * @return
-     */
-    public boolean isAdmin() {
-        // TODO implement here
-        return false;
-    }
-
-    /**
-     * @param course
-     */
-    public void addCourse(CourseServices course) {
-        // TODO implement here
-    }
-
-    /**
-     * @param courses
-     */
-    public void addCourses(List<CourseServices> courses) {
-        // TODO implement here
-    }
 
     public void getTeacher() {
         try {
             coreClient.getConnection().sendToServer("#GETTEACHER" );
+        }catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    public void getTeacherNotAdmin() {
+        try {
+            coreClient.getConnection().sendToServer("#GETTEACHERNA" );
         }catch (IOException e) {
             e.printStackTrace();
         }

@@ -596,6 +596,20 @@ public class StartUI extends UI {
         });
     }
     /**
+     * This method update the admin list
+     * @param staff : staff list
+     */
+    @Override
+    public void getStaff(List<StaffType> staff) {
+        Platform.runLater(() -> {
+            if(adminUI != null)
+                adminUI.setStaff(staff);
+            else if(superAdminUI != null)
+                superAdminUI.setStaff(staff);
+        });
+    }
+
+    /**
      * This method put the record user in the list recordsNames
      * @param records : list of user record
      */

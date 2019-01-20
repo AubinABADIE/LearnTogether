@@ -31,5 +31,6 @@ public interface DisplayIF {
     void getRecords(List<RecordType>records);
     void getRecordByUser(List<RecordType>records);
     void getAdmin(List<AdminType> adm);
+    void getStaff(List<StaffType> adm);
 
 }

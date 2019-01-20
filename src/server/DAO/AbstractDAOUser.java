@@ -2,6 +2,7 @@ package server.DAO;
 
 
 import Types.AdminType;
+import Types.StaffType;
 import Types.TeacherType;
 import Types.UserType;
 
@@ -9,6 +10,7 @@ import java.sql.Connection;
 import java.util.List;
 
 /**  This class is the abstract class for the DAO user
+ * @author Audrey SAMSON
  * @author Aubin ABADIE
  * @author Yvan SANSON
  */
@@ -29,8 +31,10 @@ public abstract class AbstractDAOUser {
     public abstract boolean setNewPwd(String login, String password);
     public abstract int deleteDAOUser(int id, String role);
     public abstract List<TeacherType> searchAllTeacher();
+    public abstract List<TeacherType> searchAllTeacherNA();
 	public abstract List<UserType> getAllUsers();
-	public abstract List<UserType> getPossibleAdmin();
     public abstract List<AdminType> getAllAdmin();
+    public abstract List<StaffType> getAllStaffNotAdmin();
+    public abstract int updateDAOAdminUser(int id, String name, String firstname, String email, String birthDate, String role, int isAdmin);
 
 }

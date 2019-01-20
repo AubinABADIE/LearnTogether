@@ -54,6 +54,7 @@ public class AdminUI extends TeacherUI {
     protected ObservableList<UserType> userNames;
     protected ObservableList<TeacherType> teacherNames;
     protected ObservableList<AdminType> admNames;
+    protected ObservableList<StaffType> staffNames;
 
     /**
      * Default constructor
@@ -85,8 +86,12 @@ public class AdminUI extends TeacherUI {
     public void setUsers(List<UserType> users) {
     	userNames.setAll(users);
     }
+
     public void setAdmin(List<AdminType> adm) {
         admNames.setAll(adm);
+    }
+    public void setStaff(List<StaffType> staff) {
+        staffNames.setAll(staff);
     }
 
     /**

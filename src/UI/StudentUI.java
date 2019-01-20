@@ -1,5 +1,6 @@
 package UI;
 
+import Types.StaffType;
 import client.CoreClient;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
@@ -11,6 +12,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
+import java.util.List;
 
 
 /**
@@ -79,5 +81,10 @@ public class StudentUI extends UI  {
 
         principalStudentScene = new Scene(studentScene, 900, 700);
         return principalStudentScene;
+    }
+
+    @Override
+    public void getStaff(List<StaffType> adm) {
+
     }
 }

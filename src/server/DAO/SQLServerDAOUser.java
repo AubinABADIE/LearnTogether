@@ -3,6 +3,7 @@ package server.DAO;
 import Types.UserType;
 import Types.TeacherType;
 import Types.AdminType;
+import Types.StaffType;
 
 
 import java.io.File;
@@ -181,6 +182,7 @@ public class SQLServerDAOUser extends AbstractDAOUser {
         return res;
 	}
 
+
     /**
      * Reads the DB and delete the user.
      * @param id
@@ -334,6 +336,43 @@ public class SQLServerDAOUser extends AbstractDAOUser {
             }
             return teacher;
     }
+    /**
+     * This method return the teachers list where teachers are not admins
+     */
+    @Override
+    public List<TeacherType> searchAllTeacherNA() {
+        ArrayList<TeacherType> teacher = new ArrayList();
+        Connection connection = getConnection();
+        if(connection != null){
+            try{
+                PreparedStatement preparedStatement = connection.prepareStatement("SELECT * from Teachers WHERE isAdmin = ? ");
+                preparedStatement.setBoolean(1, false);
+                ResultSet resultSet = preparedStatement.executeQuery();
+                int id = 0;
+                while (resultSet.next()){
+                    System.out.println("teacher NA +1");
+                    id = resultSet.getInt("idTeacher");
+                    try {
+                        PreparedStatement preparedStatement2 = connection.prepareStatement("SELECT * from GeneralUsers WHERE idUser = ? ");
+                        preparedStatement2.setInt(1, id);
+                        ResultSet resultSet2 = preparedStatement2.executeQuery();
+                        while (resultSet2.next()){
+                            teacher.add(new TeacherType(resultSet2.getInt("idUser"),
+                                    resultSet2.getString("name"),
+                                    resultSet2.getString("firstName"),
+                                    resultSet2.getString("email"),
+                                    resultSet2.getString("birthDate"),
+                                    resultSet2.getString("role")));}
+                    }catch (SQLException e){e.printStackTrace();}
+                }
+
+            }catch (SQLException e){e.printStackTrace();}
+            finally {
+                closeConnection(connection);
+            }
+        }
+        return teacher;
+    }
     
     /**
      * This method return the users list
@@ -363,21 +402,100 @@ public class SQLServerDAOUser extends AbstractDAOUser {
         return users;
     }
 
+
+
     @Override
-    public List<UserType> getPossibleAdmin() {
-        List<UserType> users = new ArrayList();
+    public List<AdminType> getAllAdmin() {
+        List<AdminType> users = new ArrayList();
+        Connection connection = getConnection();
+        if(connection != null) {
+            try {
+                PreparedStatement preparedStatement = connection.prepareStatement("SELECT * from Staffs WHERE isAdmin = ? ");
+                preparedStatement.setBoolean(1, true);
+
+                ResultSet resultSet = preparedStatement.executeQuery();
+                int id = 0;
+                while (resultSet.next()) {
+                    id = resultSet.getInt("idStaff");
+                    System.out.print("+1 /");
+                    try {
+                        PreparedStatement preparedStatement2 = connection.prepareStatement("SELECT * from GeneralUsers WHERE idUser = ? ");
+                        preparedStatement2.setInt(1, id);
+                        ResultSet resultSet2 = preparedStatement2.executeQuery();
+
+                        while (resultSet2.next()) {
+                            users.add(new AdminType(resultSet2.getInt("idUser"),
+                                    resultSet2.getString("name"),
+                                    resultSet2.getString("firstName"),
+                                    resultSet2.getString("email"),
+                                    resultSet2.getString("birthDate"),
+                                    resultSet2.getString("role")));
+                        }
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    }
+                }
+                    try {
+                        PreparedStatement preparedStatementT = connection.prepareStatement("SELECT * from Teachers WHERE isAdmin = ? ");
+                        preparedStatementT.setBoolean(1, true);
+
+                        ResultSet resultSetT = preparedStatementT.executeQuery();
+                        int id2 = 0;
+                        while (resultSetT.next()) {
+                            id2 = resultSetT.getInt("idTeacher");
+                            System.out.print("teach+1 /");
+                            try {
+                                PreparedStatement preparedStatementT2 = connection.prepareStatement("SELECT * from GeneralUsers WHERE idUser = ? ");
+                                preparedStatementT2.setInt(1, id2);
+                                ResultSet resultSetT2 = preparedStatementT2.executeQuery();
+                                while (resultSetT2.next()) {
+                                    users.add(new AdminType(resultSetT2.getInt("idUser"),
+                                            resultSetT2.getString("name"),
+                                            resultSetT2.getString("firstName"),
+                                            resultSetT2.getString("email"),
+                                            resultSetT2.getString("birthDate"),
+                                            resultSetT2.getString("role")));
+                                }
+                            } catch (SQLException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }catch (SQLException e) {
+                        e.printStackTrace();
+
+                    }
+
+        } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }return users;
+    }
+
+
+    @Override
+    public List<StaffType> getAllStaffNotAdmin() {
+        List<StaffType> users = new ArrayList();
         Connection connection = getConnection();
         if(connection != null){
             try{
-                PreparedStatement preparedStatement = connection.prepareStatement("SELECT * from GeneralUsers WHERE role = 'TEACHER' OR role = 'STAFF' ");
+                PreparedStatement preparedStatement = connection.prepareStatement("SELECT * from Staffs WHERE isAdmin = ? ");
+                preparedStatement.setBoolean(1, false);
                 ResultSet resultSet = preparedStatement.executeQuery();
+                int id = 0;
                 while (resultSet.next()){
-                    users.add(new TeacherType(resultSet.getInt("idUser"),
-                            resultSet.getString("name"),
-                            resultSet.getString("firstName"),
-                            resultSet.getString("email"),
-                            resultSet.getString("birthDate"),
-                            resultSet.getString("role")));
+                    id = resultSet.getInt("idStaff");
+                    try {
+                        PreparedStatement preparedStatement2 = connection.prepareStatement("SELECT * from GeneralUsers WHERE idUser = ? ");
+                        preparedStatement2.setInt(1, id);
+                        ResultSet resultSet2 = preparedStatement2.executeQuery();
+                        while (resultSet.next()){
+                            users.add(new StaffType(resultSet2.getInt("idUser"),
+                                    resultSet2.getString("name"),
+                                    resultSet2.getString("firstName"),
+                                    resultSet2.getString("email"),
+                                    resultSet2.getString("birthDate"),
+                                    resultSet2.getString("role")));}
+                    }catch (SQLException e){e.printStackTrace();}
                 }
 
             }catch (SQLException e){e.printStackTrace();}
@@ -388,29 +506,63 @@ public class SQLServerDAOUser extends AbstractDAOUser {
         return users;
     }
 
+    /**
+     *
+     * @param id
+     * @param name
+     * @param firstName
+     * @param birthDate
+     * @param email
+     * @param role
+     * @param isAdmin : 0=FALSE , 1=TRUE
+     * @return
+     */
     @Override
-    public List<AdminType> getAllAdmin() {
-        List<AdminType> users = new ArrayList();
+    public int updateDAOAdminUser(int id, String name, String firstName, String email, String birthDate, String role, int isAdmin) {
         Connection connection = getConnection();
+        int res = 0;
+        int result =0;
+        int result2 =0;
         if(connection != null){
             try{
-                PreparedStatement preparedStatement = connection.prepareStatement("SELECT * from GeneralUsers WHERE role = 'ADMIN' ");
-                ResultSet resultSet = preparedStatement.executeQuery();
-                while (resultSet.next()){
-                    users.add(new AdminType(resultSet.getInt("idUser"),
-                            resultSet.getString("name"),
-                            resultSet.getString("firstName"),
-                            resultSet.getString("email"),
-                            resultSet.getString("birthDate"),
-                            resultSet.getString("role")));
-                }
-
+                PreparedStatement preparedStatement = connection.prepareStatement("UPDATE GeneralUsers SET name = ?, firstName = ?, email = ?, birthDate = ?, role = ? WHERE idUser = ?");
+                preparedStatement.setString(1,name);
+                preparedStatement.setString(2,firstName);
+                preparedStatement.setString(3,email);
+                preparedStatement.setString(4,birthDate);
+                preparedStatement.setString(5,role.toUpperCase());
+                preparedStatement.setInt(6,id);
+                res = preparedStatement.executeUpdate();
             }catch (SQLException e){e.printStackTrace();}
-            finally {
-                closeConnection(connection);
+            if (res==1){
+            if(role.equals("TEACHER")) {
+                PreparedStatement preparedStatement2 = null;
+                try {
+                    preparedStatement2 = connection.prepareStatement("UPDATE Teachers SET isAdmin = ? WHERE idTeacher = ?");
+                    preparedStatement2.setInt(1, isAdmin);
+                    preparedStatement2.setInt(2, id);
+                    result = preparedStatement2.executeUpdate();
+                } catch (SQLException e) {
+                e.printStackTrace();
             }
-        }
-        return users;
+                return result;
+            } else if(role.equals("STAFF")) {
+                PreparedStatement preparedStatement3 = null;
+                try {
+                    preparedStatement3 = connection.prepareStatement("UPDATE Staffs isAdmin = ? WHERE idStaff = ?");
+
+                preparedStatement3.setInt(1, isAdmin);
+                preparedStatement3.setInt(2, id);
+                result2 = preparedStatement3.executeUpdate();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+                return result2;
+            }
+            }
+
+    }
+        return res;
     }
 
 }

@@ -199,6 +199,23 @@ public class UserServices{
             e.printStackTrace();
         }
     }
+    /**
+     * This method is called when an admin wants to set different information of an user profile.
+     * @param id
+     * @param name
+     * @param firstname
+     * @param birthDate
+     * @param email
+     * @param isAdmin
+     * @param role
+     */
+    public void updateAdminUser(int id, String name, String firstname, String email, String birthDate, String role, int isAdmin) {
+        try {
+            coreClient.getConnection().sendToServer("#UPDATEADMINUSER " + id + " " + name + " " + firstname + " " + email + " " + birthDate + " " + role + " " + isAdmin);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
     
     /**
      * When the server responds to a UPDATEUSER command sent by this client. This method interprets what is returned.
@@ -265,11 +282,22 @@ public class UserServices{
     }
 
     /**
-     * This method send a message to the server to have the possible admin list
+     * This method send a message to the server to have the possible admins list
      */
     public void getAdmin() {
         try {
             coreClient.getConnection().sendToServer("#GETADMIN");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * This method send a message to the server to have the staffs list
+     */
+    public void getStaffNotAdmin() {
+        try {
+            coreClient.getConnection().sendToServer("#GETSTAFFNA");
         } catch (IOException e) {
             e.printStackTrace();
         }

@@ -2,10 +2,11 @@ package Types;
 
 import java.io.Serializable;
 
-public class AdminType extends UserType implements Serializable {
-    //role = "ADMIN"
+public class StaffType extends UserType implements Serializable {
 
-    public AdminType(int id, String name, String firstName, String email, String birthDate, String role) {
+    //role = "STAFF"
+
+    public StaffType(int id, String name, String firstName, String email, String birthDate, String role) {
         super(id, name, firstName, email, birthDate, role);
 
     }
@@ -15,4 +16,3 @@ public class AdminType extends UserType implements Serializable {
         return getName() + " " + getFirstName()+ " "+ getId();
     }
 }
-
