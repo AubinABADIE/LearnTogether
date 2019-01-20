@@ -62,18 +62,6 @@ public class AdminUI extends TeacherUI {
         super(primaryStage, login, id, client);
     }
 
-    public Tab getTabRoom() {
-        return tabRoom;
-    }
-
-    public Scene getPrincipalAdminScene() {
-        return principalAdminScene;
-    }
-
-    public void setPrincipalAdminScene(Scene principalAdminScene) {
-        this.principalAdminScene = principalAdminScene;
-    }
-
     public void setRooms(List<RoomType> roomList) {
         roomNames.setAll(roomList);
     }
@@ -161,8 +149,6 @@ public class AdminUI extends TeacherUI {
     /**
      * This method create the room tab in the principal admin scene
      */
-
-
     protected Tab tabRoom() {
 
         Tab tabRoom = new Tab();
@@ -348,6 +334,11 @@ public class AdminUI extends TeacherUI {
         return gridRoomVisu;
     }
 
+    /**
+     * This method create the pane to create a room
+     * @param tabRoom : room pane
+     * @return : gridPane : the create room form
+     */
     protected GridPane createTabRoom(Tab tabRoom) {
         //return button
         Image returnRoom = new Image(getClass().getResourceAsStream("images/icons8-return.png"));
@@ -505,6 +496,18 @@ public class AdminUI extends TeacherUI {
         return gridRoom;
     }
 
+    /**
+     * This method create the update room pane
+     * @param tabRoom : room tab
+     * @param name : room name
+     * @param capacity : room capacity
+     * @param building : room building number
+     * @param hasProjector : if the room hasa projector
+     * @param hasComputer : if the room has computers
+     * @param description : room description
+     * @param id : room id
+     * @return GridPane with the room update form
+     */
     protected GridPane updateTabRoom(Tab tabRoom, String name, int capacity, int building, boolean hasProjector, boolean hasComputer, String description, int id) {
 
         //return button
@@ -678,6 +681,10 @@ public class AdminUI extends TeacherUI {
         return gridUpadateRoom;
     }
 
+    /**
+     * This method update the actual room tab
+     * @return Default gridPane for room tab
+     */
     public GridPane setRoomTab() {
         return roomRead(tabRoom);
     }
@@ -1117,6 +1124,11 @@ public class AdminUI extends TeacherUI {
         return gridDepV;
     }
 
+    /**
+     * This method create the department create pane
+     * @param tabDepartment : department tab
+     * @return the GridPane with the department creation form
+     */
     protected GridPane createTabDepartment(Tab tabDepartment) {
         // labels
         Label nameLabel = new Label("Name of departement : ");
@@ -1207,6 +1219,15 @@ public class AdminUI extends TeacherUI {
         return gridDep;
     }
 
+    /**
+     * This method create the department update pane
+     * @param tabDepartment : department tab
+     * @param nameDep : department name
+     * @param refTeacher : teacher who is in charge of the department
+     * @param descDep : department description
+     * @param idDep : department id
+     * @return a GridPane with the department updated form
+     */
     protected GridPane updateTabDep(Tab tabDepartment, String nameDep, int refTeacher, String descDep, int idDep) {
         // labels
         Label nameLabel = new Label("Name of departement : ");
@@ -1318,6 +1339,11 @@ public class AdminUI extends TeacherUI {
         return gridDep;
     }
 
+    /**
+     * This method create the promotion creation pane
+     * @param tabDepartment : department tab
+     * @return the Gridpane with the creation of promotion form
+     */
     protected GridPane createTabPromotion(Tab tabDepartment) {
 
         // labels
@@ -1423,6 +1449,16 @@ public class AdminUI extends TeacherUI {
         return gridPromo;
     }
 
+    /**
+     * This method create the promotion updated pane
+     * @param tabDepartment : department tab
+     * @param namePromo : promotion name
+     * @param descPromo : promotion description
+     * @param graduationPromo : promotion graduation year
+     * @param refDep : promotion department
+     * @param idPromo : promotion id
+     * @return the gridpane with the promotion updated form
+     */
     protected GridPane updateTabPromo(Tab tabDepartment, String namePromo, String descPromo, int graduationPromo, int refDep, int idPromo){
 
         // labels
@@ -1546,6 +1582,11 @@ public class AdminUI extends TeacherUI {
         return gridPromoUp;
     }
 
+    /**
+     * This method create the class creation pane
+     * @param tabDepartment : department tab
+     * @return a gridpane with the class creation form
+     */
     protected GridPane createTabClass(Tab tabDepartment) {
 
         // labels
@@ -1642,6 +1683,15 @@ public class AdminUI extends TeacherUI {
         return gridClass;
     }
 
+    /**
+     * This method create the class updated pane
+     * @param tabDepartment : department tab
+     * @param nameClass :calss name
+     * @param descClass : class description
+     * @param refPromo : clss promotion
+     * @param idClass : class id
+     * @return a gridpane with the class updated form
+     */
     protected GridPane updateTabClass(Tab tabDepartment, String nameClass, String descClass, int refPromo, int idClass) {
 
         // labels
@@ -1757,7 +1807,6 @@ public class AdminUI extends TeacherUI {
     
     /**
      * Create the user management tab for admin.
-     * 
      * @return Tab user
      */
     protected Tab createTabUser(){
@@ -1772,8 +1821,7 @@ public class AdminUI extends TeacherUI {
 
     /**
      * Create the content of the user management tab.
-     * 
-     * @param tabUser
+     * @param tabUser : user tab
      * @return A GridPane which is the tab content.
      */
     protected GridPane readUser(Tab tabUser){
@@ -1935,8 +1983,7 @@ public class AdminUI extends TeacherUI {
     
     /**
      * Create the content of the user create tab.
-     * 
-     * @param tabUser
+     * @param tabUser : user tab
      * @return A GridPane which is the tab content.
      */
     private GridPane createUser(Tab tabUser) {
@@ -2058,12 +2105,12 @@ public class AdminUI extends TeacherUI {
     /**
      * Create the content of the user update tab.
      * 
-     * @param tabUser
-     * @param name
-     * @param birthDate
-     * @param email
-     * @param id
-     * @param role
+     * @param tabUser : user tab
+     * @param name : user name
+     * @param birthDate : user birth date
+     * @param email : user login
+     * @param id : user id
+     * @param role : user role
      * @return A GridPane which is the tab content.
      */
 	private GridPane updateUser(Tab tabUser, int id, String name, String firstName, String email, String birthDate, String role) {
@@ -2172,7 +2219,12 @@ public class AdminUI extends TeacherUI {
         return gridUser;
 		
 	}
-    
+
+    /**
+     * This method create the course creation pane
+     * @param tabCourse : course tab
+     * @return a gridpane with the course creation form
+     */
     private GridPane createTabCourse(Tab tabCourse){
 	      
 	       // labels
@@ -2290,8 +2342,12 @@ public class AdminUI extends TeacherUI {
 
 	        return gridCourse;
 	        }
-    
-    
+
+    /**
+     * This method create a course read pane
+     * @param tabCourse : course tab
+     * @return a gridpane with the course read visual
+     */
     protected GridPane courseRead(Tab tabCourse){
         client.getCourses();
         ListView<CourseType> list = new ListView<>();
@@ -2451,7 +2507,17 @@ public class AdminUI extends TeacherUI {
 
         return gridCourseVisu;
     }
-    
+
+    /**
+     * This method create a course updated pane
+     * @param tabCourse : coursetab
+     * @param nameCourse : course name
+     * @param descriptionCourse : course description
+     * @param nbTotalHourCourse : course hours
+     * @param referentTeacherCourse : teacher in charge of course
+     * @param idCourse : course id
+     * @return a gridpne with the course updated form
+     */
     protected GridPane updateTabCourse(Tab tabCourse, String nameCourse, String descriptionCourse, int nbTotalHourCourse, int referentTeacherCourse, int idCourse){
         // labels
         Label nameCourseLabel = new Label("Name of course : ");
