@@ -519,7 +519,7 @@ public class SQLServerDAOUser extends AbstractDAOUser {
     }
 
     /**
-     *
+     *This method updates a user in the DAO with its ID.
      * @param id
      * @param name
      * @param firstName
@@ -527,7 +527,7 @@ public class SQLServerDAOUser extends AbstractDAOUser {
      * @param email
      * @param role
      * @param isAdmin : 0=FALSE , 1=TRUE
-     * @return
+     * @return 0 or 1 depending if the update failed or succeeded.
      */
     @Override
     public int updateDAOAdminUser(int id, String name, String firstName, String email, String birthDate, String role, int isAdmin) {
