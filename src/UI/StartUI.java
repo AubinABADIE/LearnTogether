@@ -107,6 +107,10 @@ public class StartUI extends UI {
         }
     }
 
+    /**
+     * Beginning of application
+     * @param primaryStage Frame window.
+     */
     @Override
     public void start(Stage primaryStage){
         setupListeners();
@@ -154,7 +158,6 @@ public class StartUI extends UI {
      * This method setups the different listeners used in the UI.
      * It mainly setups the connection status and the current state.
      */
-    @Override
     protected void setupListeners(){
         connectionStatus.addListener((observable, oldValue, newValue) -> {
             if(newValue.equalsIgnoreCase("STUDENT")){
@@ -275,8 +278,12 @@ public class StartUI extends UI {
                 Platform.runLater(() -> showAlert(Alert.AlertType.CONFIRMATION, null, "Success", "The record has been downloaded in the Downloads folder."));
             } else if (newValue.equalsIgnoreCase("RECORD NOT DOWNLOADED")) {
                 Platform.runLater(() -> showAlert(Alert.AlertType.ERROR, null, "Failure", "The record cannot be downloaded at this time. Try again later?"));
-            }
-            else if (newValue.equalsIgnoreCase("DC FAILURE")) {
+            } else if(newValue.equalsIgnoreCase("REC DELETE SUCCESS")){
+                Platform.runLater(() -> showAlert(Alert.AlertType.CONFIRMATION, null, "Success", "You have deleted the record."));
+                Platform.runLater(()->client.getRecordsByUser(userID));
+            } else if (newValue.equalsIgnoreCase("REC DELETE FAILURE")) {
+                Platform.runLater(() -> showAlert(Alert.AlertType.CONFIRMATION, null, "Failure", "Error: Record hasn't been deleted."));
+            } else if (newValue.equalsIgnoreCase("DC FAILURE")) {
                 Platform.runLater(() -> showAlert(Alert.AlertType.CONFIRMATION, null, "Failure", "Error: Department hasn't been created."));
             } else if (newValue.equalsIgnoreCase("DC SUCCESS")) {
                 Platform.runLater(() -> showAlert(Alert.AlertType.CONFIRMATION, null, "Success", "You have created the department."));
@@ -314,11 +321,11 @@ public class StartUI extends UI {
                 Platform.runLater(() -> showAlert(Alert.AlertType.CONFIRMATION, null, "Failure", "Error: Class hasn't been created."));
             } else if (newValue.equalsIgnoreCase("CLC SUCCESS")) {
                 Platform.runLater(() -> showAlert(Alert.AlertType.CONFIRMATION, null, "Success", "Class has been created."));
-            }else if (newValue.equalsIgnoreCase("CLU FAILURE")) {
+            } else if (newValue.equalsIgnoreCase("CLU FAILURE")) {
                 Platform.runLater(() -> showAlert(Alert.AlertType.CONFIRMATION, null, "Failure", "Error: Class hasn't been updated."));
             } else if (newValue.equalsIgnoreCase("CLU SUCCESS")) {
                 Platform.runLater(() -> showAlert(Alert.AlertType.CONFIRMATION, null, "Success", "Class has been updated."));
-            }else if (newValue.equalsIgnoreCase("CLP FAILURE")) {
+            } else if (newValue.equalsIgnoreCase("CLP FAILURE")) {
                 Platform.runLater(() -> showAlert(Alert.AlertType.CONFIRMATION, null, "Failure", "Error: Class hasn't been deleted."));
             } else if (newValue.equalsIgnoreCase("CLP SUCCESS")) {
                 Platform.runLater(() -> showAlert(Alert.AlertType.CONFIRMATION, null, "Success", "Class has been deleted."));
@@ -444,6 +451,10 @@ public class StartUI extends UI {
         });
     }
 
+    /**
+     * First pane : connection pane
+     * @param pane : connection pane
+     */
     private void addUIControlsFirstConnectionPane(GridPane pane){
         // Add Header
         Label headerLabel = new Label("First connection");
@@ -505,6 +516,14 @@ public class StartUI extends UI {
         });
     }
 
+    /**
+     * This method is triggered by the business logic.
+     * It changes the connection status according to the parameters.
+     * This connection status is then analysed by the listener, and the corresponding UI is started.
+     * @param isConnected is the user is connected
+     * @param id the ID of the user, corresponding to the DB.
+     * @param role the user role in the DB.
+     */
     @Override
     public void showLogin(boolean isConnected, int id, String role){
         if(isConnected){
@@ -536,6 +555,11 @@ public class StartUI extends UI {
     public void display(String message){
 
     }
+
+    /**
+     * This method update the room list
+     * @param rooms : room list
+     */
     @Override
     public void getRooms(List<RoomType> rooms){
     	Platform.runLater(() -> {
@@ -546,6 +570,10 @@ public class StartUI extends UI {
         });
     }
 
+    /**
+     * This method update the record list
+     * @param records : record list
+     */
     @Override
     public void getRecords(List<RecordType> records){
         Platform.runLater(() -> {
@@ -554,6 +582,10 @@ public class StartUI extends UI {
         });
     }
 
+    /**
+     * This method update the admin list
+     * @param adm : admin list
+     */
     @Override
     public void getAdmin(List<AdminType> adm) {
         Platform.runLater(() -> {
@@ -575,7 +607,10 @@ public class StartUI extends UI {
         });
     }
 
-
+    /**
+     * This method update the course list
+     * @param courses : courses list
+     */
     @Override
     public void getCourses(List<CourseType> courses){
     	Platform.runLater(() -> {
@@ -588,6 +623,10 @@ public class StartUI extends UI {
         });
     }
 
+    /**
+     * This mehod update the conversation message list
+     * @param conversationMessages : message list
+     */
     @Override
     public void setConversationMessages(List<MessageType> conversationMessages){
         if(getCurrentUI().getConvo() != null){
@@ -600,9 +639,12 @@ public class StartUI extends UI {
         }
 
     }
-    
-    
 
+
+    /**
+     * This mehod update the conversation list
+     * @param emails : conversation list
+     */
     @Override
     public void setConversationEmails(List<String> emails) {
         emails.remove(0);
@@ -611,6 +653,10 @@ public class StartUI extends UI {
         }
     }
 
+    /**
+     * This method update the department list
+     * @param dep : department list
+     */
     @Override
     public void getDepartment(List<DepartmentType> dep)
         {
@@ -622,9 +668,10 @@ public class StartUI extends UI {
             });
 
         }
-    
+
     /**
-     * Set the user for the current UI.
+     * This method update the user list
+     * @param user : user list
      */
     @Override
 	public void setUser(UserType user) {
@@ -634,6 +681,10 @@ public class StartUI extends UI {
     	});
 	}
 
+    /**
+     * This method update the teacher list
+     * @param teacher : teacher list
+     */
     @Override
     public void getTeacher(List<TeacherType> teacher) {
         Platform.runLater(() -> {
@@ -645,6 +696,10 @@ public class StartUI extends UI {
 
     }
 
+    /**
+     * This method update the promo list
+     * @param promo : promo list
+     */
     @Override
     public void getPromo(List<PromotionType> promo) {
         Platform.runLater(() -> {
@@ -655,6 +710,10 @@ public class StartUI extends UI {
         });
     }
 
+    /**
+     * This method update the class list
+     * @param classes : class list
+     */
     @Override
     public void getClasses(List<ClassType> classes) {
         Platform.runLater(() -> {
@@ -667,6 +726,7 @@ public class StartUI extends UI {
 
     /**
      * Get all users in DB and set them in a list for the user management tab.
+     * @param users user list
      */
 	@Override
 	public void getUsers(List<UserType> users) {

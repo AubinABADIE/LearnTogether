@@ -36,14 +36,11 @@ public class SuperAdminUI extends AdminUI {
         super(primaryStage, login, id, client);
     }
 
-    public Scene getPrincipalSuperAdminScene() {
-        return principalSuperAdminScene;
-    }
-
-    public void setPrincipalSuperAdminScene(Scene principalSuperAdminScene) {
-        this.principalSuperAdminScene = principalSuperAdminScene;
-    }
-
+    /**
+     * This method creates the scene (view) for the Super Admin.
+     * It is called by the startUI when a student logs in.
+     * @return the principal scene
+     */
     public Scene createPrincipalSuperAdminScene(){
     	this.primaryStage.setTitle("LearnTogether for Admins");
         BorderPane adminScene = new BorderPane();
@@ -102,10 +99,10 @@ public class SuperAdminUI extends AdminUI {
         return principalSuperAdminScene;
     }
 
-    public void addUIControls(BorderPane borderPane){
-
-    }
-
+    /**
+     * This method creates the tab for admin management.
+     * @return the tab.
+     */
     protected Tab createTabAdmManagement() {
 
         Tab tabAdmManagement= new Tab();
@@ -118,9 +115,9 @@ public class SuperAdminUI extends AdminUI {
     }
 
     /**
-     *
-     * @param tabAdmManagement
-     * @return
+     * This method creates and sets up the admin management pane.
+     * @param tabAdmManagement the admin management tab
+     * @return the populated grid pane
      */
     protected GridPane admManaRead(Tab tabAdmManagement) {
         /*add list of users*/
@@ -276,13 +273,13 @@ public class SuperAdminUI extends AdminUI {
     }
 
     /**
-     *
-     * @param tabUser
-     * @param name
-     * @param birthDate
-     * @param email
-     * @param id
-     * @param role
+     * This method creates and populates the update Admin page.
+     * @param tabUser the user tab
+     * @param name the admin name
+     * @param birthDate the admin birth date
+     * @param email the admin email
+     * @param id the admin id
+     * @param role the admin role
      * @return A GridPane which is the tab content.
      */
     private GridPane updateAdmin(Tab tabUser, int id, String name, String firstName, String birthDate, String email, String role) {
@@ -356,9 +353,7 @@ public class SuperAdminUI extends AdminUI {
         cancelCreate.setOnAction(event -> {
             tabUser.setContent(admManaRead(tabAdmManagement));
         });
-
-
         return gridUser;
     }
 
-    }
+}

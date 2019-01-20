@@ -64,7 +64,6 @@ public abstract class UI extends Application implements DisplayIF {
     protected ObservableList<CourseType> courseNames;
     protected ObservableList<RecordType> recordNames;
 
-
     //Business logic
     CoreClient client;
 
@@ -75,36 +74,7 @@ public abstract class UI extends Application implements DisplayIF {
     protected UserType user;
     protected File recordFile;
 
-
-
-
-    public String getConnectionStatus() {
-        return connectionStatus.get();
-    }
-
-    public StringProperty connectionStatusProperty() {
-        return connectionStatus;
-    }
-
-    public void setConnectionStatus(String connectionStatus) {
-        this.connectionStatus.set(connectionStatus);
-    }
-
-    public String getCurrentState() {
-        return currentState.get();
-    }
-
-    public StringProperty currentStateProperty() {
-        return currentState;
-    }
-
-    public void setCurrentState(String currentState) {
-        this.currentState.set(currentState);
-    }
-
-    public ObservableList<String> getReceiversEmail() {
-        return receiversEmail;
-    }
+    //Getters and setters
 
     public void setReceiversEmail(List<String> receiversEmail) {
         this.receiversEmail.setAll(receiversEmail);
@@ -114,37 +84,16 @@ public abstract class UI extends Application implements DisplayIF {
         return convo;
     }
 
-    public void setConvo(TextArea convo) {
-        this.convo = convo;
-    }
-    
-    public BooleanProperty getHasClient() {
-		return hasClient;
-	}
-
 	public void setHasClient(boolean hasClient) {
 		this.hasClient.setValue(hasClient);
 	}
 
-    public ObservableList<CourseType> getCourseNames() {
-        return courseNames;
-    }
-
-    public void setCourseNames(List<CourseType> courseNames) {
-        if(this.courseNames != null)
-            this.courseNames.setAll(courseNames);
-    }
-
-    public File getRecordFile() {
-        return recordFile;
+    public void setCourses(List<CourseType> courseList) {
+        courseNames.setAll(courseList);
     }
 
     public void setRecordFile(File recordFile) {
         this.recordFile = recordFile;
-    }
-
-    public ObservableList<RecordType> getRecordNames() {
-        return recordNames;
     }
 
     public void setRecordNames(List<RecordType> recordNames) {
@@ -152,7 +101,7 @@ public abstract class UI extends Application implements DisplayIF {
     }
 
     /**
-	 * Create the window with the two scene and set the first scene as main.
+	 * Create the window
 	 * 
 	 * @param primaryStage Frame window.
 	 * @throws Exception
@@ -162,17 +111,20 @@ public abstract class UI extends Application implements DisplayIF {
 
     }
 
-    protected void setupListeners(){
-    	
-    }
-
-
+    /**
+     * This method creates a simple waiting pane to provide some information to the user.
+     * @return the pane
+     */
     protected BorderPane createWaitingPane(){
         BorderPane borderPane = new BorderPane();
         borderPane.setPadding(new Insets(40, 40, 40, 40));
         return borderPane;
     }
 
+    /**
+     * This method adds controls to the waiting pane (mainly a text)
+     * @param pane the pane to write text to.
+     */
     protected void addUIControlsWaitingPane(BorderPane pane){
         Text waitingText = new Text("Connecting... Please wait.");
         pane.setCenter(waitingText);
@@ -214,10 +166,20 @@ public abstract class UI extends Application implements DisplayIF {
         });
 
     }
-    @Override
-    public void display(String message){
 
-    }
+    /**
+     * Displays a message on the UI. Mainly used on StartUI, hence why it is enmpty.
+     * Inherits from DisplayIF.
+     * @param message the message to display.
+     */
+    @Override
+    public void display(String message){}
+
+    /**
+     * This method sets the current state of the UI.
+     * Used mainly to display alerts, or change panes.
+     * @param cmd the state the UI must be.
+     */
     @Override
     public void setState(String cmd){
         currentState.setValue(cmd);
@@ -227,8 +189,7 @@ public abstract class UI extends Application implements DisplayIF {
     }
     
     /**
-     * Create the profile tab for all user type.
-     * 
+     * Creates the profile tab for all user type.
      * @return Profile tab
      */
     public Tab createProfileTab() {
@@ -410,6 +371,10 @@ public abstract class UI extends Application implements DisplayIF {
         return gridProfile;
     }
 
+    /**
+     * Creates the general chat tab.
+     * @return the tab content.
+     */
     Tab createChatTab(){
         client.getConversationEmail(userID);
         Tab chatTab = new Tab();
@@ -521,7 +486,7 @@ public abstract class UI extends Application implements DisplayIF {
     }
 
     /**
-     * Create the record tab
+     * Creates the record tab
      * @return Tab which is the record tab
      */
     protected Tab createRecordTab (){
@@ -669,7 +634,7 @@ public abstract class UI extends Application implements DisplayIF {
     }
 
     /**
-     * This method buils pane of add record.
+     * This method builds the pane of add record.
      * @param tabRecords : tab record
      * @return return the gridPane with the form
      */
@@ -861,14 +826,19 @@ public abstract class UI extends Application implements DisplayIF {
         Button btnD = new Button("Delete");
         btnD.setGraphic(deleteView);//setting icon to button
 
+        HBox hboxDButton = new HBox();
+        hboxDButton.getChildren().add(btnD);
+        hboxDButton.setAlignment(Pos.CENTER);
+
         //delete info
         Text titleDel = new Text(" ");
         Text nameDel = new Text(" ");
 
         VBox vboxButtonDelete = new VBox();
-        vboxButtonDelete.getChildren().addAll(titleDel,nameDel);
+        vboxButtonDelete.getChildren().addAll(titleDel,nameDel, hboxDButton);
         vboxButtonDelete.setAlignment(Pos.CENTER);
         vboxButtonDelete.setPadding(new Insets(0, 0, 0, 75));
+
 
 
         //add in the heaeder view
@@ -881,8 +851,24 @@ public abstract class UI extends Application implements DisplayIF {
         deleteGrid.add(returnTitleBox, 1,0);
         deleteGrid.add(btnReturnRecD, 2,0);
         deleteGrid.add(vboxlistDelete, 1,1);
-        deleteGrid.add(vboxButtonDelete, 2,1);
+        //deleteGrid.add(vboxButtonDelete, 2,1);
 
+        btnD.setOnAction(event -> {
+            SelectionModel<RecordType> selectedDeleteRoom = listD.getSelectionModel();
+            if (selectedDeleteRoom.getSelectedItem() != null) {
+                Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure you want to delete the record?", ButtonType.YES, ButtonType.NO);
+                alert.setHeaderText("Confirmation delete");
+                Window win = deleteGrid.getScene().getWindow();
+                alert.initOwner(win);
+                alert.showAndWait();
+                if (alert.getResult() == ButtonType.NO) {
+                    return;
+                }
+                if (alert.getResult() == ButtonType.YES) {
+                    client.handleDeleteRecord(selectedDeleteRoom.getSelectedItem().getRecordId());
+                }
+            }
+        });
 
         //display delete for one record
         listD.setOnMouseClicked(event -> {
@@ -894,12 +880,16 @@ public abstract class UI extends Application implements DisplayIF {
             nameDel.setFont(Font.font(15));
             titleDel.setText("Delete this record : ");
             titleDel.setFont(Font.font(15));
-            vboxButtonDelete.getChildren().add(btnD);
         });
 
         return deleteGrid;
     }
 
+    /**
+     * This method is called from the business logic to set the messages for a certain conversation.
+     * Inherits from DisplayIF.
+     * @param conversationMessages the list of messages related to a certain conversation.
+     */
     @Override
     public void setConversationMessages(List<MessageType> conversationMessages){
         if(convo != null){
@@ -912,6 +902,12 @@ public abstract class UI extends Application implements DisplayIF {
         }
     }
 
+    /**
+     * This method id called by the business logic.
+     * Populates the list of emails the client has conversations with.
+     * Inherits from DisplayIF.
+     * @param emails the list of emails
+     */
     @Override
     public void setConversationEmails(List<String> emails) {
         emails.remove(0);
@@ -920,10 +916,101 @@ public abstract class UI extends Application implements DisplayIF {
         }
     }
 
+    /**
+     * This method is called by the business logic to get the records stored on the database.
+     * Inherits from DisplayIF.
+     * It is mainly used in StartUI, hence why it is empty.
+     * @param records the records stored.
+     */
     @Override
-    public void getRecords(List<RecordType>records){
+    public void getRecords(List<RecordType>records){}
 
-    }
+    /**
+     * This method is called by the business logic to get the records uploaded by this user into the database.
+     * Inherits from DisplayIF.
+     * It is mainly used in StartUI, hence why it is empty.
+     * @param records the records uploaded by the user.
+     */
     @Override
     public void getRecordByUser(List<RecordType>records){}
+
+    /**
+     * This method gets the rooms available into the database.
+     * Inherits from DisplayIF.
+     * It is used by the other UIs, hence why it's empty here.
+     * @param rooms the list of rooms.
+     */
+    @Override
+    public void getRooms(List<RoomType> rooms) {}
+
+    /**
+     * This method gets the courses stored into the database.
+     * Inherits from DisplayIF.
+     * It is used by the other UIs, hence why it's empty here.
+     * @param courses
+     */
+    @Override
+    public void getCourses(List<CourseType> courses) {}
+
+    /**
+     * This method sets the UserType, that is used in the profile.
+     * Inherits from UI.
+     * @param user
+     */
+    @Override
+    public void setUser(UserType user) { this.user = user;}
+
+    /**
+     * This method gets the departments stored into the database.
+     * Inherits from DisplayIF.
+     * It is used by the other UIs, hence why it's empty here.
+     * @param dep the list of departments.
+     */
+    @Override
+    public void getDepartment(List<DepartmentType> dep) {}
+
+    /**
+     * This method gets the teachers stored into the database.
+     * Inherits from DisplayIF.
+     * It is used by the other UIs, hence why it's empty here.
+     * @param teacher the list of teachers.
+     */
+    @Override
+    public void getTeacher(List<TeacherType> teacher) {}
+
+    /**
+     * This method gets the promotions stored into the database.
+     * Inherits from DisplayIF.
+     * It is used by the other UIs, hence why it's empty here.
+     * @param promo the list of promotions
+     */
+    @Override
+    public void getPromo(List<PromotionType> promo) {}
+
+    /**
+     * This method gets the classes stored into the database.
+     * Inherits from DisplayIF.
+     * It is used by the other UIs, hence why it's empty here.
+     * @param classes the list of classes
+     */
+    @Override
+    public void getClasses(List<ClassType> classes) {}
+
+    /**
+     * This method gets the users stored into the database.
+     * Inherits from DisplayIF.
+     * It is used by the other UIs, hence why it's empty here.
+     * @param users the list of users.
+     */
+    @Override
+    public void getUsers(List<UserType> users) {}
+
+    /**
+     * This method gets the admins stored into the database.
+     * Inherits from DisplayIF.
+     * It is used by the other UIs, hence why it's empty here.
+     * @param adm the list of admins.
+     */
+    @Override
+    public void getAdmin(List<AdminType> adm) {}
 }

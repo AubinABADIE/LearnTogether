@@ -21,7 +21,7 @@ public abstract class AbstractDAOUser {
     public abstract Connection getConnection();
 
 
-    public abstract int createDAOUser(String name, String firstname, String birthDate, String email, String password, String role);
+    public abstract int createDAOUser(String name, String firstname, String birthDate, String email, String password, String role, String jobType);
     public abstract int readDAOUserByLogin(String login, String password);
     public abstract UserType readDAOUser(int id);
     public abstract boolean isPdwNull(String login);

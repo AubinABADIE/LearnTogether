@@ -65,7 +65,7 @@ public class SQLServerDAOUser extends AbstractDAOUser {
     /**
      * This method create a user in the data base
      * @param name : user name
-     * @param firstname : user first name
+     * @param firstName : user first name
      * @param birthDate : user birth date
      * @param email : user login
      * @param password : user password
@@ -73,20 +73,47 @@ public class SQLServerDAOUser extends AbstractDAOUser {
      * @return
      */
     @Override
-	public int createDAOUser(String name, String firstname, String birthDate, String email, String role, String password) {
+	public int createDAOUser(String name, String firstName, String birthDate, String email, String role, String password, String jobType) {
     	Connection connection = getConnection();
         int result = 0;
         if(connection != null){
             try{
-                PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO GeneralUsers (name, firstname, birthDate, email, password, role) VALUES (? ,? ,? ,? ,?, ?)");
+            	PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO GeneralUsers (name, firstname, birthDate, email, password, role) VALUES (? ,? ,? ,? ,?, ?)");
                 preparedStatement.setString(1, name);
-                preparedStatement.setString(2, firstname);
+                preparedStatement.setString(2, firstName);
                 preparedStatement.setString(3, birthDate);
                 preparedStatement.setString(4, email);
                 preparedStatement.setString(5, password);
-                preparedStatement.setString(6, role);
-                result = preparedStatement.executeUpdate();
+                preparedStatement.setString(6, role.toUpperCase());
+                preparedStatement.executeUpdate();
+                
+                PreparedStatement preparedStatement2 = connection.prepareStatement("SELECT idUser FROM GeneralUsers WHERE email = ?");
+                preparedStatement2.setString(1, email);
+                ResultSet resultSet = preparedStatement2.executeQuery();
+                int id = 0;
+                if(resultSet != null){
+                    resultSet.next();
+                    id = resultSet.getInt("idUser");
+                }
 
+            	if(role.equals("STUDENT")) {
+            		PreparedStatement preparedStatement3 = connection.prepareStatement("INSERT INTO Students (idStudent) VALUES (?) ");
+            		preparedStatement3.setInt(1, id);
+                    result = preparedStatement3.executeUpdate();
+            	} else if(role.equals("TEACHER")) {
+            		PreparedStatement preparedStatement3 = connection.prepareStatement("INSERT INTO Teachers (idTeacher, isAdmin) VALUES (?, ?)");
+            		preparedStatement3.setInt(1, id);
+            		preparedStatement3.setBoolean(2, false);
+            		result = preparedStatement3.executeUpdate();
+            	} else if(role.equals("STAFF")) {
+            		PreparedStatement preparedStatement3 = connection.prepareStatement("INSERT INTO Staffs (idStaff, jobType, isAdmin, isSuperAdmin) VALUES (?, ?, ?, ?)");
+            		preparedStatement3.setInt(1, id);
+            		preparedStatement3.setString(2, jobType);
+            		preparedStatement3.setBoolean(3, false);
+            		preparedStatement3.setBoolean(4, false);
+                    result = preparedStatement3.executeUpdate();
+            	}
+                
             }catch (SQLException e){
                 e.printStackTrace();
             }
@@ -126,25 +153,24 @@ public class SQLServerDAOUser extends AbstractDAOUser {
      *
      * @param id
      * @param name
-     * @param firstname
+     * @param firstName
      * @param birthDate
      * @param email
-     * @param password
      * @param role
      * @return
      */
     @Override
-	public int updateDAOUser(int id, String name, String firstname, String email, String birthDate, String role) {
+	public int updateDAOUser(int id, String name, String firstName, String email, String birthDate, String role) {
     	Connection connection = getConnection();
         int res = 0;
         if(connection != null){
             try{
-                PreparedStatement preparedStatement = connection.prepareStatement("UPDATE GeneralUsers SET name = ?, firstname = ?, email = ?, birthdate = ?, role = ? WHERE idUser = ?");
+                PreparedStatement preparedStatement = connection.prepareStatement("UPDATE GeneralUsers SET name = ?, firstName = ?, email = ?, birthDate = ?, role = ? WHERE idUser = ?");
                 preparedStatement.setString(1,name);
-                preparedStatement.setString(2,firstname);
+                preparedStatement.setString(2,firstName);
                 preparedStatement.setString(3,email);
                 preparedStatement.setString(4,birthDate);
-                preparedStatement.setString(5,role);
+                preparedStatement.setString(5,role.toUpperCase());
                 preparedStatement.setInt(6,id);
                 res = preparedStatement.executeUpdate();
             }catch (SQLException e){e.printStackTrace();}
@@ -165,19 +191,27 @@ public class SQLServerDAOUser extends AbstractDAOUser {
         int result = 0;
         if(connection != null){
             try{
-            	if(role.equals("STUDENT")) {
-            		PreparedStatement preparedStatement = connection.prepareStatement("DELETE FROM Students WHERE idStudent = ?");
-                    preparedStatement.setInt(1, id);
-                    preparedStatement.executeUpdate();
-            	} else if(role.equals("TEACHER")) {
-            		PreparedStatement preparedStatement = connection.prepareStatement("DELETE FROM Teachers WHERE idTeacher = ?");
-                    preparedStatement.setInt(1, id);
-                    preparedStatement.executeUpdate();
-            	} else if(role.equals("ADMIN") || role.equals("SUPERADMIN")) {
-            		PreparedStatement preparedStatement = connection.prepareStatement("DELETE FROM Staffs WHERE idStaff = ?");
-                    preparedStatement.setInt(1, id);
-                    preparedStatement.executeUpdate();
-            	}
+                switch (role) {
+                    case "STUDENT": {
+                        PreparedStatement preparedStatement = connection.prepareStatement("DELETE FROM Students WHERE idStudent = ?");
+                        preparedStatement.setInt(1, id);
+                        preparedStatement.executeUpdate();
+                        break;
+                    }
+                    case "TEACHER": {
+                        PreparedStatement preparedStatement = connection.prepareStatement("DELETE FROM Teachers WHERE idTeacher = ?");
+                        preparedStatement.setInt(1, id);
+                        preparedStatement.executeUpdate();
+                        break;
+                    }
+                    case "ADMIN":
+                    case "SUPERADMIN": {
+                        PreparedStatement preparedStatement = connection.prepareStatement("DELETE FROM Staffs WHERE idStaff = ?");
+                        preparedStatement.setInt(1, id);
+                        preparedStatement.executeUpdate();
+                        break;
+                    }
+                }
             	
                 PreparedStatement preparedStatement = connection.prepareStatement("DELETE FROM GeneralUsers WHERE idUser = ?");
                 preparedStatement.setInt(1, id);

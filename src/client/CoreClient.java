@@ -153,6 +153,9 @@ public class CoreClient implements ClientIF {
             else if(((String) msg).startsWith("#RECORDUPLOAD")){
                 records.handleRecordUploaded((String)msg);
             }
+            else if (((String) msg).startsWith("#DELETEDRECORD")){
+                records.handleDeletedRecord((String)msg);
+            }
 
         } else if (msg instanceof List) {
             if (((List) msg).get(0) instanceof RoomType)
@@ -415,8 +418,8 @@ public class CoreClient implements ClientIF {
      * @param password : user password
      * @param role : user role
      */
-    public void handleCreateUser(String name, String firstname, String birthDate, String email, String role, String password) {
-    	user.createUser(name, firstname, birthDate, email, role, password);
+    public void handleCreateUser(String name, String firstname, String birthDate, String email, String role, String password, String jobType) {
+    	user.createUser(name, firstname, birthDate, email, role, password, jobType);
     }
 
     /**
@@ -610,5 +613,13 @@ public class CoreClient implements ClientIF {
      */
     public void getRecordsByUser(int id){
         records.getRecordsByUser(id);
+    }
+
+    /**
+     * This method delegates to recordServices the deletion of one record
+     * @param recordId: record id
+     */
+    public void handleDeleteRecord(int recordId){
+        records.handleDeleteRecord(recordId);
     }
 }

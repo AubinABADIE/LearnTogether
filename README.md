@@ -174,8 +174,14 @@ Arguments:
  ### #GETRECORDBYUSER
  The client want to retrieve all the record donating by a user.
  Argument :
- - : int the user id
+ - id : int the user id
  *Usage*: `#GETRECORDBYUSER-/-{id}`
+
+ ### #DELETERECORD
+ The client want to delete a record.
+ Argument :
+ - id : int the record id
+ *Usage*: `#DELETERECORD-/-{id}`
  
 ### ##GETTEACHER
 The client want to recover all the teachers 
@@ -326,4 +332,4 @@ Arguments:
 | 6        | Teacher       |    PolyMtp | teacher@umontpellier.fr            |Teacher       |TEACHER   |  
 | 8        | Staff         | PolyMtp    | StaffAdmin@umontpellier.fr         |AdmStaff      |ADMIN     |  
 | 9        | SuperStaff    | PolyMtp    | SuperAdminAdmin@umontpellier.fr    |SuperAdmin    |SUPERADMIN|  
-| 11       | Stratulat     | Tiberiu    | tibi.stratulat@umontpellier.fr     |Tibi          |TEACHER   |# Learn Together  
+| 11       | Stratulat     | Tiberiu    | tibi.stratulat@umontpellier.fr     |Tibi          |TEACHER   |

@@ -29,9 +29,6 @@ public class GeneralServer implements Observer {
     private AbstractDAOFactory dao;
     private FileStorageHandler fileStorageHandler;
 
-
-
-
     /**
      * The useful constructor
      * @param port: the server address
@@ -82,30 +79,27 @@ public class GeneralServer implements Observer {
         if (instruction.startsWith("LOGIN")) {
             String[] ids = instruction.split(" ");
             handleLoginFromClient(ids[1], ids[2], client);
-        }
-        else if(instruction.startsWith("FIRSTCONN")){
+        } else if(instruction.startsWith("FIRSTCONN")){
             String[] creds = instruction.split(" ");
             handleFirstConnectionFromClient(creds[1], creds[2], client);
-        }
-        else if(instruction.startsWith("CREATEDEP")){
+        } else if(instruction.startsWith("CREATEDEP")){
             String[] creds = instruction.split("-/-");
             handleCreateDepartmentFromClient(creds[1], creds[2], creds[3], client);
-        }else if(instruction.startsWith("UPDATEDEP")){
+        } else if(instruction.startsWith("UPDATEDEP")){
             String[] creds = instruction.split("-/-");
             handleUpdateDepartmentFromClient(creds[1], creds[2], creds[3],creds[4], client);
-        }else if(instruction.startsWith("DELETEDEP")){
+        } else if(instruction.startsWith("DELETEDEP")){
             String[] creds = instruction.split("-/-");
             handleDeleteDepartmentFromClient(Integer.parseInt(creds[1]), client);
-        }else if (instruction.startsWith("GETDEPARTMENT")){
+        } else if (instruction.startsWith("GETDEPARTMENT")){
             handleListDepFromClient(client);
-        }
-        else if(instruction.startsWith("CREATEPROMOTION")){
+        } else if(instruction.startsWith("CREATEPROMOTION")){
             String[] creds = instruction.split("-/-");
             handleCreatePromotionFromClient(creds[1], creds[2], creds[3],creds[4], client);
-        }else if(instruction.startsWith("UPDATEPROMOTION")){
+        } else if(instruction.startsWith("UPDATEPROMOTION")){
             String[] creds = instruction.split("-/-");
             handleUpdatePromotionFromClient(creds[1], creds[2], creds[3],creds[4],creds[5],  client);
-        }else if(instruction.startsWith("DELETEPROMOTION")){
+        } else if(instruction.startsWith("DELETEPROMOTION")){
             String[] creds = instruction.split("-/-");
             handleDeletePromotionFromClient(Integer.parseInt(creds[1]), client);
         }else if (instruction.startsWith("GETPROMOTIONBYDEP")){
@@ -113,14 +107,13 @@ public class GeneralServer implements Observer {
             handleListPromoByDepFromClient(Integer.parseInt(creds[1]),client);
         }else if (instruction.startsWith("GETPROMOTION")){
             handleListPromoFromClient(client);
-        }
-        else if(instruction.startsWith("CREATECLASS")){
+        } else if(instruction.startsWith("CREATECLASS")){
             String[] creds = instruction.split("-/-");
             handleCreateClassFromClient(creds[1], creds[2], creds[3], client);
-        }else if(instruction.startsWith("UPDATECLASS")){
+        } else if(instruction.startsWith("UPDATECLASS")){
             String[] creds = instruction.split("-/-");
             handleUpdateClassFromClient(creds[1], creds[2], creds[3],creds[4], client);
-        }else if(instruction.startsWith("DELETECLASS")){
+        } else if(instruction.startsWith("DELETECLASS")){
             String[] creds = instruction.split("-/-");
             handleDeleteClassFromClient(Integer.parseInt(creds[1]), client);
         }else if (instruction.startsWith("GETCLASSBYPROMO")){
@@ -128,8 +121,7 @@ public class GeneralServer implements Observer {
             handleListClassByPromoFromClient(Integer.parseInt(creds[1]),client);
         }else if (instruction.startsWith("GETCLASS")){
             handleListClassFromClient(client);
-        }
-        else if (instruction.startsWith("CREATEROOM")){
+        } else if (instruction.startsWith("CREATEROOM")){
             String[] attributes = instruction.split("-/-");
             handleCreateRoomFromClient(attributes[1], Integer.parseInt(attributes[2]), Integer.parseInt(attributes[3]), Boolean.parseBoolean(attributes[4]), Boolean.parseBoolean(attributes[5]),attributes[6], client);
         }else if (instruction.startsWith("DELETEROOM")){
@@ -140,8 +132,7 @@ public class GeneralServer implements Observer {
             handleUpdateRoomFromClient(Integer.parseInt(attributes[1]),attributes[2],Integer.parseInt(attributes[3]), Integer.parseInt(attributes[4]), Boolean.parseBoolean(attributes[5]),Boolean.parseBoolean( attributes[6]), attributes[7], client);
         } else if (instruction.startsWith("GETROOMS")){
             handleListRoomsFromClient(client);
-        }
-        else if (instruction.startsWith("CREATECOURSE")){
+        } else if (instruction.startsWith("CREATECOURSE")){
             String[] attributes = instruction.split("-/-");
             handleCreateCourseFromClient(attributes[1], attributes[2], Integer.parseInt(attributes[3]), attributes[4], Integer.parseInt(attributes[5]), client);
         }else if (instruction.startsWith("DELETECOURSE")){
@@ -155,64 +146,54 @@ public class GeneralServer implements Observer {
         } else if (instruction.startsWith("GETCOURSET")){
             String[] attributes = instruction.split("-/-");
             handleListCoursesFromClient(Integer.parseInt(attributes[1]), client);
-        }
-        else if(instruction.startsWith("SENDMSGTOCLIENT")){
+        } else if(instruction.startsWith("SENDMSGTOCLIENT")){
             String[] attributes = instruction.split("-/-");
             handleSendMessageToClient(Integer.parseInt(attributes[1]), attributes[2],attributes[3], client);
-        }
-        else if(instruction.startsWith("RETRIEVECONVERSATION")){
+        } else if(instruction.startsWith("RETRIEVECONVERSATION")){
             String[] attributes = instruction.split(" ");
             handleReadConversation(Integer.parseInt(attributes[1]), attributes[2], client);
-        }
-        else if(instruction.startsWith("CREATEUSER")) {
+        } else if(instruction.startsWith("CREATEUSER")) {
         	String[] attributes = instruction.split(" ");
-        	handleCreateUser(attributes[1], attributes[2], attributes[3], attributes[4], attributes[5], attributes[6], client);  
+        	handleCreateUser(attributes[1], attributes[2], attributes[3], attributes[4], attributes[5], attributes[6], attributes[7], client);  
         }
         else if(instruction.startsWith("GETUSERS")) {
             handleReadUsers(client);
-        }
-        else if(instruction.startsWith("GETUSER")) {
+        } else if(instruction.startsWith("GETUSER")) {
         	String[] attributes = instruction.split(" ");
         	handleReadUser(Integer.parseInt(attributes[1]), client);        	
-        }
-
-        else if(instruction.startsWith("UPDATEPWD")) {
+        } else if(instruction.startsWith("UPDATEPWD")) {
         	String[] attributes = instruction.split(" ");
         	handleUpdatePwd(attributes[1], attributes[2], client);  
-        }
-        else if(instruction.startsWith("UPDATEUSER")) {
+        } else if(instruction.startsWith("UPDATEUSER")) {
         	String[] attributes = instruction.split(" ");
         	handleUpdateUser(Integer.parseInt(attributes[1]), attributes[2], attributes[3], attributes[4], attributes[5], attributes[7], client);  
-        }
-        else if(instruction.startsWith("DELETEUSER")) {
+        } else if(instruction.startsWith("DELETEUSER")) {
         	String[] attributes = instruction.split(" ");
         	handleDeleteUser(Integer.parseInt(attributes[1]), attributes[2], client);  
-        }
-        else if(instruction.startsWith("GETCONVEMAIL")){
+        } else if(instruction.startsWith("GETCONVEMAIL")){
             String[] attributes = instruction.split(" ");
             handleGetConversationEmails(Integer.parseInt(attributes[1]), client);
-        }
-        else if (instruction.startsWith("GETTEACHER")){
+        } else if (instruction.startsWith("GETTEACHER")){
             handleListTeacherFromClient(client);
-        }
-        else if(instruction.startsWith("DELETECONVERSATION")){
+        } else if(instruction.startsWith("DELETECONVERSATION")){
             String[] attributes = instruction.split(" ");
             handleDeleteConversation(Integer.parseInt(attributes[1]), attributes[2], client);
-        }
-        else if (instruction.startsWith("GETRECORDS")){
+        } else if (instruction.startsWith("GETRECORDS")){
             handleGetAllRecord(client);
-        }
-        else if(instruction.startsWith("DOWNLOADRECORD")){
+        } else if(instruction.startsWith("DOWNLOADRECORD")){
             handleRecordDownloadRequest(Integer.parseInt(instruction.split(" ")[1]), client);
-        }else if(instruction.startsWith("GETPADMIN")){
+        } else if(instruction.startsWith("GETPADMIN")){
             handleGetAllPossibleAdmin(client);
-        }else if(instruction.startsWith("GETADMIN")){
+        } else if(instruction.startsWith("GETADMIN")){
             handleGetAllAdmin(client);
-        }
-        else if (instruction.startsWith("GETRECORDBYUSER")){
+        } else if (instruction.startsWith("GETRECORDBYUSER")){
             handleGetRecordByUser(Integer.parseInt(instruction.split("-/-")[1]), client);
+        } else if(instruction.startsWith("DELETERECORD")){
+            handleDeleteRecordRequest(Integer.parseInt(instruction.split("-/-")[1]), client);
         }
+
     }
+
 
 
 
@@ -298,11 +279,11 @@ public class GeneralServer implements Observer {
         sendToClientLogin(true, user.getId(), user.getRole(), client);
     }
 
-    /**
-     * @param name
-     * @param refTeacherID
-     * @param descriptionDep
-     * @param client
+    /** This method handles the creation od department
+     * @param name : the department name
+     * @param refTeacherID : teacher in charge of department
+     * @param descriptionDep : department description
+     * @param client : the client from which it originated.
      */
     public void handleCreateDepartmentFromClient(String name, String refTeacherID, String descriptionDep, ConnectionToClient client) {
         int refTeacher= Integer.parseInt(refTeacherID);
@@ -322,11 +303,11 @@ public class GeneralServer implements Observer {
         }
     }
 
-    /**
-     * @param idDep
-     * @param name
-     * @param refTeacherID
-     * @param client
+    /**This method handles the department updated
+     * @param idDep : department id
+     * @param name : department name
+     * @param refTeacherID : teacher who is in charge of department
+     * @param client : client from which it originated
      */
     public void handleUpdateDepartmentFromClient(String idDep, String name, String refTeacherID, String descriptionDep, ConnectionToClient client) {
         int idDepart=Integer.parseInt(idDep);
@@ -346,9 +327,9 @@ public class GeneralServer implements Observer {
         }
     }
 
-    /**
-     * @param idDep
-     * @param client
+    /**This method handles the department deletion
+     * @param idDep : department id
+     * @param client : the client from which it originated.
      */
     public void handleDeleteDepartmentFromClient(int idDep, ConnectionToClient client) {
 
@@ -368,9 +349,9 @@ public class GeneralServer implements Observer {
         }
     }
 
-    /**
-     * @param idDep
-     * @param client
+    /** This method handles the department reading
+     * @param idDep : department id
+     * @param client :the client from which it originated.
      */
     public void handleReadDepartmentFromClient(String idDep, ConnectionToClient client) {
         int idDepart=Integer.parseInt(idDep);
@@ -392,6 +373,7 @@ public class GeneralServer implements Observer {
 
     /**
      * This method delegates to the dao the research of the department
+     * @param client : the client from which it originated.
      */
 
     public void handleListDepFromClient(ConnectionToClient client){
@@ -406,6 +388,7 @@ public class GeneralServer implements Observer {
 
     /**
      * This method delegates to the dao the research of the department
+     * @param client : the client from which it originated.
      */
 
     public void handleListTeacherFromClient(ConnectionToClient client){
@@ -426,6 +409,7 @@ public class GeneralServer implements Observer {
      * @param hasProjector : if the room has a projector
      * @param hasComputer : if th room has computers
      * @param description : small description of the room
+     * @param client : the client from which it originated.
      */
     private void handleCreateRoomFromClient(String name, int capacity, int building, boolean hasProjector, boolean hasComputer, String description, ConnectionToClient client){
         int result = dao.getRoomDAO().createRoom(name, capacity, building, hasProjector, hasComputer, description);
@@ -446,6 +430,7 @@ public class GeneralServer implements Observer {
 
     /**
      * This method delegates to the dao the research of the room
+     * @param client : the client from which it originated.
      */
 
     public void handleListRoomsFromClient(ConnectionToClient client){
@@ -535,10 +520,11 @@ public class GeneralServer implements Observer {
             e.printStackTrace();
         }
     }
-    
-    
+
+
     /**
-     * This method delegates to the dao the research of the course
+     *  This method delegates to the dao the research of the course.
+     * @param client : client who create the course
      */
     public void handleListCoursesFromClient(ConnectionToClient client){
         List<CourseType> courses =  dao.getCourseDAO().searchAllCourses();
@@ -550,9 +536,11 @@ public class GeneralServer implements Observer {
          }
 
      }
-    
+
     /**
      * This method delegates to the dao the research of the course
+     * @param userID : user id
+     * @param client : client who create the course
      */
     public void handleListCoursesFromClient(int userID, ConnectionToClient client){
         List<CourseType> courses =  dao.getCourseDAO().searchAllCourses(userID);
@@ -689,16 +677,16 @@ public class GeneralServer implements Observer {
     
     /**
      * This method creates a new user based on the information. It then sends a message concerning the success or not.
-     * @param name
-     * @param firstname
-     * @param birthDate
-     * @param email
-     * @param password
-     * @param role
-     * @param client
+     * @param name : user name
+     * @param firstname : user first name
+     * @param birthDate : user birth date
+     * @param email : user login
+     * @param password : user password
+     * @param role : user role
+     * @param client : the client from which it originated.
      */
-    private void handleCreateUser(String name, String firstname, String birthDate, String email, String role, String password, ConnectionToClient client) {
-    	int res = dao.getUserDAO().createDAOUser(name, firstname, birthDate, email, role, password);
+    private void handleCreateUser(String name, String firstname, String birthDate, String email, String role, String password, String jobType, ConnectionToClient client) {
+    	int res = dao.getUserDAO().createDAOUser(name, firstname, birthDate, email, role, password, jobType);
         try {
             if (res == 0)
                 client.sendToClient("#CREATEDUSER FAILURE");
@@ -725,7 +713,7 @@ public class GeneralServer implements Observer {
     
     /**
      * This method get the information of all users. It then sends a message containing these information.
-     * @param client; the asking client.
+     * @param client: the asking client.
      */
     private void handleReadUsers(ConnectionToClient client) {
     	List<UserType> users = dao.getUserDAO().getAllUsers();
@@ -738,9 +726,9 @@ public class GeneralServer implements Observer {
     
     /**
      * This method set a new password from the user ID. It then sends a message concerning the success or not.
-     * @param login
-     * @param pwd
-     * @param client
+     * @param login : user login
+     * @param pwd : user password
+     * @param client : the client from which it originated.
      */
     private void handleUpdatePwd(String login, String pwd, ConnectionToClient client) {
     	boolean result = dao.getUserDAO().setNewPwd(login, pwd);
@@ -759,16 +747,16 @@ public class GeneralServer implements Observer {
 
     /**
      * This method a user from the user ID. It then sends a message concerning the success or not.
-     * @param id
-     * @param name
-     * @param firstname
-     * @param birthDate
-     * @param email
-     * @param role
-     * @param client
+     * @param id : user id
+     * @param name : user name
+     * @param firstName : user first name
+     * @param birthDate : user birth date
+     * @param email : user login
+     * @param role : user role
+     * @param client : the client from which it originated.
      */
-    private void handleUpdateUser(int id, String name, String firstname, String email, String birthDate, String role, ConnectionToClient client) {
-    	int result = dao.getUserDAO().updateDAOUser(id, name, firstname, email, birthDate, role);
+    private void handleUpdateUser(int id, String name, String firstName, String email, String birthDate, String role, ConnectionToClient client) {
+    	int result = dao.getUserDAO().updateDAOUser(id, name, firstName, email, birthDate, role);
     	String msg;
         if (result == 1){
         	msg = "#UPDATEDUSER SUCCESS" ;
@@ -784,8 +772,8 @@ public class GeneralServer implements Observer {
 
     /**
      * This method delete a user from the user ID. It then sends a message concerning the success or not.
-     * @param id
-     * @param client
+     * @param id : user id
+     * @param client : the client from which it originated.
      */
     private void handleDeleteUser(int id, String role, ConnectionToClient client) {
     	int result = dao.getUserDAO().deleteDAOUser(id, role);
@@ -801,10 +789,11 @@ public class GeneralServer implements Observer {
             e.printStackTrace();
         }
     }
-    
-    
+
+
     /**
      * This method delegates to the dao the research of the department
+     * @param client : the client from which it originated.
      */
 
     public void handleListPromoFromClient(ConnectionToClient client){
@@ -832,11 +821,12 @@ public class GeneralServer implements Observer {
     }
 
     /**
-     * @param name
-     * @param descriptionPromo
-     * @param graduationYear
-     * @param idDepartment
-     * @param client
+     * This method handles the promotion creation
+     * @param name : promotion name
+     * @param descriptionPromo : promotion description
+     * @param graduationYear : promotion graduation year
+     * @param idDepartment : department id
+     * @param client : the client from which it originated.
      */
     public void handleCreatePromotionFromClient(String name, String descriptionPromo, String graduationYear, String idDepartment, ConnectionToClient client) {
         int g=Integer.parseInt(graduationYear);
@@ -857,6 +847,11 @@ public class GeneralServer implements Observer {
         }
     }
 
+    /**
+     * This method handles the promotion deletion
+     * @param idPromo : promotion id
+     * @param client : the client from which it originated.
+     */
     public void handleDeletePromotionFromClient(int idPromo, ConnectionToClient client) {
 
         int result = dao.getPromotionDAO().deletePromotion(idPromo);
@@ -875,13 +870,13 @@ public class GeneralServer implements Observer {
         }
     }
 
-    /**
-     * @param id
-     * @param name
-     * @param descriptionPromo
-     * @param graduationYear
-     * @param idDepartment
-     * @param client
+    /** This method handles the promotion updated
+     * @param id : promotion id
+     * @param name : promotion name
+     * @param descriptionPromo : promotion description
+     * @param graduationYear : promotion graduation year
+     * @param idDepartment : department id
+     * @param client : the client from which it originated.
      */
     public void handleUpdatePromotionFromClient(String id,String name, String descriptionPromo, String graduationYear, String idDepartment, ConnectionToClient client) {
         int idP=Integer.parseInt(id);
@@ -906,6 +901,7 @@ public class GeneralServer implements Observer {
 
     /**
      * This method delegates to the dao the research of the classes
+     * @param client : the client from which it originated.
      */
 
     public void handleListClassFromClient(ConnectionToClient client){
@@ -931,10 +927,11 @@ public class GeneralServer implements Observer {
     }
 
     /**
-     * @param nameClass
-     * @param descClass
-     * @param refPromo
-     * @param client
+     * This method handles the class creation
+     * @param nameClass : class name
+     * @param descClass : class description
+     * @param refPromo : promotion id
+     * @param client : the client from which it originated.
      */
     public void handleCreateClassFromClient( String nameClass,String descClass,String refPromo, ConnectionToClient client) {
         int rp=Integer.parseInt(refPromo);
@@ -954,6 +951,11 @@ public class GeneralServer implements Observer {
         }
     }
 
+    /**
+     * This method handles the class deletion
+     * @param idClass : class id
+     * @param client : the client from which it originated.
+     */
     public void handleDeleteClassFromClient(int idClass, ConnectionToClient client) {
 
         int result = dao.getClassDAO().deleteClass(idClass);
@@ -973,11 +975,12 @@ public class GeneralServer implements Observer {
     }
 
     /**
-     * @param idC
-     * @param nameClass
-     * @param descClass
-     * @param refPromo
-     * @param client
+     * This method handles the class updated
+     * @param idC : class id
+     * @param nameClass : class name
+     * @param descClass : class description
+     * @param refPromo : promotion id
+     * @param client : the client from which it originated.
      */
     public void handleUpdateClassFromClient(String idC,String nameClass,String descClass,String refPromo,ConnectionToClient client){
         int id=Integer.parseInt(idC);
@@ -1067,6 +1070,27 @@ public class GeneralServer implements Observer {
 
 
     /**
+     * This method deletes the record from the database and the storage service, then sends the result of the operation to the client.
+     * @param recordID the record ID
+     * @param client the asking client
+     */
+    private void handleDeleteRecordRequest(int recordID, ConnectionToClient client) {
+        String result= "#DELETEDRECORD FAILURE";
+        RecordType record = dao.getRecordsDAO().getRecord(recordID);
+        int dbDeletion = dao.getRecordsDAO().deleteRecord(recordID);
+        if(dbDeletion == 1){
+            boolean storageDeletion = fileStorageHandler.deleteFile(record.getName());
+            if(storageDeletion)
+                result = "#DELETEDRECORD SUCCESS";
+        }
+        try {
+            client.sendToClient(result);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
      * This method handles when the client wants the possible admins list
      * @param client : the client that sent the request
      */
@@ -1092,7 +1116,11 @@ public class GeneralServer implements Observer {
         }
     }
 
-
+    /**
+     * This method is called by the observable server.
+     * @param o : observable server
+     * @param arg : updated object
+     */
     @Override
     public void update(Observable o, Object arg) {
         if (arg instanceof OriginatorMessage) {
@@ -1128,7 +1156,6 @@ public class GeneralServer implements Observer {
     private void serverStopped() { }
     private void serverStarted() { }
     private void serverClosed() { }
-
     public void handleMessageFromServerUI(String message) {
         display.display("No commands have been implemented yet.");
     }
