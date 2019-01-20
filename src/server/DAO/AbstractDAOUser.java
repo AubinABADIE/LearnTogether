@@ -24,9 +24,9 @@ public abstract class AbstractDAOUser {
     public abstract int readDAOUserByLogin(String login, String password);
     public abstract UserType readDAOUser(int id);
     public abstract boolean isPdwNull(String login);
-    public abstract int updateDAOUser(int id, String name, String firstname, String birthDate, String email, String password, String role);
+    public abstract int updateDAOUser(int id, String name, String firstname, String email, String birthDate, String role);
     public abstract boolean setNewPwd(String login, String password);
-    public abstract int deleteDAOUser(int id);
+    public abstract int deleteDAOUser(int id, String role);
     public abstract List<TeacherType> searchAllTeacher();
 	public abstract List<UserType> getAllUsers();
 

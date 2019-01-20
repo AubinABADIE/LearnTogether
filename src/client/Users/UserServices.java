@@ -114,9 +114,9 @@ public class UserServices{
      * @param password
      * @param role
      */
-    public void createUser(String name, String firstname, String birthDate, String email, String password, String role) {
+    public void createUser(String name, String firstname, String birthDate, String email, String role, String password) {
     	try {
-    		coreClient.getConnection().sendToServer("#CREATEUSER " + name + " " + firstname + " " + birthDate  + " " + email + " " + password + " " + role);
+    		coreClient.getConnection().sendToServer("#CREATEUSER " + name + " " + firstname + " " + birthDate  + " " + email + " " + role + " " + password);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -127,7 +127,11 @@ public class UserServices{
      * @param msg: the response from the server.
      */
     public void handleCreatedUser(String msg) {
-    	String[] credentials = msg.split(" ");
+    	String[] args = msg.split(" ");
+        if(args[1].equalsIgnoreCase("SUCCESS"))
+            coreClient.getDisplay().setState("CUS SUCCESS");
+        else
+            coreClient.getDisplay().setState("CUS FAILURE");
 	}
     
     /**
@@ -188,9 +192,9 @@ public class UserServices{
      * @param password
      * @param role
      */
-    public void updateUser(int id, String name, String firstname, String birthDate, String email, String password, String role) {
+    public void updateUser(int id, String name, String firstname, String email, String birthDate, String role) {
     	try {
-    		coreClient.getConnection().sendToServer("#UPDATEUSER " + id);
+    		coreClient.getConnection().sendToServer("#UPDATEUSER " + id + " " + name + " " + firstname + " " + email + " " + birthDate + " " + role);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -229,9 +233,9 @@ public class UserServices{
 	 * This method is called when the admin wants to delete a user.
 	 * @param id
 	 */
-	public void deleteUser(int id) {
+	public void deleteUser(int id, String role) {
     	try {
-    		coreClient.getConnection().sendToServer("#DELETEUSER " + id);
+    		coreClient.getConnection().sendToServer("#DELETEUSER " + id + " " + role);
         } catch (IOException e) {
             e.printStackTrace();
         }

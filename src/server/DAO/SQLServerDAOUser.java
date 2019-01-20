@@ -71,8 +71,7 @@ public class SQLServerDAOUser extends AbstractDAOUser {
      * @return
      */
     @Override
-	public int createDAOUser(String name, String firstname, String birthDate, String email, String password,
-			String role) {
+	public int createDAOUser(String name, String firstname, String birthDate, String email, String role, String password) {
     	Connection connection = getConnection();
         int result = 0;
         if(connection != null){
@@ -133,19 +132,18 @@ public class SQLServerDAOUser extends AbstractDAOUser {
      * @return
      */
     @Override
-	public int updateDAOUser(int id, String name, String firstname, String birthDate, String email, String password, String role) {
+	public int updateDAOUser(int id, String name, String firstname, String email, String birthDate, String role) {
     	Connection connection = getConnection();
         int res = 0;
         if(connection != null){
             try{
-                PreparedStatement preparedStatement = connection.prepareStatement("UPDATE GeneralUsers SET name = ?, firstname = ?, birthdate = ?, email = ?, password = ?, role = ? WHERE idUser = ?");
+                PreparedStatement preparedStatement = connection.prepareStatement("UPDATE GeneralUsers SET name = ?, firstname = ?, email = ?, birthdate = ?, role = ? WHERE idUser = ?");
                 preparedStatement.setString(1,name);
                 preparedStatement.setString(2,firstname);
-                preparedStatement.setString(3,birthDate);
-                preparedStatement.setString(4,email);
-                preparedStatement.setString(5,password);
-                preparedStatement.setString(6,role);
-                preparedStatement.setInt(7,id);
+                preparedStatement.setString(3,email);
+                preparedStatement.setString(4,birthDate);
+                preparedStatement.setString(5,role);
+                preparedStatement.setInt(6,id);
                 res = preparedStatement.executeUpdate();
             }catch (SQLException e){e.printStackTrace();}
             finally {
@@ -160,11 +158,25 @@ public class SQLServerDAOUser extends AbstractDAOUser {
      * @param id
      */
     @Override
-    public int deleteDAOUser(int id) {
+    public int deleteDAOUser(int id, String role) {
     	Connection connection = getConnection();
         int result = 0;
         if(connection != null){
             try{
+            	if(role.equals("STUDENT")) {
+            		PreparedStatement preparedStatement = connection.prepareStatement("DELETE FROM Students WHERE idStudent = ?");
+                    preparedStatement.setInt(1, id);
+                    preparedStatement.executeUpdate();
+            	} else if(role.equals("TEACHER")) {
+            		PreparedStatement preparedStatement = connection.prepareStatement("DELETE FROM Teachers WHERE idTeacher = ?");
+                    preparedStatement.setInt(1, id);
+                    preparedStatement.executeUpdate();
+            	} else if(role.equals("ADMIN") || role.equals("SUPERADMIN")) {
+            		PreparedStatement preparedStatement = connection.prepareStatement("DELETE FROM Staffs WHERE idStaff = ?");
+                    preparedStatement.setInt(1, id);
+                    preparedStatement.executeUpdate();
+            	}
+            	
                 PreparedStatement preparedStatement = connection.prepareStatement("DELETE FROM GeneralUsers WHERE idUser = ?");
                 preparedStatement.setInt(1, id);
                 result = preparedStatement.executeUpdate();

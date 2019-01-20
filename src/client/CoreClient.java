@@ -406,8 +406,8 @@ public class CoreClient implements ClientIF {
      * @param password : user password
      * @param role : user role
      */
-    public void handleCreateUser(String name, String firstname, String birthDate, String email, String password, String role) {
-    	user.createUser(name, firstname, birthDate, email, password, role);
+    public void handleCreateUser(String name, String firstname, String birthDate, String email, String role, String password) {
+    	user.createUser(name, firstname, birthDate, email, role, password);
     }
 
     /**
@@ -437,16 +437,16 @@ public class CoreClient implements ClientIF {
      * @param password : user password
      * @param role : user role
      */
-    public void handleUpdateUser(int id, String name, String firstname, String birthDate, String email, String password, String role) {
-    	user.updateUser(id, name, firstname, birthDate, email, password, role);
+    public void handleUpdateUser(int id, String name, String firstname, String email, String birthDate, String role) {
+    	user.updateUser(id, name, firstname, email, birthDate, role);
     }
 
     /**
      * This method delegates to userServices the user deletion request
      * @param id : user id
      */
-    public void handleDeleteUser(int id) {
-    	user.deleteUser(id);
+    public void handleDeleteUser(int id, String role) {
+    	user.deleteUser(id, role);
     }
 
     /**

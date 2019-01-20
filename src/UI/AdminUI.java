@@ -1889,7 +1889,7 @@ public class AdminUI extends TeacherUI {
         btnUpdateUser.setOnAction(event ->{
             SelectionModel<UserType> selectedDeleteUser = userList.getSelectionModel();
             if (selectedDeleteUser.getSelectedItem() != null) {
-                updateUser(tabUser, selectedDeleteUser.getSelectedItem().getName(), selectedDeleteUser.getSelectedItem().getBirthDate(),selectedDeleteUser.getSelectedItem().getEmail(), selectedDeleteUser.getSelectedItem().getId(), selectedDeleteUser.getSelectedItem().getRole());
+                updateUser(tabUser, selectedDeleteUser.getSelectedItem().getId(), selectedDeleteUser.getSelectedItem().getName(), selectedDeleteUser.getSelectedItem().getFirstName(), selectedDeleteUser.getSelectedItem().getEmail(), selectedDeleteUser.getSelectedItem().getBirthDate(), selectedDeleteUser.getSelectedItem().getRole());
             }
         });
 
@@ -1905,8 +1905,9 @@ public class AdminUI extends TeacherUI {
                     return;
                 }
                 if (alert.getResult() == ButtonType.YES) {
-                    client.handleDeleteUser(selectedDeleteUser.getSelectedItem().getId());
+                    client.handleDeleteUser(selectedDeleteUser.getSelectedItem().getId(), selectedDeleteUser.getSelectedItem().getRole());
                 }
+                tabUser.setContent(readUser(tabUser));
             }
         });
 
@@ -1920,7 +1921,6 @@ public class AdminUI extends TeacherUI {
             email.setText(selectedUser.getSelectedItem().getEmail());
             id.setText(Integer.toString(selectedUser.getSelectedItem().getId()));
             role.setText(selectedUser.getSelectedItem().getRole());
-
         });
 
         return gridUserVisu;
@@ -1932,11 +1932,6 @@ public class AdminUI extends TeacherUI {
      * @return
      */
     private GridPane createUser(Tab tabUser) {
-		//return button
-        Image returnUser = new Image(getClass().getResourceAsStream("images/icons8-return.png"));
-        ImageView returnUserView = new ImageView(returnUser);
-        returnUserView.setFitHeight(15);
-        returnUserView.setFitWidth(15);
         
         // labels
         Label nameLabel = new Label("Name: ");
@@ -2036,6 +2031,8 @@ public class AdminUI extends TeacherUI {
             birthDateField.setText("");
             emailField.setText("");
             passwordField.setText("");
+            
+            tabUser.setContent(readUser(tabUser));
 
         });
 
@@ -2056,8 +2053,110 @@ public class AdminUI extends TeacherUI {
      * @param id
      * @param role
      */
-	private void updateUser(Tab tabUser, String name, String birthDate, String email, int id, String role) {
-		// TODO Auto-generated method stub
+	private GridPane updateUser(Tab tabUser, int id, String name, String firstName, String email, String birthDate, String role) {
+		
+		// labels
+        Label nameLabel = new Label("Name: ");
+        Label firstNameLabel = new Label("Fisrtname: ");
+        Label birthDateLabel = new Label("Birthdate: ");
+        Label emailLabel = new Label("Email: ");
+        Label roleLabel = new Label("Role: ");
+
+        
+        // Add fields
+        TextField nameField = new TextField(name);
+        TextField firstNameField = new TextField(firstName);
+        TextField birthDateField = new TextField(birthDate);
+        TextField emailField = new TextField(email);
+        ComboBox roleComboBox = new ComboBox<>();
+        roleComboBox.getItems().addAll("STUDENT", "TEACHER");
+        roleComboBox.getSelectionModel().select(role);
+
+        //grid pane
+        GridPane gridUser = new GridPane();
+        gridUser.setHgap(10);
+        gridUser.setVgap(10);
+        gridUser.setPadding(new Insets(10, 10, 10, 10));
+
+        //Hbox
+        HBox hboxnameUserInfo = new HBox();
+        HBox hboxfirstNameUserInfo = new HBox();
+        HBox hboxbirthdateUserInfo = new HBox();
+        HBox hboxemailUserInfo = new HBox();
+        HBox hboxroleUserInfo = new HBox();
+        HBox hboxpasswordUserInfo = new HBox();
+
+        // add form in hbox
+        hboxnameUserInfo.getChildren().addAll(nameLabel, nameField);
+        hboxfirstNameUserInfo.getChildren().addAll(firstNameLabel, firstNameField);
+        hboxbirthdateUserInfo.getChildren().addAll(birthDateLabel, birthDateField);
+        hboxemailUserInfo.getChildren().addAll(emailLabel, emailField);
+        hboxroleUserInfo.getChildren().addAll(roleLabel, roleComboBox);
+
+        //add hbox in gridpane
+        gridUser.add(hboxnameUserInfo, 1, 0);
+        gridUser.add(hboxfirstNameUserInfo, 1, 2);
+        gridUser.add(hboxbirthdateUserInfo, 1, 5);
+        gridUser.add(hboxemailUserInfo, 1, 7);
+        gridUser.add(hboxroleUserInfo, 1, 9);
+        gridUser.add(hboxpasswordUserInfo, 1, 11);
+
+        //add gridpane in tab
+        tabUser.setContent(gridUser);
+
+        //add button
+
+        Button okUpdate = new Button("Update");
+        okUpdate.setPrefHeight(40);
+        okUpdate.setDefaultButton(true);
+        okUpdate.setPrefWidth(100);
+        gridUser.add(okUpdate, 0, 13, 1, 1);
+        gridUser.setHalignment(okUpdate, HPos.RIGHT);
+        gridUser.setMargin(okUpdate, new Insets(20, 0, 20, 0));
+
+        Button cancelCreate = new Button("Cancel");
+        cancelCreate.setPrefHeight(40);
+        cancelCreate.setDefaultButton(false);
+        cancelCreate.setPrefWidth(100);
+        gridUser.add(cancelCreate, 2, 13, 1, 1);
+        gridUser.setHalignment(cancelCreate, HPos.RIGHT);
+        gridUser.setMargin(cancelCreate, new Insets(20, 0, 20, 0));
+
+        okUpdate.setOnAction(event -> {
+            if (nameField.getText().isEmpty()) {
+                showAlert(Alert.AlertType.ERROR, gridUser.getScene().getWindow(), "Form Error!", "Please enter user name");
+                return;
+            }
+            if (firstNameField.getText().isEmpty()) {
+                showAlert(Alert.AlertType.ERROR, gridUser.getScene().getWindow(), "Form Error!", "Please enter user firstname");
+                return;
+            }
+            if (birthDateField.getText().isEmpty()) {
+                showAlert(Alert.AlertType.ERROR, gridUser.getScene().getWindow(), "Form Error!", "Please enter user birthdate");
+                return;
+            }
+            if (emailField.getText().isEmpty()) {
+                showAlert(Alert.AlertType.ERROR, gridUser.getScene().getWindow(), "Form Error!", "Please enter user email");
+                return;
+            }
+            
+            client.handleUpdateUser(id, nameField.getText(), firstNameField.getText(), emailField.getText(), birthDateField.getText(), roleComboBox.getValue().toString());
+            
+            nameField.setText("");
+            firstNameField.setText("");
+            birthDateField.setText("");
+            emailField.setText("");
+            
+            tabUser.setContent(readUser(tabUser));
+
+        });
+
+        cancelCreate.setOnAction(event -> {
+        	tabUser.setContent(readUser(tabUser));
+        });
+
+
+        return gridUser;
 		
 	}
     

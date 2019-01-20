@@ -255,6 +255,10 @@ public class StartUI extends UI {
                 Platform.runLater(() -> showAlert(Alert.AlertType.CONFIRMATION, null, "Success", "The conversation has been deleted."));
             } else if (newValue.equalsIgnoreCase("MD FAILURE.")) {
                 Platform.runLater(() -> showAlert(Alert.AlertType.ERROR, null, "Failure", "The conversation cannot be deleted at this time."));
+            } else if (newValue.equalsIgnoreCase("CUS SUCCESS.")) {
+                Platform.runLater(() -> showAlert(Alert.AlertType.ERROR, null, "Success", "The user has been created."));
+            } else if (newValue.equalsIgnoreCase("CUS FAILURE.")) {
+                Platform.runLater(() -> showAlert(Alert.AlertType.ERROR, null, "Failure", "The user cannot be created at this time."));
             } else if (newValue.equalsIgnoreCase("UU SUCCESS.")) {
                 Platform.runLater(() -> showAlert(Alert.AlertType.ERROR, null, "Success", "The user has been updated."));
             } else if (newValue.equalsIgnoreCase("UU FAILURE.")) {
