@@ -65,7 +65,7 @@ public class SQLServerDAOUser extends AbstractDAOUser {
     /**
      * This method create a user in the data base
      * @param name : user name
-     * @param firstname : user first name
+     * @param firstName : user first name
      * @param birthDate : user birth date
      * @param email : user login
      * @param password : user password
@@ -73,18 +73,18 @@ public class SQLServerDAOUser extends AbstractDAOUser {
      * @return
      */
     @Override
-	public int createDAOUser(String name, String firstname, String birthDate, String email, String role, String password) {
+	public int createDAOUser(String name, String firstName, String birthDate, String email, String role, String password) {
     	Connection connection = getConnection();
         int result = 0;
         if(connection != null){
             try{
-                PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO GeneralUsers (name, firstname, birthDate, email, password, role) VALUES (? ,? ,? ,? ,?, ?)");
+                PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO GeneralUsers (name, firstName, birthDate, email, password, role) VALUES (? ,? ,? ,? ,?, ?)");
                 preparedStatement.setString(1, name);
-                preparedStatement.setString(2, firstname);
+                preparedStatement.setString(2, firstName);
                 preparedStatement.setString(3, birthDate);
                 preparedStatement.setString(4, email);
                 preparedStatement.setString(5, password);
-                preparedStatement.setString(6, role);
+                preparedStatement.setString(6, role.toUpperCase());
                 result = preparedStatement.executeUpdate();
 
             }catch (SQLException e){
@@ -143,7 +143,7 @@ public class SQLServerDAOUser extends AbstractDAOUser {
                 preparedStatement.setString(2,firstName);
                 preparedStatement.setString(3,email);
                 preparedStatement.setString(4,birthDate);
-                preparedStatement.setString(5,role);
+                preparedStatement.setString(5,role.toUpperCase());
                 preparedStatement.setInt(6,id);
                 res = preparedStatement.executeUpdate();
             }catch (SQLException e){e.printStackTrace();}
