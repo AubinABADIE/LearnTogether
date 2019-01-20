@@ -32,6 +32,7 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.stage.Window;
 
+import java.sql.Date;
 import java.util.List;
 
 /**
@@ -523,9 +524,12 @@ public class TeacherUI extends UI {
     }
 	
 	protected GridPane eventRead(Tab tabEvent){
-        //client.getEvents(userID);
+        client.getEvents();
         ListView<EventType> list = new ListView<>();
+        Date d1 = new Date(2018, 01, 14);
+        EventType et = new EventType(1, d1, (float)1.5, 1, 2, 5, 4, 5, 6);
         eventNames = FXCollections.observableArrayList();
+        eventNames.add(et);
         eventNames.addListener((ListChangeListener<EventType>) c -> list.setItems(eventNames));
 
         Image addEvent = new Image(getClass().getResourceAsStream("images/icons8-plus-208.png"));
@@ -595,13 +599,13 @@ public class TeacherUI extends UI {
         HBox hbIdPromo = new HBox();
         HBox hbIdDepartement = new HBox();
 
-        Label dateTimeLabel = new Label("Heure de début :");
-        Label durationLabel = new Label("Duration :");
-        Label idRoomLabel = new Label("Room :");
-        Label idCourseLabel = new Label("Course :");
-        Label idTeacherLabel = new Label("Teacher :");
-        Label idClassLabel = new Label("Class :");
-        Label idPromoLabel = new Label("Promotion :");
+        Label dateTimeLabel = new Label("Heure de début : ");
+        Label durationLabel = new Label("Duration : ");
+        Label idRoomLabel = new Label("Room : ");
+        Label idCourseLabel = new Label("Course : ");
+        Label idTeacherLabel = new Label("Teacher : ");
+        Label idClassLabel = new Label("Class : ");
+        Label idPromoLabel = new Label("Promotion : ");
         Label idDepartementLabel = new Label("Departement : ");
 
 
@@ -687,12 +691,13 @@ public class TeacherUI extends UI {
             gridEventVisu.add(vboxInfoEvent, 2, 2);
             System.out.println("clicked on " + list.getSelectionModel().getSelectedItem());
             SelectionModel<EventType> selectedEvent = list.getSelectionModel();
-            //dateTime.setText(selectedEvent.getSelectedItem().getDateTimeEvent());
+            //dateTime.setDate(selectedEvent.getSelectedItem().getDateTimeEvent());
             //duration.setText(selectedEvent.getSelectedItem().getDuration());
             idRoom.setText(Integer.toString(selectedEvent.getSelectedItem().getIdRoom()));
             idCourse.setText(Integer.toString(selectedEvent.getSelectedItem().getIdCourse()));
             idTeacher.setText(Integer.toString(selectedEvent.getSelectedItem().getIdTeacher()));
             idClass.setText(Integer.toString(selectedEvent.getSelectedItem().getIdClass()));
+            idPromo.setText(Integer.toString(selectedEvent.getSelectedItem().getIdPromo()));
             idDepartement.setText(Integer.toString(selectedEvent.getSelectedItem().getIdDepartement()));
         });
 

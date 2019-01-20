@@ -31,6 +31,9 @@ public class EventType implements Serializable {
         this.setIdDepartement(idDepartement);
     }
 
+    public String toString(){
+    	return "Event : " + idEvent;
+    }
 	public int getIdEvent() {
 		return idEvent;
 	}

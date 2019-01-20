@@ -18,6 +18,7 @@ import client.Chat.ConversationServices;
 import client.Room.RoomServices;
 import client.Users.UserServices;
 import client.Courses.CourseServices;
+import client.Events.EventServices;
 import common.ClientIF;
 import common.DisplayIF;
 
@@ -40,6 +41,7 @@ public class CoreClient implements ClientIF {
     private PromotionServices promo;
     private ClassServices classes;
     private RecordServices records;
+    private EventServices event;
 
     //UI and Connections
     private AdaptableClient connection;
@@ -346,16 +348,34 @@ public class CoreClient implements ClientIF {
 
     
     /**
-     * This method delegates getCourses to courseServices
+     * This method delegates getCourses to courseServices to recover all the courses of the teacher
      * @param userID the user ID.
      */
     public void getCourses(int userID) {
         course.getCourses(userID);
     }
     
+    /**
+     * This method delegates getCourses to courseServices to recover all the courses
+     */
     public void getCourses() {
         course.getCourses();
         
+    }
+    
+    /**
+     * This method delegates getCourses to courseServices to recover all the courses of the teacher
+     * @param userID the user ID.
+     */
+    public void getEvents(int userID) {
+        event.getEvents(userID);
+    }
+    
+    /**
+     * This method delegates getCourses to courseServices to recover all the courses
+     */
+    public void getEvents() {
+        //event.getEvents();
     }
 
     /**
