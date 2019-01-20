@@ -162,14 +162,14 @@ public class GeneralServer implements Observer {
         	String[] attributes = instruction.split(" ");
         	handleCreateUser(attributes[1], attributes[2], attributes[3], attributes[4], attributes[5], attributes[6], client);  
         }
+        else if(instruction.startsWith("GETUSERS")) {
+            handleReadUsers(client);
+        }
         else if(instruction.startsWith("GETUSER")) {
         	String[] attributes = instruction.split(" ");
         	handleReadUser(Integer.parseInt(attributes[1]), client);        	
         }
-        else if(instruction.startsWith("GETUSERS")) {
-        	String[] attributes = instruction.split(" ");
-        	handleReadUsers(client);        	
-        }
+
         else if(instruction.startsWith("UPDATEPWD")) {
         	String[] attributes = instruction.split(" ");
         	handleUpdatePwd(attributes[1], attributes[2], client);  

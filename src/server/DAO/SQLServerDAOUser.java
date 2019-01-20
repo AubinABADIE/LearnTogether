@@ -292,6 +292,7 @@ public class SQLServerDAOUser extends AbstractDAOUser {
      */
     @Override
     public List<UserType> getAllUsers() {
+        System.out.println("aubin");
             List<UserType> users = new ArrayList();
             Connection connection = getConnection();
             if(connection != null){
