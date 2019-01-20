@@ -339,7 +339,6 @@ public class SQLServerDAOUser extends AbstractDAOUser {
             return teacher;
     }
     /**
-     * This method return the users list
      * @return the users list.
      * This method return the teachers list where teachers are not admins
      */
@@ -354,7 +353,6 @@ public class SQLServerDAOUser extends AbstractDAOUser {
                 ResultSet resultSet = preparedStatement.executeQuery();
                 int id = 0;
                 while (resultSet.next()){
-                    System.out.println("teacher NA +1");
                     id = resultSet.getInt("idTeacher");
                     try {
                         PreparedStatement preparedStatement2 = connection.prepareStatement("SELECT * from GeneralUsers WHERE idUser = ? ");
@@ -429,7 +427,6 @@ public class SQLServerDAOUser extends AbstractDAOUser {
                 int id = 0;
                 while (resultSet.next()) {
                     id = resultSet.getInt("idStaff");
-                    System.out.print("+1 /");
                     try {
                         PreparedStatement preparedStatement2 = connection.prepareStatement("SELECT * from GeneralUsers WHERE idUser = ? ");
                         preparedStatement2.setInt(1, id);
@@ -455,7 +452,6 @@ public class SQLServerDAOUser extends AbstractDAOUser {
                         int id2 = 0;
                         while (resultSetT.next()) {
                             id2 = resultSetT.getInt("idTeacher");
-                            System.out.print("teach+1 /");
                             try {
                                 PreparedStatement preparedStatementT2 = connection.prepareStatement("SELECT * from GeneralUsers WHERE idUser = ? ");
                                 preparedStatementT2.setInt(1, id2);
