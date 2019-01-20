@@ -24,8 +24,6 @@ public class GeneralServer implements Observer {
     private ObservableOriginatorServer comm;
     private ChatIF display;
     final private static int DEFAULT_PORT = 5555;
-    private Date currentDate;
-    private SimpleDateFormat dateFormat;
     private AbstractDAOFactory dao;
     private FileStorageHandler fileStorageHandler;
 
@@ -39,8 +37,6 @@ public class GeneralServer implements Observer {
         comm = new ObservableOriginatorServer(port);
         comm.addObserver(this);
         comm.listen();
-        currentDate = new Date();
-        dateFormat = new SimpleDateFormat(" '['HH:mm:ss']'");
         this.display=display;
         dao = new SQLServerFactory();
         dao.createDAOUser();
