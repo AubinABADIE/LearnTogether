@@ -16,8 +16,15 @@ import Types.CourseType;
  */
 
 public class SQLServerDAOCourse extends AbstractDAOCourse{
+    /**
+     * Default constructor
+     */
 	public SQLServerDAOCourse (){}
-	
+
+    /**
+     * This method creates the connection with the data base
+     * @return : a connection
+     */
 	public Connection getConnection() {
         {
             Connection connection = null;
@@ -35,7 +42,11 @@ public class SQLServerDAOCourse extends AbstractDAOCourse{
             return connection;
         }
     }
-	
+
+    /**
+     * This method closes the connection to the database.
+     * @param connection the active connection.
+     */
 	public void closeConnection(Connection connection){
         try {
             connection.close();
@@ -45,11 +56,12 @@ public class SQLServerDAOCourse extends AbstractDAOCourse{
     }
 	
 	/**
-     * this method create a course in the data base
+     * this method creates a course in the data base
      * @param name : course name
 	 * @param description : small description of the course
 	 * @param nbHourTotal : the total hours of the course
 	 * @param idT : the referring teacher of the course
+     * @return 1 if the creation was successful, 0 otherwise.
      */
     @Override
     public int createCourse(String name, String description, int nbHourTotal, int idT, int promoId){
@@ -76,10 +88,11 @@ public class SQLServerDAOCourse extends AbstractDAOCourse{
     }
     
     /**
-     * This method return the courses list
+     * This method returns the courses list
+     * @return the courses list.
      */
     public List<CourseType> searchAllCourses(){
-        ArrayList courses = new ArrayList();
+        ArrayList<CourseType> courses = new ArrayList<>();
         Connection connection = getConnection();
         if(connection != null){
             try{
@@ -101,9 +114,14 @@ public class SQLServerDAOCourse extends AbstractDAOCourse{
         }
         return courses;
     }
-    
+
+    /**
+     * This method searches for all the courses relative to a user in the database.
+     * @param userID the user ID.
+     * @return a list of courses done by this user.
+     */
     public List<CourseType> searchAllCourses(int userID){
-        ArrayList courses = new ArrayList();
+        ArrayList<CourseType> courses = new ArrayList<>();
         Connection connection = getConnection();
         if(connection != null){
             try{
@@ -128,9 +146,9 @@ public class SQLServerDAOCourse extends AbstractDAOCourse{
     }
     
     /**
-     * This methos delete a course. It return an int to specify to the server the state of the deletion
+     * This method deletes a course. It return an int to specify to the server the state of the deletion
      * @param id : course id
-     * @return int who give the state of the deletion in the data base
+     * @return 1 if the deletion was successful, 0 otherwise.
      */
     @Override
     public int deleteCourse (int id){
@@ -151,9 +169,19 @@ public class SQLServerDAOCourse extends AbstractDAOCourse{
         }
         return result;
     }
-    
+
+    /**
+     * This method updates a course in the database, with the course ID.
+     * @param idCourse the course ID.
+     * @param courseName the new course name.
+     * @param courseDescription the new course description.
+     * @param nbHourTotal the new number of hours.
+     * @param idTeacher the new teacher ID.
+     * @param promoId the new promo ID.
+     * @return 1 if the update was successful, 0 otherwise.
+     */
     public int updateCourse(int idCourse, String courseName, String courseDescription, int nbHourTotal, String idTeacher, int promoId){
-        Connection connection =getConnection();
+        Connection connection = getConnection();
         int result = 0;
         if(connection!= null){
             try{

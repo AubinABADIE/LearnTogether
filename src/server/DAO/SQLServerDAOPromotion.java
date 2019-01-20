@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * This class instantiate the method relative to the promotion in SQLServer data base
+ * This class instantiates the methods relative to the promotion in SQLServer data base
  * @author Audrey SAMSON
  */
 
@@ -56,11 +56,11 @@ public class SQLServerDAOPromotion extends AbstractDAOPromotion {
 
     /**
      * This method returns all the promotion in the data base.
-     * @return int which returns the state of the selection.
+     * @return a list of promotions.
      */
     @Override
     public List<PromotionType> searchAllPromotion() {
-        ArrayList promo = new ArrayList();
+        ArrayList<PromotionType> promo = new ArrayList<>();
         Connection connection = getConnection();
         if(connection != null){
             try{
@@ -84,11 +84,11 @@ public class SQLServerDAOPromotion extends AbstractDAOPromotion {
 
     /**
      * This method returns all the promotion in the data base.
-     * @return int which returns the state of the selection.
+     * @return a list a promotions.
      */
     @Override
     public List<PromotionType> searchAllPromotionByDep(int idDep) {
-        ArrayList promo = new ArrayList();
+        ArrayList<PromotionType> promo = new ArrayList<>();
         Connection connection = getConnection();
         if(connection != null){
             try{
@@ -117,7 +117,7 @@ public class SQLServerDAOPromotion extends AbstractDAOPromotion {
      * @param descriptionDep : promotion description
      * @param graduationYear : promotion gradation year
      * @param refDep : promotion department reference
-     * @return int which give the state of the creation
+     * @return 1 if the creation was successful, 0 otherwise.
      */
     @Override
     public int createPromotion(String name, String descriptionDep,  int graduationYear,int refDep) {
@@ -148,7 +148,7 @@ public class SQLServerDAOPromotion extends AbstractDAOPromotion {
      * @param descriptionDep : promotion description
      * @param graduationYear : promotion graduation year
      * @param refDep : promotion department id
-     * @return int which gives the state od the request
+     * @return 1 if the update was successful, 0 otherwise.
      */
     @Override
     public int updatePromotion(int idPromo, String name,String descriptionDep, int graduationYear,int refDep) {
@@ -176,7 +176,7 @@ public class SQLServerDAOPromotion extends AbstractDAOPromotion {
     /**
      * This method deletes the promotion in the data base
      * @param idPromotion : promotion id
-     * @return int which gives the state od the request
+     * @return 1 if the deletion was successful, 0 otherwise.
      */
     @Override
     public int deletePromotion(int idPromotion) {

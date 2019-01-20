@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * This class instantiate the method relative to the room in SQLServer data base
+ * This class instantiates the methods relative to the room in SQLServer data base
  * @author Marie SALELLES
  */
 

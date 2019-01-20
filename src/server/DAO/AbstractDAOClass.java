@@ -34,8 +34,6 @@ public abstract class AbstractDAOClass {
      */
     public abstract int deleteClass(int id);
 
-    public abstract int readClass(int id);
-
     public abstract List<ClassType> searchAllClasses();
 
     public abstract List<ClassType> searchAllClassesByPromo(int idPromo);

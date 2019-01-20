@@ -10,7 +10,7 @@ import java.util.HashSet;
 import java.util.List;
 
 /**
- *This class instantiate the method relative to the conversation in SQLServer data base
+ *This class instantiates the methods relative to the conversation in SQLServer data base
  * @author Yvan SANSON
  */
 public class SQLServerDAOConversation extends AbstractDAOConversation{
@@ -18,9 +18,12 @@ public class SQLServerDAOConversation extends AbstractDAOConversation{
     /**
      * Default constructor
      */
-    public SQLServerDAOConversation() {
-    }
+    public SQLServerDAOConversation() { }
 
+    /**
+     * This method creates the connection with the data base
+     * @return : a connection
+     */
     @Override
     public Connection getConnection() {
         Connection connection = null;
@@ -38,6 +41,10 @@ public class SQLServerDAOConversation extends AbstractDAOConversation{
         return connection;
     }
 
+    /**
+     * This method closes the connection to the database.
+     * @param connection the active connection.
+     */
     @Override
     public void closeConnection(Connection connection) {
         try {
@@ -52,7 +59,7 @@ public class SQLServerDAOConversation extends AbstractDAOConversation{
      * @param senderID: The original sender ID.
      * @param receiverEmail: The receiver email.
      * @param messageContent: The message content.
-     * @return: 1 if it was successful, 0 otherwise.
+     * @return 1 if it was successful, 0 otherwise.
      */
     public int storeMessage(int senderID, String receiverEmail, String messageContent){
         Calendar cal = Calendar.getInstance();
@@ -141,6 +148,11 @@ public class SQLServerDAOConversation extends AbstractDAOConversation{
         return conversationMessages;
     }
 
+    /**
+     * This method retrieves all the emails which have a conversation with the ID.
+     * @param askingID the client ID.
+     * @return a list of emails.
+     */
     @Override
     public List<String> getConversationEmails(int askingID) {
         Connection connection = getConnection();
@@ -164,6 +176,12 @@ public class SQLServerDAOConversation extends AbstractDAOConversation{
         return new ArrayList<>(new HashSet<>(emails));
     }
 
+    /**
+     * This method deletes the conversation between two users.
+     * @param askingID the user ID that asks to delete.
+     * @param otherEmail the other participant's email.
+     * @return 1 if the deletion was successful, 0 otherwise.
+     */
     @Override
     public int deleteConversation(int askingID, String otherEmail) {
         int res = 0;

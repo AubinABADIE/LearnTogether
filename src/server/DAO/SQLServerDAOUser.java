@@ -12,7 +12,7 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * This class instantiate the method relative to the user in SQLServer data base
+ * This class instantiates the methods relative to the user in SQLServer data base
  * @author Yvan SANSON
  * @author Aubin ABADIE
  */
@@ -27,7 +27,7 @@ public class SQLServerDAOUser extends AbstractDAOUser {
 
 
     /**
-     * This function create the connection with the data base
+     * This method creates the connection with the data base
      * @return : a connection
      */
     @Override
@@ -51,7 +51,7 @@ public class SQLServerDAOUser extends AbstractDAOUser {
 
     /**
      * This method closes a connection to a database.
-     * @param connexion
+     * @param connexion the active connection.
      */
     public void closeConnection(Connection connexion){
         try {
@@ -61,7 +61,6 @@ public class SQLServerDAOUser extends AbstractDAOUser {
         }
     }
 
-
     /**
      * This method create a user in the data base
      * @param name : user name
@@ -70,7 +69,7 @@ public class SQLServerDAOUser extends AbstractDAOUser {
      * @param email : user login
      * @param password : user password
      * @param role : user role
-     * @return
+     * @return 0 or 1 depending if the creation failed or succeeded.
      */
     @Override
 	public int createDAOUser(String name, String firstName, String birthDate, String email, String role, String password, String jobType) {
@@ -150,14 +149,14 @@ public class SQLServerDAOUser extends AbstractDAOUser {
     }
 
     /**
-     *
-     * @param id
-     * @param name
-     * @param firstName
-     * @param birthDate
-     * @param email
-     * @param role
-     * @return
+     * This method updates a user in the DAO with its ID.
+     * @param id the user ID
+     * @param name the user name
+     * @param firstName the user first name
+     * @param birthDate the user birth date
+     * @param email the user email
+     * @param role the user role
+     * @return 0 or 1 depending if the update failed or succeeded.
      */
     @Override
 	public int updateDAOUser(int id, String name, String firstName, String email, String birthDate, String role) {
@@ -183,7 +182,8 @@ public class SQLServerDAOUser extends AbstractDAOUser {
 
     /**
      * Reads the DB and delete the user.
-     * @param id
+     * @param id the user ID.
+     * @return 0 or 1 depending if the deletion failed or succeeded.
      */
     @Override
     public int deleteDAOUser(int id, String role) {
@@ -308,7 +308,8 @@ public class SQLServerDAOUser extends AbstractDAOUser {
 
 
     /**
-     * This method return the teachers list
+     * This method returns the teachers list
+     * @return the teacher list.
      */
     @Override
     public List<TeacherType> searchAllTeacher() {
@@ -337,6 +338,7 @@ public class SQLServerDAOUser extends AbstractDAOUser {
     
     /**
      * This method return the users list
+     * @return the users list.
      */
     @Override
     public List<UserType> getAllUsers() {
@@ -363,6 +365,11 @@ public class SQLServerDAOUser extends AbstractDAOUser {
         return users;
     }
 
+    /**
+     * This method returns the users that can be admins.
+     * It selects the teachers and staffs from the DB.
+     * @return a list of users.
+     */
     @Override
     public List<UserType> getPossibleAdmin() {
         List<UserType> users = new ArrayList();
@@ -388,6 +395,10 @@ public class SQLServerDAOUser extends AbstractDAOUser {
         return users;
     }
 
+    /**
+     * This method retrieves the admins from the database.
+     * @return a list of admins.
+     */
     @Override
     public List<AdminType> getAllAdmin() {
         List<AdminType> users = new ArrayList();
