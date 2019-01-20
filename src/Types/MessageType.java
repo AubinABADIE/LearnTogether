@@ -4,6 +4,10 @@ import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+/**
+ * This class represents a message in the database.
+ * @author Yvan SANSON
+ */
 public class MessageType implements Serializable {
     private int idMessage;
     private String content;

@@ -2,7 +2,10 @@ package Types;
 
 import java.io.Serializable;
 
-
+/**
+ * This class represents a teacher in the database.
+ * @author Audrey SAMSON
+ */
 public class TeacherType extends UserType implements Serializable {
 
 

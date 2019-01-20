@@ -2,6 +2,10 @@ package Types;
 
 import java.io.Serializable;
 
+/**
+ * This class represents a room in the database.
+ * @author Marie SALELLES
+ */
 public class RoomType implements Serializable {
     private int id;
     private String name;

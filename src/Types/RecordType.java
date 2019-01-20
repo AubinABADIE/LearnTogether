@@ -1,13 +1,10 @@
 package Types;
 
-import java.io.File;
 import java.io.Serializable;
-import java.util.Arrays;
 
 /**
- * This class is used to model the Record found in the database.
- * It implements Serializable to allow a RacordType object to go through sockets.
- *
+ * This class represents a record in the database.
+ * In addition, it stores a byte array representing the file, used to store it in a storage service.
  * @author Marie SALELLES
  * @author Yvan SANSON
  */

@@ -1,5 +1,9 @@
 package Types;
 
+/**
+ * This class represents an admin in the database.
+ * @author Aubin ABADIE
+ */
 public class AdminType extends UserType{
     //role = "ADMIN"
 
