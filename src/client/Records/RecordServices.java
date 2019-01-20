@@ -81,6 +81,10 @@ public class RecordServices {
         }
     }
 
+    /**
+     * This method change the state for the UI
+     * @param record : the record
+     */
     public void handleReceivedRecord(RecordType record){
         try(FileOutputStream stream = new FileOutputStream(System.getProperty("user.home") +"/Downloads/"+ record.getName())) {
             stream.write(record.getRecord());
@@ -91,11 +95,23 @@ public class RecordServices {
         }
     }
 
+    /**
+     * This method handle the Server response to display correctly on the UI
+     * @param msg : String result of the uploading
+     */
     public void handleRecordUploaded(String msg) {
         String state = msg.split(" ")[1];
         if(state.equalsIgnoreCase("SUCCESS"))
             client.getDisplay().setState("REC UPLOAD SUCCESS");
         else
             client.getDisplay().setState("REC UPLOAD FAILURE");
+    }
+
+    public void getRecordsByUser(int id){
+        try {
+            client.getConnection().sendToServer("#GETRECORDBYUSER" +"-/-"+ id);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

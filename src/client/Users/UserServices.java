@@ -143,7 +143,7 @@ public class UserServices{
     }
     
     /**
-     * This method send a message to the server to have the rooms list
+     * This method send a message to the server to have the user list
      */
     public void getUsers() {
         try {

@@ -497,6 +497,18 @@ public class StartUI extends UI {
         });
     }
 
+    /**
+     * This method put the record user in the list recordsNames
+     * @param records : list of user record
+     */
+    @Override
+    public void getRecordByUser(List<RecordType> records){
+        Platform.runLater(()->{
+            records.remove(records.get(0));
+            getCurrentUI().setRecordNames(records);
+        });
+    }
+
 
     @Override
     public void getCourses(List<CourseType> courses){

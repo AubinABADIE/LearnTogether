@@ -29,4 +29,5 @@ public interface DisplayIF {
     void getClasses(List<ClassType> classes);
     void getUsers(List<UserType> users);
     void getRecords(List<RecordType>records);
+    void getRecordByUser(List<RecordType>records);
 }

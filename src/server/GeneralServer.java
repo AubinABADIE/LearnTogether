@@ -199,6 +199,9 @@ public class GeneralServer implements Observer {
         else if(instruction.startsWith("DOWNLOADRECORD")){
             handleRecordDownloadRequest(Integer.parseInt(instruction.split(" ")[1]), client);
         }
+        else if (instruction.startsWith("GETRECORDBYUSER")){
+            handleGetRecordByUser(Integer.parseInt(instruction.split("-/-")[1]), client);
+        }
     }
 
 
@@ -991,6 +994,20 @@ public class GeneralServer implements Observer {
         List<RecordType> rec =  dao.getRecordsDAO().searchAllRecords();
         try {
             client.sendToClient(rec);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * This method handles when the client wants the user records list
+     * @param id : user id
+     * @param client : the client that sent the request
+     */
+    public void handleGetRecordByUser(int id, ConnectionToClient client){
+        List<RecordType> recUser =  dao.getRecordsDAO().searchRecordsByUser(id);
+        try {
+            client.sendToClient(recUser);
         } catch (IOException e) {
             e.printStackTrace();
         }

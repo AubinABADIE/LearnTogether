@@ -181,7 +181,11 @@ public class CoreClient implements ClientIF {
             	display.getUsers((List<UserType>) msg);
             }
             else if (((List)msg).get(0) instanceof RecordType){
-                display.getRecords((List<RecordType>)msg);
+                if (((RecordType)((List)msg).get(0)).getName().equals("FOR USER")){
+                    display.getRecordByUser((List<RecordType>)msg);
+                } else {
+                    display.getRecords((List<RecordType>)msg);
+                }
             }
         }
         else if (msg instanceof UserType) {
@@ -562,5 +566,13 @@ public class CoreClient implements ClientIF {
      */
     public void downloadRec(int id){
         records.downloadRec(id);
+    }
+
+    /**
+     * This method delegates to recordServices the reading of user records
+     * @param id : user id
+     */
+    public void getRecordsByUser(int id){
+        records.getRecordsByUser(id);
     }
 }
