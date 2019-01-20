@@ -883,6 +883,22 @@ public abstract class UI extends Application implements DisplayIF {
         deleteGrid.add(vboxlistDelete, 1,1);
         deleteGrid.add(vboxButtonDelete, 2,1);
 
+        btnD.setOnAction(event -> {
+            SelectionModel<RecordType> selectedDeleteRoom = listD.getSelectionModel();
+            if (selectedDeleteRoom.getSelectedItem() != null) {
+                Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure you want to delete the record?", ButtonType.YES, ButtonType.NO);
+                alert.setHeaderText("Confirmation delete");
+                Window win = deleteGrid.getScene().getWindow();
+                alert.initOwner(win);
+                alert.showAndWait();
+                if (alert.getResult() == ButtonType.NO) {
+                    return;
+                }
+                if (alert.getResult() == ButtonType.YES) {
+                    client.handleDeleteRecord(selectedDeleteRoom.getSelectedItem().getRecordId());
+                }
+            }
+        });
 
         //display delete for one record
         listD.setOnMouseClicked(event -> {
