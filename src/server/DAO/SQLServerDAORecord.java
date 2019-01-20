@@ -148,4 +148,29 @@ public class SQLServerDAORecord extends AbstractDAORecords{
         }
         return records;
     }
+
+    @Override
+    public List<RecordType> searchRecordsByUser(int id) {
+        ArrayList<RecordType> records = new ArrayList();
+        Connection connection = getConnection();
+        if(connection != null){
+            try{
+                PreparedStatement preparedStatement = connection.prepareStatement("SELECT * from Records WHERE idUser = ?");
+                preparedStatement.setInt(1, id);
+                ResultSet resultSet = preparedStatement.executeQuery();
+                records.add(new RecordType(0,"FOR USER",0,2000,0));
+                while (resultSet.next()){
+                    records.add(new RecordType(resultSet.getInt("idRecord"),
+                            resultSet.getString("recordName"),
+                            resultSet.getInt("idCourse"),
+                            resultSet.getInt("recordYear"),
+                            resultSet.getInt("idUser")));
+                }
+            }catch (SQLException e){e.printStackTrace();}
+            finally {
+                closeConnection(connection);
+            }
+        }
+        return records;
+    }
 }

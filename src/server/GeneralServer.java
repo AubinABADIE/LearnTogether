@@ -176,11 +176,11 @@ public class GeneralServer implements Observer {
         }
         else if(instruction.startsWith("UPDATEUSER")) {
         	String[] attributes = instruction.split(" ");
-        	handleUpdateUser(Integer.parseInt(attributes[1]), attributes[2], attributes[3], attributes[4], attributes[5], attributes[6], attributes[7], client);  
+        	handleUpdateUser(Integer.parseInt(attributes[1]), attributes[2], attributes[3], attributes[4], attributes[5], attributes[7], client);  
         }
         else if(instruction.startsWith("DELETEUSER")) {
         	String[] attributes = instruction.split(" ");
-        	handleDeleteUser(Integer.parseInt(attributes[1]), client);  
+        	handleDeleteUser(Integer.parseInt(attributes[1]), attributes[2], client);  
         }
         else if(instruction.startsWith("GETCONVEMAIL")){
             String[] attributes = instruction.split(" ");
@@ -202,6 +202,9 @@ public class GeneralServer implements Observer {
             handleGetAllPossibleAdmin(client);
         }else if(instruction.startsWith("GETADMIN")){
             handleGetAllAdmin(client);
+        }
+        else if (instruction.startsWith("GETRECORDBYUSER")){
+            handleGetRecordByUser(Integer.parseInt(instruction.split("-/-")[1]), client);
         }
     }
 
@@ -688,8 +691,8 @@ public class GeneralServer implements Observer {
      * @param role
      * @param client
      */
-    private void handleCreateUser(String name, String firstname, String birthDate, String email, String password, String role, ConnectionToClient client) {
-    	int res = dao.getUserDAO().createDAOUser(name, firstname, birthDate, email, password, role);
+    private void handleCreateUser(String name, String firstname, String birthDate, String email, String role, String password, ConnectionToClient client) {
+    	int res = dao.getUserDAO().createDAOUser(name, firstname, birthDate, email, role, password);
         try {
             if (res == 0)
                 client.sendToClient("#CREATEDUSER FAILURE");
@@ -759,8 +762,8 @@ public class GeneralServer implements Observer {
      * @param role
      * @param client
      */
-    private void handleUpdateUser(int id, String name, String firstname, String birthDate, String email, String password, String role, ConnectionToClient client) {
-    	int result = dao.getUserDAO().updateDAOUser(id, name, firstname, birthDate, email, password, role);
+    private void handleUpdateUser(int id, String name, String firstname, String email, String birthDate, String role, ConnectionToClient client) {
+    	int result = dao.getUserDAO().updateDAOUser(id, name, firstname, email, birthDate, role);
     	String msg;
         if (result == 1){
         	msg = "#UPDATEDUSER SUCCESS" ;
@@ -779,8 +782,8 @@ public class GeneralServer implements Observer {
      * @param id
      * @param client
      */
-    private void handleDeleteUser(int id, ConnectionToClient client) {
-    	int result = dao.getUserDAO().deleteDAOUser(id);
+    private void handleDeleteUser(int id, String role, ConnectionToClient client) {
+    	int result = dao.getUserDAO().deleteDAOUser(id, role);
     	String msg;
         if (result == 1){
         	msg = "#DELETEDUSER SUCCESS" ;
@@ -995,6 +998,20 @@ public class GeneralServer implements Observer {
         List<RecordType> rec =  dao.getRecordsDAO().searchAllRecords();
         try {
             client.sendToClient(rec);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * This method handles when the client wants the user records list
+     * @param id : user id
+     * @param client : the client that sent the request
+     */
+    public void handleGetRecordByUser(int id, ConnectionToClient client){
+        List<RecordType> recUser =  dao.getRecordsDAO().searchRecordsByUser(id);
+        try {
+            client.sendToClient(recUser);
         } catch (IOException e) {
             e.printStackTrace();
         }

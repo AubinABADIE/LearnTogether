@@ -255,6 +255,10 @@ public class StartUI extends UI {
                 Platform.runLater(() -> showAlert(Alert.AlertType.CONFIRMATION, null, "Success", "The conversation has been deleted."));
             } else if (newValue.equalsIgnoreCase("MD FAILURE.")) {
                 Platform.runLater(() -> showAlert(Alert.AlertType.ERROR, null, "Failure", "The conversation cannot be deleted at this time."));
+            } else if (newValue.equalsIgnoreCase("CUS SUCCESS.")) {
+                Platform.runLater(() -> showAlert(Alert.AlertType.ERROR, null, "Success", "The user has been created."));
+            } else if (newValue.equalsIgnoreCase("CUS FAILURE.")) {
+                Platform.runLater(() -> showAlert(Alert.AlertType.ERROR, null, "Failure", "The user cannot be created at this time."));
             } else if (newValue.equalsIgnoreCase("UU SUCCESS.")) {
                 Platform.runLater(() -> showAlert(Alert.AlertType.ERROR, null, "Success", "The user has been updated."));
             } else if (newValue.equalsIgnoreCase("UU FAILURE.")) {
@@ -383,7 +387,7 @@ public class StartUI extends UI {
         gridPane.add(nameLabel, 0,1);
 
         // Add Name Text Field
-        TextField nameField = new TextField("teacher@umontpellier.fr");
+        TextField nameField = new TextField("StaffAdmin@umontpellier.fr");
         nameField.setPrefHeight(40);
         gridPane.add(nameField, 1,1);
 
@@ -394,6 +398,7 @@ public class StartUI extends UI {
         // Add Password Text Field
         PasswordField passwordField = new PasswordField();
         passwordField.setPrefHeight(40);
+        passwordField.setText("AdmStaff");
         gridPane.add(passwordField, 1, 2);
 
         // Add Login Button
@@ -558,6 +563,17 @@ public class StartUI extends UI {
                 superAdminUI.setAdmin(adm);
         });
     }
+    /**
+     * This method put the record user in the list recordsNames
+     * @param records : list of user record
+     */
+    @Override
+    public void getRecordByUser(List<RecordType> records){
+        Platform.runLater(()->{
+            records.remove(records.get(0));
+            getCurrentUI().setRecordNames(records);
+        });
+    }
 
 
     @Override
@@ -607,6 +623,9 @@ public class StartUI extends UI {
 
         }
     
+    /**
+     * Set the user for the current UI.
+     */
     @Override
 	public void setUser(UserType user) {
     	Platform.runLater(() -> {
@@ -646,7 +665,9 @@ public class StartUI extends UI {
         });
     }
 
-
+    /**
+     * Get all users in DB and set them in a list for the user management tab.
+     */
 	@Override
 	public void getUsers(List<UserType> users) {
 		Platform.runLater(() -> {
