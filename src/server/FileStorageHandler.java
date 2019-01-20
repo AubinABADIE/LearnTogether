@@ -1,6 +1,7 @@
 package server;
 
 import com.microsoft.azure.storage.blob.*;
+import com.microsoft.azure.storage.blob.models.BlobDeleteResponse;
 import com.microsoft.rest.v2.http.HttpPipeline;
 import com.microsoft.rest.v2.util.FlowableUtil;
 import io.reactivex.Flowable;
@@ -92,5 +93,24 @@ public class FileStorageHandler {
         return FlowableUtil.collectBytesInArray(downloadResponse.body(null)).blockingGet();
     }
 
+    /**
+     * This method tries to delete a file in the storage service, then tries to delete the associated container.
+     * @param fileName the file to delete
+     * @return boolean, true if the operation succeeded, false otherwise.
+     */
+    public boolean deleteFile(String fileName){
+        String name = refactorFileName(fileName);
+        String containerName = refactorContainerName(fileName);
+        try {
+            containerURL = serviceURL.createContainerURL(containerName);
+            BlockBlobURL blobURL = containerURL.createBlockBlobURL(name);
+            blobURL.delete().blockingGet();
+            containerURL.delete().blockingGet();
+        }catch (Exception e){
+            e.printStackTrace();
+            return false;
+        }
+        return true;
+    }
 
 }

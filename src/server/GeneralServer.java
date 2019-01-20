@@ -6,6 +6,7 @@ import common.ChatIF;
 import Types.*;
 import com.lloseng.ocsf.server.ObservableOriginatorServer;
 import server.DAO.*;
+import sun.jvm.hotspot.debugger.posix.elf.ELFSectionHeader;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -28,9 +29,6 @@ public class GeneralServer implements Observer {
     private SimpleDateFormat dateFormat;
     private AbstractDAOFactory dao;
     private FileStorageHandler fileStorageHandler;
-
-
-
 
     /**
      * The useful constructor
@@ -82,48 +80,43 @@ public class GeneralServer implements Observer {
         if (instruction.startsWith("LOGIN")) {
             String[] ids = instruction.split(" ");
             handleLoginFromClient(ids[1], ids[2], client);
-        }
-        else if(instruction.startsWith("FIRSTCONN")){
+        } else if(instruction.startsWith("FIRSTCONN")){
             String[] creds = instruction.split(" ");
             handleFirstConnectionFromClient(creds[1], creds[2], client);
-        }
-        else if(instruction.startsWith("CREATEDEP")){
+        } else if(instruction.startsWith("CREATEDEP")){
             String[] creds = instruction.split("-/-");
             handleCreateDepartmentFromClient(creds[1], creds[2], creds[3], client);
-        }else if(instruction.startsWith("UPDATEDEP")){
+        } else if(instruction.startsWith("UPDATEDEP")){
             String[] creds = instruction.split("-/-");
             handleUpdateDepartmentFromClient(creds[1], creds[2], creds[3],creds[4], client);
-        }else if(instruction.startsWith("DELETEDEP")){
+        } else if(instruction.startsWith("DELETEDEP")){
             String[] creds = instruction.split("-/-");
             handleDeleteDepartmentFromClient(Integer.parseInt(creds[1]), client);
-        }else if (instruction.startsWith("GETDEPARTMENT")){
+        } else if (instruction.startsWith("GETDEPARTMENT")){
             handleListDepFromClient(client);
-        }
-        else if(instruction.startsWith("CREATEPROMOTION")){
+        } else if(instruction.startsWith("CREATEPROMOTION")){
             String[] creds = instruction.split("-/-");
             handleCreatePromotionFromClient(creds[1], creds[2], creds[3],creds[4], client);
-        }else if(instruction.startsWith("UPDATEPROMOTION")){
+        } else if(instruction.startsWith("UPDATEPROMOTION")){
             String[] creds = instruction.split("-/-");
             handleUpdatePromotionFromClient(creds[1], creds[2], creds[3],creds[4],creds[5],  client);
-        }else if(instruction.startsWith("DELETEPROMOTION")){
+        } else if(instruction.startsWith("DELETEPROMOTION")){
             String[] creds = instruction.split("-/-");
             handleDeletePromotionFromClient(Integer.parseInt(creds[1]), client);
-        }else if (instruction.startsWith("GETPROMOTION")){
+        } else if (instruction.startsWith("GETPROMOTION")){
             handleListPromoFromClient(client);
-        }
-        else if(instruction.startsWith("CREATECLASS")){
+        } else if(instruction.startsWith("CREATECLASS")){
             String[] creds = instruction.split("-/-");
             handleCreateClassFromClient(creds[1], creds[2], creds[3], client);
-        }else if(instruction.startsWith("UPDATECLASS")){
+        } else if(instruction.startsWith("UPDATECLASS")){
             String[] creds = instruction.split("-/-");
             handleUpdateClassFromClient(creds[1], creds[2], creds[3],creds[4], client);
-        }else if(instruction.startsWith("DELETECLASS")){
+        } else if(instruction.startsWith("DELETECLASS")){
             String[] creds = instruction.split("-/-");
             handleDeleteClassFromClient(Integer.parseInt(creds[1]), client);
-        }else if (instruction.startsWith("GETCLASS")){
+        } else if (instruction.startsWith("GETCLASS")){
             handleListClassFromClient(client);
-        }
-        else if (instruction.startsWith("CREATEROOM")){
+        } else if (instruction.startsWith("CREATEROOM")){
             String[] attributes = instruction.split("-/-");
             handleCreateRoomFromClient(attributes[1], Integer.parseInt(attributes[2]), Integer.parseInt(attributes[3]), Boolean.parseBoolean(attributes[4]), Boolean.parseBoolean(attributes[5]),attributes[6], client);
         }else if (instruction.startsWith("DELETEROOM")){
@@ -134,8 +127,7 @@ public class GeneralServer implements Observer {
             handleUpdateRoomFromClient(Integer.parseInt(attributes[1]),attributes[2],Integer.parseInt(attributes[3]), Integer.parseInt(attributes[4]), Boolean.parseBoolean(attributes[5]),Boolean.parseBoolean( attributes[6]), attributes[7], client);
         } else if (instruction.startsWith("GETROOMS")){
             handleListRoomsFromClient(client);
-        }
-        else if (instruction.startsWith("CREATECOURSE")){
+        } else if (instruction.startsWith("CREATECOURSE")){
             String[] attributes = instruction.split("-/-");
             handleCreateCourseFromClient(attributes[1], attributes[2], Integer.parseInt(attributes[3]), attributes[4], Integer.parseInt(attributes[5]), client);
         }else if (instruction.startsWith("DELETECOURSE")){
@@ -149,64 +141,53 @@ public class GeneralServer implements Observer {
         } else if (instruction.startsWith("GETCOURSET")){
             String[] attributes = instruction.split("-/-");
             handleListCoursesFromClient(Integer.parseInt(attributes[1]), client);
-        }
-        else if(instruction.startsWith("SENDMSGTOCLIENT")){
+        } else if(instruction.startsWith("SENDMSGTOCLIENT")){
             String[] attributes = instruction.split("-/-");
             handleSendMessageToClient(Integer.parseInt(attributes[1]), attributes[2],attributes[3], client);
-        }
-        else if(instruction.startsWith("RETRIEVECONVERSATION")){
+        } else if(instruction.startsWith("RETRIEVECONVERSATION")){
             String[] attributes = instruction.split(" ");
             handleReadConversation(Integer.parseInt(attributes[1]), attributes[2], client);
-        }
-        else if(instruction.startsWith("CREATEUSER")) {
+        } else if(instruction.startsWith("CREATEUSER")) {
         	String[] attributes = instruction.split(" ");
         	handleCreateUser(attributes[1], attributes[2], attributes[3], attributes[4], attributes[5], attributes[6], client);  
-        }
-        else if(instruction.startsWith("GETUSERS")) {
+        } else if(instruction.startsWith("GETUSERS")) {
             handleReadUsers(client);
-        }
-        else if(instruction.startsWith("GETUSER")) {
+        } else if(instruction.startsWith("GETUSER")) {
         	String[] attributes = instruction.split(" ");
         	handleReadUser(Integer.parseInt(attributes[1]), client);        	
-        }
-
-        else if(instruction.startsWith("UPDATEPWD")) {
+        } else if(instruction.startsWith("UPDATEPWD")) {
         	String[] attributes = instruction.split(" ");
         	handleUpdatePwd(attributes[1], attributes[2], client);  
-        }
-        else if(instruction.startsWith("UPDATEUSER")) {
+        } else if(instruction.startsWith("UPDATEUSER")) {
         	String[] attributes = instruction.split(" ");
         	handleUpdateUser(Integer.parseInt(attributes[1]), attributes[2], attributes[3], attributes[4], attributes[5], attributes[7], client);  
-        }
-        else if(instruction.startsWith("DELETEUSER")) {
+        } else if(instruction.startsWith("DELETEUSER")) {
         	String[] attributes = instruction.split(" ");
         	handleDeleteUser(Integer.parseInt(attributes[1]), attributes[2], client);  
-        }
-        else if(instruction.startsWith("GETCONVEMAIL")){
+        } else if(instruction.startsWith("GETCONVEMAIL")){
             String[] attributes = instruction.split(" ");
             handleGetConversationEmails(Integer.parseInt(attributes[1]), client);
-        }
-        else if (instruction.startsWith("GETTEACHER")){
+        } else if (instruction.startsWith("GETTEACHER")){
             handleListTeacherFromClient(client);
-        }
-        else if(instruction.startsWith("DELETECONVERSATION")){
+        } else if(instruction.startsWith("DELETECONVERSATION")){
             String[] attributes = instruction.split(" ");
             handleDeleteConversation(Integer.parseInt(attributes[1]), attributes[2], client);
-        }
-        else if (instruction.startsWith("GETRECORDS")){
+        } else if (instruction.startsWith("GETRECORDS")){
             handleGetAllRecord(client);
-        }
-        else if(instruction.startsWith("DOWNLOADRECORD")){
+        } else if(instruction.startsWith("DOWNLOADRECORD")){
             handleRecordDownloadRequest(Integer.parseInt(instruction.split(" ")[1]), client);
-        }else if(instruction.startsWith("GETPADMIN")){
+        } else if(instruction.startsWith("GETPADMIN")){
             handleGetAllPossibleAdmin(client);
-        }else if(instruction.startsWith("GETADMIN")){
+        } else if(instruction.startsWith("GETADMIN")){
             handleGetAllAdmin(client);
-        }
-        else if (instruction.startsWith("GETRECORDBYUSER")){
+        } else if (instruction.startsWith("GETRECORDBYUSER")){
             handleGetRecordByUser(Integer.parseInt(instruction.split("-/-")[1]), client);
+        } else if(instruction.startsWith("DELETERECORD")){
+            handleDeleteRecordRequest(Integer.parseInt(instruction.split("-/-")[1]), client);
         }
+
     }
+
 
 
 
@@ -1035,6 +1016,27 @@ public class GeneralServer implements Observer {
         }
     }
 
+
+    /**
+     * This method deletes the record from the database and the storage service, then sends the result of the operation to the client.
+     * @param recordID the record ID
+     * @param client the asking client
+     */
+    private void handleDeleteRecordRequest(int recordID, ConnectionToClient client) {
+        String result= "#DELETEDRECORD FAILURE";
+        RecordType record = dao.getRecordsDAO().getRecord(recordID);
+        int dbDeletion = dao.getRecordsDAO().deleteRecord(recordID);
+        if(dbDeletion == 1){
+            boolean storageDeletion = fileStorageHandler.deleteFile(record.getName());
+            if(storageDeletion)
+                result = "#DELETEDRECORD SUCCESS";
+        }
+        try {
+            client.sendToClient(result);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
     /**
      * This method handles when the client wants the possible admins list

@@ -332,4 +332,4 @@ Arguments:
 | 6        | Teacher       |    PolyMtp | teacher@umontpellier.fr            |Teacher       |TEACHER   |  
 | 8        | Staff         | PolyMtp    | StaffAdmin@umontpellier.fr         |AdmStaff      |ADMIN     |  
 | 9        | SuperStaff    | PolyMtp    | SuperAdminAdmin@umontpellier.fr    |SuperAdmin    |SUPERADMIN|  
-| 11       | Stratulat     | Tiberiu    | tibi.stratulat@umontpellier.fr     |Tibi          |TEACHER   |# Learn Together  
+| 11       | Stratulat     | Tiberiu    | tibi.stratulat@umontpellier.fr     |Tibi          |TEACHER   |

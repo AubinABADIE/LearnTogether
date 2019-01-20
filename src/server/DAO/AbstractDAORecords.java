@@ -16,7 +16,7 @@ public abstract class AbstractDAORecords {
 
 
     /**
-     * This method search all the records in the data base
+     * This method searches all the records in the data base
      * @return : the record list
      */
     public abstract List<RecordType> searchAllRecords();
@@ -26,9 +26,11 @@ public abstract class AbstractDAORecords {
     public abstract RecordType getRecord(int recordID);
 
     /**
-     * This methos seaches the records by user in the data base
+     * This method searches the records by user in the data base
      * @param id : user id
      * @return : the record list of one user
      */
     public abstract List<RecordType> searchRecordsByUser(int id);
+
+    public abstract int deleteRecord(int recordID);
 }
