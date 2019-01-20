@@ -18,8 +18,8 @@ public class CourseServices {
 	 * @param totalHours : the total hours of the course
 	 * @param idT : the referring teacher of the course
 	 */
-	public void handleCreateCourse (String name, String description, int totalHours, int idT){
-		String objConstruct = name + "-/-" + description + "-/-" + totalHours + "-/-" + idT;
+	public void handleCreateCourse (String name, String description, int totalHours, int idT, int promo){
+		String objConstruct = name + "-/-" + description + "-/-" + totalHours + "-/-" + idT + "-/-" + promo;
 		try {
 	    	client.getConnection().sendToServer("#CREATECOURSE-/-" + objConstruct);
 	    } catch (IOException e) {
@@ -34,8 +34,8 @@ public class CourseServices {
 	 * @param totalHours : the total hours of the course
 	 * @param idT : the referring teacher of the course
      */
-    public void handleUpdateCourse (int id, String name, String description, int totalHours, int idT){
-        String objConstruct = id + "-/-" + name + "-/-" + description + "-/-" + totalHours + "-/-" + idT;
+    public void handleUpdateCourse (int id, String name, String description, int totalHours, int idT, int promoId){
+        String objConstruct = id + "-/-" + name + "-/-" + description + "-/-" + totalHours + "-/-" + idT + "-/-" + promoId;
 
         try {
             client.getConnection().sendToServer("#UPDATECOURSE-/-" + objConstruct);

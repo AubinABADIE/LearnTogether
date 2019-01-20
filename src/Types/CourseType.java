@@ -8,13 +8,15 @@ public class CourseType implements Serializable {
     private String description;
     private int nbTotalHour;
     private int idTeacher;
+    private int idPromo;
 
-    public CourseType(int id, String name, String description, int totalHours, int idTeacher){
+    public CourseType(int id, String name, String description, int totalHours, int idTeacher,int idPromo){
         this.id = id;
         this.name = name;
         this.description = description;
         this.setNbTotalHour(totalHours);
         this.idTeacher=idTeacher;
+        this.setIdPromo(idPromo);
     }
 
     public int getId() {
@@ -60,5 +62,13 @@ public class CourseType implements Serializable {
 
 	public void setNbTotalHour(int nbTotalHour) {
 		this.nbTotalHour = nbTotalHour;
+	}
+
+	public int getIdPromo() {
+		return idPromo;
+	}
+
+	public void setIdPromo(int idPromo) {
+		this.idPromo = idPromo;
 	}
 }

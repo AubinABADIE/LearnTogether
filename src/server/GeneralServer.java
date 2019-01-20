@@ -137,13 +137,13 @@ public class GeneralServer implements Observer {
         }
         else if (instruction.startsWith("CREATECOURSE")){
             String[] attributes = instruction.split("-/-");
-            handleCreateCourseFromClient(attributes[1], attributes[2], Integer.parseInt(attributes[3]), attributes[4], client);
+            handleCreateCourseFromClient(attributes[1], attributes[2], Integer.parseInt(attributes[3]), attributes[4], Integer.parseInt(attributes[5]), client);
         }else if (instruction.startsWith("DELETECOURSE")){
             String[] attributes = instruction.split("-/-");
             handleDeleteCourseFromClient(Integer.parseInt(attributes[1]), client);
         } else if(instruction.startsWith("UPDATECOURSE")){
             String[] attributes = instruction.split("-/-");
-            handleUpdateCourseFromClient(Integer.parseInt(attributes[1]),attributes[2],attributes[3], Integer.parseInt(attributes[4]), attributes[5], client);
+            handleUpdateCourseFromClient(Integer.parseInt(attributes[1]),attributes[2],attributes[3], Integer.parseInt(attributes[4]), attributes[5], Integer.parseInt(attributes[6]), client);
         } else if (instruction.startsWith("GETCOURSES")){
             handleListCoursesFromClient(client);
         } else if (instruction.startsWith("GETCOURSET")){
@@ -162,14 +162,14 @@ public class GeneralServer implements Observer {
         	String[] attributes = instruction.split(" ");
         	handleCreateUser(attributes[1], attributes[2], attributes[3], attributes[4], attributes[5], attributes[6], client);  
         }
+        else if(instruction.startsWith("GETUSERS")) {
+            handleReadUsers(client);
+        }
         else if(instruction.startsWith("GETUSER")) {
         	String[] attributes = instruction.split(" ");
         	handleReadUser(Integer.parseInt(attributes[1]), client);        	
         }
-        else if(instruction.startsWith("GETUSERS")) {
-        	String[] attributes = instruction.split(" ");
-        	handleReadUsers(client);        	
-        }
+
         else if(instruction.startsWith("UPDATEPWD")) {
         	String[] attributes = instruction.split(" ");
         	handleUpdatePwd(attributes[1], attributes[2], client);  
@@ -505,9 +505,9 @@ public class GeneralServer implements Observer {
      * @param client : client who create the course
      */
     
-    private void handleCreateCourseFromClient(String courseName, String courseDescription, int nbHourTotal, String idTeacher, ConnectionToClient client){
+    private void handleCreateCourseFromClient(String courseName, String courseDescription, int nbHourTotal, String idTeacher, int promoId, ConnectionToClient client){
     	int idTeacherRef = Integer.parseInt(idTeacher);
-    	int result = dao.getCourseDAO().createCourse(courseName, courseDescription, nbHourTotal, idTeacherRef);
+    	int result = dao.getCourseDAO().createCourse(courseName, courseDescription, nbHourTotal, idTeacherRef, promoId);
 
         String mess;
         if (result == 1){
@@ -586,8 +586,8 @@ public class GeneralServer implements Observer {
      * @param client : client who update the course
      */
     
-    public void handleUpdateCourseFromClient (int idCourse, String courseName, String courseDescription, int nbTotalHour, String idTeacher, ConnectionToClient client ){
-    	int result = dao.getCourseDAO().updateCourse(idCourse, courseName, courseDescription, nbTotalHour, idTeacher);
+    public void handleUpdateCourseFromClient (int idCourse, String courseName, String courseDescription, int nbTotalHour, String idTeacher, int promoId, ConnectionToClient client ){
+    	int result = dao.getCourseDAO().updateCourse(idCourse, courseName, courseDescription, nbTotalHour, idTeacher, promoId);
 
         String mess;
         if (result == 1){
