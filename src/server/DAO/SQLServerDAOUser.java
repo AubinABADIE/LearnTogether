@@ -73,7 +73,7 @@ public class SQLServerDAOUser extends AbstractDAOUser {
      * @return
      */
     @Override
-	public int createDAOUser(String name, String firstname, String birthDate, String email, String role, String password, String jobType) {
+	public int createDAOUser(String name, String firstName, String birthDate, String email, String role, String password, String jobType) {
     	Connection connection = getConnection();
         int result = 0;
         if(connection != null){
