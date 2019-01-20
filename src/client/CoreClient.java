@@ -117,13 +117,13 @@ public class CoreClient implements ClientIF {
             else if  (((String) msg).startsWith("#DELETEDDEPARTMENT")){
                 department.handleDeletedDepartment((String) msg);
             }
-            else if  (((String) msg).startsWith("#CREATEDPROMOTION")){
+            else if  (((String) msg).startsWith("#CREATEDPROMO")){
                 promo.handleCreatedPromo((String) msg);
             }
-            else if  (((String) msg).startsWith("#UPDATEDPROMOTION")){
+            else if  (((String) msg).startsWith("#UPDATEDPROMO")){
                 promo.handleUpdatedPromo((String) msg);
             }
-            else if  (((String) msg).startsWith("#DELETEDPROMOTION")){
+            else if  (((String) msg).startsWith("#DELETEDPROMO")){
                 promo.handleDeletedPromo((String) msg);
             }
             else if  (((String) msg).startsWith("#CREATEDCLASS")){
