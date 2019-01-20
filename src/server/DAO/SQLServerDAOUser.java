@@ -126,22 +126,21 @@ public class SQLServerDAOUser extends AbstractDAOUser {
      *
      * @param id
      * @param name
-     * @param firstname
+     * @param firstName
      * @param birthDate
      * @param email
-     * @param password
      * @param role
      * @return
      */
     @Override
-	public int updateDAOUser(int id, String name, String firstname, String email, String birthDate, String role) {
+	public int updateDAOUser(int id, String name, String firstName, String email, String birthDate, String role) {
     	Connection connection = getConnection();
         int res = 0;
         if(connection != null){
             try{
-                PreparedStatement preparedStatement = connection.prepareStatement("UPDATE GeneralUsers SET name = ?, firstname = ?, email = ?, birthdate = ?, role = ? WHERE idUser = ?");
+                PreparedStatement preparedStatement = connection.prepareStatement("UPDATE GeneralUsers SET name = ?, firstName = ?, email = ?, birthDate = ?, role = ? WHERE idUser = ?");
                 preparedStatement.setString(1,name);
-                preparedStatement.setString(2,firstname);
+                preparedStatement.setString(2,firstName);
                 preparedStatement.setString(3,email);
                 preparedStatement.setString(4,birthDate);
                 preparedStatement.setString(5,role);

@@ -173,4 +173,20 @@ public class SQLServerDAORecord extends AbstractDAORecords{
         }
         return records;
     }
+
+    @Override
+    public int deleteRecord(int recordID) {
+        int result = 0;
+        Connection connection = getConnection();
+        if(connection!=null){
+            try{
+                PreparedStatement preparedStatement = connection.prepareStatement("delete from Records where idRecord=?");
+                preparedStatement.setInt(1, recordID);
+                result = preparedStatement.executeUpdate();
+            }catch (SQLException e){
+                e.printStackTrace();
+            }
+        }
+        return result;
+    }
 }
