@@ -1751,8 +1751,9 @@ public class AdminUI extends TeacherUI {
     }
     
     /**
+     * Create the user management tab for admin.
      * 
-     * @return
+     * @return Tab user
      */
     protected Tab createTabUser(){
 
@@ -1765,9 +1766,10 @@ public class AdminUI extends TeacherUI {
     }
 
     /**
+     * Create the content of the user management tab.
      * 
      * @param tabUser
-     * @return
+     * @return A GridPane which is the tab content.
      */
     protected GridPane readUser(Tab tabUser){
 
@@ -1927,9 +1929,10 @@ public class AdminUI extends TeacherUI {
     }
     
     /**
+     * Create the content of the user create tab.
      * 
      * @param tabUser
-     * @return
+     * @return A GridPane which is the tab content.
      */
     private GridPane createUser(Tab tabUser) {
         
@@ -2045,6 +2048,7 @@ public class AdminUI extends TeacherUI {
 	}
 
     /**
+     * Create the content of the user update tab.
      * 
      * @param tabUser
      * @param name
@@ -2052,6 +2056,7 @@ public class AdminUI extends TeacherUI {
      * @param email
      * @param id
      * @param role
+     * @return A GridPane which is the tab content.
      */
 	private GridPane updateUser(Tab tabUser, int id, String name, String firstName, String email, String birthDate, String role) {
 		

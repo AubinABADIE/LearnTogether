@@ -227,7 +227,7 @@ public abstract class UI extends Application implements DisplayIF {
     }
     
     /**
-     * Create the profile tab for all user type
+     * Create the profile tab for all user type.
      * 
      * @return Profile tab
      */
@@ -242,6 +242,12 @@ public abstract class UI extends Application implements DisplayIF {
         return tabProfile;
     }
     
+    /**
+     * Create the content of the profile tab.
+     * 
+     * @param tabProfile
+     * @return A GridPane which is the tab content.
+     */
     public GridPane readProfile(Tab tabProfile) {
     	
         client.handleReadUser(userID);
@@ -334,6 +340,12 @@ public abstract class UI extends Application implements DisplayIF {
         return gridProfile;
     }
     
+    /**
+     * Create the content of the profile update tab.
+     * 
+     * @param tabProfile
+     * @return A GridPane which is the tab content.
+     */
     public GridPane updateProfile(Tab tabProfile) {
     	// Labels
     	Label old = new Label("Old password: ");

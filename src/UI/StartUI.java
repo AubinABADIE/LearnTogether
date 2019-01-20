@@ -387,7 +387,7 @@ public class StartUI extends UI {
         gridPane.add(nameLabel, 0,1);
 
         // Add Name Text Field
-        TextField nameField = new TextField("teacher@umontpellier.fr");
+        TextField nameField = new TextField("StaffAdmin@umontpellier.fr");
         nameField.setPrefHeight(40);
         gridPane.add(nameField, 1,1);
 
@@ -398,6 +398,7 @@ public class StartUI extends UI {
         // Add Password Text Field
         PasswordField passwordField = new PasswordField();
         passwordField.setPrefHeight(40);
+        passwordField.setText("AdmStaff");
         gridPane.add(passwordField, 1, 2);
 
         // Add Login Button
@@ -613,6 +614,9 @@ public class StartUI extends UI {
 
         }
     
+    /**
+     * Set the user for the current UI.
+     */
     @Override
 	public void setUser(UserType user) {
     	Platform.runLater(() -> {
@@ -652,7 +656,9 @@ public class StartUI extends UI {
         });
     }
 
-
+    /**
+     * Get all users in DB and set them in a list for the user management tab.
+     */
 	@Override
 	public void getUsers(List<UserType> users) {
 		Platform.runLater(() -> {

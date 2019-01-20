@@ -403,6 +403,7 @@ public class CoreClient implements ClientIF {
      **********************/
     /**
      * This method delegates to userServices the user creation request
+     * 
      * @param name : user name
      * @param firstname : user first name
      * @param birthDate : user birth date
@@ -416,6 +417,7 @@ public class CoreClient implements ClientIF {
 
     /**
      * This method delegates to userServices the user reading request
+     * 
      * @param id : user id
      */
     public void handleReadUser(int id) {
@@ -424,6 +426,7 @@ public class CoreClient implements ClientIF {
 
     /**
      * This method delegates to userServices the password updated request
+     * 
      * @param login : user email
      * @param pwd : user password
      */
@@ -433,6 +436,7 @@ public class CoreClient implements ClientIF {
 
     /**
      * This method delegates to userServices the user updated request
+     * 
      * @param id : user id
      * @param name : user name
      * @param firstname : user first name
@@ -447,6 +451,7 @@ public class CoreClient implements ClientIF {
 
     /**
      * This method delegates to userServices the user deletion request
+     * 
      * @param id : user id
      */
     public void handleDeleteUser(int id, String role) {
