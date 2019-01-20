@@ -73,20 +73,47 @@ public class SQLServerDAOUser extends AbstractDAOUser {
      * @return
      */
     @Override
-	public int createDAOUser(String name, String firstName, String birthDate, String email, String role, String password) {
+	public int createDAOUser(String name, String firstname, String birthDate, String email, String role, String password, String jobType) {
     	Connection connection = getConnection();
         int result = 0;
         if(connection != null){
             try{
-                PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO GeneralUsers (name, firstName, birthDate, email, password, role) VALUES (? ,? ,? ,? ,?, ?)");
+            	PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO GeneralUsers (name, firstname, birthDate, email, password, role) VALUES (? ,? ,? ,? ,?, ?)");
                 preparedStatement.setString(1, name);
                 preparedStatement.setString(2, firstName);
                 preparedStatement.setString(3, birthDate);
                 preparedStatement.setString(4, email);
                 preparedStatement.setString(5, password);
                 preparedStatement.setString(6, role.toUpperCase());
-                result = preparedStatement.executeUpdate();
+                preparedStatement.executeUpdate();
+                
+                PreparedStatement preparedStatement2 = connection.prepareStatement("SELECT idUser FROM GeneralUsers WHERE email = ?");
+                preparedStatement2.setString(1, email);
+                ResultSet resultSet = preparedStatement2.executeQuery();
+                int id = 0;
+                if(resultSet != null){
+                    resultSet.next();
+                    id = resultSet.getInt("idUser");
+                }
 
+            	if(role.equals("STUDENT")) {
+            		PreparedStatement preparedStatement3 = connection.prepareStatement("INSERT INTO Students (idStudent) VALUES (?) ");
+            		preparedStatement3.setInt(1, id);
+                    result = preparedStatement3.executeUpdate();
+            	} else if(role.equals("TEACHER")) {
+            		PreparedStatement preparedStatement3 = connection.prepareStatement("INSERT INTO Teachers (idTeacher, isAdmin) VALUES (?, ?)");
+            		preparedStatement3.setInt(1, id);
+            		preparedStatement3.setBoolean(2, false);
+            		result = preparedStatement3.executeUpdate();
+            	} else if(role.equals("STAFF")) {
+            		PreparedStatement preparedStatement3 = connection.prepareStatement("INSERT INTO Staffs (idStaff, jobType, isAdmin, isSuperAdmin) VALUES (?, ?, ?, ?)");
+            		preparedStatement3.setInt(1, id);
+            		preparedStatement3.setString(2, jobType);
+            		preparedStatement3.setBoolean(3, false);
+            		preparedStatement3.setBoolean(4, false);
+                    result = preparedStatement3.executeUpdate();
+            	}
+                
             }catch (SQLException e){
                 e.printStackTrace();
             }
