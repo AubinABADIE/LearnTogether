@@ -484,6 +484,11 @@ public class SQLServerDAOUser extends AbstractDAOUser {
     }
 
 
+
+    /**
+     * This method retrieves the staff who are not admin from the database.
+     * @return a list of staffs (users).
+     */
     @Override
     public List<StaffType> getAllStaffNotAdmin() {
         List<StaffType> users = new ArrayList();

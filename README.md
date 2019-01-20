@@ -236,7 +236,104 @@ No parameters.
 ### #GETUSER 
 Used when the client wants a user into database to display his profile.  
 No parameters. 
-  
+
+### #CREATEDEP
+Used when the client wants to create a department into the database. The parse method for the different parameters is "-/-"
+Arguments:
+- name: String
+- refTeacherId : int
+- description : String
+*Usage*: `#CREATEDEP-/-{name}-/-{refTeacherId}-/-{description}`
+
+### #DELETEDEP
+Used when the client wants to delete a department. The parse method for the different parameters is "-/-"
+Arguments:
+- id : int
+*Usage*: `#DELETEDEP-/-{id}`
+
+### #UPDATEDEP
+Used when the client wants to update a department into the database. The parse method for the different parameters is "-/-"
+Arguments:
+- id = int
+- name: String
+- refTeacherId : int
+- description : String
+*Usage*: `#UPDATEDEP-/-{id}-/-{name}-/-{refTeacherId}-/-{description}`
+
+### #GETDEPARTMENT
+Used when the client wants the list of all departments.
+No parameters.
+
+### #CREATEPROMOTION
+Used when the client wants to create a promotion into the database. The parse method for the different parameters is "-/-"
+Arguments:
+- name: String
+- description : String
+- graduationYear : int
+- idDepartment : int
+*Usage*: `#CREATEPROMOTION-/-{name}-/-{description}-/-{graduationYear}-/-{idDepartment}`
+
+### #DELETEPROMOTION
+Used when the client wants to delete a promotion. The parse method for the different parameters is "-/-"
+Arguments:
+- id : int
+*Usage*: `#DELETEPROMOTION-/-{id}`
+
+### #UPDATEPROMOTION
+Used when the client wants to update a promotion into the database. The parse method for the different parameters is "-/-"
+Arguments:
+- id = int
+- name: String
+- description : String
+- graduationYear : int
+- idDepartment : int
+*Usage*: `#UPDATEPROMOTION-/-{id}-/-{name}-/-{description}-/-{graduationYear}-/-{idDepartment}`
+
+### #GETPROMOTION
+Used when the client wants the list of all promotions.
+No parameters.
+
+### #GETPROMOTIONBYDEP
+Used when the client wants the list of all promotions related to a specific department.
+Arguments:
+- idDepartment : int
+*Usage*: `#GETPROMOTIONBYDEP-/-{idDep}`
+
+### #CREATECLASS
+Used when the client wants to create a class into the database. The parse method for the different parameters is "-/-"
+Arguments:
+- name: String
+- description : String
+- refPromoId : int
+*Usage*: `#CREATECLASS-/-{name}-/-{description}-/-{refPromoId}`
+
+### #DELETECLASS
+Used when the client wants to delete a class. The parse method for the different parameters is "-/-"
+Arguments:
+- id : int
+*Usage*: `#DELETECLASS-/-{id}`
+
+### #UPDATECLASS
+Used when the client wants to update a class into the database. The parse method for the different parameters is "-/-"
+Arguments:
+- id = int
+- name: String
+- description : String
+- refPromoId : int
+*Usage*: `#UPDATECLASS-/-{id}-/-{name}-/-{description}-/-{refPromoId}`
+
+### #GETCLASS
+Used when the client wants the list of all classes.
+No parameters.
+
+### #GETCLASSBYPROMO
+Used when the client wants the list of all classes related to a specific promotion.
+Arguments:
+- idPromotion : int
+*Usage*: `#GETCLASSBYPROMO/-{idPromotion}`
+
+
+
 ## FROM the server  
   
   
@@ -333,3 +430,60 @@ Arguments:
 | 8        | Staff         | PolyMtp    | StaffAdmin@umontpellier.fr         |AdmStaff      |ADMIN     |  
 | 9        | SuperStaff    | PolyMtp    | SuperAdminAdmin@umontpellier.fr    |SuperAdmin    |SUPERADMIN|  
 | 11       | Stratulat     | Tiberiu    | tibi.stratulat@umontpellier.fr     |Tibi          |TEACHER   |
+
+
+### \#CREATEDDEPARTMENT
+The server responds to a #CREATEDEPARTMENT injonction from the client by sending this.
+Arguments :
+- mess : String with the result of the action.
+*Usage*: `#CREATEDDEPARTMENT {mess}`
+
+### #DELETEDDEPARTMENT
+The server responds to a #DELETEDEPARTMENT from the client by sending this.
+Arguments:
+- mess : String with the result of the action.
+*Usage*:  `#DELETEDDEPARTMENT {mess}`
+
+### #UPDATEDDEPARTMENT
+The server responds to a #UPDATEDEPARTMENT from the client by sending this.
+Arguments:
+- mess : String with the result of the action.
+*Usage*:  `#UPDATEDDEPARTMENT {mess}`
+
+### \#CREATEDPROMO
+The server responds to a #CREATEPROMO injonction from the client by sending this.
+Arguments :
+- mess : String with the result of the action.
+*Usage*: `#CREATEDPROMO {mess}`
+
+### #DELETEDPROMO
+The server responds to a #DELETEPROMOTION from the client by sending this.
+Arguments:
+- mess : String with the result of the action.
+*Usage*:  `#DELETEDPROMO {mess}`
+
+### #UPDATEDPROMO
+The server responds to a #UPDATEPROMOTION from the client by sending this.
+Arguments:
+- mess : String with the result of the action.
+*Usage*:  `#UPDATEDPROMOTION {mess}`
+
+
+### \#CREATEDCLASS
+The server responds to a #CREATECLASS injonction from the client by sending this.
+Arguments :
+- mess : String with the result of the action.
+*Usage*: `#CREATEDCLASS {mess}`
+
+### #DELETEDCLASS
+The server responds to a #DELETECLASS from the client by sending this.
+Arguments:
+- mess : String with the result of the action.
+*Usage*:  `#DELETEDCLASS {mess}`
+
+### #UPDATEDCLASS
+The server responds to a #UPDATECLASS from the client by sending this.
+Arguments:
+- mess : String with the result of the action.
+*Usage*:  `#UPDATEDCLASS {mess}`
+
