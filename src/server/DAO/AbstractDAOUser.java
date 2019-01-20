@@ -2,6 +2,7 @@ package server.DAO;
 
 
 import Types.AdminType;
+import Types.StaffType;
 import Types.TeacherType;
 import Types.UserType;
 
@@ -9,6 +10,7 @@ import java.sql.Connection;
 import java.util.List;
 
 /**  This class is the abstract class for the DAO user
+ * @author Audrey SAMSON
  * @author Aubin ABADIE
  * @author Yvan SANSON
  */
@@ -96,6 +98,13 @@ public abstract class AbstractDAOUser {
      */
     public abstract List<TeacherType> searchAllTeacher();
 
+
+    /**
+     * This method returns the teachers list of the teachers who are not admins
+     * @return the teacher list.
+     */
+    public abstract List<TeacherType> searchAllTeacherNA();
+
     /**
      * This method return the users list
      * @return the users list.
@@ -103,16 +112,28 @@ public abstract class AbstractDAOUser {
     public abstract List<UserType> getAllUsers();
     
     /**
-     * This method returns the users that can be admins.
-     * It selects the teachers and staffs from the DB.
+     * This method returns the staff that are not admin.
      * @return a list of users.
      */
-    public abstract List<UserType> getPossibleAdmin();
+    public abstract List<StaffType> getAllStaffNotAdmin();
     
     /**
      * This method retrieves the admins from the database.
      * @return a list of admins.
      */
     public abstract List<AdminType> getAllAdmin();
+
+    /**
+     * This method updates a user in the DAO with its ID.
+     * @param id the user ID
+     * @param name the user name
+     * @param firstName the user first name
+     * @param birthDate the user birth date
+     * @param email the user email
+     * @param role the user role
+     * @param isAdmin is the user is admin or not
+     * @return 0 or 1 depending if the update failed or succeeded.
+     */
+    public abstract int updateDAOAdminUser(int id, String name, String firstName, String email, String birthDate, String role, int isAdmin);
 
 }

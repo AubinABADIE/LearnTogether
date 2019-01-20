@@ -32,6 +32,7 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.stage.Window;
 
+import java.sql.Date;
 import java.util.List;
 
 /**
@@ -47,6 +48,7 @@ public class TeacherUI extends UI {
 	private Scene principalTeacherScene;
 	private Tab  tabRecords;
 	Tab tabCourse;
+	Tab tabEvent;
 	protected ObservableList<PromotionType> promoNames;
 
     /**
@@ -99,6 +101,8 @@ public class TeacherUI extends UI {
         Tab tabChat = createChatTab();
         
         tabCourse = tabCourse();
+        
+        tabEvent = tabEvent();
 
         tabPane.getTabs().add(tabProfile);
         tabPane.getTabs().add(tabSchedule);
@@ -106,6 +110,7 @@ public class TeacherUI extends UI {
         tabPane.getTabs().add(tabDiary);
         tabPane.getTabs().add(tabChat);
         tabPane.getTabs().add(tabCourse);
+        tabPane.getTabs().add(tabEvent);
         
 
         topBar.getChildren().addAll(titleBar, tabPane);
@@ -116,7 +121,7 @@ public class TeacherUI extends UI {
         principalTeacherScene = new Scene(teacherScene, 900, 700);
         return principalTeacherScene;
 	}
-
+	
     /**
      * This method creates the tab for the courses management.
      * @return the tab.
@@ -127,6 +132,18 @@ public class TeacherUI extends UI {
         tabCourse.setClosable(false);
         tabCourse.setContent(courseRead(tabCourse));
         return tabCourse;
+	}
+	
+	/**
+     * This method creates the tab for the event management.
+     * @return the tab.
+     */
+	protected Tab tabEvent(){
+        Tab tabEvent = new Tab();
+        tabEvent.setText("Event");
+        tabEvent.setClosable(false);
+        tabEvent.setContent(eventRead(tabEvent));
+        return tabEvent;
 	}
 
     /**
@@ -504,5 +521,191 @@ public class TeacherUI extends UI {
         });
 
         return gridUpdateCourse;
+    }
+	
+	protected GridPane eventRead(Tab tabEvent){
+        client.getEvents();
+        ListView<EventType> list = new ListView<>();
+        Date d1 = new Date(2018, 01, 14);
+        EventType et = new EventType(1, d1, (float)1.5, 1, 2, 5, 4, 5, 6);
+        eventNames = FXCollections.observableArrayList();
+        eventNames.add(et);
+        eventNames.addListener((ListChangeListener<EventType>) c -> list.setItems(eventNames));
+
+        Image addEvent = new Image(getClass().getResourceAsStream("images/icons8-plus-208.png"));
+        ImageView addEventView = new ImageView(addEvent);
+        addEventView.setFitHeight(15);
+        addEventView.setFitWidth(15);
+
+        //create button add
+        Button btnAddEvent = new Button("Add");
+        btnAddEvent.setGraphic(addEventView);//setting icon to button
+
+        //delete button
+        Image deleteEvent = new Image(getClass().getResourceAsStream("images/icons8-annuler-208.png"));
+        ImageView deleteEventView = new ImageView(deleteEvent);
+        deleteEventView.setFitHeight(12);
+        deleteEventView.setFitWidth(12);
+
+        //create button delete
+        Button btnDeleteEvent = new Button("Delete");
+        btnDeleteEvent.setGraphic(deleteEventView);//setting icon to button
+
+        // add in hbox buttons and title
+        HBox hboxButtonEvent = new HBox();
+
+        Text title = new Text("Event : ");
+        title.setFont(Font.font(20));
+        hboxButtonEvent.getChildren().add(title);
+        hboxButtonEvent.getChildren().add(btnAddEvent);
+        hboxButtonEvent.getChildren().add(btnDeleteEvent);
+        hboxButtonEvent.setSpacing(5);
+
+        list.setItems(eventNames);
+        System.out.println(eventNames);
+        list.setPrefWidth(350);
+        list.setPrefHeight(500);
+
+        // left vbox
+        VBox vboxListEvent = new VBox();
+        vboxListEvent.getChildren().add(list);
+
+        //grid pane
+        GridPane gridEventVisu = new GridPane();
+        gridEventVisu.setHgap(10);
+        gridEventVisu.setVgap(10);
+        gridEventVisu.setPadding(new Insets(10,10,10,10));
+
+        gridEventVisu.add(hboxButtonEvent, 1, 0);
+        gridEventVisu.add(vboxListEvent, 1, 2);
+
+        /*creation of the info vbox of one event*/
+        VBox vboxInfoEvent = new VBox();
+
+        //title of column
+        HBox hboxEventInfo = new HBox();
+        Text titleInfo = new Text("Event information : ");
+        titleInfo.setFont(Font.font(20));
+        hboxEventInfo.getChildren().add(titleInfo);
+        hboxEventInfo.setAlignment(Pos.CENTER);
+
+        // initialisation label and input
+        HBox hbDateTime= new HBox();
+        HBox hbDuration = new HBox();
+        HBox hbIdRoom = new HBox();
+        HBox hbIdCourse = new HBox();
+        HBox hbIdTeacher = new HBox();
+        HBox hbIdClass = new HBox();
+        HBox hbIdPromo = new HBox();
+        HBox hbIdDepartement = new HBox();
+
+        Label dateTimeLabel = new Label("Heure de début : ");
+        Label durationLabel = new Label("Duration : ");
+        Label idRoomLabel = new Label("Room : ");
+        Label idCourseLabel = new Label("Course : ");
+        Label idTeacherLabel = new Label("Teacher : ");
+        Label idClassLabel = new Label("Class : ");
+        Label idPromoLabel = new Label("Promotion : ");
+        Label idDepartementLabel = new Label("Departement : ");
+
+
+        Text dateTime = new Text(" ");
+        Text duration = new Text(" ");
+        Text idRoom = new Text(" ");
+        Text idCourse = new Text(" ");
+        Text idTeacher = new Text(" ");
+        Text idClass = new Text(" ");
+        Text idPromo = new Text(" ");
+        Text idDepartement = new Text(" ");
+
+        hbDateTime.getChildren().add(dateTimeLabel);
+        hbDuration.getChildren().add(durationLabel);
+        hbIdRoom.getChildren().add(idRoomLabel);
+        hbIdCourse.getChildren().add(idCourseLabel);
+        hbIdTeacher.getChildren().add(idTeacherLabel);
+        hbIdClass.getChildren().add(idClassLabel);
+        hbIdPromo.getChildren().add(idPromoLabel);
+        hbIdDepartement.getChildren().add(idDepartementLabel);
+
+        hbDateTime.getChildren().add(dateTime);
+        hbDuration.getChildren().add(duration);
+        hbIdRoom.getChildren().add(idRoom);
+        hbIdCourse.getChildren().add(idCourse);
+        hbIdTeacher.getChildren().add(idTeacher);
+        hbIdClass.getChildren().add(idClass);
+        hbIdPromo.getChildren().add(idPromo);
+        hbIdDepartement.getChildren().add(idDepartement);
+
+        hbDateTime.setAlignment(Pos.CENTER);
+        hbDuration.setAlignment(Pos.CENTER);
+        hbIdRoom.setAlignment(Pos.CENTER);
+        hbIdCourse.setAlignment(Pos.CENTER);
+        hbIdTeacher.setAlignment(Pos.CENTER);
+        hbIdClass.setAlignment(Pos.CENTER);
+        hbIdPromo.setAlignment(Pos.CENTER);
+        hbIdDepartement.setAlignment(Pos.CENTER);
+
+
+        //create update button
+        HBox hboxupdateButton = new HBox();
+        Button btnUpdateEvent = new Button("Update");
+        hboxupdateButton.getChildren().add(btnUpdateEvent);
+        hboxupdateButton.setAlignment(Pos.CENTER);
+
+        vboxInfoEvent.getChildren().addAll(hbDateTime, hbDuration,hbIdRoom,hbIdCourse, hbIdTeacher, hbIdClass, hbIdPromo, hbIdDepartement, hboxupdateButton);
+        vboxInfoEvent.setSpacing(10);
+        vboxInfoEvent.setPadding( new Insets(100, 0, 0, 75));
+
+
+        btnAddEvent.setOnAction(event -> {
+            //createTabEvent(tabEvent);
+        });
+
+        btnUpdateEvent.setOnAction(event ->{
+            SelectionModel<EventType> selectedDeleteEvent = list.getSelectionModel();
+            if (selectedDeleteEvent.getSelectedItem() != null) {
+                //updateTabEvent(tabEvent, selectedDeleteEvent.getSelectedItem().getName(),selectedDeleteEvent.getSelectedItem().getDescription(),selectedDeleteEvent.getSelectedItem().getNbTotalHour(),selectedDeleteEvent.getSelectedItem().getIdTeacher(), selectedDeleteEvent.getSelectedItem().getId());
+            }
+        });
+
+        btnDeleteEvent.setOnAction(event -> {
+            SelectionModel<EventType> selectedDeleteEvent = list.getSelectionModel();
+            if (selectedDeleteEvent.getSelectedItem() != null){
+                Alert alert = new Alert(Alert.AlertType.CONFIRMATION,"You are sure to delete a event", ButtonType.YES, ButtonType.NO);
+                alert.setHeaderText("Confirmation delete");
+                Window win = gridEventVisu.getScene().getWindow();
+                alert.initOwner(win);
+                alert.showAndWait();
+                if (alert.getResult() == ButtonType.NO) {
+                    return;
+                }
+                if (alert.getResult() == ButtonType.YES) {
+                    //client.handleDeleteEvent(selectedDeleteEvent.getSelectedItem().getIdEvent());
+                }
+            }
+
+        });
+
+        list.setOnMouseClicked(event -> {
+            gridEventVisu.getChildren().remove(vboxInfoEvent);
+            gridEventVisu.add(vboxInfoEvent, 2, 2);
+            System.out.println("clicked on " + list.getSelectionModel().getSelectedItem());
+            SelectionModel<EventType> selectedEvent = list.getSelectionModel();
+            //dateTime.setDate(selectedEvent.getSelectedItem().getDateTimeEvent());
+            //duration.setText(selectedEvent.getSelectedItem().getDuration());
+            idRoom.setText(Integer.toString(selectedEvent.getSelectedItem().getIdRoom()));
+            idCourse.setText(Integer.toString(selectedEvent.getSelectedItem().getIdCourse()));
+            idTeacher.setText(Integer.toString(selectedEvent.getSelectedItem().getIdTeacher()));
+            idClass.setText(Integer.toString(selectedEvent.getSelectedItem().getIdClass()));
+            idPromo.setText(Integer.toString(selectedEvent.getSelectedItem().getIdPromo()));
+            idDepartement.setText(Integer.toString(selectedEvent.getSelectedItem().getIdDepartement()));
+        });
+
+        return gridEventVisu;
+	}
+
+    @Override
+    public void getStaff(List<StaffType> adm) {
+
     }
 }

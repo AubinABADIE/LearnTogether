@@ -43,6 +43,8 @@ public abstract class AbstractDAOFactory{
     public abstract AbstractDAOClass getClassDAO();
 
     public abstract AbstractDAORecords getRecordsDAO();
+    
+    public abstract AbstractDAOEvent getEventDAO();
 
     /**
      * This method creates a User DAO.
@@ -83,4 +85,11 @@ public abstract class AbstractDAOFactory{
      * This method creates a Records DAO.
      */
     public abstract void createDAORecords();
+
+    /**
+     * This method creates a Events DAO.
+     */
+    public abstract void createDAOEvent();
+
+	
 }

@@ -7,6 +7,7 @@ import Types.*;
 import com.lloseng.ocsf.server.ObservableOriginatorServer;
 import server.DAO.*;
 
+import java.sql.Date;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -24,8 +25,6 @@ public class GeneralServer implements Observer {
     private ObservableOriginatorServer comm;
     private ChatIF display;
     final private static int DEFAULT_PORT = 5555;
-    private Date currentDate;
-    private SimpleDateFormat dateFormat;
     private AbstractDAOFactory dao;
     private FileStorageHandler fileStorageHandler;
 
@@ -39,8 +38,6 @@ public class GeneralServer implements Observer {
         comm = new ObservableOriginatorServer(port);
         comm.addObserver(this);
         comm.listen();
-        currentDate = new Date();
-        dateFormat = new SimpleDateFormat(" '['HH:mm:ss']'");
         this.display=display;
         dao = new SQLServerFactory();
         dao.createDAOUser();
@@ -51,6 +48,7 @@ public class GeneralServer implements Observer {
         dao.createDAOPromotion();
         dao.createDAOClass();
         dao.createDAORecords();
+        dao.createDAOEvent();
         fileStorageHandler = new FileStorageHandler();
         display.display("Server is running on port " + port);
     }
@@ -164,7 +162,11 @@ public class GeneralServer implements Observer {
         } else if(instruction.startsWith("UPDATEPWD")) {
         	String[] attributes = instruction.split(" ");
         	handleUpdatePwd(attributes[1], attributes[2], client);  
-        } else if(instruction.startsWith("UPDATEUSER")) {
+        } else if(instruction.startsWith("UPDATEADMINUSER")) {
+            String[] attributes = instruction.split(" ");
+            handleUpdateAdminUser(Integer.parseInt(attributes[1]), attributes[2], attributes[3], attributes[4], attributes[5], attributes[7],attributes[8], client);
+        }
+        else if(instruction.startsWith("UPDATEUSER")) {
         	String[] attributes = instruction.split(" ");
         	handleUpdateUser(Integer.parseInt(attributes[1]), attributes[2], attributes[3], attributes[4], attributes[5], attributes[7], client);  
         } else if(instruction.startsWith("DELETEUSER")) {
@@ -173,6 +175,8 @@ public class GeneralServer implements Observer {
         } else if(instruction.startsWith("GETCONVEMAIL")){
             String[] attributes = instruction.split(" ");
             handleGetConversationEmails(Integer.parseInt(attributes[1]), client);
+        } else if (instruction.startsWith("GETTEACHERNA")) {
+            handleListTeacherNAFromClient(client);
         } else if (instruction.startsWith("GETTEACHER")){
             handleListTeacherFromClient(client);
         } else if(instruction.startsWith("DELETECONVERSATION")){
@@ -182,14 +186,28 @@ public class GeneralServer implements Observer {
             handleGetAllRecord(client);
         } else if(instruction.startsWith("DOWNLOADRECORD")){
             handleRecordDownloadRequest(Integer.parseInt(instruction.split(" ")[1]), client);
-        } else if(instruction.startsWith("GETPADMIN")){
-            handleGetAllPossibleAdmin(client);
-        } else if(instruction.startsWith("GETADMIN")){
+        } else if(instruction.startsWith("GETADMIN")) {
             handleGetAllAdmin(client);
+        } else if(instruction.startsWith("GETSTAFFNA")){
+            handleGetAllStaffNotAdmin(client);
         } else if (instruction.startsWith("GETRECORDBYUSER")){
             handleGetRecordByUser(Integer.parseInt(instruction.split("-/-")[1]), client);
         } else if(instruction.startsWith("DELETERECORD")){
             handleDeleteRecordRequest(Integer.parseInt(instruction.split("-/-")[1]), client);
+        }else if (instruction.startsWith("CREATEEVENT")){
+            String[] attributes = instruction.split("-/-");
+            //handleCreateEventFromClient(attributes[1], attributes[2], Integer.parseInt(attributes[3]), attributes[4], Integer.parseInt(attributes[5]), client);
+        }else if (instruction.startsWith("DELETEEVENT")){
+            String[] attributes = instruction.split("-/-");
+            //handleDeleteEventFromClient(Integer.parseInt(attributes[1]), client);
+        } else if(instruction.startsWith("UPDATEEVENT")){
+            String[] attributes = instruction.split("-/-");
+            //handleUpdateEventFromClient(Integer.parseInt(attributes[1]),attributes[2],attributes[3], Integer.parseInt(attributes[4]), attributes[5], Integer.parseInt(attributes[6]), client);
+        } else if (instruction.startsWith("GETEVENT")){
+            handleListEventFromClient(client);
+        } else if (instruction.startsWith("GETEVENTT")){
+            String[] attributes = instruction.split("-/-");
+            handleListEventFromClient(Integer.parseInt(attributes[1]), client);
         }
 
     }
@@ -399,7 +417,20 @@ public class GeneralServer implements Observer {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+    /**
+     * This method delegates to the dao the research of the department
+     * @param client : the client from which it originated.
+     */
 
+    public void handleListTeacherNAFromClient(ConnectionToClient client){
+        List<TeacherType> teacher =  dao.getUserDAO().searchAllTeacherNA();
+        System.out.println(teacher.size());
+        try {
+            client.sendToClient(teacher);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -772,6 +803,31 @@ public class GeneralServer implements Observer {
             e.printStackTrace();
         }
     }
+    /**
+     * This method a user from the user ID. It then sends a message concerning the success or not.
+     * @param id : user id
+     * @param name : user name
+     * @param firstName : user first name
+     * @param birthDate : user birth date
+     * @param email : user login
+     * @param role : user role
+     * @param client : the client from which it originated.
+     */
+    private void handleUpdateAdminUser(int id, String name, String firstName, String email, String birthDate, String role, String isAdmin,ConnectionToClient client) {
+        int isAd= Integer.parseInt(isAdmin);
+        int result = dao.getUserDAO().updateDAOAdminUser(id, name, firstName, email, birthDate, role, isAd);
+        String msg;
+        if (result == 1){
+            msg = "#UPDATEDUSER SUCCESS" ;
+        } else{
+            msg = "#UPDATEDUSER FAILURE";
+        }
+        try {
+            client.sendToClient(msg);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
     /**
      * This method delete a user from the user ID. It then sends a message concerning the success or not.
@@ -1097,18 +1153,6 @@ public class GeneralServer implements Observer {
         }
     }
 
-    /**
-     * This method handles when the client wants the possible admins list
-     * @param client : the client that sent the request
-     */
-    public void handleGetAllPossibleAdmin(ConnectionToClient client){
-        List<UserType> adm =  dao.getUserDAO().getPossibleAdmin();
-        try {
-            client.sendToClient(adm);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
 
     /**
      * This method handles when the client wants the admins list
@@ -1119,6 +1163,139 @@ public class GeneralServer implements Observer {
         try {
             client.sendToClient(adm);
         } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * This method handles when the client wants the staffs list
+     * @param client : the client that sent the request
+     */
+    public void handleGetAllStaffNotAdmin(ConnectionToClient client){
+        List<StaffType> staff =  dao.getUserDAO().getAllStaffNotAdmin();
+        System.out.println(staff.size());
+        try {
+            client.sendToClient(staff);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    
+    /**
+     * This method delegates to the dao the event creation and interprets the result of the insert. At the end, ta message is sending to the client.
+     /**
+     * @param idEvent : the id of the Event 
+     * @param dateTimeEvent : the time and the date when the event begin
+     * @param duration : the duration of the event
+     * @param idRoom : the room when the event will take place
+     * @param idCourse : the course related to the event 
+     * @param idTeacher : the teacher related to the event
+     * @param idClass : the class related to the event
+     * @param idPromo : the promo related to the event
+     * @param iddepartement : the departement related to the event
+     */
+    
+    private void handleCreateEventFromClient(int idEvent, Date dateTimeEvent, float duration, int idRoom, int idCourse, int idTeacher, int idClass, int idPromo, int idDepartement, ConnectionToClient client){
+    	
+    	int result = dao.getEventDAO().createEvent(dateTimeEvent, duration, idRoom, idCourse, idTeacher, idClass, idPromo, idDepartement, client);
+
+        String mess;
+        if (result == 1){
+            mess = "#CREATEDEVENT Success";
+        }
+        else{
+            mess = "#CREATEDEVENT Failure";
+        }
+        try {
+            client.sendToClient(mess);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    /**
+     *  This method delegates to the dao the research of the event.
+     * @param client : client who create the event
+     */
+    public void handleListEventFromClient(ConnectionToClient client){
+        List<EventType> events =  dao.getEventDAO().searchAllEvents();
+
+         try {
+             client.sendToClient(events);
+         } catch (IOException e) {
+             e.printStackTrace();
+         }
+
+     }
+
+    /**
+     * This method delegates to the dao the research of the event
+     * @param userID : user id
+     * @param client : client who create the event
+     */
+    public void handleListEventFromClient(int userID, ConnectionToClient client){
+        List<EventType> events =  dao.getEventDAO().searchAllEvents(userID);
+
+         try {
+        	 System.out.println(events instanceof EventType);
+             client.sendToClient(events);
+         } catch (IOException e) {
+             e.printStackTrace();
+         }
+
+     }
+    
+    
+    /**
+     * This method delegates to the dao the deletion of event
+     * @param id : event id
+     * @param client : client who deletes the event
+     */
+    public void handleDeleteEventFromClient(int id, ConnectionToClient client){
+        int result = dao.getEventDAO().deleteEvent(id);
+
+        String mess;
+        if (result == 1){
+            mess = "#DELETEDEVENT Success" ;
+        } else{
+            mess = "#DELETEDEVENT Failure";
+        }
+
+        try{
+            client.sendToClient(mess);
+        } catch(IOException e) {
+            e.printStackTrace();
+        }
+    }
+    
+    /**
+     * This method delegates to the dao the event update
+    /**
+     * @param idEvent : the id of the Event 
+     * @param dateTimeEvent : the time and the date when the event begin
+     * @param duration : the duration of the event
+     * @param idRoom : the room when the event will take place
+     * @param idCourse : the course related to the event 
+     * @param idTeacher : the teacher related to the event
+     * @param idClass : the class related to the event
+     * @param idPromo : the promomotion related to the event
+     * @param iddepartement : the departement related to the event
+     */
+    
+    public void handleUpdateEventFromClient (int idEvent, Date dateTimeEvent, float duration, int idRoom, int idCourse, int idTeacher, int idClass, int idPromo, int idDepartement, ConnectionToClient client ){
+    	int result = dao.getEventDAO().updateEvent(idEvent, dateTimeEvent, duration, idRoom, idCourse, idTeacher, idClass, idPromo, idDepartement);
+
+        String mess;
+        if (result == 1){
+            mess = "#UPDATEDEVENT Success" ;
+        } else{
+            mess = "#UPDATEDEVENT Failure";
+        }
+
+        try{
+            client.sendToClient(mess);
+        } catch(IOException e) {
             e.printStackTrace();
         }
     }

@@ -63,6 +63,7 @@ public abstract class UI extends Application implements DisplayIF {
     TextArea convo;
     protected ObservableList<CourseType> courseNames;
     protected ObservableList<RecordType> recordNames;
+    protected ObservableList<EventType> eventNames;
 
     //Business logic
     CoreClient client;

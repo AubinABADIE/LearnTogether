@@ -37,6 +37,13 @@ public class TeacherServices{
         }catch (IOException e) {
             e.printStackTrace();
         }
+    }
+    public void getTeacherNotAdmin() {
+        try {
+            coreClient.getConnection().sendToServer("#GETTEACHERNA" );
+        }catch (IOException e) {
+            e.printStackTrace();
+        }
 
     }
 

@@ -11,7 +11,6 @@ public class StaffServices{
 
     private CoreClient client;
 
-
     public StaffServices(CoreClient client) {
         this.client=client;
     }

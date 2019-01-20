@@ -2,14 +2,16 @@ package Types;
 
 import java.io.Serializable;
 
-public class AdminType extends UserType implements Serializable {
 /**
- * This class represents an admin in the database.
+ * This class represents a Staff in the DataBase
  * @author Audrey SAMSON
  */
-    //role = "ADMIN"
 
-    public AdminType(int id, String name, String firstName, String email, String birthDate, String role) {
+public class StaffType extends UserType implements Serializable {
+
+    //role = "STAFF"
+
+    public StaffType(int id, String name, String firstName, String email, String birthDate, String role) {
         super(id, name, firstName, email, birthDate, role);
 
     }
@@ -19,4 +21,3 @@ public class AdminType extends UserType implements Serializable {
         return getName() + " " + getFirstName()+ " "+ getId();
     }
 }
-

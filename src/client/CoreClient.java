@@ -18,6 +18,7 @@ import client.Chat.ConversationServices;
 import client.Room.RoomServices;
 import client.Users.UserServices;
 import client.Courses.CourseServices;
+import client.Events.EventServices;
 import common.ClientIF;
 import common.DisplayIF;
 
@@ -40,6 +41,7 @@ public class CoreClient implements ClientIF {
     private PromotionServices promo;
     private ClassServices classes;
     private RecordServices records;
+    private EventServices event;
 
     //UI and Connections
     private AdaptableClient connection;
@@ -183,6 +185,9 @@ public class CoreClient implements ClientIF {
             }
             else if (((List)msg).get(0) instanceof AdminType) {
                 display.getAdmin((List<AdminType>) msg);
+            }
+            else if (((List)msg).get(0) instanceof StaffType) {
+                display.getStaff((List<StaffType>) msg);
             }
             else if (((List)msg).get(0) instanceof UserType) {
             	display.getUsers((List<UserType>) msg);
@@ -343,16 +348,34 @@ public class CoreClient implements ClientIF {
 
     
     /**
-     * This method delegates getCourses to courseServices
+     * This method delegates getCourses to courseServices to recover all the courses of the teacher
      * @param userID the user ID.
      */
     public void getCourses(int userID) {
         course.getCourses(userID);
     }
     
+    /**
+     * This method delegates getCourses to courseServices to recover all the courses
+     */
     public void getCourses() {
         course.getCourses();
         
+    }
+    
+    /**
+     * This method delegates getCourses to courseServices to recover all the courses of the teacher
+     * @param userID the user ID.
+     */
+    public void getEvents(int userID) {
+        event.getEvents(userID);
+    }
+    
+    /**
+     * This method delegates getCourses to courseServices to recover all the courses
+     */
+    public void getEvents() {
+        //event.getEvents();
     }
 
     /**
@@ -450,6 +473,20 @@ public class CoreClient implements ClientIF {
     public void handleUpdateUser(int id, String name, String firstName, String email, String birthDate, String role) {
     	user.updateUser(id, name, firstName, email, birthDate, role);
     }
+    /**
+     * This method delegates to userServices the admin user updated request
+     *
+     * @param id : user id
+     * @param name : user name
+     * @param firstname : user first name
+     * @param birthDate : user birth date
+     * @param email : user login
+     * @param role : user role
+     * @param isAdmin: boolean, admin user or not
+     */
+    public void handleUpdateAdminUser(int id, String name, String firstname, String email, String birthDate, String role, int isAdmin) {
+        user.updateAdminUser(id, name, firstname, email, birthDate, role,isAdmin);
+    }
 
     /**
      * This method delegates to userServices the user deletion request.
@@ -466,19 +503,28 @@ public class CoreClient implements ClientIF {
     public void getTeacher() {
         teacher.getTeacher();
     }
-    
+
     /**
-     * This method delegates to UserServices the users reading request
+     * This method delegates to teacherServices the teachers' reading request
      */
-    public void getPossibleAdmin() {
-    	user.getPossibleAdmin();
+    public void getTeacherNotAdmin() {
+        teacher.getTeacherNotAdmin();
     }
+
     /**
      * This method delegates to UserServices the users reading request
      */
     public void getAdmin() {
         user.getAdmin();
     }
+
+    /**
+     * This method delegates to UserServices the users reading request
+     */
+    public void getStaffNotAdmin() {
+        user.getStaffNotAdmin();
+    }
+
 
 
     /**
