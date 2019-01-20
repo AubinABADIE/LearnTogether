@@ -42,7 +42,6 @@ public class AdminUI extends TeacherUI {
     protected Tab tabRecords;
     protected Tab tabDiary;
     protected Tab tabChat;
-    protected Tab tabCourse;
     protected Tab tabRoom;
     protected Tab tabDepartment;
 	protected Tab tabUser;

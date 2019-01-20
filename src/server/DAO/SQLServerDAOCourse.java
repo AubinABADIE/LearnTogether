@@ -186,7 +186,7 @@ public class SQLServerDAOCourse extends AbstractDAOCourse{
         if(connection!= null){
             try{
                 PreparedStatement preparedStatement = connection.prepareStatement("UPDATE Courses SET courseName = ?, courseDescription = ?, nbHourTotal = ?, idTeacher = ?, idPromo = ?  WHERE idCourse = ?");
-                preparedStatement.setInt(5, idCourse);
+                preparedStatement.setInt(6, idCourse);
                 preparedStatement.setString(1, courseName);
                 preparedStatement.setString(2, courseDescription);
                 preparedStatement.setInt(3, nbHourTotal);
