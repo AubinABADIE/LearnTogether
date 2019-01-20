@@ -107,11 +107,39 @@ public class RecordServices {
             client.getDisplay().setState("REC UPLOAD FAILURE");
     }
 
+    /**
+     * This method handle the client request to have the user record list
+     * @param id: user id
+     */
     public void getRecordsByUser(int id){
         try {
             client.getConnection().sendToServer("#GETRECORDBYUSER" +"-/-"+ id);
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    /**
+     * This method handle the client request to delete a record
+     * @param id : record id
+     */
+    public void handleDeleteRecord(int id){
+        try {
+            client.getConnection().sendToServer("#DELETERECORD" +"-/-"+ id);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * This method handle the server response to display correctly on the UI
+     * @param msg : state of the deletion
+     */
+    public void handleDeletedRecord(String msg){
+        String state = msg.split(" ")[1];
+        if(state.equalsIgnoreCase("SUCCESS"))
+            client.getDisplay().setState("REC DELETE SUCCESS");
+        else
+            client.getDisplay().setState("REC DELETE FAILURE");
     }
 }

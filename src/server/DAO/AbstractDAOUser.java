@@ -1,6 +1,7 @@
 package server.DAO;
 
 
+import Types.AdminType;
 import Types.TeacherType;
 import Types.UserType;
 
@@ -29,5 +30,7 @@ public abstract class AbstractDAOUser {
     public abstract int deleteDAOUser(int id, String role);
     public abstract List<TeacherType> searchAllTeacher();
 	public abstract List<UserType> getAllUsers();
+	public abstract List<UserType> getPossibleAdmin();
+    public abstract List<AdminType> getAllAdmin();
 
 }

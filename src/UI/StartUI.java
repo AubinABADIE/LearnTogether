@@ -275,8 +275,12 @@ public class StartUI extends UI {
                 Platform.runLater(() -> showAlert(Alert.AlertType.CONFIRMATION, null, "Success", "The record has been downloaded in the Downloads folder."));
             } else if (newValue.equalsIgnoreCase("RECORD NOT DOWNLOADED")) {
                 Platform.runLater(() -> showAlert(Alert.AlertType.ERROR, null, "Failure", "The record cannot be downloaded at this time. Try again later?"));
-            }
-            else if (newValue.equalsIgnoreCase("DC FAILURE")) {
+            } else if(newValue.equalsIgnoreCase("REC DELETE SUCCESS")){
+                Platform.runLater(() -> showAlert(Alert.AlertType.CONFIRMATION, null, "Success", "You have deleted the record."));
+                Platform.runLater(()->client.getRecordsByUser(userID));
+            }else if (newValue.equalsIgnoreCase("REC DELETE FAILURE")) {
+                Platform.runLater(() -> showAlert(Alert.AlertType.CONFIRMATION, null, "Failure", "Error: Record hasn't been deleted."));
+            } else if (newValue.equalsIgnoreCase("DC FAILURE")) {
                 Platform.runLater(() -> showAlert(Alert.AlertType.CONFIRMATION, null, "Failure", "Error: Department hasn't been created."));
             } else if (newValue.equalsIgnoreCase("DC SUCCESS")) {
                 Platform.runLater(() -> showAlert(Alert.AlertType.CONFIRMATION, null, "Success", "You have created the department."));
@@ -554,6 +558,15 @@ public class StartUI extends UI {
         });
     }
 
+    @Override
+    public void getAdmin(List<AdminType> adm) {
+        Platform.runLater(() -> {
+            if(adminUI != null)
+                adminUI.setAdmin(adm);
+            else if(superAdminUI != null)
+                superAdminUI.setAdmin(adm);
+        });
+    }
     /**
      * This method put the record user in the list recordsNames
      * @param records : list of user record

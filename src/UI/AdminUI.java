@@ -46,12 +46,14 @@ public class AdminUI extends TeacherUI {
     protected Tab tabRoom;
     protected Tab tabDepartment;
 	protected Tab tabUser;
+    protected Tab tabAdmManagement;
 	protected ObservableList<RoomType> roomNames;
     protected ObservableList<DepartmentType> depNames;
-    //protected ObservableList<PromotionType> promoNames;
+    protected ObservableList<PromotionType> promoNames;
     protected ObservableList<ClassType> classNames;
     protected ObservableList<UserType> userNames;
     protected ObservableList<TeacherType> teacherNames;
+    protected ObservableList<AdminType> admNames;
 
     /**
      * Default constructor
@@ -94,6 +96,9 @@ public class AdminUI extends TeacherUI {
     
     public void setUsers(List<UserType> users) {
     	userNames.setAll(users);
+    }
+    public void setAdmin(List<AdminType> adm) {
+        admNames.setAll(adm);
     }
 
     /**
@@ -740,7 +745,7 @@ public class AdminUI extends TeacherUI {
         list.setItems(depNames);
         System.out.println(depNames);
         list.setPrefWidth(300);
-        list.setPrefHeight(500);
+        list.setPrefHeight(300);
 
         // left vbox
         Text labelHeader = new Text("Departments");
@@ -816,7 +821,7 @@ public class AdminUI extends TeacherUI {
         listPromo.setItems(promoNames);
         System.out.println(promoNames);
         listPromo.setPrefWidth(300);
-        listPromo.setPrefHeight(500);
+        listPromo.setPrefHeight(300);
 
         // left vbox
         Text labelHeaderPromo = new Text("Promotions");
@@ -890,7 +895,7 @@ public class AdminUI extends TeacherUI {
         listClass.setItems(classNames);
         System.out.println(classNames);
         listClass.setPrefWidth(300);
-        listClass.setPrefHeight(500);
+        listClass.setPrefHeight(300);
 
         // left vbox
         Text labelHeaderCl = new Text("Classes");
@@ -2567,5 +2572,6 @@ public class AdminUI extends TeacherUI {
 
         return gridUpdateCourse;
     }
+
 
  }

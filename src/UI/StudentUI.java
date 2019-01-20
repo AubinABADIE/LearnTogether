@@ -133,4 +133,9 @@ public class StudentUI extends UI  {
 	public void getUsers(List<UserType> users) {
 		
 	}
+
+    @Override
+    public void getAdmin(List<AdminType> adm) {
+
+    }
 }
