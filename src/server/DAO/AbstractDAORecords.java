@@ -20,7 +20,7 @@ public abstract class AbstractDAORecords {
      * @return : the record list
      */
     public abstract List<RecordType> searchAllRecords();
-    
+
     public abstract int createRecord(String name, int year, int courseID, int donatingUser);
 
     public abstract RecordType getRecord(int recordID);
