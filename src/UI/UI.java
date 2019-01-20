@@ -92,6 +92,10 @@ public abstract class UI extends Application implements DisplayIF {
     public void setCourses(List<CourseType> courseList) {
         courseNames.setAll(courseList);
     }
+    
+    public void setEvents(List<EventType> eventList) {
+        eventNames.setAll(eventList);
+    }
 
     public void setRecordFile(File recordFile) {
         this.recordFile = recordFile;
@@ -1013,4 +1017,13 @@ public abstract class UI extends Application implements DisplayIF {
      */
     @Override
     public void getAdmin(List<AdminType> adm) {}
+    
+    /**
+     * This method gets the events stored into the database.
+     * Inherits from DisplayIF.
+     * It is used by the other UIs, hence why it's empty here.
+     * @param events the list of events.
+     */
+    @Override
+    public void getEvents(List<EventType> events) {}
 }

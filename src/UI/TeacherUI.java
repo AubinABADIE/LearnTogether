@@ -703,6 +703,14 @@ public class TeacherUI extends UI {
 
         return gridEventVisu;
 	}
+	
+	/**
+     * This method sets the current tab to the eventTab.
+     * @return the events information display.
+     */
+	protected GridPane setEventTab(){
+        return eventRead(tabEvent);
+    }
 
     @Override
     public void getStaff(List<StaffType> adm) {

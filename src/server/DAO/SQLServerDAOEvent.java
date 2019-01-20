@@ -1,5 +1,10 @@
 package server.DAO;
 
+/**
+ * This class instantiate the method relative to the course in SQLServer data base
+ * @author Solene SERAFIN
+ */
+
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.DriverManager;

@@ -2,6 +2,7 @@ package client;
 
 import java.io.File;
 import java.io.IOException;
+import java.sql.Date;
 import java.util.List;
 
 import Types.DepartmentType;
@@ -84,6 +85,7 @@ public class CoreClient implements ClientIF {
         promo = new PromotionServices(this);
         classes = new ClassServices(this);
         records = new RecordServices(this);
+        event = new EventServices(this);
     }
 
     /**
@@ -157,7 +159,14 @@ public class CoreClient implements ClientIF {
             }
             else if (((String) msg).startsWith("#DELETEDRECORD")){
                 records.handleDeletedRecord((String)msg);
+            }else if  (((String) msg).startsWith("#CREATEDEVENT")){
+                event.handleCreatedEvent((String) msg);
+            } else if (((String)msg).startsWith("#DELETEDEVENT")){
+                event.handleDeletedEvent((String)msg);
+            } else if (((String) msg).startsWith("#UPDATEDEVENT")){
+                event.handleUpdatedEvent((String) msg);
             }
+            
 
         } else if (msg instanceof List) {
             if (((List) msg).get(0) instanceof RoomType)
@@ -191,6 +200,9 @@ public class CoreClient implements ClientIF {
             }
             else if (((List)msg).get(0) instanceof UserType) {
             	display.getUsers((List<UserType>) msg);
+            }
+            else if (((List)msg).get(0) instanceof EventType) {
+            	display.getEvents((List<EventType>)msg);
             }
             else if (((List)msg).get(0) instanceof RecordType){
                 if (((RecordType)((List)msg).get(0)).getName().equals("FOR USER")){
@@ -280,10 +292,12 @@ public class CoreClient implements ClientIF {
     public void getRooms() {
         room.getRooms();
     }
+    
+    //Course
 
     /**
-     * This method delegates the management of the room creation to the roomservices
-     * @param name : room name
+     * This method delegates the management of the course creation to the courseservices
+     * @param name : course name
      * @param description : small description of the course
 	 * @param totalHours : the total hours of the course
 	 * @param idT: the referring teacher of the course
@@ -294,8 +308,8 @@ public class CoreClient implements ClientIF {
     }
 
     /**
-     * This method delegates the management of the room deletion to the courseservices
-     * @param id : room id
+     * This method delegates the management of the course deletion to the courseservices
+     * @param id : course id
      */
     public void handleDeleteCourse(int id){
         course.handleDeleteCourse(id);
@@ -313,6 +327,22 @@ public class CoreClient implements ClientIF {
      */
     public void handleUpdateCourse(int id, String name, String description, int totalHours, int idT, int promoId){
         course.handleUpdateCourse(id, name, description, totalHours, idT, promoId);
+    }
+    
+    /**
+     * This method delegates getCourses to courseServices to recover all the courses of the teacher
+     * @param userID the user ID.
+     */
+    public void getCourses(int userID) {
+        course.getCourses(userID);
+    }
+    
+    /**
+     * This method delegates getCourses to courseServices to recover all the courses
+     */
+    public void getCourses() {
+        course.getCourses();
+        
     }
 
     //Departments
@@ -344,38 +374,6 @@ public class CoreClient implements ClientIF {
      */
     public void handleDeleteDepartment(int departmentID){
         department.deleteDepartment(departmentID);
-    }
-
-    
-    /**
-     * This method delegates getCourses to courseServices to recover all the courses of the teacher
-     * @param userID the user ID.
-     */
-    public void getCourses(int userID) {
-        course.getCourses(userID);
-    }
-    
-    /**
-     * This method delegates getCourses to courseServices to recover all the courses
-     */
-    public void getCourses() {
-        course.getCourses();
-        
-    }
-    
-    /**
-     * This method delegates getCourses to courseServices to recover all the courses of the teacher
-     * @param userID the user ID.
-     */
-    public void getEvents(int userID) {
-        event.getEvents(userID);
-    }
-    
-    /**
-     * This method delegates getCourses to courseServices to recover all the courses
-     */
-    public void getEvents() {
-        //event.getEvents();
     }
 
     /**
@@ -663,5 +661,61 @@ public class CoreClient implements ClientIF {
      */
     public void handleDeleteRecord(int recordId){
         records.handleDeleteRecord(recordId);
+    }
+    
+    //Events
+    /**
+     * This method delegates the management of the event creation to the eventservices
+     * @param dateTimeEvent : the time and the date when the event begin
+     * @param duration : the duration of the event
+     * @param idRoom : the room when the event will take place
+     * @param idCourse : the course related to the event 
+     * @param idTeacher : the teacher related to the event
+     * @param idClass : the class related to the event
+     * @param idPromo : the promo related to the event
+     * @param iddepartement : the departement related to the event
+     */
+    public void handleCreateEvent(Date dateTimeEvent, float duration, int idRoom, int idCourse, int idTeacher, int idClass, int idPromo, int idDepartement) {
+        event.handleCreateEvent(dateTimeEvent, duration, idRoom, idCourse, idTeacher, idClass, idPromo, idDepartement);
+    }
+
+    /**
+     * This method delegates the management of the event deletion to the eventservices
+     * @param id : event id
+     */
+    public void handleDeleteEvent(int id){
+        event.handleDeleteEvent(id);
+    }
+
+
+    /**
+     * This method delegates the management of the course update to the courseServices
+     * @param idEvent : the id of the Event 
+     * @param dateTimeEvent : the time and the date when the event begin
+     * @param duration : the duration of the event
+     * @param idRoom : the room when the event will take place
+     * @param idCourse : the course related to the event 
+     * @param idTeacher : the teacher related to the event
+     * @param idClass : the class related to the event
+     * @param idPromo : the promo related to the event
+     * @param iddepartement : the departement related to the event
+     */
+    public void handleUpdateEvent(int idEvent, Date dateTimeEvent, float duration, int idRoom, int idCourse, int idTeacher, int idClass, int idPromo, int idDepartement){
+        event.handleUpdateEvent(idEvent, dateTimeEvent, duration, idRoom, idCourse, idTeacher, idClass, idPromo, idDepartement);
+    }
+    
+    /**
+     * This method delegates getEvent to eventServices to recover all the events of the teacher
+     * @param userID the user ID.
+     */
+    public void getEvents(int userID) {
+        event.getEvents(userID);
+    }
+    
+    /**
+     * This method delegates getEvent to eventServices to recover all the events
+     */
+    public void getEvents() {
+        //event.getEvents();
     }
 }

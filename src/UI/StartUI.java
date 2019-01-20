@@ -254,7 +254,29 @@ public class StartUI extends UI {
                 }
             } else if (newValue.equalsIgnoreCase("CU FAILURE")) {
                 Platform.runLater(() -> showAlert(Alert.AlertType.ERROR, null, "Failure", "Error: Course hasn't been updated."));
-            } else if (newValue.equalsIgnoreCase("MD SUCCESS")) {
+            }else if (newValue.equalsIgnoreCase("EC SUCCESS")) {
+                Platform.runLater(() -> showAlert(Alert.AlertType.CONFIRMATION, null, "Success", "You have created the event."));
+                if (teacherUI != null) {
+                    Platform.runLater(() -> teacherUI.tabEvent.setContent(teacherUI.setEventTab()));
+                }
+            } else if (newValue.equalsIgnoreCase("EC FAILURE")) {
+                Platform.runLater(() -> showAlert(Alert.AlertType.CONFIRMATION, null, "Failure", "Error: Event hasn't been created."));
+            } else if (newValue.equalsIgnoreCase("ED SUCCESS")) {
+                Platform.runLater(() -> showAlert(Alert.AlertType.CONFIRMATION, null, "Success", "You have deleted the event."));
+                if (teacherUI != null) {
+                    Platform.runLater(() -> teacherUI.client.getEvents(userID));
+                }
+            } else if (newValue.equalsIgnoreCase("ED FAILURE")) {
+                Platform.runLater(() -> showAlert(Alert.AlertType.CONFIRMATION, null, "Failure", "Error: Event hasn't been deleted."));
+            } else if (newValue.equalsIgnoreCase("EU SUCCESS")) {
+                showAlert(Alert.AlertType.CONFIRMATION, null, "Success", "You have update the event.");
+                if (teacherUI != null) {
+                    Platform.runLater(() -> Platform.runLater(() -> teacherUI.client.getEvents(userID)));
+                    Platform.runLater(() -> teacherUI.tabEvent.setContent(teacherUI.setEventTab()));
+                }
+            } else if (newValue.equalsIgnoreCase("EU FAILURE")) {
+                Platform.runLater(() -> showAlert(Alert.AlertType.ERROR, null, "Failure", "Error: Event hasn't been updated."));
+            }else if (newValue.equalsIgnoreCase("MD SUCCESS")) {
                 Platform.runLater(() -> showAlert(Alert.AlertType.CONFIRMATION, null, "Success", "The conversation has been deleted."));
             } else if (newValue.equalsIgnoreCase("MD FAILURE.")) {
                 Platform.runLater(() -> showAlert(Alert.AlertType.ERROR, null, "Failure", "The conversation cannot be deleted at this time."));
@@ -634,6 +656,22 @@ public class StartUI extends UI {
                 superAdminUI.setCourses(courses);
             else if(teacherUI != null)
                 teacherUI.setCourses(courses);
+        });
+    }
+    
+    /**
+     * This method update the event list
+     * @param events : events list
+     */
+    @Override
+    public void getEvents(List<EventType> events){
+    	Platform.runLater(() -> {
+            if(adminUI != null)
+                adminUI.setEvents(events);
+            else if(superAdminUI != null)
+                superAdminUI.setEvents(events);
+            else if(teacherUI != null)
+                teacherUI.setEvents(events);
         });
     }
 

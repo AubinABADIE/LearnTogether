@@ -4,6 +4,11 @@ import java.sql.Connection;
 import java.sql.Date;
 import java.util.List;
 
+/** This class is the abstract class for the DAO event
+ * @author Solène SERAFIN
+ * @author Audrey SAMSON
+ */
+
 import com.lloseng.ocsf.server.ConnectionToClient;
 
 import Types.EventType;

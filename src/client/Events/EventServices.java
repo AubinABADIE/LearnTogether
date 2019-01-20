@@ -6,7 +6,7 @@ import java.sql.Date;
 import client.CoreClient;
 
 /**
- * This is the business logic related to the events on the client side.
+ * This is the business logic related to the courses on the client side.
  * @author Solene SERAFIN
  */
 
