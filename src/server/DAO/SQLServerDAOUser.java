@@ -164,19 +164,27 @@ public class SQLServerDAOUser extends AbstractDAOUser {
         int result = 0;
         if(connection != null){
             try{
-            	if(role.equals("STUDENT")) {
-            		PreparedStatement preparedStatement = connection.prepareStatement("DELETE FROM Students WHERE idStudent = ?");
-                    preparedStatement.setInt(1, id);
-                    preparedStatement.executeUpdate();
-            	} else if(role.equals("TEACHER")) {
-            		PreparedStatement preparedStatement = connection.prepareStatement("DELETE FROM Teachers WHERE idTeacher = ?");
-                    preparedStatement.setInt(1, id);
-                    preparedStatement.executeUpdate();
-            	} else if(role.equals("ADMIN") || role.equals("SUPERADMIN")) {
-            		PreparedStatement preparedStatement = connection.prepareStatement("DELETE FROM Staffs WHERE idStaff = ?");
-                    preparedStatement.setInt(1, id);
-                    preparedStatement.executeUpdate();
-            	}
+                switch (role) {
+                    case "STUDENT": {
+                        PreparedStatement preparedStatement = connection.prepareStatement("DELETE FROM Students WHERE idStudent = ?");
+                        preparedStatement.setInt(1, id);
+                        preparedStatement.executeUpdate();
+                        break;
+                    }
+                    case "TEACHER": {
+                        PreparedStatement preparedStatement = connection.prepareStatement("DELETE FROM Teachers WHERE idTeacher = ?");
+                        preparedStatement.setInt(1, id);
+                        preparedStatement.executeUpdate();
+                        break;
+                    }
+                    case "ADMIN":
+                    case "SUPERADMIN": {
+                        PreparedStatement preparedStatement = connection.prepareStatement("DELETE FROM Staffs WHERE idStaff = ?");
+                        preparedStatement.setInt(1, id);
+                        preparedStatement.executeUpdate();
+                        break;
+                    }
+                }
             	
                 PreparedStatement preparedStatement = connection.prepareStatement("DELETE FROM GeneralUsers WHERE idUser = ?");
                 preparedStatement.setInt(1, id);

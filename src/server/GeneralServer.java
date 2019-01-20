@@ -736,15 +736,14 @@ public class GeneralServer implements Observer {
      * This method a user from the user ID. It then sends a message concerning the success or not.
      * @param id
      * @param name
-     * @param firstname
+     * @param firstName
      * @param birthDate
      * @param email
-     * @param password
      * @param role
      * @param client
      */
-    private void handleUpdateUser(int id, String name, String firstname, String email, String birthDate, String role, ConnectionToClient client) {
-    	int result = dao.getUserDAO().updateDAOUser(id, name, firstname, email, birthDate, role);
+    private void handleUpdateUser(int id, String name, String firstName, String email, String birthDate, String role, ConnectionToClient client) {
+    	int result = dao.getUserDAO().updateDAOUser(id, name, firstName, email, birthDate, role);
     	String msg;
         if (result == 1){
         	msg = "#UPDATEDUSER SUCCESS" ;
