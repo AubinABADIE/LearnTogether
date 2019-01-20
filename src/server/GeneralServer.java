@@ -1173,7 +1173,6 @@ public class GeneralServer implements Observer {
      */
     public void handleGetAllStaffNotAdmin(ConnectionToClient client){
         List<StaffType> staff =  dao.getUserDAO().getAllStaffNotAdmin();
-        System.out.println(staff.size());
         try {
             client.sendToClient(staff);
         } catch (IOException e) {
