@@ -217,6 +217,17 @@ Arguments:
   
 *Usage* : `#UPDATEUSER {name} {firstName} {email} {birthDate} {role}`  
 
+### #UPDATEADMINUSER
+Used when the client wants to update a user, who is not an admin, to put him as an admin into the database. The parse method for the different parameters is " "
+Arguments:
+- name: String
+- firstName : String
+- email : String
+- birthDate : String
+- role : String
+- isAdmin : int
+*Usage* : `#UPDATEADMINUSER {name} {firstName} {email} {birthDate} {role} {isAdmin}`
+
 ### #UPDATEPWD
 Used when the client wants to update his password into the database. The parse method for the different parameters is " "  
 Arguments:  
@@ -235,7 +246,19 @@ No parameters.
 
 ### #GETUSER 
 Used when the client wants a user into database to display his profile.  
-No parameters. 
+No parameters.
+
+### #GETADMIN
+Used when the client wants the list of all admin users into database.
+No parameters.
+
+### #GETSTAFFNA
+Used when the client wants the list of all no-admin staffs into database.
+No parameters.
+
+### #GETTEACHERNA
+Used when the client wants the list of all no-admin teachers into database.
+No parameters.
 
 ### #CREATEDEP
 Used when the client wants to create a department into the database. The parse method for the different parameters is "-/-"

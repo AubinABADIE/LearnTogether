@@ -272,16 +272,6 @@ public class UserServices{
             coreClient.getDisplay().setState("DU FAILURE");
 	}
 
-    /**
-     * This method send a message to the server to have the possible admin list
-     */
-    public void getPossibleAdmin() {
-        try {
-            coreClient.getConnection().sendToServer("#GETPADMIN");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
 
     /**
      * This method send a message to the server to have the possible admins list
