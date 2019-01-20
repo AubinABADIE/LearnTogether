@@ -41,6 +41,7 @@ public class SQLServerDAORoom extends AbstractDAORoom{
 
     /**
      * This method closes the connection with the data base
+     * @param connection the active connection.
      */
     public void closeConnection(Connection connection){
         try {
@@ -86,6 +87,7 @@ public class SQLServerDAORoom extends AbstractDAORoom{
 
     /**
      * This method returns the rooms list
+     * @return the list of rooms.
      */
     public List<RoomType> searchAllRooms(){
         ArrayList rooms = new ArrayList();
