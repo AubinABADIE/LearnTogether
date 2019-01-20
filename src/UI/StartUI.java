@@ -271,18 +271,24 @@ public class StartUI extends UI {
                 Platform.runLater(() -> showAlert(Alert.AlertType.CONFIRMATION, null, "Success", "The record has been downloaded in the Downloads folder."));
             } else if (newValue.equalsIgnoreCase("RECORD NOT DOWNLOADED")) {
                 Platform.runLater(() -> showAlert(Alert.AlertType.ERROR, null, "Failure", "The record cannot be downloaded at this time. Try again later?"));
-            } else if (newValue.equalsIgnoreCase("DC FAILURE")) {
+            }
+            else if (newValue.equalsIgnoreCase("DC FAILURE")) {
                 Platform.runLater(() -> showAlert(Alert.AlertType.CONFIRMATION, null, "Failure", "Error: Department hasn't been created."));
             } else if (newValue.equalsIgnoreCase("DC SUCCESS")) {
                 Platform.runLater(() -> showAlert(Alert.AlertType.CONFIRMATION, null, "Success", "You have created the department."));
-            } else if (newValue.equalsIgnoreCase("DU FAILURE")) {
+            } else if (newValue.equalsIgnoreCase("DEU FAILURE")) {
                 Platform.runLater(() -> showAlert(Alert.AlertType.CONFIRMATION, null, "Failure", "Error: Department hasn't been updated."));
-            } else if (newValue.equalsIgnoreCase("DU SUCCESS")) {
+            } else if (newValue.equalsIgnoreCase("DEU SUCCESS")) {
                 Platform.runLater(() -> showAlert(Alert.AlertType.CONFIRMATION, null, "Success", "Department has been updated."));
             } else if (newValue.equalsIgnoreCase("DD FAILURE")) {
                 Platform.runLater(() -> showAlert(Alert.AlertType.CONFIRMATION, null, "Failure", "Error: Department hasn't been deleted."));
             } else if (newValue.equalsIgnoreCase("DD SUCCESS")) {
                 Platform.runLater(() -> showAlert(Alert.AlertType.CONFIRMATION, null, "Success", "Department has been deleted."));
+                if (adminUI != null) {
+                    Platform.runLater(() -> adminUI.client.getDepartment());
+                } else if (superAdminUI != null) {
+                    Platform.runLater(() -> superAdminUI.client.getDepartment());
+                }
             } else if (newValue.equalsIgnoreCase("PC FAILURE")) {
                 Platform.runLater(() -> showAlert(Alert.AlertType.CONFIRMATION, null, "Failure", "Error: Promotion hasn't been created."));
             } else if (newValue.equalsIgnoreCase("PC SUCCESS")) {
@@ -295,6 +301,11 @@ public class StartUI extends UI {
                 Platform.runLater(() -> showAlert(Alert.AlertType.CONFIRMATION, null, "Failure", "Error: Promotion hasn't been deleted."));
             } else if (newValue.equalsIgnoreCase("DP SUCCESS")) {
                 Platform.runLater(() -> showAlert(Alert.AlertType.CONFIRMATION, null, "Success", "Promotion has been deleted."));
+                if (adminUI != null) {
+                    Platform.runLater(() -> adminUI.client.getPromo());
+                } else if (superAdminUI != null) {
+                    Platform.runLater(() -> superAdminUI.client.getPromo());
+                }
             } else if (newValue.equalsIgnoreCase("CLC FAILURE")) {
                 Platform.runLater(() -> showAlert(Alert.AlertType.CONFIRMATION, null, "Failure", "Error: Class hasn't been created."));
             } else if (newValue.equalsIgnoreCase("CLC SUCCESS")) {
@@ -303,10 +314,15 @@ public class StartUI extends UI {
                 Platform.runLater(() -> showAlert(Alert.AlertType.CONFIRMATION, null, "Failure", "Error: Class hasn't been updated."));
             } else if (newValue.equalsIgnoreCase("CLU SUCCESS")) {
                 Platform.runLater(() -> showAlert(Alert.AlertType.CONFIRMATION, null, "Success", "Class has been updated."));
-            }else if (newValue.equalsIgnoreCase("CLD FAILURE")) {
+            }else if (newValue.equalsIgnoreCase("CLP FAILURE")) {
                 Platform.runLater(() -> showAlert(Alert.AlertType.CONFIRMATION, null, "Failure", "Error: Class hasn't been deleted."));
-            } else if (newValue.equalsIgnoreCase("CLD SUCCESS")) {
+            } else if (newValue.equalsIgnoreCase("CLP SUCCESS")) {
                 Platform.runLater(() -> showAlert(Alert.AlertType.CONFIRMATION, null, "Success", "Class has been deleted."));
+                if (adminUI != null) {
+                    Platform.runLater(() -> adminUI.client.getClasses());
+                } else if (superAdminUI != null) {
+                    Platform.runLater(() -> superAdminUI.client.getClasses());
+                }
             }
 
         });

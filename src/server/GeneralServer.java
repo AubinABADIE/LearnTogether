@@ -297,10 +297,10 @@ public class GeneralServer implements Observer {
 
         String mess;
         if (result == 1){
-            mess = "#CREATEDEPARTMENT Success";
+            mess = "#CREATEDDEPARTMENT Success";
         }
         else{
-            mess = "#CREATEDEPARTMENT Failure";
+            mess = "#CREATEDDEPARTMENT Failure";
         }
         try {
             client.sendToClient(mess);
@@ -321,10 +321,10 @@ public class GeneralServer implements Observer {
 
         String mess;
         if (result == 1){
-            mess = "#CREATEDDEPARTMENT Success";
+            mess = "#UPDATEDDEPARTMENT Success";
         }
         else{
-            mess = "#CREATEDEPARTMENT Failure";
+            mess = "#UPDATEDDEPARTMENT Failure";
         }
         try {
             client.sendToClient(mess);
@@ -838,10 +838,10 @@ public class GeneralServer implements Observer {
 
         String mess;
         if (result == 1){
-            mess = "#DELETEDPROMOTION Success";
+            mess = "#DELETEDPROMO Success";
         }
         else{
-            mess = "#DELETEDPROMOTION Failure";
+            mess = "#DELETEDPROMO Failure";
         }
         try {
             client.sendToClient(mess);
@@ -867,10 +867,10 @@ public class GeneralServer implements Observer {
 
         String mess;
         if (result == 1){
-            mess = "#CREATEDPROMO Success";
+            mess = "#UPDATEDPROMO Success";
         }
         else{
-            mess = "#CREATEDEDPROMO Failure";
+            mess = "#UPDATEDPROMO Failure";
         }
         try {
             client.sendToClient(mess);
@@ -949,10 +949,10 @@ public class GeneralServer implements Observer {
 
         String mess;
         if (result == 1){
-            mess = "#CREATEDCLASS Success";
+            mess = "#UPDATEDCLASS Success";
         }
         else{
-            mess = "#CREATECLASS Failure";
+            mess = "#UPDATEDCLASS Failure";
         }
         try {
             client.sendToClient(mess);
