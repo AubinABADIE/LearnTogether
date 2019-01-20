@@ -32,7 +32,7 @@ public class UserServices{
      * @param pwd: the original password.
      * @return the encrypted password.
      */
-    private String encryptPwd(String pwd){
+    public String encryptPwd(String pwd){
         try {
             MessageDigest digest = MessageDigest.getInstance("SHA-256");
             byte[] hash = digest.digest(pwd.getBytes(StandardCharsets.UTF_8));

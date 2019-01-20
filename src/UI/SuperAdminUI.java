@@ -81,6 +81,8 @@ public class SuperAdminUI extends AdminUI {
         tabCourse = tabCourse();
 
         tabDepartment =  tabDepartment();
+        
+        tabUser = createTabUser();
 
         tabAdmManagement = createTabAdmManagement();
 
@@ -92,6 +94,7 @@ public class SuperAdminUI extends AdminUI {
         tabPane.getTabs().add(tabRoom);
         tabPane.getTabs().add(tabCourse);
         tabPane.getTabs().add(tabDepartment);
+        tabPane.getTabs().add(tabUser);
         tabPane.getTabs().add(tabAdmManagement);
 
 
