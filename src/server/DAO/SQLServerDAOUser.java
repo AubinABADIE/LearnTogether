@@ -342,7 +342,7 @@ public class SQLServerDAOUser extends AbstractDAOUser {
      * @return the users list.
      * This method return the teachers list where teachers are not admins
      */
-    @Override
+
     public List<TeacherType> searchAllTeacherNA() {
         ArrayList<TeacherType> teacher = new ArrayList();
         Connection connection = getConnection();
