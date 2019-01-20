@@ -8,12 +8,11 @@ import Types.CourseType;
 
 import java.util.List;
 
+/**
+ * Interface between the UI and the business logic client side.
+ */
 public interface DisplayIF {
 
-    /**
-     * Method that when overriden is used to display objects onto
-     * a UI.
-     */
     void display(String message);
     void setState(String cmd);
     void showLogin(boolean isConnected, int id, String role);

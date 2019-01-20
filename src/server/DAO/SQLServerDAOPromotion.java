@@ -45,6 +45,7 @@ public class SQLServerDAOPromotion extends AbstractDAOPromotion {
     }
     /**
      * This method closes the connection with the data base
+     * @param connection the active connection.
      */
     public void closeConnection(Connection connection){
         try {

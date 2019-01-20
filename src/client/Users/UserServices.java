@@ -108,15 +108,16 @@ public class UserServices{
     /**
      * This method is called when the admin wants to create a new user.
      * @param name : user name
-     * @param firstname : user first name
+     * @param firstName : user first name
      * @param birthDate : user birth date
      * @param email : user login
      * @param password : user password
+     * @param jobType : the user job type
      * @param role : user role
      */
-    public void createUser(String name, String firstname, String birthDate, String email, String role, String password, String jobType) {
+    public void createUser(String name, String firstName, String birthDate, String email, String role, String password, String jobType) {
     	try {
-    		coreClient.getConnection().sendToServer("#CREATEUSER " + name + " " + firstname + " " + birthDate  + " " + email + " " + role + " " + password + " " + jobType);
+    		coreClient.getConnection().sendToServer("#CREATEUSER " + name + " " + firstName + " " + birthDate  + " " + email + " " + role + " " + password + " " + jobType);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -231,6 +232,7 @@ public class UserServices{
 	/**
 	 * This method is called when the admin wants to delete a user.
 	 * @param id : user id
+     * @param role : the user role.
 	 */
 	public void deleteUser(int id, String role) {
     	try {

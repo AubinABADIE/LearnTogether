@@ -65,6 +65,7 @@ public class ClassServices {
 
     /**
      * This method asks the server to update an existing department with the following attributes.
+     * @param idC : the course ID.
      * @param nameClass is the class name.
      * @param refPromo is the referring promotion of this class, recognized by its ID.
      * @param descClass is the description of the class.

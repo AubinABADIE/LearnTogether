@@ -18,7 +18,8 @@ public class RecordServices {
     private CoreClient client;
 
     /**
-     * Default constructor
+     * Constructor
+     * @param client the main business logic.
      */
     public RecordServices(CoreClient client) {
         this.client=client;

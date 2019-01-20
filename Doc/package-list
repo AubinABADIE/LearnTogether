@@ -1,0 +1,17 @@
+Types
+UI
+client
+client.Chat
+client.Courses
+client.Grades
+client.Groups
+client.Records
+client.Room
+client.Schedule
+client.ToDoList
+client.Users
+com.lloseng.ocsf.client
+com.lloseng.ocsf.server
+common
+server
+server.DAO

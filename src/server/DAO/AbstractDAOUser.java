@@ -22,7 +22,7 @@ public abstract class AbstractDAOUser {
 
     /**
      * This method closes a connection to a database.
-     * @param connexion the active connection.
+     * @param connection the active connection.
      */
     public abstract void closeConnection(Connection connection);
 
@@ -34,13 +34,15 @@ public abstract class AbstractDAOUser {
      * @param email : user login
      * @param password : user password
      * @param role : user role
+     * @param jobType : the user job type.
      * @return 0 or 1 depending if the creation failed or succeeded.
      */
-    public abstract int createDAOUser(String name, String firstname, String birthDate, String email, String password, String role, String jobType);
+    public abstract int createDAOUser(String name, String firstName, String birthDate, String email, String password, String role, String jobType);
 
     /**
      * Reads the DB and retrieves the user by its ID
      * @param id the user ID in the DB
+     * @return a user description.
      */
     public abstract UserType readDAOUser(int id);
 
@@ -54,13 +56,14 @@ public abstract class AbstractDAOUser {
      * @param role the user role
      * @return 0 or 1 depending if the update failed or succeeded.
      */
-    public abstract int updateDAOUser(int id, String name, String firstname, String email, String birthDate, String role);
+    public abstract int updateDAOUser(int id, String name, String firstName, String email, String birthDate, String role);
 
      /**
-     * Reads the DB and delete the user.
-     * @param id the user ID.
-     * @return 0 or 1 depending if the deletion failed or succeeded.
-     */
+      * Reads the DB and delete the user.
+      * @param id the user ID.
+      * @param role the user role.
+      * @return 0 or 1 depending if the deletion failed or succeeded.
+      */
     public abstract int deleteDAOUser(int id, String role);
 
     /**

@@ -17,6 +17,7 @@ public abstract class AbstractDAOPromotion {
 
     /**
      * This method returns all the promotion in the data base.
+     * @param idDep the promo ID.
      * @return a list a promotions.
      */
     public abstract List<PromotionType> searchAllPromotionByDep(int idDep);
@@ -44,7 +45,7 @@ public abstract class AbstractDAOPromotion {
 
     /**
      * This method deletes the promotion in the data base
-     * @param idPromotion : promotion id
+     * @param idPromo : promotion id
      * @return 1 if the deletion was successful, 0 otherwise.
      */
     public abstract int deletePromotion(int idPromo);

@@ -31,8 +31,8 @@ public class FileStorageHandler {
 
     /**
      * This constructor tries to connect to Azure Storage to store files.
-     * @throws InvalidKeyException
-     * @throws MalformedURLException
+     * @throws InvalidKeyException if the key is invalid
+     * @throws MalformedURLException if the URL is invalid
      */
     public FileStorageHandler() throws InvalidKeyException, MalformedURLException {
         sharedKeyCredentials = new SharedKeyCredentials(accountName, accountKey);

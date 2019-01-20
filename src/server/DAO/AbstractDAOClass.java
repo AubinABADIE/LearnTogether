@@ -18,7 +18,7 @@ public abstract class AbstractDAOClass {
     /**
      * This method creates a class in the database.
      * @param className the class name.
-     * @param classDescription the class description.
+     * @param descClass the class description.
      * @param idPromotion the promotion the class belongs to.
      * @return 1 if the creation was successful, 0 otherwise.
      */

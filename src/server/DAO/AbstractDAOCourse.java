@@ -26,8 +26,9 @@ public abstract class AbstractDAOCourse{
      * this method creates a course in the data base
      * @param name : course name
 	 * @param description : small description of the course
-	 * @param nbHourTotal : the total hours of the course
+	 * @param totalHours : the total hours of the course
 	 * @param idT : the referring teacher of the course
+     * @param promo : the promo ID.
      * @return 1 if the creation was successful, 0 otherwise.
      */
     public abstract int createCourse(String name, String description, int totalHours, int idT, int promo);
@@ -57,12 +58,12 @@ public abstract class AbstractDAOCourse{
      * @param idCourse the course ID.
      * @param courseName the new course name.
      * @param courseDescription the new course description.
-     * @param nbHourTotal the new number of hours.
-     * @param idTeacher the new teacher ID.
+     * @param nbTotalHours the new number of hours.
+     * @param idT the new teacher ID.
      * @param promoId the new promo ID.
      * @return 1 if the update was successful, 0 otherwise.
      */
-    public abstract int updateCourse(int idCourse, String courseName, String coursDescription, int nbTotalHours, String idT, int promoId);
+    public abstract int updateCourse(int idCourse, String courseName, String courseDescription, int nbTotalHours, String idT, int promoId);
 
 }
 

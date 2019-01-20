@@ -27,32 +27,6 @@ public class TeacherServices{
         this.coreClient = coreClient;
     }
 
-    /**
-     * 
-     */
-    private List<CourseServices> courseList;
-
-    /**
-     * @return
-     */
-    public boolean isAdmin() {
-        // TODO implement here
-        return false;
-    }
-
-    /**
-     * @param course
-     */
-    public void addCourse(CourseServices course) {
-        // TODO implement here
-    }
-
-    /**
-     * @param courses
-     */
-    public void addCourses(List<CourseServices> courses) {
-        // TODO implement here
-    }
 
     /**
      * This method asks to the server to have the teacher list

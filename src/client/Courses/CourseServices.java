@@ -20,6 +20,7 @@ public class CourseServices {
 	 * @param description : small description of the course
 	 * @param totalHours : the total hours of the course
 	 * @param idT : the referring teacher of the course
+      * @param promo :the promo ID.
 	 */
 	public void handleCreateCourse (String name, String description, int totalHours, int idT, int promo){
 		String objConstruct = name + "-/-" + description + "-/-" + totalHours + "-/-" + idT + "-/-" + promo;
@@ -32,10 +33,12 @@ public class CourseServices {
 	
 	/**
      * This method create String with all course attributes and send it to the server to update the course
+     * @param id : the course ID.
      * @param name : course name
 	 * @param description : small description of the course
 	 * @param totalHours : the total hours of the course
 	 * @param idT : the referring teacher of the course
+     * @param promoId : the promo ID.
      */
     public void handleUpdateCourse (int id, String name, String description, int totalHours, int idT, int promoId){
         String objConstruct = id + "-/-" + name + "-/-" + description + "-/-" + totalHours + "-/-" + idT + "-/-" + promoId;

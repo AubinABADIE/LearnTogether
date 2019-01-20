@@ -27,6 +27,7 @@ public abstract class AbstractDAORecords {
      * @param year : exam year
      * @param courseID : record course
      * @param donatingUser : user id who give the record
+     * @return 1 if the creation is successful, 0 otherwise.
      */
     public abstract int createRecord(String name, int year, int courseID, int donatingUser);
 

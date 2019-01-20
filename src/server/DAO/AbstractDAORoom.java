@@ -30,6 +30,7 @@ public abstract class AbstractDAORoom {
      * @param hasProjector : if the room has a projector
      * @param hasComputer : if the room has computers
      * @param description : small description of the room
+     * @return 1 if the creation was successful, 0 otherwise.
      */
     public abstract int createRoom(String name, int capacity, int building, boolean hasProjector, boolean hasComputer, String description);
 
@@ -52,9 +53,9 @@ public abstract class AbstractDAORoom {
      * @param name : room name
      * @param capacity : room capacity
      * @param building : room building number
-     * @param projector : if the room has a projector
-     * @param computer : if the room has computers
-     * @param desc : room description
+     * @param hasProjector : if the room has a projector
+     * @param hasComputer : if the room has computers
+     * @param description : room description
      * @return int who give the state of the updated in the data base
      */
     public abstract int updateRoom(int id,String name, int capacity, int building, boolean hasProjector, boolean hasComputer, String description );

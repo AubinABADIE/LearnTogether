@@ -29,8 +29,13 @@ import javafx.stage.Stage;
  */
 public class SuperAdminUI extends AdminUI {
     private Scene principalSuperAdminScene;
+
     /**
-     * Default constructor
+     * Useful constructor.
+     * @param primaryStage the primary stage.
+     * @param login the client login.
+     * @param id the client ID.
+     * @param client the business logic.
      */
     public SuperAdminUI(Stage primaryStage, String login, int id, CoreClient client) {
         super(primaryStage, login, id, client);

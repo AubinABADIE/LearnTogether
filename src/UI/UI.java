@@ -104,10 +104,9 @@ public abstract class UI extends Application implements DisplayIF {
 	 * Create the window
 	 * 
 	 * @param primaryStage Frame window.
-	 * @throws Exception
 	 */
     @Override
-    public void start(Stage primaryStage) throws Exception {
+    public void start(Stage primaryStage){
 
     }
 
@@ -206,7 +205,7 @@ public abstract class UI extends Application implements DisplayIF {
     /**
      * Create the content of the profile tab.
      * 
-     * @param tabProfile
+     * @param tabProfile the profile tab.
      * @return A GridPane which is the tab content.
      */
     public GridPane readProfile(Tab tabProfile) {
@@ -304,7 +303,7 @@ public abstract class UI extends Application implements DisplayIF {
     /**
      * Create the content of the profile update tab.
      * 
-     * @param tabProfile
+     * @param tabProfile the profile tab.
      * @return A GridPane which is the tab content.
      */
     public GridPane updateProfile(Tab tabProfile) {
@@ -947,7 +946,7 @@ public abstract class UI extends Application implements DisplayIF {
      * This method gets the courses stored into the database.
      * Inherits from DisplayIF.
      * It is used by the other UIs, hence why it's empty here.
-     * @param courses
+     * @param courses the list of courses.
      */
     @Override
     public void getCourses(List<CourseType> courses) {}
@@ -955,7 +954,7 @@ public abstract class UI extends Application implements DisplayIF {
     /**
      * This method sets the UserType, that is used in the profile.
      * Inherits from UI.
-     * @param user
+     * @param user the list of users.
      */
     @Override
     public void setUser(UserType user) { this.user = user;}

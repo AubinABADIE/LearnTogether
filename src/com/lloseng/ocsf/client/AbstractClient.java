@@ -327,7 +327,7 @@ public abstract class AbstractClient implements Runnable
    * client's thread that is reading messages from the server.
    * The method may be overridden by subclasses.
    * Most exceptions will cause the end of the reading thread except for
-   * <code>ClassNotFoundException<\code>s received when an object of
+   * <code>ClassNotFoundException<\code> received when an object of
    * unknown class is received and for the <code>RuntimeException</code>s
    * that can be thrown by the message handling method implemented by the user.
    *

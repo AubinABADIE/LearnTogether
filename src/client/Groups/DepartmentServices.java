@@ -44,6 +44,7 @@ public class DepartmentServices {
 
     /**
      * This method asks the server to update an existing department with the following attributes.
+     * @param idDep : the department ID.
      * @param name is the department name.
      * @param refTeacherID is the referring teacher of this department, recognized by its ID.
      * @param descDep is the description of the department.
