@@ -27,47 +27,21 @@ public abstract class AbstractDAOFactory{
 
     }
 
-    public abstract Connection getConnection();
+    public abstract AbstractDAORoom getRoomDAO();
 
-    public AbstractDAORoom getRoomDAO() {
-        return roomDAO;
-    }
+    public abstract AbstractDAOUser getUserDAO();
 
-    public void setRoomDAO(AbstractDAORoom roomDAO) {
-        this.roomDAO = roomDAO;
-    }
+    public abstract AbstractDAODepartment getDepartmentDAO();
 
-    public AbstractDAOUser getUserDAO() {
-        return userDAO;
-    }
-
-    public void setUserDAO(AbstractDAOUser userDAO) {
-        this.userDAO = userDAO;
-    }
-
-    public AbstractDAODepartment getDepartmentDAO() {
-        return departmentDAO;
-    }
-
-    public void setDepartmentDAO(AbstractDAODepartment departmentDAO) {
-        this.departmentDAO = departmentDAO;
-    }
-
-    public AbstractDAOConversation getConversationDAO() {
-        return conversationDAO;
-    }
-
-    public void setConversationDAO(AbstractDAOConversation conversationDAO) {
-        this.conversationDAO = conversationDAO;
-    }
+    public abstract AbstractDAOConversation getConversationDAO();
     
-    public AbstractDAOCourse getCourseDAO() {
-		return courseDAO;
-	}
+    public abstract AbstractDAOCourse getCourseDAO();
 
-	public void setCourseDAO(AbstractDAOCourse courseDAO) {
-		this.courseDAO = courseDAO;
-	}
+    public abstract AbstractDAOPromotion getPromotionDAO();
+
+    public abstract AbstractDAOClass getClassDAO();
+
+    public abstract AbstractDAORecords getRecordsDAO();
 
     public abstract void createDAOUser();
 
@@ -84,28 +58,4 @@ public abstract class AbstractDAOFactory{
     public abstract void createDAOClass();
 
     public abstract void createDAORecords();
-
-    public AbstractDAOPromotion getPromotionDAO() {
-        return promotionDAO;
-    }
-
-    public void setPromotionDAO(AbstractDAOPromotion promotionDAO) {
-        this.promotionDAO = promotionDAO;
-    }
-
-    public AbstractDAOClass getClassDAO() {
-        return classDAO;
-    }
-
-    public void setClassDAO(AbstractDAOClass classDAO) {
-        this.classDAO = classDAO;
-    }
-
-    public AbstractDAORecords getRecordsDAO() {
-        return recordsDAO;
-    }
-
-    public void setRecordsDAO(AbstractDAORecords recordsDAO) {
-        this.recordsDAO = recordsDAO;
-    }
 }

@@ -1,15 +1,8 @@
 package server.DAO;
 
-
-import Types.UserType;
-
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.util.List;
-
 /**
- * Ths class create an SQLServer factory
+ * Ths class creates an SQLServer factory
+ * It contains all the DAO used in the project, and provides ways to get access to it.
  * @author Aubin ABADIE
  * @author Marie SALELLES
  * @author Audrey SAMSON
@@ -34,140 +27,133 @@ public class SQLServerFactory extends AbstractDAOFactory {
     public SQLServerFactory() {
     }
 
-    @Override
-    public Connection getConnection() {
-            Connection connection = null;
-            String hostName = "learntogether.database.windows.net"; // update me
-            String dbName = "LearnTogether"; // update me
-            String user = "ysanson"; // update me
-            String password = "LearnTogether1"; // update me
-            String url = String.format("jdbc:sqlserver://%s:1433;database=%s;user=%s;password=%s;encrypt=true;"
-                    + "hostNameInCertificate=*.database.windows.net;loginTimeout=30;", hostName, dbName, user, password);
-            try {
-                connection= DriverManager.getConnection(url);
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-            return connection;
-    }
-
+    /**
+     * This method creates a User DAO.
+     */
     @Override
     public void createDAOUser(){
         userDAO = new SQLServerDAOUser();
     }
 
+    /**
+     * This method creates a Department DAO.
+     */
     @Override
     public void createDAODepartment(){
             departmentDAO = new SQLServerDAODepartment();
     }
 
+    /**
+     * This method creates a Room DAO.
+     */
     @Override
     public void createDAORoom() {
         this.roomDAO = new SQLServerDAORoom();
     }
 
+    /**
+     * This method creates a Conversation DAO.
+     */
     @Override
     public void createDAOConversation() {
         this.conversationDAO = new SQLServerDAOConversation();
     }
-    
+
+    /**
+     * This method creates a Course DAO.
+     */
     @Override
     public void createDAOCourse() {
         this.courseDAO = new SQLServerDAOCourse();
     }
 
+    /**
+     * This method creates a Promotion DAO.
+     */
     @Override
     public void createDAOPromotion() {
         this.promotionDAO = new SQLServerDAOPromotion();
     }
 
+    /**
+     * This method creates a Class DAO.
+     */
     @Override
     public void createDAOClass() { this.classDAO = new SQLServerDAOClass(); }
 
+    /**
+     * This method creates a Records DAO.
+     */
     @Override
     public void createDAORecords(){this.recordsDAO = new SQLServerDAORecord();}
 
+    /**
+     * This method returns the User DAO.
+     * @return the User DAO.
+     */
     @Override
     public SQLServerDAOUser getUserDAO() {
         return userDAO;
     }
 
-    public void setUserDAO(SQLServerDAOUser userDAO) {
-        this.userDAO = userDAO;
-    }
+    /**
+     * This method returns the Department DAO.
+     * @return the Department DAO.
+     */
     @Override
     public SQLServerDAODepartment getDepartmentDAO() {
         return departmentDAO;
     }
 
-    public void setDepartmentDAO(SQLServerDAODepartment departmentDAO) {
-        this.departmentDAO = departmentDAO;
-    }
-
+    /**
+     * This method returns the Room DAO.
+     * @return the Room DAO.
+     */
     @Override
     public SQLServerDAORoom getRoomDAO() {
         return roomDAO;
     }
 
-    public void setRoomDAO(SQLServerDAORoom roomDAO) {
-        this.roomDAO = roomDAO;
-    }
-
-    @Override
-    public SQLServerDAOConversation getConversationDAO() {
-        return conversationDAO;
-    }
-
-    public void setConversationDAO(SQLServerDAOConversation conversationDAO) {
-        this.conversationDAO = conversationDAO;
-    }
-
-    public int readDAOUserByLogin(String login, String password) {
-        return userDAO.readDAOUserByLogin(login, password);
-    }
-    
-    public UserType readDAOUser(int id) {
-        return userDAO.readDAOUser(id);
-    }
-    
-    public boolean isPdwNull(String login){return userDAO.isPdwNull(login);}
-    
-    public boolean setNewPwd(String login, String password) {
-        return userDAO.setNewPwd(login, password);
-    }
-
-	public SQLServerDAOCourse getCourseDAO() {
-		return courseDAO;
-	}
-
-	public void setCourseDAO(SQLServerDAOCourse courseDAO) {
-		this.courseDAO = courseDAO;
-	}
-
+    /**
+     * This method returns the Promotion DAO.
+     * @return the Promotion DAO.
+     */
     @Override
     public SQLServerDAOPromotion getPromotionDAO() {
         return promotionDAO;
     }
 
-    public void setPromotionDAO(SQLServerDAOPromotion promotionDAO) {
-        this.promotionDAO = promotionDAO;
+    /**
+     * This method returns the Conversation DAO.
+     * @return the Conversation DAO.
+     */
+    @Override
+    public SQLServerDAOConversation getConversationDAO() {
+        return conversationDAO;
     }
 
+    /**
+     * This method returns the Course DAO.
+     * @return the Course DAO.
+     */
+    @Override
+    public AbstractDAOCourse getCourseDAO() { return courseDAO; }
+
+    /**
+     * This method returns the Class DAO.
+     * @return the Class DAO.
+     */
     @Override
     public SQLServerDAOClass getClassDAO() {
         return classDAO;
     }
 
-    public void setClassDAO(SQLServerDAOClass classDAO) {
-        this.classDAO = classDAO;
-    }
-
+    /**
+     * This method returns the Records DAO.
+     * @return the Records DAO.
+     */
     @Override
     public SQLServerDAORecord getRecordsDAO() {
         return recordsDAO;
-    }
-
-    public void setRecordsDAO(SQLServerDAORecord recordsDAO) {
-        this.recordsDAO = recordsDAO;
     }
 }

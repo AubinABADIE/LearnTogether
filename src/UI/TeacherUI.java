@@ -238,10 +238,7 @@ public class TeacherUI extends UI {
         vboxInfoCourse.setSpacing(10);
         vboxInfoCourse.setPadding( new Insets(100, 0, 0, 75));
 
-
-        btnAddCourse.setOnAction(event -> {
-            createTabCourse(tabCourse);
-        });
+        btnAddCourse.setOnAction(event -> createTabCourse(tabCourse));
 
         btnUpdateCourse.setOnAction(event ->{
             SelectionModel<CourseType> selectedDeleteCourse = list.getSelectionModel();
