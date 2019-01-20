@@ -160,7 +160,7 @@ public class GeneralServer implements Observer {
         }
         else if(instruction.startsWith("CREATEUSER")) {
         	String[] attributes = instruction.split(" ");
-        	handleCreateUser(attributes[1], attributes[2], attributes[3], attributes[4], attributes[5], attributes[6], client);  
+        	handleCreateUser(attributes[1], attributes[2], attributes[3], attributes[4], attributes[5], attributes[6], attributes[7], client);  
         }
         else if(instruction.startsWith("GETUSERS")) {
             handleReadUsers(client);
@@ -687,8 +687,8 @@ public class GeneralServer implements Observer {
      * @param role
      * @param client
      */
-    private void handleCreateUser(String name, String firstname, String birthDate, String email, String role, String password, ConnectionToClient client) {
-    	int res = dao.getUserDAO().createDAOUser(name, firstname, birthDate, email, role, password);
+    private void handleCreateUser(String name, String firstname, String birthDate, String email, String role, String password, String jobType, ConnectionToClient client) {
+    	int res = dao.getUserDAO().createDAOUser(name, firstname, birthDate, email, role, password, jobType);
         try {
             if (res == 0)
                 client.sendToClient("#CREATEDUSER FAILURE");

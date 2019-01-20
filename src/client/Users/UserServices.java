@@ -114,9 +114,9 @@ public class UserServices{
      * @param password
      * @param role
      */
-    public void createUser(String name, String firstname, String birthDate, String email, String role, String password) {
+    public void createUser(String name, String firstname, String birthDate, String email, String role, String password, String jobType) {
     	try {
-    		coreClient.getConnection().sendToServer("#CREATEUSER " + name + " " + firstname + " " + birthDate  + " " + email + " " + role + " " + password);
+    		coreClient.getConnection().sendToServer("#CREATEUSER " + name + " " + firstname + " " + birthDate  + " " + email + " " + role + " " + password + " " + jobType);
         } catch (IOException e) {
             e.printStackTrace();
         }

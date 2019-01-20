@@ -411,8 +411,8 @@ public class CoreClient implements ClientIF {
      * @param password : user password
      * @param role : user role
      */
-    public void handleCreateUser(String name, String firstname, String birthDate, String email, String role, String password) {
-    	user.createUser(name, firstname, birthDate, email, role, password);
+    public void handleCreateUser(String name, String firstname, String birthDate, String email, String role, String password, String jobType) {
+    	user.createUser(name, firstname, birthDate, email, role, password, jobType);
     }
 
     /**

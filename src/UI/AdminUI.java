@@ -1941,8 +1941,8 @@ public class AdminUI extends TeacherUI {
         Label firstNameLabel = new Label("Fisrtname: ");
         Label birthDateLabel = new Label("Birthdate: ");
         Label emailLabel = new Label("Email: ");
-        Label roleLabel = new Label("Role: ");
-        Label passwordLabel = new Label("Password: ");
+        Label roleLabel = new Label("Type: ");
+        Label jobTypeLabel = new Label("Job type: (fill if STAFF) ");
 
         // Add fields
         TextField nameField = new TextField();
@@ -1950,9 +1950,9 @@ public class AdminUI extends TeacherUI {
         TextField birthDateField = new TextField();
         TextField emailField = new TextField();
         ComboBox roleComboBox = new ComboBox<>();
-        roleComboBox.getItems().addAll("Student", "Teacher");
-        roleComboBox.getSelectionModel().select("Student");
-        TextField passwordField = new TextField();
+        roleComboBox.getItems().addAll("STUDENT", "STUDENT", "STUDENT");
+        roleComboBox.getSelectionModel().select("STUDENT");
+        TextField jobTypeField = new TextField();
 
         //grid pane
         GridPane gridUser = new GridPane();
@@ -1966,7 +1966,7 @@ public class AdminUI extends TeacherUI {
         HBox hboxbirthdateUserInfo = new HBox();
         HBox hboxemailUserInfo = new HBox();
         HBox hboxroleUserInfo = new HBox();
-        HBox hboxpasswordUserInfo = new HBox();
+        HBox hboxjobTypeUserInfo = new HBox();
 
         // add form in hbox
         hboxnameUserInfo.getChildren().addAll(nameLabel, nameField);
@@ -1974,7 +1974,7 @@ public class AdminUI extends TeacherUI {
         hboxbirthdateUserInfo.getChildren().addAll(birthDateLabel, birthDateField);
         hboxemailUserInfo.getChildren().addAll(emailLabel, emailField);
         hboxroleUserInfo.getChildren().addAll(roleLabel, roleComboBox);
-        hboxpasswordUserInfo.getChildren().addAll(passwordLabel, passwordField);
+        hboxjobTypeUserInfo.getChildren().addAll(jobTypeLabel, jobTypeField);
 
         //add hbox in gridpane
         gridUser.add(hboxnameUserInfo, 1, 0);
@@ -1982,7 +1982,7 @@ public class AdminUI extends TeacherUI {
         gridUser.add(hboxbirthdateUserInfo, 1, 5);
         gridUser.add(hboxemailUserInfo, 1, 7);
         gridUser.add(hboxroleUserInfo, 1, 9);
-        gridUser.add(hboxpasswordUserInfo, 1, 11);
+        gridUser.add(hboxjobTypeUserInfo, 1, 11);
 
         //add gridpane in tab
         tabUser.setContent(gridUser);
@@ -2022,18 +2022,21 @@ public class AdminUI extends TeacherUI {
                 showAlert(Alert.AlertType.ERROR, gridUser.getScene().getWindow(), "Form Error!", "Please enter user email");
                 return;
             }
-            if (passwordField.getText().isEmpty()) {
-                showAlert(Alert.AlertType.ERROR, gridUser.getScene().getWindow(), "Form Error!", "Please enter user password");
-                return;
-            }
             
-            client.handleCreateUser(nameField.getText(), firstNameField.getText(), birthDateField.getText(), emailField.getText(), roleComboBox.getValue().toString(), passwordField.getText());
+            if(roleComboBox.getValue().equals("STAFF")) {
+            	if (jobTypeField.getText().isEmpty()) {
+                    showAlert(Alert.AlertType.ERROR, gridUser.getScene().getWindow(), "Form Error!", "Please enter user a job type");
+                    return;
+                }
+            	client.handleCreateUser(nameField.getText(), firstNameField.getText(), birthDateField.getText(), emailField.getText(), roleComboBox.getValue().toString(), "null", jobTypeField.getText());
+            } else {
+            	client.handleCreateUser(nameField.getText(), firstNameField.getText(), birthDateField.getText(), emailField.getText(), roleComboBox.getValue().toString(), "null", "null");
+            }
             
             nameField.setText("");
             firstNameField.setText("");
             birthDateField.setText("");
             emailField.setText("");
-            passwordField.setText("");
             
             tabUser.setContent(readUser(tabUser));
 
