@@ -14,9 +14,9 @@ import java.util.List;
 
 /**
  * This class instantiates the methods relative to the user in SQLServer data base
- * @author Aubin ABADIE
- * @author Audrey SAMSON
- * @author Yvan SANSON
+ * @author Aubin ABADIE for the profile, for the user management
+ * @author Yvan SANSON for the login and password encryption, for the chat
+ * @author Audrey SAMSON for the admin management
  */
 public class SQLServerDAOUser extends AbstractDAOUser {
 
