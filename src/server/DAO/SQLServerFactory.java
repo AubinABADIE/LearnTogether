@@ -19,6 +19,7 @@ public class SQLServerFactory extends AbstractDAOFactory {
     private SQLServerDAOPromotion promotionDAO;
     private SQLServerDAOClass classDAO;
     private SQLServerDAORecord recordsDAO;
+    private SQLServerDAOEvent eventDAO;
 
 
     /**
@@ -88,9 +89,16 @@ public class SQLServerFactory extends AbstractDAOFactory {
     public void createDAORecords(){this.recordsDAO = new SQLServerDAORecord();}
 
     /**
+     * This method creates a Event DAO.
+     */
+    @Override
+    public void createDAOEvent(){this.eventDAO = new SQLServerDAOEvent();}
+    
+    /**
      * This method returns the User DAO.
      * @return the User DAO.
      */
+    
     @Override
     public SQLServerDAOUser getUserDAO() {
         return userDAO;
@@ -155,5 +163,14 @@ public class SQLServerFactory extends AbstractDAOFactory {
     @Override
     public SQLServerDAORecord getRecordsDAO() {
         return recordsDAO;
+    }
+    
+    /**
+     * This method returns the Event DAO.
+     * @return the Event DAO.
+     */
+    @Override
+    public SQLServerDAOEvent getEventDAO() {
+        return eventDAO;
     }
 }
