@@ -2,6 +2,8 @@ package server.DAO;
 
 import Types.UserType;
 import Types.TeacherType;
+import Types.AdminType;
+
 
 import java.io.File;
 import java.sql.*;
@@ -292,7 +294,6 @@ public class SQLServerDAOUser extends AbstractDAOUser {
      */
     @Override
     public List<UserType> getAllUsers() {
-        System.out.println("aubin");
             List<UserType> users = new ArrayList();
             Connection connection = getConnection();
             if(connection != null){
@@ -314,6 +315,56 @@ public class SQLServerDAOUser extends AbstractDAOUser {
                 }
             }
             return users;
+    }
+
+    @Override
+    public List<UserType> getPossibleAdmin() {
+        List<UserType> users = new ArrayList();
+        Connection connection = getConnection();
+        if(connection != null){
+            try{
+                PreparedStatement preparedStatement = connection.prepareStatement("SELECT * from GeneralUsers WHERE role = 'TEACHER' OR role = 'STAFF' ");
+                ResultSet resultSet = preparedStatement.executeQuery();
+                while (resultSet.next()){
+                    users.add(new TeacherType(resultSet.getInt("idUser"),
+                            resultSet.getString("name"),
+                            resultSet.getString("firstName"),
+                            resultSet.getString("email"),
+                            resultSet.getString("birthDate"),
+                            resultSet.getString("role")));
+                }
+
+            }catch (SQLException e){e.printStackTrace();}
+            finally {
+                closeConnection(connection);
+            }
+        }
+        return users;
+    }
+
+    @Override
+    public List<AdminType> getAllAdmin() {
+        List<AdminType> users = new ArrayList();
+        Connection connection = getConnection();
+        if(connection != null){
+            try{
+                PreparedStatement preparedStatement = connection.prepareStatement("SELECT * from GeneralUsers WHERE role = 'ADMIN' ");
+                ResultSet resultSet = preparedStatement.executeQuery();
+                while (resultSet.next()){
+                    users.add(new AdminType(resultSet.getInt("idUser"),
+                            resultSet.getString("name"),
+                            resultSet.getString("firstName"),
+                            resultSet.getString("email"),
+                            resultSet.getString("birthDate"),
+                            resultSet.getString("role")));
+                }
+
+            }catch (SQLException e){e.printStackTrace();}
+            finally {
+                closeConnection(connection);
+            }
+        }
+        return users;
     }
 
 }

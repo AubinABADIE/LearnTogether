@@ -50,6 +50,6 @@ public class DepartmentType implements Serializable {
 
     @Override
     public String toString() {
-        return "Name: " + nameDep;
+        return nameDep;
     }
 }

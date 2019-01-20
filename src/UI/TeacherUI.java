@@ -543,7 +543,6 @@ public class TeacherUI extends UI {
     @Override
 	public void start(Stage arg0) throws Exception {
 		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
@@ -556,7 +555,12 @@ public class TeacherUI extends UI {
 		
 	}
 
-	@Override
+    @Override
+    public void getAdmin(List<AdminType> adm) {
+
+    }
+
+    @Override
 	public void setUser(UserType user) {
 		this.user = user;
 		

@@ -549,6 +549,16 @@ public class StartUI extends UI {
         });
     }
 
+    @Override
+    public void getAdmin(List<AdminType> adm) {
+        Platform.runLater(() -> {
+            if(adminUI != null)
+                adminUI.setAdmin(adm);
+            else if(superAdminUI != null)
+                superAdminUI.setAdmin(adm);
+        });
+    }
+
 
     @Override
     public void getCourses(List<CourseType> courses){

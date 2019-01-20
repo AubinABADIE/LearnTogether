@@ -61,6 +61,6 @@ public class PromotionType implements Serializable {
 
     @Override
     public String toString() {
-        return "Name: " + namePromo;
+        return namePromo;
     }
 }

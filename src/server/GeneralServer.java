@@ -198,6 +198,10 @@ public class GeneralServer implements Observer {
         }
         else if(instruction.startsWith("DOWNLOADRECORD")){
             handleRecordDownloadRequest(Integer.parseInt(instruction.split(" ")[1]), client);
+        }else if(instruction.startsWith("GETPADMIN")){
+            handleGetAllPossibleAdmin(client);
+        }else if(instruction.startsWith("GETADMIN")){
+            handleGetAllAdmin(client);
         }
     }
 
@@ -1013,6 +1017,34 @@ public class GeneralServer implements Observer {
             }
         }
     }
+
+
+    /**
+     * This method handles when the client wants the possible admins list
+     * @param client : the client that sent the request
+     */
+    public void handleGetAllPossibleAdmin(ConnectionToClient client){
+        List<UserType> adm =  dao.getUserDAO().getPossibleAdmin();
+        try {
+            client.sendToClient(adm);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * This method handles when the client wants the admins list
+     * @param client : the client that sent the request
+     */
+    public void handleGetAllAdmin(ConnectionToClient client){
+        List<AdminType> adm =  dao.getUserDAO().getAllAdmin();
+        try {
+            client.sendToClient(adm);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 
     @Override
     public void update(Observable o, Object arg) {

@@ -72,6 +72,12 @@ public class UserType implements Serializable {
 		this.birthDate = birthDate;
 	}
 
+	public String isAdmin(){
+    	if (role.equalsIgnoreCase("ADMIN")) {
+			return "YES";
+		}
+    	else return "NO";
+	}
 
 	@Override
 	public String toString() {

@@ -49,6 +49,6 @@ public class ClassType implements Serializable {
     }
     @Override
     public String toString() {
-        return "Name: " + className;
+        return className;
     }
 }

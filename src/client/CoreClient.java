@@ -162,22 +162,26 @@ public class CoreClient implements ClientIF {
             else if (((List) msg).get(0) instanceof String) {
                 if (((String) ((List) msg).get(0)).equalsIgnoreCase("CONVERSATION EMAILS"))
                     display.setConversationEmails((List<String>) msg);
-            } else if (((List) msg).get(0) instanceof DepartmentType) {
-                display.getDepartment((List<DepartmentType>) msg);
-            } else if (((List) msg).get(0) instanceof TeacherType) {
-                display.getTeacher((List<TeacherType>) msg);
-            } else if (((List) msg).get(0) instanceof PromotionType) {
-                display.getPromo((List<PromotionType>) msg);
-            }else if (((List) msg).get(0) instanceof ClassType) {
-                display.getClasses((List<ClassType>) msg);
-            } else if (((List)msg).get(0) instanceof DepartmentType){
+            }
+            else if (((List) msg).get(0) instanceof DepartmentType){
                 display.getDepartment((List<DepartmentType>)msg);
-            } else if (((List)msg).get(0) instanceof TeacherType) {
-            	System.out.println("TEACHER");
-            	display.getTeacher((List<TeacherType>)msg);
-            } else if (((List)msg).get(0) instanceof CourseType) {
+            }
+            else if (((List) msg).get(0) instanceof TeacherType){
+                display.getTeacher((List<TeacherType>)msg);
+            }
+            else if (((List) msg).get(0) instanceof PromotionType) {
+                display.getPromo((List<PromotionType>) msg);
+            }
+            else if (((List) msg).get(0) instanceof ClassType) {
+                display.getClasses((List<ClassType>) msg);
+            }
+            else if (((List)msg).get(0) instanceof CourseType) {
             	display.getCourses((List<CourseType>)msg);
-            } else if (((List)msg).get(0) instanceof UserType) {
+            }
+            else if (((List)msg).get(0) instanceof AdminType) {
+                display.getAdmin((List<AdminType>) msg);
+            }
+            else if (((List)msg).get(0) instanceof UserType) {
             	display.getUsers((List<UserType>) msg);
             }
             else if (((List)msg).get(0) instanceof RecordType){
@@ -459,11 +463,23 @@ public class CoreClient implements ClientIF {
     /**
      * This method delegates to UserServices the users reading request
      */
-    public void getUsers() {
-    	user.getUsers();
+    public void getPossibleAdmin() {
+    	user.getPossibleAdmin();
     }
-    
-    
+    /**
+     * This method delegates to UserServices the users reading request
+     */
+    public void getAdmin() {
+        user.getAdmin();
+    }
+
+
+    /**
+     * This method delegates to UserServices the users reading request
+     */
+    public void getUsers() {
+        user.getUsers();
+    }
 
     /**
      * This method delegates getPromotion to PromotionServices class
