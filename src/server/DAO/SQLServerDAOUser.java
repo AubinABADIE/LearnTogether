@@ -292,27 +292,27 @@ public class SQLServerDAOUser extends AbstractDAOUser {
      */
     @Override
     public List<UserType> getAllUsers() {
-            List<UserType> users = new ArrayList();
-            Connection connection = getConnection();
-            if(connection != null){
-                try{
-                    PreparedStatement preparedStatement = connection.prepareStatement("SELECT * from GeneralUsers");
-                    ResultSet resultSet = preparedStatement.executeQuery();
-                    while (resultSet.next()){
-                        users.add(new TeacherType(resultSet.getInt("idUser"),
-                                resultSet.getString("name"),
-                                resultSet.getString("firstName"),
-                                resultSet.getString("email"),
-                                resultSet.getString("birthDate"),
-                                resultSet.getString("role")));
-                    }
-
-                }catch (SQLException e){e.printStackTrace();}
-                finally {
-                    closeConnection(connection);
+        List<UserType> users = new ArrayList();
+        Connection connection = getConnection();
+        if(connection != null){
+            try{
+                PreparedStatement preparedStatement = connection.prepareStatement("SELECT * from GeneralUsers");
+                ResultSet resultSet = preparedStatement.executeQuery();
+                while (resultSet.next()){
+                    users.add(new UserType(resultSet.getInt("idUser"),
+                            resultSet.getString("name"),
+                            resultSet.getString("firstName"),
+                            resultSet.getString("email"),
+                            resultSet.getString("birthDate"),
+                            resultSet.getString("role")));
                 }
+
+            }catch (SQLException e){e.printStackTrace();}
+            finally {
+                closeConnection(connection);
             }
-            return users;
+        }
+        return users;
     }
 
 }

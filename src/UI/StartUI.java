@@ -180,99 +180,151 @@ public class StartUI extends UI {
         });
 
         currentState.addListener((observable, oldValue, newValue) -> {
-            if(newValue.equalsIgnoreCase("FC SUCCESS")){
-                Platform.runLater(()-> showAlert(Alert.AlertType.CONFIRMATION, null, "Success", "This account has been activated. You can now log in properly."));
-                Platform.runLater(()->primaryStage.setScene(connectionScene));
-            }
-            else if(newValue.equalsIgnoreCase("FC FAILURE")){
+            if (newValue.equalsIgnoreCase("FC SUCCESS")) {
+                Platform.runLater(() -> showAlert(Alert.AlertType.CONFIRMATION, null, "Success", "This account has been activated. You can now log in properly."));
+                Platform.runLater(() -> primaryStage.setScene(connectionScene));
+            } else if (newValue.equalsIgnoreCase("FC FAILURE")) {
                 Platform.runLater(() -> showAlert(Alert.AlertType.ERROR, null, "Failure", "Error: impossible to activate your account. Is it already activated? Otherwise, please check later."));
-                Platform.runLater(()->primaryStage.setScene(connectionScene));
+                Platform.runLater(() -> primaryStage.setScene(connectionScene));
             } else if (newValue.equalsIgnoreCase("RC SUCCESS")) {
-                Platform.runLater(()->showAlert(Alert.AlertType.CONFIRMATION, null, "Success", "You have created the room."));
-                if (adminUI != null){
-                    Platform.runLater(()->adminUI.tabRoom.setContent(adminUI.setRoomTab()));
-                } else if (superAdminUI != null){
-                    Platform.runLater(()->superAdminUI.tabRoom.setContent(superAdminUI.setRoomTab()));
+                Platform.runLater(() -> showAlert(Alert.AlertType.CONFIRMATION, null, "Success", "You have created the room."));
+                if (adminUI != null) {
+                    Platform.runLater(() -> adminUI.tabRoom.setContent(adminUI.setRoomTab()));
+                } else if (superAdminUI != null) {
+                    Platform.runLater(() -> superAdminUI.tabRoom.setContent(superAdminUI.setRoomTab()));
                 }
             } else if (newValue.equalsIgnoreCase("RC FAILURE")) {
-                Platform.runLater(()->showAlert(Alert.AlertType.CONFIRMATION, null, "Failure", "Error: Room hasn't been created."));
-            } else if (newValue.equalsIgnoreCase("RD SUCCESS")){
-                Platform.runLater(()->showAlert(Alert.AlertType.CONFIRMATION, null, "Success", "You have deleted the room."));
-                if (adminUI != null){
-                    Platform.runLater(()->adminUI.client.getRooms());
-                }else if (superAdminUI != null){
-                    Platform.runLater(()->superAdminUI.client.getRooms());
+                Platform.runLater(() -> showAlert(Alert.AlertType.CONFIRMATION, null, "Failure", "Error: Room hasn't been created."));
+            } else if (newValue.equalsIgnoreCase("RD SUCCESS")) {
+                Platform.runLater(() -> showAlert(Alert.AlertType.CONFIRMATION, null, "Success", "You have deleted the room."));
+                if (adminUI != null) {
+                    Platform.runLater(() -> adminUI.client.getRooms());
+                } else if (superAdminUI != null) {
+                    Platform.runLater(() -> superAdminUI.client.getRooms());
                 }
-            } else if (newValue.equalsIgnoreCase("RD FAILURE")){
-                Platform.runLater(()->showAlert(Alert.AlertType.CONFIRMATION, null, "Failure", "Error: Room hasn't been deleted."));
-            } else if (newValue.equalsIgnoreCase("RU SUCCESS")){
+            } else if (newValue.equalsIgnoreCase("RD FAILURE")) {
+                Platform.runLater(() -> showAlert(Alert.AlertType.CONFIRMATION, null, "Failure", "Error: Room hasn't been deleted."));
+            } else if (newValue.equalsIgnoreCase("RU SUCCESS")) {
                 showAlert(Alert.AlertType.CONFIRMATION, null, "Success", "You have update the room.");
-                if (adminUI != null){
-                    Platform.runLater(()->Platform.runLater(()->adminUI.client.getRooms()));
-                    Platform.runLater(()->adminUI.tabRoom.setContent(adminUI.setRoomTab()));
-                } else if (superAdminUI != null){
-                    Platform.runLater(()->Platform.runLater(()->superAdminUI.client.getRooms()));
-                    Platform.runLater(()->superAdminUI.tabRoom.setContent(superAdminUI.setRoomTab()));
+                if (adminUI != null) {
+                    Platform.runLater(() -> Platform.runLater(() -> adminUI.client.getRooms()));
+                    Platform.runLater(() -> adminUI.tabRoom.setContent(adminUI.setRoomTab()));
+                } else if (superAdminUI != null) {
+                    Platform.runLater(() -> Platform.runLater(() -> superAdminUI.client.getRooms()));
+                    Platform.runLater(() -> superAdminUI.tabRoom.setContent(superAdminUI.setRoomTab()));
                 }
-            } else if (newValue.equalsIgnoreCase("RU FAILURE")){
-                Platform.runLater(()->showAlert(Alert.AlertType.CONFIRMATION, null, "Failure", "Error: Room hasn't been updated."));
+            } else if (newValue.equalsIgnoreCase("RU FAILURE")) {
+                Platform.runLater(() -> showAlert(Alert.AlertType.CONFIRMATION, null, "Failure", "Error: Room hasn't been updated."));
             } else if (newValue.equalsIgnoreCase("CC SUCCESS")) {
-            	Platform.runLater(()->showAlert(Alert.AlertType.CONFIRMATION, null, "Success", "You have created the course."));
-                if (adminUI != null){
-                    Platform.runLater(()->adminUI.tabCourse.setContent(adminUI.setCourseTab()));
-                } else if (superAdminUI != null){
-                    Platform.runLater(()->superAdminUI.tabCourse.setContent(superAdminUI.setCourseTab()));
-                }else if (teacherUI != null){
-                    Platform.runLater(()->teacherUI.tabCourse.setContent(teacherUI.setCourseTab()));
+                Platform.runLater(() -> showAlert(Alert.AlertType.CONFIRMATION, null, "Success", "You have created the course."));
+                if (adminUI != null) {
+                    Platform.runLater(() -> adminUI.tabCourse.setContent(adminUI.setCourseTab()));
+                } else if (superAdminUI != null) {
+                    Platform.runLater(() -> superAdminUI.tabCourse.setContent(superAdminUI.setCourseTab()));
+                } else if (teacherUI != null) {
+                    Platform.runLater(() -> teacherUI.tabCourse.setContent(teacherUI.setCourseTab()));
                 }
             } else if (newValue.equalsIgnoreCase("CC FAILURE")) {
-                Platform.runLater(()->showAlert(Alert.AlertType.CONFIRMATION, null, "Failure", "Error: Course hasn't been created."));
-            } else if (newValue.equalsIgnoreCase("CD SUCCESS")){
-            	Platform.runLater(()->showAlert(Alert.AlertType.CONFIRMATION, null, "Success", "You have deleted the course."));
-                if (adminUI != null){
-                    Platform.runLater(()->adminUI.client.getCourses());
-                }else if (superAdminUI != null){
-                    Platform.runLater(()->superAdminUI.client.getCourses());
-                }else if (teacherUI != null){
-                    Platform.runLater(()->teacherUI.client.getCourses(userID));
+                Platform.runLater(() -> showAlert(Alert.AlertType.CONFIRMATION, null, "Failure", "Error: Course hasn't been created."));
+            } else if (newValue.equalsIgnoreCase("CD SUCCESS")) {
+                Platform.runLater(() -> showAlert(Alert.AlertType.CONFIRMATION, null, "Success", "You have deleted the course."));
+                if (adminUI != null) {
+                    Platform.runLater(() -> adminUI.client.getCourses());
+                } else if (superAdminUI != null) {
+                    Platform.runLater(() -> superAdminUI.client.getCourses());
+                } else if (teacherUI != null) {
+                    Platform.runLater(() -> teacherUI.client.getCourses(userID));
                 }
-            } else if (newValue.equalsIgnoreCase("CD FAILURE")){
-                Platform.runLater(()->showAlert(Alert.AlertType.CONFIRMATION, null, "Failure", "Error: Course hasn't been deleted."));
-            } else if (newValue.equalsIgnoreCase("CU SUCCESS")){
+            } else if (newValue.equalsIgnoreCase("CD FAILURE")) {
+                Platform.runLater(() -> showAlert(Alert.AlertType.CONFIRMATION, null, "Failure", "Error: Course hasn't been deleted."));
+            } else if (newValue.equalsIgnoreCase("CU SUCCESS")) {
                 showAlert(Alert.AlertType.CONFIRMATION, null, "Success", "You have update the course.");
-                if (adminUI != null){
-                    Platform.runLater(()->adminUI.client.getCourses());
-                    Platform.runLater(()->adminUI.tabCourse.setContent(adminUI.setCourseTab()));
-                } else if (superAdminUI != null){
-                    Platform.runLater(()->superAdminUI.client.getCourses());
-                    Platform.runLater(()->superAdminUI.tabCourse.setContent(superAdminUI.setCourseTab()));
-                }else if (teacherUI != null){
-                    Platform.runLater(()->Platform.runLater(()->teacherUI.client.getCourses(userID)));
-                    Platform.runLater(()->teacherUI.tabCourse.setContent(teacherUI.setCourseTab()));
+                if (adminUI != null) {
+                    Platform.runLater(() -> adminUI.client.getCourses());
+                    Platform.runLater(() -> adminUI.tabCourse.setContent(adminUI.setCourseTab()));
+                } else if (superAdminUI != null) {
+                    Platform.runLater(() -> superAdminUI.client.getCourses());
+                    Platform.runLater(() -> superAdminUI.tabCourse.setContent(superAdminUI.setCourseTab()));
+                } else if (teacherUI != null) {
+                    Platform.runLater(() -> Platform.runLater(() -> teacherUI.client.getCourses(userID)));
+                    Platform.runLater(() -> teacherUI.tabCourse.setContent(teacherUI.setCourseTab()));
                 }
-            } else if (newValue.equalsIgnoreCase("CU FAILURE")){
-                Platform.runLater(()->showAlert(Alert.AlertType.ERROR, null, "Failure", "Error: Course hasn't been updated."));
-            } else if(newValue.equalsIgnoreCase("MD SUCCESS")){
-                Platform.runLater(()->showAlert(Alert.AlertType.CONFIRMATION, null, "Success", "The conversation has been deleted."));
-            } else if(newValue.equalsIgnoreCase("MD FAILURE.")){
-                Platform.runLater(()->showAlert(Alert.AlertType.ERROR, null, "Failure", "The conversation cannot be deleted at this time."));
-            } else if(newValue.equalsIgnoreCase("UU SUCCESS.")){
-                Platform.runLater(()->showAlert(Alert.AlertType.ERROR, null, "Success", "The user has been updated."));
-            } else if(newValue.equalsIgnoreCase("UU FAILURE.")){
-                Platform.runLater(()->showAlert(Alert.AlertType.ERROR, null, "Failure", "The user cannot be updated at this time."));
-            }  else if(newValue.equalsIgnoreCase("DU SUCCESS.")){
-                Platform.runLater(()->showAlert(Alert.AlertType.ERROR, null, "Success", "The user has been deleted."));
-            } else if(newValue.equalsIgnoreCase("DU FAILURE.")){
-                Platform.runLater(()->showAlert(Alert.AlertType.ERROR, null, "Failure", "The user cannot be deleted at this time."));
+            } else if (newValue.equalsIgnoreCase("CU FAILURE")) {
+                Platform.runLater(() -> showAlert(Alert.AlertType.ERROR, null, "Failure", "Error: Course hasn't been updated."));
+            } else if (newValue.equalsIgnoreCase("MD SUCCESS")) {
+                Platform.runLater(() -> showAlert(Alert.AlertType.CONFIRMATION, null, "Success", "The conversation has been deleted."));
+            } else if (newValue.equalsIgnoreCase("MD FAILURE.")) {
+                Platform.runLater(() -> showAlert(Alert.AlertType.ERROR, null, "Failure", "The conversation cannot be deleted at this time."));
+            } else if (newValue.equalsIgnoreCase("UU SUCCESS.")) {
+                Platform.runLater(() -> showAlert(Alert.AlertType.ERROR, null, "Success", "The user has been updated."));
+            } else if (newValue.equalsIgnoreCase("UU FAILURE.")) {
+                Platform.runLater(() -> showAlert(Alert.AlertType.ERROR, null, "Failure", "The user cannot be updated at this time."));
+            } else if (newValue.equalsIgnoreCase("DU SUCCESS.")) {
+                Platform.runLater(() -> showAlert(Alert.AlertType.ERROR, null, "Success", "The user has been deleted."));
+            } else if (newValue.equalsIgnoreCase("DU FAILURE.")) {
+                Platform.runLater(() -> showAlert(Alert.AlertType.ERROR, null, "Failure", "The user cannot be deleted at this time."));
             } else if (newValue.equalsIgnoreCase("REC UPLOAD SUCCESS")) {
-                Platform.runLater(()->showAlert(Alert.AlertType.CONFIRMATION, null, "Success", "The record has been added."));
-            } else if(newValue.equalsIgnoreCase("REC UPLOAD FAILURE")){
-                Platform.runLater(()->showAlert(Alert.AlertType.ERROR, null, "Failure", "The record cannot be uploaded at this time. Try another name?"));
-            } else if(newValue.equalsIgnoreCase("RECORD DOWNLOADED")){
-                Platform.runLater(()->showAlert(Alert.AlertType.CONFIRMATION, null, "Success", "The record has been downloaded in the Downloads folder."));
-            } else if(newValue.equalsIgnoreCase("RECORD NOT DOWNLOADED")){
-                Platform.runLater(()->showAlert(Alert.AlertType.ERROR, null, "Failure", "The record cannot be downloaded at this time. Try again later?"));
+                Platform.runLater(() -> showAlert(Alert.AlertType.CONFIRMATION, null, "Success", "The record has been added."));
+            } else if (newValue.equalsIgnoreCase("REC UPLOAD FAILURE")) {
+                Platform.runLater(() -> showAlert(Alert.AlertType.ERROR, null, "Failure", "The record cannot be uploaded at this time. Try another name?"));
+            } else if (newValue.equalsIgnoreCase("RECORD DOWNLOADED")) {
+                Platform.runLater(() -> showAlert(Alert.AlertType.CONFIRMATION, null, "Success", "The record has been downloaded in the Downloads folder."));
+            } else if (newValue.equalsIgnoreCase("RECORD NOT DOWNLOADED")) {
+                Platform.runLater(() -> showAlert(Alert.AlertType.ERROR, null, "Failure", "The record cannot be downloaded at this time. Try again later?"));
             }
+            else if (newValue.equalsIgnoreCase("DC FAILURE")) {
+                Platform.runLater(() -> showAlert(Alert.AlertType.CONFIRMATION, null, "Failure", "Error: Department hasn't been created."));
+            } else if (newValue.equalsIgnoreCase("DC SUCCESS")) {
+                Platform.runLater(() -> showAlert(Alert.AlertType.CONFIRMATION, null, "Success", "You have created the department."));
+            } else if (newValue.equalsIgnoreCase("DEU FAILURE")) {
+                Platform.runLater(() -> showAlert(Alert.AlertType.CONFIRMATION, null, "Failure", "Error: Department hasn't been updated."));
+            } else if (newValue.equalsIgnoreCase("DEU SUCCESS")) {
+                Platform.runLater(() -> showAlert(Alert.AlertType.CONFIRMATION, null, "Success", "Department has been updated."));
+            } else if (newValue.equalsIgnoreCase("DD FAILURE")) {
+                Platform.runLater(() -> showAlert(Alert.AlertType.CONFIRMATION, null, "Failure", "Error: Department hasn't been deleted."));
+            } else if (newValue.equalsIgnoreCase("DD SUCCESS")) {
+                Platform.runLater(() -> showAlert(Alert.AlertType.CONFIRMATION, null, "Success", "Department has been deleted."));
+                if (adminUI != null) {
+                    Platform.runLater(() -> adminUI.client.getDepartment());
+                } else if (superAdminUI != null) {
+                    Platform.runLater(() -> superAdminUI.client.getDepartment());
+                }
+            } else if (newValue.equalsIgnoreCase("PC FAILURE")) {
+                Platform.runLater(() -> showAlert(Alert.AlertType.CONFIRMATION, null, "Failure", "Error: Promotion hasn't been created."));
+            } else if (newValue.equalsIgnoreCase("PC SUCCESS")) {
+                Platform.runLater(() -> showAlert(Alert.AlertType.CONFIRMATION, null, "Success", "Promotion has been created."));
+            } else if (newValue.equalsIgnoreCase("PU FAILURE")) {
+                Platform.runLater(() -> showAlert(Alert.AlertType.CONFIRMATION, null, "Failure", "Error: Promotion hasn't been updated."));
+            } else if (newValue.equalsIgnoreCase("PU SUCCESS")) {
+                Platform.runLater(() -> showAlert(Alert.AlertType.CONFIRMATION, null, "Success", "Promotion has been updated."));
+            } else if (newValue.equalsIgnoreCase("DP FAILURE")) {
+                Platform.runLater(() -> showAlert(Alert.AlertType.CONFIRMATION, null, "Failure", "Error: Promotion hasn't been deleted."));
+            } else if (newValue.equalsIgnoreCase("DP SUCCESS")) {
+                Platform.runLater(() -> showAlert(Alert.AlertType.CONFIRMATION, null, "Success", "Promotion has been deleted."));
+                if (adminUI != null) {
+                    Platform.runLater(() -> adminUI.client.getPromo());
+                } else if (superAdminUI != null) {
+                    Platform.runLater(() -> superAdminUI.client.getPromo());
+                }
+            } else if (newValue.equalsIgnoreCase("CLC FAILURE")) {
+                Platform.runLater(() -> showAlert(Alert.AlertType.CONFIRMATION, null, "Failure", "Error: Class hasn't been created."));
+            } else if (newValue.equalsIgnoreCase("CLC SUCCESS")) {
+                Platform.runLater(() -> showAlert(Alert.AlertType.CONFIRMATION, null, "Success", "Class has been created."));
+            }else if (newValue.equalsIgnoreCase("CLU FAILURE")) {
+                Platform.runLater(() -> showAlert(Alert.AlertType.CONFIRMATION, null, "Failure", "Error: Class hasn't been updated."));
+            } else if (newValue.equalsIgnoreCase("CLU SUCCESS")) {
+                Platform.runLater(() -> showAlert(Alert.AlertType.CONFIRMATION, null, "Success", "Class has been updated."));
+            }else if (newValue.equalsIgnoreCase("CLP FAILURE")) {
+                Platform.runLater(() -> showAlert(Alert.AlertType.CONFIRMATION, null, "Failure", "Error: Class hasn't been deleted."));
+            } else if (newValue.equalsIgnoreCase("CLP SUCCESS")) {
+                Platform.runLater(() -> showAlert(Alert.AlertType.CONFIRMATION, null, "Success", "Class has been deleted."));
+                if (adminUI != null) {
+                    Platform.runLater(() -> adminUI.client.getClasses());
+                } else if (superAdminUI != null) {
+                    Platform.runLater(() -> superAdminUI.client.getClasses());
+                }
+            }
+
         });
     }
 

@@ -77,9 +77,9 @@ public class DepartmentServices {
     public void handleUpdatedDepartment(String msg){
         String args[] = msg.split(" ");
         if(args[1].equalsIgnoreCase("SUCCESS"))
-            coreClient.getDisplay().setState("DU SUCCESS");
+            coreClient.getDisplay().setState("DEU SUCCESS");
         else
-            coreClient.getDisplay().setState("DU FAILURE");
+            coreClient.getDisplay().setState("DEU FAILURE");
     }
 
     public void handleDeletedDepartment(String msg){
