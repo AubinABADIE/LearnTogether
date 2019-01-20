@@ -20,7 +20,15 @@ public abstract class AbstractDAORecords {
      * @return : the record list
      */
     public abstract List<RecordType> searchAllRecords();
+
     public abstract int createRecord(String name, int year, int courseID, int donatingUser);
 
     public abstract RecordType getRecord(int recordID);
+
+    /**
+     * This methos seaches the records by user in the data base
+     * @param id : user id
+     * @return : the record list of one user
+     */
+    public abstract List<RecordType> searchRecordsByUser(int id);
 }

@@ -810,6 +810,7 @@ public abstract class UI extends Application implements DisplayIF {
         Button btnReturnRecD = new Button();
         btnReturnRecD.setGraphic(returnRecView);//setting icon to button
 
+
         btnReturnRecD.setOnAction(event -> {
             tabRecords.setContent(readRecords(tabRecords));
         });
@@ -818,48 +819,71 @@ public abstract class UI extends Application implements DisplayIF {
         Text titleDeleteRecord = new Text("Delete a Record :");
         titleDeleteRecord.setFont(Font.font(20));
 
+
+
         //record list
 
-        //client.getRecordsByUser();
-        ListView<RecordType> list = new ListView<>();
+        client.getRecordsByUser(userID);
+        ListView<RecordType> listD = new ListView<>();
         recordNames = FXCollections.observableArrayList();
         recordNames.addListener((ListChangeListener<RecordType>) c -> {
-            list.setItems(recordNames);
+            listD.setItems(recordNames);
         });
 
-        list.setItems(recordNames);
-        list.setPrefWidth(350);
-        list.setPrefHeight(500);
+        listD.setItems(recordNames);
+        listD.setPrefWidth(350);
+        listD.setPrefHeight(500);
 
+
+        VBox vboxlistDelete = new VBox();
+        vboxlistDelete.getChildren().add(listD);
+        vboxlistDelete.setAlignment(Pos.CENTER);
+
+        //delete button
         Image deleteR = new Image(getClass().getResourceAsStream("images/icons8-annuler-208.png"));
+        ImageView deleteView = new ImageView(deleteR);
+        deleteView.setFitHeight(15);
+        deleteView.setFitWidth(15);
 
-        //add images on the items in the recordList
-        list.setCellFactory(param -> new ListCell<RecordType>() {
-            private ImageView imageView = new ImageView();
-            Button deleteRB = new Button();
-            @Override
-            public void updateItem(RecordType nameR, boolean empty) {
-                super.updateItem(nameR, empty);
-                imageView.setImage(deleteR);
-                deleteRB.setGraphic(imageView);
-            }
-            //event delete
+        //create the button
+        Button btnD = new Button("Delete");
+        btnD.setGraphic(deleteView);//setting icon to button
+
+        //delete info
+        Text titleDel = new Text(" ");
+        Text nameDel = new Text(" ");
+
+        VBox vboxButtonDelete = new VBox();
+        vboxButtonDelete.getChildren().addAll(titleDel,nameDel);
+        vboxButtonDelete.setAlignment(Pos.CENTER);
+        vboxButtonDelete.setPadding(new Insets(0, 0, 0, 75));
 
 
-
-
-        });
-
-
+        //add in the heaeder view
         HBox returnTitleBox = new HBox();
+        returnTitleBox.getChildren().add(titleDeleteRecord);
+        //returnTitleBox.setSpacing(600);
 
-        returnTitleBox.getChildren().addAll(titleDeleteRecord, btnReturnRecD);
-        returnTitleBox.setSpacing(600);
-
-
+        // grid pane
         GridPane deleteGrid = new GridPane();
         deleteGrid.add(returnTitleBox, 1,0);
-        deleteGrid.add(list, 1,1);
+        deleteGrid.add(btnReturnRecD, 2,0);
+        deleteGrid.add(vboxlistDelete, 1,1);
+        deleteGrid.add(vboxButtonDelete, 2,1);
+
+
+        //display delete for one record
+        listD.setOnMouseClicked(event -> {
+            deleteGrid.getChildren().remove(vboxButtonDelete);
+            deleteGrid.add(vboxButtonDelete, 2, 1);
+            System.out.println("clicked on " + listD.getSelectionModel().getSelectedItem());
+            SelectionModel<RecordType> selectedRec = listD.getSelectionModel();
+            nameDel.setText(selectedRec.getSelectedItem().getName());
+            nameDel.setFont(Font.font(15));
+            titleDel.setText("Delete this record : ");
+            titleDel.setFont(Font.font(15));
+            vboxButtonDelete.getChildren().add(btnD);
+        });
 
         return deleteGrid;
     }
@@ -888,4 +912,6 @@ public abstract class UI extends Application implements DisplayIF {
     public void getRecords(List<RecordType>records){
 
     }
+    @Override
+    public void getRecordByUser(List<RecordType>records){}
 }
