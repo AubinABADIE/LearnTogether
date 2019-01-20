@@ -38,4 +38,6 @@ public abstract class AbstractDAOClass {
 
     public abstract List<ClassType> searchAllClasses();
 
+    public abstract List<ClassType> searchAllClassesByPromo(int idPromo);
+
 }

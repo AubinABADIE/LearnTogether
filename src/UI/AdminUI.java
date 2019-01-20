@@ -713,28 +713,27 @@ public class AdminUI extends TeacherUI {
             list.setItems(depNames);
         });
 
-
-
+        //create button add
         Image addDepartment = new Image(getClass().getResourceAsStream("images/icons8-plus-208.png"));
         ImageView addDepView = new ImageView(addDepartment);
         addDepView.setFitHeight(15);
         addDepView.setFitWidth(15);
-
-        //create button add
         Button btnAddDep = new Button("Add-Dep");
         btnAddDep.setGraphic(addDepView);//setting icon to button
 
+        //create button delete
         Image deleteDep = new Image(getClass().getResourceAsStream("images/icons8-annuler-208.png"));
         ImageView deleteDepView = new ImageView(deleteDep);
         deleteDepView.setFitHeight(12);
         deleteDepView.setFitWidth(12);
-
-        //create button delete
         Button btnDeleteDep = new Button("Delete-Dep");
         btnDeleteDep.setGraphic(deleteDepView);//setting icon to button
 
         //create update button
         Button btnUpdateDe=new Button("Update-Dep");
+
+        //create button close
+        Button btnClose = new Button("Close");
 
         // add in hbox buttons and title
         HBox hboxButtonDep = new HBox();
@@ -748,7 +747,7 @@ public class AdminUI extends TeacherUI {
         list.setPrefHeight(300);
 
         // left vbox
-        Text labelHeader = new Text("Departments");
+        Text labelHeader = new Text("All Departments");
         VBox vboxListDep = new VBox();
         vboxListDep.getChildren().addAll(labelHeader,list);
 
@@ -788,28 +787,26 @@ public class AdminUI extends TeacherUI {
             listPromo.setItems(promoNames);
         });
 
-
-        Image addPromo = new Image(getClass().getResourceAsStream("images/icons8-plus-208.png"));
-        ImageView addPromoView = new ImageView(addPromo);
-        addPromoView.setFitHeight(15);
-        addPromoView.setFitWidth(15);
-
         //create button add
-        Button btnAddPromo = new Button("Add-Promo");
-        btnAddPromo.setGraphic(addPromoView);//setting icon to button
+        Image addPromo = new Image(getClass().getResourceAsStream("images/icons8-plus-208.png"));
+        ImageView addPromoV = new ImageView(addPromo);
+        addPromoV.setFitHeight(15);
+        addPromoV.setFitWidth(15);Button btnAddPromo = new Button("Add-Promo");
+        btnAddPromo.setGraphic(addPromoV);//setting icon to button
 
-        //delete button
+        //create button delete
         Image deletePromo = new Image(getClass().getResourceAsStream("images/icons8-annuler-208.png"));
         ImageView deletePromoView = new ImageView(deletePromo);
         deletePromoView.setFitHeight(12);
         deletePromoView.setFitWidth(12);
-
-        //create button delete
         Button btnDeletePromo = new Button("Delete-Promo");
         btnDeletePromo.setGraphic(deletePromoView);//setting icon to button
 
         //create update button
         Button btnUpdatePromo = new Button("Update-Promo");
+
+        //create button close
+        Button btnCloseP = new Button("Close");
 
         // add in hbox buttons and title
         HBox hboxButtonPromo = new HBox();
@@ -823,8 +820,8 @@ public class AdminUI extends TeacherUI {
         listPromo.setPrefWidth(300);
         listPromo.setPrefHeight(300);
 
-        // left vbox
-        Text labelHeaderPromo = new Text("Promotions");
+        // left vboxa
+        Text labelHeaderPromo = new Text("All Promotions");
         VBox vboxListPromo = new VBox();
         vboxListPromo.getChildren().addAll(labelHeaderPromo,listPromo);
 
@@ -867,30 +864,27 @@ public class AdminUI extends TeacherUI {
         classNames.addListener((ListChangeListener<ClassType>) c -> {
             listClass.setItems(classNames);
         });
-
-        Image addClass = new Image(getClass().getResourceAsStream("images/icons8-plus-208.png"));
-        ImageView addClassView = new ImageView(addClass);
-        addClassView.setFitHeight(15);
-        addClassView.setFitWidth(15);
-
         //create button add
+        Image addClass = new Image(getClass().getResourceAsStream("images/icons8-plus-208.png"));
+        ImageView addClassV = new ImageView(addClass);
+        addClassV.setFitHeight(15);
+        addClassV.setFitWidth(15);
         Button btnAddClass = new Button("Add-Class");
-        btnAddClass.setGraphic(addClassView);//setting icon to button
+        btnAddClass.setGraphic(addClassV);//setting icon to button
 
-        //delete button
+        //create button delete
         Image deleteClass = new Image(getClass().getResourceAsStream("images/icons8-annuler-208.png"));
         ImageView deleteClassView = new ImageView(deleteClass);
         deleteClassView.setFitHeight(12);
         deleteClassView.setFitWidth(12);
-
-        //create button delete
         Button btnDeleteClass = new Button("Delete-Class");
         btnDeleteClass.setGraphic(deleteClassView);//setting icon to button
-
 
         //create button update
         Button btnUpdateClass = new Button("Update-Class");
 
+        //create button close
+        Button btnCloseC = new Button("Close");
 
         listClass.setItems(classNames);
         System.out.println(classNames);
@@ -898,14 +892,14 @@ public class AdminUI extends TeacherUI {
         listClass.setPrefHeight(300);
 
         // left vbox
-        Text labelHeaderCl = new Text("Classes");
+        Text labelHeaderCl = new Text("All Classes");
         VBox vboxListClass = new VBox();
         vboxListClass.getChildren().addAll(labelHeaderCl,listClass);
 
 
         // add in hbox buttons and title
         HBox hboxButtonClass = new HBox();
-        Text titleClass = new Text("ClassServices : ");
+        Text titleClass = new Text("Class : ");
         hboxButtonClass.getChildren().addAll(titleClass, btnAddClass, btnDeleteClass,btnUpdateClass);
         hboxButtonClass.setSpacing(5);
 
@@ -939,11 +933,16 @@ public class AdminUI extends TeacherUI {
         hboxdescClassInfo.setAlignment(Pos.CENTER);
         //
 
+
+        //create button show all departments promotions and classes
+        Button btnShowAll = new Button("Show All");
+
         //grid pane
         GridPane gridDepV = new GridPane();
         gridDepV.setHgap(10);
         gridDepV.setVgap(10);
         gridDepV.setPadding(new Insets(10, 10, 10, 10));
+        gridDepV.add(btnShowAll, 1, 0);
         gridDepV.add(hboxButtonDep, 1, 2);
         gridDepV.add(hboxButtonPromo, 1, 4);
         gridDepV.add(hboxButtonClass, 1, 6);
@@ -953,7 +952,7 @@ public class AdminUI extends TeacherUI {
 
         /*creation of the info vbox of one department*/
         VBox vboxInfoDep = new VBox();
-        vboxInfoDep.getChildren().addAll(hboxDepInfo, hboxnameDepInfo, hboxteacherDepInfo, hboxdescDepInfo);
+        vboxInfoDep.getChildren().addAll(btnClose,hboxDepInfo, hboxnameDepInfo, hboxteacherDepInfo, hboxdescDepInfo);
         vboxInfoDep.setSpacing(10);
         vboxInfoDep.setPadding(new Insets(100, 0, 0, 75));
         HBox hboxID = new HBox();
@@ -961,7 +960,7 @@ public class AdminUI extends TeacherUI {
 
         /*creation of the info vbox of one promotion*/
         VBox vboxInfoPromo = new VBox();
-        vboxInfoPromo.getChildren().addAll(hboxPromoInfo, hboxnamePromoInfo, hboxgraduationPromoInfo, hboxdescPromoInfo);
+        vboxInfoPromo.getChildren().addAll(btnCloseP,hboxPromoInfo, hboxnamePromoInfo, hboxgraduationPromoInfo, hboxdescPromoInfo);
         vboxInfoPromo.setSpacing(10);
         vboxInfoPromo.setPadding(new Insets(100, 0, 0, 75));
         HBox hboxIP = new HBox();
@@ -969,11 +968,31 @@ public class AdminUI extends TeacherUI {
 
         /*creation of the info vbox of one class*/
         VBox vboxInfoClass = new VBox();
-        vboxInfoClass.getChildren().addAll(hboxClassInfo, hboxnameClassInfo, hboxdepClassInfo, hboxdescClassInfo);
+        vboxInfoClass.getChildren().addAll(btnCloseC,hboxClassInfo, hboxnameClassInfo, hboxdepClassInfo, hboxdescClassInfo);
         vboxInfoClass.setSpacing(10);
         vboxInfoClass.setPadding(new Insets(100, 0, 0, 75));
         HBox hboxIC = new HBox();
         hboxIC.getChildren().add(vboxInfoClass);
+
+
+        // Button show all departments promotions and classes
+        btnShowAll.setOnAction(event -> {
+            tabDepartment.setContent(departmentRead(tabDepartment));
+            labelHeader.setText("All Departments");
+            labelHeaderPromo.setText("All Promotions");
+            labelHeaderCl.setText("All Classes");
+        });
+
+        //Buttons to close the information about Dep / Promo / Class
+        btnClose.setOnAction(event -> {
+            gridDepV.getChildren().remove(hboxID);
+        });
+        btnCloseP.setOnAction(event -> {
+            gridDepV.getChildren().remove(hboxIP);
+        });
+        btnCloseC.setOnAction(event -> {
+            gridDepV.getChildren().remove(hboxIC);
+        });
 
         //Dep
         btnAddDep.setOnAction(event -> {
@@ -1011,7 +1030,7 @@ public class AdminUI extends TeacherUI {
             gridDepV.getChildren().remove(hboxID);
             gridDepV.getChildren().remove(hboxIP);
             gridDepV.getChildren().remove(hboxIC);
-            gridDepV.add(hboxID, 1, 7);
+            gridDepV.add(hboxID, 1, 6);
             listClass.getSelectionModel().clearSelection();
             listPromo.getSelectionModel().clearSelection();
             System.out.println("clicked on " + list.getSelectionModel().getSelectedItem());
@@ -1019,7 +1038,8 @@ public class AdminUI extends TeacherUI {
             name.setText(selectedDep.getSelectedItem().getNameDep());
             teacher.setText(Integer.toString(selectedDep.getSelectedItem().getRefTeacher()));
             description.setText(selectedDep.getSelectedItem().getDescriptionDep());
-
+            client.getPromoByDep(selectedDep.getSelectedItem().getIdDepartment());
+            labelHeaderPromo.setText(selectedDep.getSelectedItem().getNameDep()+ "'s Promotions");
         });
 
         //Promo
@@ -1060,14 +1080,16 @@ public class AdminUI extends TeacherUI {
             gridDepV.getChildren().remove(hboxIC);
             listClass.getSelectionModel().clearSelection();
             list.getSelectionModel().clearSelection();
-            gridDepV.add(hboxIP, 1, 7);
+            gridDepV.add(hboxIP, 1, 6);
             System.out.println("clicked on " + listPromo.getSelectionModel().getSelectedItem());
             SelectionModel<PromotionType> selectedPromo = listPromo.getSelectionModel();
             namePromo.setText(selectedPromo.getSelectedItem().getNamePromo());
             graduationPromo.setText(Integer.toString(selectedPromo.getSelectedItem().getGraduationPromo()));
             descriptionPromo.setText(selectedPromo.getSelectedItem().getDescriptionPromo());
             depPromo.setText(Integer.toString(selectedPromo.getSelectedItem().getRefDep()));
-            System.out.println(selectedPromo.getSelectedItem().getDescriptionPromo());
+            client.getClassesByPromo(selectedPromo.getSelectedItem().getIdPromo());
+            labelHeaderCl.setText(selectedPromo.getSelectedItem().getNamePromo()+"'s Classes");
+
         });
 
         //ClassServices
@@ -1106,7 +1128,7 @@ public class AdminUI extends TeacherUI {
             gridDepV.getChildren().remove(hboxIC);
             list.getSelectionModel().clearSelection();
             listPromo.getSelectionModel().clearSelection();
-            gridDepV.add(hboxIC, 1, 7);
+            gridDepV.add(hboxIC, 1, 6);
             System.out.println("clicked on " + listClass.getSelectionModel().getSelectedItem());
             SelectionModel<ClassType> selectedClass = listClass.getSelectionModel();
             nameClass.setText(selectedClass.getSelectedItem().getClassName());
@@ -1322,7 +1344,7 @@ public class AdminUI extends TeacherUI {
 
         // labels
         Label nameLabel = new Label("Name of promotion : ");
-        Label depLabel = new Label("Referent DepartmentServices : ");
+        Label depLabel = new Label("Referent Department : ");
         Label gradLabel = new Label("Promo's graduation : ");
         Label descLabel = new Label("Description : ");
 

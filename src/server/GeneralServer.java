@@ -108,6 +108,9 @@ public class GeneralServer implements Observer {
         }else if(instruction.startsWith("DELETEPROMOTION")){
             String[] creds = instruction.split("-/-");
             handleDeletePromotionFromClient(Integer.parseInt(creds[1]), client);
+        }else if (instruction.startsWith("GETPROMOTIONBYDEP")){
+            String[] creds = instruction.split("-/-");
+            handleListPromoByDepFromClient(Integer.parseInt(creds[1]),client);
         }else if (instruction.startsWith("GETPROMOTION")){
             handleListPromoFromClient(client);
         }
@@ -120,6 +123,9 @@ public class GeneralServer implements Observer {
         }else if(instruction.startsWith("DELETECLASS")){
             String[] creds = instruction.split("-/-");
             handleDeleteClassFromClient(Integer.parseInt(creds[1]), client);
+        }else if (instruction.startsWith("GETCLASSBYPROMO")){
+            String[] creds = instruction.split("-/-");
+            handleListClassByPromoFromClient(Integer.parseInt(creds[1]),client);
         }else if (instruction.startsWith("GETCLASS")){
             handleListClassFromClient(client);
         }
@@ -758,7 +764,6 @@ public class GeneralServer implements Observer {
      * @param firstname
      * @param birthDate
      * @param email
-     * @param password
      * @param role
      * @param client
      */
@@ -805,6 +810,19 @@ public class GeneralServer implements Observer {
     public void handleListPromoFromClient(ConnectionToClient client){
 
         List<PromotionType> promo =  dao.getPromotionDAO().searchAllPromotion();
+        try {
+            client.sendToClient(promo);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+    /**
+     * This method delegates to the dao the research of the department
+     */
+
+    public void handleListPromoByDepFromClient(int idDep,ConnectionToClient client){
+        List<PromotionType> promo =  dao.getPromotionDAO().searchAllPromotionByDep(idDep);
         try {
             client.sendToClient(promo);
         } catch (IOException e) {
@@ -899,6 +917,18 @@ public class GeneralServer implements Observer {
         }
     }
 
+    /**
+     * This method delegates to the dao the research of the classes within an id of a promotion
+     */
+
+    public void handleListClassByPromoFromClient(int idPromo, ConnectionToClient client){
+        List<ClassType> cl =  dao.getClassDAO().searchAllClassesByPromo(idPromo);
+        try {
+            client.sendToClient(cl);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
     /**
      * @param nameClass

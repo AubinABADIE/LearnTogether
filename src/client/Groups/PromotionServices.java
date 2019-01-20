@@ -70,6 +70,17 @@ public class PromotionServices {
         }
     }
 
+    /**
+     *
+     */
+    public void getPromotionByDep(int idDep) {
+        try {
+            coreClient.getConnection().sendToServer("#GETPROMOTIONBYDEP-/-" + idDep );
+        }catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     public void handleCreatedPromo(String msg){
         String args[] = msg.split(" ");
         if(args[1].equalsIgnoreCase("SUCCESS"))

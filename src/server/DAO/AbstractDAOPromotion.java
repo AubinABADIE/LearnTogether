@@ -16,6 +16,7 @@ public abstract class AbstractDAOPromotion {
     }
 
     public abstract List<PromotionType> searchAllPromotion();
+    public abstract List<PromotionType> searchAllPromotionByDep(int idDep);
 
     /**
      * @param name

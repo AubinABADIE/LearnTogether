@@ -135,4 +135,29 @@ public class SQLServerDAOClass extends AbstractDAOClass {
         return cl;
     }
 
+
+
+    @Override
+    public List<ClassType> searchAllClassesByPromo(int idPromo) {
+        ArrayList cl = new ArrayList();
+        Connection connection = getConnection();
+        if(connection != null){
+            try{
+                PreparedStatement preparedStatement = connection.prepareStatement("SELECT * from Classes WHERE idPromotion = ? ");
+                preparedStatement.setInt(1, idPromo);
+                ResultSet resultSet = preparedStatement.executeQuery();
+                while (resultSet.next()){
+                    cl.add(new ClassType(resultSet.getInt(1),
+                            resultSet.getString(2),
+                            resultSet.getString(3),
+                            resultSet.getInt(4)));
+                }
+            }catch (SQLException e){e.printStackTrace();}
+            finally {
+                closeConnection(connection);
+            }
+        }
+        return cl;
+    }
+
 }

@@ -83,6 +83,35 @@ public class SQLServerDAOPromotion extends AbstractDAOPromotion {
     }
 
     /**
+     * This method returns all the promotion in the data base.
+     * @return int which returns the state of the selection.
+     */
+    @Override
+    public List<PromotionType> searchAllPromotionByDep(int idDep) {
+        ArrayList promo = new ArrayList();
+        Connection connection = getConnection();
+        if(connection != null){
+            try{
+                PreparedStatement preparedStatement = connection.prepareStatement("SELECT * from Promotions WHERE idDepartment = ? ");
+                preparedStatement.setInt(1, idDep);
+                ResultSet resultSet = preparedStatement.executeQuery();
+                while (resultSet.next()){
+                    promo.add(new PromotionType(resultSet.getInt("idPromotion"),
+                            resultSet.getString("promotionName"),
+                            resultSet.getString("descriptionPromo"),
+                            resultSet.getInt("graduationYear"),
+                            resultSet.getInt("idDepartment")
+                    ));
+                }
+            }catch (SQLException e){e.printStackTrace();}
+            finally {
+                closeConnection(connection);
+            }
+        }
+        return promo;
+    }
+
+    /**
      * This method creates a promotion in the data base.
      * @param name : promotion name
      * @param descriptionDep : promotion description

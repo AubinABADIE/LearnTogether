@@ -446,7 +446,6 @@ public class CoreClient implements ClientIF {
      * @param firstname : user first name
      * @param birthDate : user birth date
      * @param email : user login
-     * @param password : user password
      * @param role : user role
      */
     public void handleUpdateUser(int id, String name, String firstname, String email, String birthDate, String role) {
@@ -496,6 +495,12 @@ public class CoreClient implements ClientIF {
     public void getPromo() {
         promo.getPromotion();
     }
+    /**
+     * This method delegates getPromotionByDep to PromotionServices class
+     */
+    public void getPromoByDep(int idDep) {
+        promo.getPromotionByDep(idDep);
+    }
 
     /**
      * This method delegates to promotionServices the promotion creation request
@@ -533,6 +538,13 @@ public class CoreClient implements ClientIF {
      */
     public void getClasses() {
         classes.getClasses();
+    }
+    /**
+     * This method delegates getClassesByPromo to ClassServices class
+     * @return a class list
+     */
+    public void getClassesByPromo(int idPromo) {
+        classes.getClassesByPromo(idPromo);
     }
 
     /**

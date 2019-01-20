@@ -22,6 +22,14 @@ public class ClassServices {
         }
     }
 
+    public void getClassesByPromo(int idPromo) {
+        try {
+            coreClient.getConnection().sendToServer("#GETCLASSBYPROMO-/-" + idPromo);
+        }catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 
     /**
      * This method asks the server to create a class with the following attributes.
