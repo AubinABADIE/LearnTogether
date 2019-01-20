@@ -158,7 +158,6 @@ public class StartUI extends UI {
      * This method setups the different listeners used in the UI.
      * It mainly setups the connection status and the current state.
      */
-    @Override
     protected void setupListeners(){
         connectionStatus.addListener((observable, oldValue, newValue) -> {
             if(newValue.equalsIgnoreCase("STUDENT")){
@@ -282,7 +281,7 @@ public class StartUI extends UI {
             } else if(newValue.equalsIgnoreCase("REC DELETE SUCCESS")){
                 Platform.runLater(() -> showAlert(Alert.AlertType.CONFIRMATION, null, "Success", "You have deleted the record."));
                 Platform.runLater(()->client.getRecordsByUser(userID));
-            }else if (newValue.equalsIgnoreCase("REC DELETE FAILURE")) {
+            } else if (newValue.equalsIgnoreCase("REC DELETE FAILURE")) {
                 Platform.runLater(() -> showAlert(Alert.AlertType.CONFIRMATION, null, "Failure", "Error: Record hasn't been deleted."));
             } else if (newValue.equalsIgnoreCase("DC FAILURE")) {
                 Platform.runLater(() -> showAlert(Alert.AlertType.CONFIRMATION, null, "Failure", "Error: Department hasn't been created."));
@@ -322,11 +321,11 @@ public class StartUI extends UI {
                 Platform.runLater(() -> showAlert(Alert.AlertType.CONFIRMATION, null, "Failure", "Error: Class hasn't been created."));
             } else if (newValue.equalsIgnoreCase("CLC SUCCESS")) {
                 Platform.runLater(() -> showAlert(Alert.AlertType.CONFIRMATION, null, "Success", "Class has been created."));
-            }else if (newValue.equalsIgnoreCase("CLU FAILURE")) {
+            } else if (newValue.equalsIgnoreCase("CLU FAILURE")) {
                 Platform.runLater(() -> showAlert(Alert.AlertType.CONFIRMATION, null, "Failure", "Error: Class hasn't been updated."));
             } else if (newValue.equalsIgnoreCase("CLU SUCCESS")) {
                 Platform.runLater(() -> showAlert(Alert.AlertType.CONFIRMATION, null, "Success", "Class has been updated."));
-            }else if (newValue.equalsIgnoreCase("CLP FAILURE")) {
+            } else if (newValue.equalsIgnoreCase("CLP FAILURE")) {
                 Platform.runLater(() -> showAlert(Alert.AlertType.CONFIRMATION, null, "Failure", "Error: Class hasn't been deleted."));
             } else if (newValue.equalsIgnoreCase("CLP SUCCESS")) {
                 Platform.runLater(() -> showAlert(Alert.AlertType.CONFIRMATION, null, "Success", "Class has been deleted."));

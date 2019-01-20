@@ -45,13 +45,9 @@ import java.util.List;
 public class TeacherUI extends UI {
 
 	private Scene principalTeacherScene;
-	private TabPane tabPane;
-	private Tab tabProfile, tabSchedule, tabRecords, tabDiary, tabChat;
+	private Tab  tabRecords;
 	Tab tabCourse;
-	private Tab tabRoom;
 	protected ObservableList<PromotionType> promoNames;
-	
-	//protected String teacherUpdateName;
 	
     /**
      * Default constructor
@@ -63,20 +59,11 @@ public class TeacherUI extends UI {
 		this.client = client;
     }
 
-	public Scene getPrincpalTeacherScene() {
-		return principalTeacherScene;
-	}
-
-	public void setPrincpalTeacherScene(Scene princpalTeacherScene) {
-		this.principalTeacherScene = princpalTeacherScene;
-	}
-	
-	public void setCourses(List<CourseType> courseList) {
-        courseNames.setAll(courseList);
-    }
-	
-	
-
+    /**
+     * This method creates the principal scene (view) for teachers.
+     * It is called by the startUI when a student logs in.
+     * @return the principal scene
+     */
 	public Scene createPrincipalTeacherScene(){
 		this.primaryStage.setTitle("LearnTogether for Teachers");
         BorderPane teacherScene = new BorderPane();
@@ -125,18 +112,24 @@ public class TeacherUI extends UI {
         principalTeacherScene = new Scene(teacherScene, 900, 700);
         return principalTeacherScene;
 	}
-	
-	protected Tab tabCourse(){
 
+    /**
+     * This method creates the tab for the courses management.
+     * @return the tab.
+     */
+	protected Tab tabCourse(){
         Tab tabCourse = new Tab();
         tabCourse.setText("Course");
         tabCourse.setClosable(false);
-
-
         tabCourse.setContent(courseRead(tabCourse));
         return tabCourse;
 	}
 
+    /**
+     * This method populates the content for the courses information display
+     * @param tabCourse the tab to populate
+     * @return the content.
+     */
 	protected GridPane courseRead(Tab tabCourse){
         client.getCourses(userID);
         ListView<CourseType> list = new ListView<>();
@@ -289,6 +282,11 @@ public class TeacherUI extends UI {
         return gridCourseVisu;
 	}
 
+    /**
+     * This method populates the content for the different courses management.
+     * @param tabCourse the tab to populate
+     * @return the content.
+     */
 	private GridPane createTabCourse(Tab tabCourse){
 	      
 	       // labels
@@ -389,18 +387,31 @@ public class TeacherUI extends UI {
 	        
 	        return gridCourse;
 	        }
-	
+
+    /**
+     * This method sets the current tab to the courseTab.
+     * @return the courses information display.
+     */
 	protected GridPane setCourseTab(){
         return courseRead(tabCourse);
     }
-	
+
+    /**
+     * This method creates the update course view.
+     * @param tabCourse the tab course.
+     * @param nameCourse the current name of the course.
+     * @param descriptionCourse the current description of the course.
+     * @param nbTotalHourCourse the current number of hours of the course.
+     * @param referentTeacherCourse the current referent teacher of the course.
+     * @param idCourse the current id of the course.
+     * @return the grid pane populated with the different information.
+     */
 	protected GridPane updateTabCourse(Tab tabCourse, String nameCourse, String descriptionCourse, int nbTotalHourCourse, int referentTeacherCourse, int idCourse){
         // labels
         Label nameCourseLabel = new Label("Name of course : ");
         Label descriptionCourseLabel = new Label("Description : ");
         Label nbTotalHourLabel = new Label("Total hours : ");
         Label promoLabel = new Label("Promotion : ");
-       
 
         // Add text Field
         TextField nameCourseField = new TextField();
@@ -432,7 +443,6 @@ public class TeacherUI extends UI {
         HBox referentTeacherCourseHb = new HBox();
         HBox promoHb = new HBox();
 
-
         // add form in hbox
         nameCourseHb.getChildren().addAll(nameCourseLabel, nameCourseField);
         descriptionCourseHb.getChildren().addAll(descriptionCourseLabel, descriptionCourseField);
@@ -444,7 +454,6 @@ public class TeacherUI extends UI {
         gridUpdateCourse.add(descriptionCourseHb, 1, 2);
         gridUpdateCourse.add(nbTotalHourCourseHb, 1, 3);
         gridUpdateCourse.add(promoHb, 1, 4);
-       
 
         //add gridpane in tab
         tabCourse.setContent(gridUpdateCourse);
@@ -488,82 +497,11 @@ public class TeacherUI extends UI {
             nameCourseField.setText("");
             descriptionCourseField.setText("");
             nbTotalHourField.setText("");
-
         });
-
         cancelUpdate.setOnAction(event -> {
             tabCourse.setContent(courseRead(tabCourse));
         });
 
-
         return gridUpdateCourse;
     }
-
-	public void addUIControls(BorderPane borderPane){
-
-	}
-
-	@Override
-	public void display(String message) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void setState(String cmd) {
-
-	}
-
-	@Override
-	public void getRooms(List<RoomType> rooms) {
-
-	}
-
-    @Override
-    public void getDepartment(List<DepartmentType> dep) {
-
-    }
-
-    @Override
-    public void getTeacher(List<TeacherType> teacher) {
-
-    }
-
-    @Override
-    public void getPromo(List<PromotionType> promo) {
-
-    }
-
-    @Override
-    public void getClasses(List<ClassType> classes) {
-
-    }
-
-    @Override
-	public void start(Stage arg0) throws Exception {
-		// TODO Auto-generated method stub
-	}
-
-	@Override
-	public void getCourses(List<CourseType> courses) {
-
-	}
-	
-	@Override
-	public void getUsers(List<UserType> users) {
-		
-	}
-
-    @Override
-    public void getAdmin(List<AdminType> adm) {
-
-    }
-
-    @Override
-	public void setUser(UserType user) {
-		this.user = user;
-		
-	}
-
-	
 }

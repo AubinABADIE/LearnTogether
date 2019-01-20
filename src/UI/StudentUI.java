@@ -1,6 +1,5 @@
 package UI;
 
-import Types.*;
 import client.CoreClient;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
@@ -11,9 +10,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import Types.UserType;
 
-import java.util.List;
 
 
 /**
@@ -25,7 +22,6 @@ import java.util.List;
  */
 public class StudentUI extends UI  {
     private Scene principalStudentScene;
-    private Tab recordTab;
 
     public StudentUI(Stage primaryStage, String login, int id, CoreClient client){
         this.primaryStage = primaryStage;
@@ -34,16 +30,8 @@ public class StudentUI extends UI  {
         this.client=client;
     }
 
-    public Scene getPrincipalStudentScene() {
-        return principalStudentScene;
-    }
-
-    public void setPrincipalStudentScene(Scene principalStudentScene) {
-        this.principalStudentScene = principalStudentScene;
-    }
-
     /**
-     * This function creates the principal scene (view) for the student.
+     * This method creates the principal scene (view) for the student.
      * It is called by the startUI when a student logs in.
      * @return the principal scene
      */
@@ -91,51 +79,5 @@ public class StudentUI extends UI  {
 
         principalStudentScene = new Scene(studentScene, 900, 700);
         return principalStudentScene;
-    }
-
-
-    @Override
-    public void getRooms(List<RoomType> rooms) {
-
-    }
-
-	@Override
-	public void getCourses(List<CourseType> courses) {
-		
-	}
-	
-	@Override
-	public void setUser(UserType user) {
-		this.user = user;
-		
-	}
-
-    @Override
-    public void getDepartment(List<DepartmentType> dep) {
-
-    }
-    @Override
-    public void getTeacher(List<TeacherType> teacher) {
-
-    }
-
-    @Override
-    public void getPromo(List<PromotionType> promo) {
-
-    }
-
-    @Override
-    public void getClasses(List<ClassType> classes) {
-
-    }
-
-	@Override
-	public void getUsers(List<UserType> users) {
-		
-	}
-
-    @Override
-    public void getAdmin(List<AdminType> adm) {
-
     }
 }
