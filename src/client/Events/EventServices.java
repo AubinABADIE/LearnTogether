@@ -26,10 +26,10 @@ public class EventServices {
      * @param idTeacher : the teacher related to the event
      * @param idClass : the class related to the event
      * @param idPromo : the promo related to the event
-     * @param iddepartement : the departement related to the event
+     * @param idDepartment : the department related to the event
 	 */
-	public void handleCreateEvent (Date dateTimeEvent, float duration, int idRoom, int idCourse, int idTeacher, int idClass, int idPromo, int idDepartement){
-		String objConstruct = dateTimeEvent + "-/-" + duration + "-/-" + idRoom + "-/-" + idCourse + "-/-" + idTeacher + "-/-" + idClass + "-/-" + idPromo + "-/-" + idDepartement;
+	public void handleCreateEvent (Date dateTimeEvent, float duration, int idRoom, int idCourse, int idTeacher, int idClass, int idPromo, int idDepartment){
+		String objConstruct = dateTimeEvent + "-/-" + duration + "-/-" + idRoom + "-/-" + idCourse + "-/-" + idTeacher + "-/-" + idClass + "-/-" + idPromo + "-/-" + idDepartment;
 		try {
 	    	client.getConnection().sendToServer("#CREATEEVENT-/-" + objConstruct);
 	    } catch (IOException e) {
@@ -47,10 +47,10 @@ public class EventServices {
     * @param idTeacher : the teacher related to the event
     * @param idClass : the class related to the event
     * @param idPromo : the promo related to the event
-    * @param iddepartement : the departement related to the event
+    * @param idDepartment : the department related to the event
     */
-   public void handleUpdateEvent (int idEvent, Date dateTimeEvent, float duration, int idRoom, int idCourse, int idTeacher, int idClass, int idPromo, int idDepartement){
-       String objConstruct = idEvent + "-/-" + dateTimeEvent + "-/-" + duration + "-/-" + idRoom + "-/-" + idCourse + "-/-" + idTeacher + "-/-" + idClass + "-/-" + idPromo + "-/-" + idDepartement;
+   public void handleUpdateEvent (int idEvent, Date dateTimeEvent, float duration, int idRoom, int idCourse, int idTeacher, int idClass, int idPromo, int idDepartment){
+       String objConstruct = idEvent + "-/-" + dateTimeEvent + "-/-" + duration + "-/-" + idRoom + "-/-" + idCourse + "-/-" + idTeacher + "-/-" + idClass + "-/-" + idPromo + "-/-" + idDepartment;
 
        try {
            client.getConnection().sendToServer("#UPDATEEVENT-/-" + objConstruct);
@@ -61,7 +61,7 @@ public class EventServices {
    
    /**
     * This method send to the server to delete the event
-    * @param id : event id
+    * @param idEvent : event id
     */
    public void handleDeleteEvent (int idEvent){
        try {

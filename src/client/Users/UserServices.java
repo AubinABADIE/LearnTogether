@@ -202,17 +202,17 @@ public class UserServices{
     }
     /**
      * This method is called when an admin wants to set different information of an user profile.
-     * @param id
-     * @param name
-     * @param firstname
-     * @param birthDate
-     * @param email
-     * @param isAdmin
-     * @param role
+     * @param id the user ID
+     * @param name the user name
+     * @param firstName the user first name
+     * @param birthDate the user birth date
+     * @param email the user email
+     * @param isAdmin the user state regarding its admin capabilities
+     * @param role teh user role.
      */
-    public void updateAdminUser(int id, String name, String firstname, String email, String birthDate, String role, int isAdmin) {
+    public void updateAdminUser(int id, String name, String firstName, String email, String birthDate, String role, int isAdmin) {
         try {
-            coreClient.getConnection().sendToServer("#UPDATEADMINUSER " + id + " " + name + " " + firstname + " " + email + " " + birthDate + " " + role + " " + isAdmin);
+            coreClient.getConnection().sendToServer("#UPDATEADMINUSER " + id + " " + name + " " + firstName + " " + email + " " + birthDate + " " + role + " " + isAdmin);
         } catch (IOException e) {
             e.printStackTrace();
         }

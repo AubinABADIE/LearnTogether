@@ -392,7 +392,7 @@ Arguments :
  *Usage*:  `#DELETEROOM {mess}` 
  
  ### \#CREATEDCOURSE
-The server responds to a #CREATECOURSE injonction from the client by sending this.  
+The server responds to a #CREATECOURSE injunction from the client by sending this.  
 Arguments :  
 - mess : String with the result of the action.  
   
@@ -447,7 +447,7 @@ Arguments:
 
 
 ### \#CREATEDDEPARTMENT
-The server responds to a #CREATEDEPARTMENT injonction from the client by sending this.
+The server responds to a #CREATEDEPARTMENT injunction from the client by sending this.
 Arguments :
 - mess : String with the result of the action.
 *Usage*: `#CREATEDDEPARTMENT {mess}`
@@ -465,7 +465,7 @@ Arguments:
 *Usage*:  `#UPDATEDDEPARTMENT {mess}`
 
 ### \#CREATEDPROMO
-The server responds to a #CREATEPROMO injonction from the client by sending this.
+The server responds to a #CREATEPROMO injunction from the client by sending this.
 Arguments :
 - mess : String with the result of the action.
 *Usage*: `#CREATEDPROMO {mess}`
@@ -484,7 +484,7 @@ Arguments:
 
 
 ### \#CREATEDCLASS
-The server responds to a #CREATECLASS injonction from the client by sending this.
+The server responds to a #CREATECLASS injunction from the client by sending this.
 Arguments :
 - mess : String with the result of the action.
 *Usage*: `#CREATEDCLASS {mess}`
