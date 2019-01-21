@@ -41,7 +41,8 @@ You cannot create a user at this time (unless you are connected as an administra
 If you create a user with the administrator or super administrator account you can connect to this new account  but you have to click on the *first connection* button to configure the user's password. Finally, you are redirected to the connection page and you can enter your login and password to connect.  
 For some reason, the WI-FI network *eduroam* blocks the connection to the database (and Azure in general). Please connect to another WI-FI if possible, or a VPN to bypass this limitation.
 
-  
+# Launch tests
+To launch tests, type `java test.UserServicesTest` in a terminal.
 
 # Protocol 
   
