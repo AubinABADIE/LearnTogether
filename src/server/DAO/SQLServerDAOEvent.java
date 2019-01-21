@@ -64,7 +64,7 @@ public class SQLServerDAOEvent extends AbstractDAOEvent{
     }
     
    /**
-     * @param idEvent : the id of the Event 
+     * This method creates an event in the database.
      * @param dateTimeEvent : the time and the date when the event begin
      * @param duration : the duration of the event
      * @param idRoom : the room when the event will take place
@@ -72,16 +72,16 @@ public class SQLServerDAOEvent extends AbstractDAOEvent{
      * @param idTeacher : the teacher related to the event
      * @param idClass : the class related to the event
      * @param idPromo : the promo related to the event
-     * @param iddepartement : the departement related to the event
+     * @param idDepartment : the departement related to the event
      */
    
     @Override
-    public int createEvent(Date dateTimeEvent, float duration, int idRoom, int idCourse, int idTeacher, int idClass, int idPromo, int idDepartement, ConnectionToClient client){
+    public int createEvent(Date dateTimeEvent, float duration, int idRoom, int idCourse, int idTeacher, int idClass, int idPromo, int idDepartment){
         Connection connection = getConnection();
         int result = 0;
         if(connection != null){
             try{
-                PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO Events(idEvent, dateTimeEvent, duration, idRoom, idCourse, idTeacher, idClass, idPromo, idDepartement) VALUES (? ,? ,? ,?, ?, ?, ?, ?)");
+                PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO Events(dateTimeEvent, duration, idRoom, idCourse, idTeacher, idClass, idPromo, idDepartment) VALUES (?,?,?,?,?,?,?,?)");
                 preparedStatement.setDate(1, dateTimeEvent);
                 preparedStatement.setFloat(2, duration);
                 preparedStatement.setInt(3, idRoom);
@@ -89,7 +89,7 @@ public class SQLServerDAOEvent extends AbstractDAOEvent{
                 preparedStatement.setInt(5, idTeacher);
                 preparedStatement.setInt(6, idClass);
                 preparedStatement.setInt(7, idPromo);
-                preparedStatement.setInt(8, idDepartement);
+                preparedStatement.setInt(8, idDepartment);
                 result = preparedStatement.executeUpdate();
 
             }catch (SQLException e){
@@ -200,14 +200,14 @@ public class SQLServerDAOEvent extends AbstractDAOEvent{
      * @param idTeacher : the teacher related to the event
      * @param idClass : the class related to the event
      * @param idPromo : the promo related to the event
-     * @param iddepartement : the departement related to the event
+     * @param idDepartment : the department related to the event
      */
-    public int updateEvent(int idEvent, Date dateTimeEvent, float duration, int idRoom, int idCourse, int idTeacher, int idClass, int idPromo, int idDepartement){
+    public int updateEvent(int idEvent, Date dateTimeEvent, float duration, int idRoom, int idCourse, int idTeacher, int idClass, int idPromo, int idDepartment){
         Connection connection = getConnection();
         int result = 0;
         if(connection!= null){
             try{
-                PreparedStatement preparedStatement = connection.prepareStatement("UPDATE Events SET idEvent = ?, dateTimeEvent = ?, duration = ?, idRoom = ?, idCourse = ?, idTeacher = ?, idClass = ?, idPromo = ?, idDepartement = ? WHERE idEvent = ?");
+                PreparedStatement preparedStatement = connection.prepareStatement("UPDATE Events SET idEvent = ?, dateTimeEvent = ?, duration = ?, idRoom = ?, idCourse = ?, idTeacher = ?, idClass = ?, idPromo = ?, idDepartment = ? WHERE idEvent = ?");
                 preparedStatement.setInt(9, idEvent);
                 preparedStatement.setDate(1, dateTimeEvent);
                 preparedStatement.setFloat(2, duration);
@@ -216,7 +216,7 @@ public class SQLServerDAOEvent extends AbstractDAOEvent{
                 preparedStatement.setInt(5, idTeacher);
                 preparedStatement.setInt(6, idClass);
                 preparedStatement.setInt(7, idPromo);
-                preparedStatement.setInt(8, idDepartement);
+                preparedStatement.setInt(8, idDepartment);
 
                 result = preparedStatement.executeUpdate();
             } catch(SQLException e){

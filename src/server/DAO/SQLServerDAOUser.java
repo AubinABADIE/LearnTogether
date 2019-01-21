@@ -521,12 +521,12 @@ public class SQLServerDAOUser extends AbstractDAOUser {
 
     /**
      *This method updates a user in the DAO with its ID.
-     * @param id
-     * @param name
-     * @param firstName
-     * @param birthDate
-     * @param email
-     * @param role
+     * @param id the user ID
+     * @param name the user name
+     * @param firstName the user first name
+     * @param birthDate the user birth date
+     * @param email the user email
+     * @param role the user role
      * @param isAdmin : 0=FALSE , 1=TRUE
      * @return 0 or 1 depending if the update failed or succeeded.
      */

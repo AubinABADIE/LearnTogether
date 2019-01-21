@@ -3,6 +3,7 @@ UI
 client
 client.Chat
 client.Courses
+client.Events
 client.Grades
 client.Groups
 client.Records
@@ -15,3 +16,4 @@ com.lloseng.ocsf.server
 common
 server
 server.DAO
+test

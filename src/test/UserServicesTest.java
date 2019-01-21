@@ -1,9 +1,11 @@
 package test;
 
-import static org.junit.Assert.*;
+import client.Users.UserServices;
 import org.junit.Test;
 
-import client.Users.UserServices;
+import static org.junit.Assert.*;
+import static org.testng.AssertJUnit.assertFalse;
+import static org.testng.AssertJUnit.assertTrue;
 
 public class UserServicesTest {
 

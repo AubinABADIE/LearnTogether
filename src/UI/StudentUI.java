@@ -83,8 +83,5 @@ public class StudentUI extends UI  {
         return principalStudentScene;
     }
 
-    @Override
-    public void getStaff(List<StaffType> adm) {
 
-    }
 }

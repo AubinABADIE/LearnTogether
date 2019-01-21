@@ -1026,4 +1026,15 @@ public abstract class UI extends Application implements DisplayIF {
      */
     @Override
     public void getEvents(List<EventType> events) {}
+
+    /**
+     * This method gets the staffs stored into the database.
+     * Inherits from DisplayIF.
+     * It is used bu other UIs, hence why it's empty here.
+     * @param adm the list of staffs.
+     */
+    @Override
+    public void getStaff(List<StaffType> adm) {
+
+    }
 }

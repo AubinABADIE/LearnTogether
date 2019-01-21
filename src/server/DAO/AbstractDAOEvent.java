@@ -33,7 +33,6 @@ public abstract class AbstractDAOEvent{
 
     /**
      * this method creates a course in the data base
-     * @param idEvent : the id of the Event 
      * @param dateTimeEvent : the time and the date when the event begin
      * @param duration : the duration of the event
      * @param idRoom : the room when the event will take place
@@ -41,11 +40,11 @@ public abstract class AbstractDAOEvent{
      * @param idTeacher : the teacher related to the event
      * @param idClass : the class related to the event
      * @param idPromo : the promo related to the event
-     * @param iddepartement : the departement related to the event
+     * @param idDepartment : the department related to the event
      * @return 1 if the creation was successful, 0 otherwise.
      */
     
-    public abstract int createEvent(Date dateTimeEvent, float duration, int idRoom, int idCourse, int idTeacher, int idClass, int idPromo, int idDepartement, ConnectionToClient client);
+    public abstract int createEvent(Date dateTimeEvent, float duration, int idRoom, int idCourse, int idTeacher, int idClass, int idPromo, int idDepartment);
     
     /**
      * This method returns the events list
@@ -77,10 +76,10 @@ public abstract class AbstractDAOEvent{
      * @param idTeacher : the teacher related to the event
      * @param idClass : the class related to the event
      * @param idPromo : the promo related to the event
-     * @param iddepartement : the departement related to the event
+     * @param idDepartment : the department related to the event
      * @return 1 if the update was successful, 0 otherwise.
      */
-    public abstract int updateEvent(int idEvent, Date dateTimeEvent, float duration, int idRoom, int idCourse, int idTeacher, int idClass, int idPromo, int idDepartement);
+    public abstract int updateEvent(int idEvent, Date dateTimeEvent, float duration, int idRoom, int idCourse, int idTeacher, int idClass, int idPromo, int idDepartment);
 
 	
 

@@ -522,11 +522,16 @@ public class TeacherUI extends UI {
 
         return gridUpdateCourse;
     }
-	
+
+    /**
+     * This method populates the pane to read events.
+     * @param tabEvent the tab to populate.
+     * @return the populated grid pane.
+     */
 	protected GridPane eventRead(Tab tabEvent){
         client.getEvents();
         ListView<EventType> list = new ListView<>();
-        Date d1 = new Date(2018, 01, 14);
+        Date d1 = new Date(2018, 1, 14);
         EventType et = new EventType(1, d1, (float)1.5, 1, 2, 5, 4, 5, 6);
         eventNames = FXCollections.observableArrayList();
         eventNames.add(et);
@@ -712,8 +717,4 @@ public class TeacherUI extends UI {
         return eventRead(tabEvent);
     }
 
-    @Override
-    public void getStaff(List<StaffType> adm) {
-
-    }
 }

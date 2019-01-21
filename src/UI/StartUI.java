@@ -416,7 +416,7 @@ public class StartUI extends UI {
         gridPane.add(nameLabel, 0,1);
 
         // Add Name Text Field
-        TextField nameField = new TextField("StaffAdmin@umontpellier.fr");
+        TextField nameField = new TextField();
         nameField.setPrefHeight(40);
         gridPane.add(nameField, 1,1);
 
@@ -427,7 +427,6 @@ public class StartUI extends UI {
         // Add Password Text Field
         PasswordField passwordField = new PasswordField();
         passwordField.setPrefHeight(40);
-        passwordField.setText("AdmStaff");
         gridPane.add(passwordField, 1, 2);
 
         // Add Login Button
@@ -494,7 +493,7 @@ public class StartUI extends UI {
         pane.add(nameLabel, 0,3);
 
         // Add Name Text Field
-        TextField nameField = new TextField("yvan.sanson@etu.umontpellier.fr");
+        TextField nameField = new TextField();
         nameField.setPrefHeight(40);
         pane.add(nameField, 1,3);
 

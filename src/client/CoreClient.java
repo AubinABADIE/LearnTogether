@@ -673,10 +673,10 @@ public class CoreClient implements ClientIF {
      * @param idTeacher : the teacher related to the event
      * @param idClass : the class related to the event
      * @param idPromo : the promo related to the event
-     * @param iddepartement : the departement related to the event
+     * @param idDepartment : the department related to the event
      */
-    public void handleCreateEvent(Date dateTimeEvent, float duration, int idRoom, int idCourse, int idTeacher, int idClass, int idPromo, int idDepartement) {
-        event.handleCreateEvent(dateTimeEvent, duration, idRoom, idCourse, idTeacher, idClass, idPromo, idDepartement);
+    public void handleCreateEvent(Date dateTimeEvent, float duration, int idRoom, int idCourse, int idTeacher, int idClass, int idPromo, int idDepartment) {
+        event.handleCreateEvent(dateTimeEvent, duration, idRoom, idCourse, idTeacher, idClass, idPromo, idDepartment);
     }
 
     /**
@@ -698,10 +698,10 @@ public class CoreClient implements ClientIF {
      * @param idTeacher : the teacher related to the event
      * @param idClass : the class related to the event
      * @param idPromo : the promo related to the event
-     * @param iddepartement : the departement related to the event
+     * @param idDepartment : the department related to the event
      */
-    public void handleUpdateEvent(int idEvent, Date dateTimeEvent, float duration, int idRoom, int idCourse, int idTeacher, int idClass, int idPromo, int idDepartement){
-        event.handleUpdateEvent(idEvent, dateTimeEvent, duration, idRoom, idCourse, idTeacher, idClass, idPromo, idDepartement);
+    public void handleUpdateEvent(int idEvent, Date dateTimeEvent, float duration, int idRoom, int idCourse, int idTeacher, int idClass, int idPromo, int idDepartment){
+        event.handleUpdateEvent(idEvent, dateTimeEvent, duration, idRoom, idCourse, idTeacher, idClass, idPromo, idDepartment);
     }
     
     /**

@@ -442,17 +442,7 @@ The server responds to a #DELETEUSER from the client by sending this.
 Arguments:  
 - mess : String with the result of the action.  
   
-*Usage*:  `#DELETEDUSER {mess}` 
-  
-#Users in the DB  
-| id       |      name     |  first name |           email                   |   password   | role     |  
-|----------|:-------------:|:-----------:|:---------------------------------:|:------------:|:--------:|  
-| 3        |  SANSON       | Yvan       | yvan.sanson@etu.umontpellier.fr    |LearnTogether |STUDENT   |        
-| 4        |    SALELLES   |   Marie    | marie.salelles@etu.umontpellier.fr |Test          |STUDENT   |  
-| 6        | Teacher       |    PolyMtp | teacher@umontpellier.fr            |Teacher       |TEACHER   |  
-| 8        | Staff         | PolyMtp    | StaffAdmin@umontpellier.fr         |AdmStaff      |ADMIN     |  
-| 9        | SuperStaff    | PolyMtp    | SuperAdminAdmin@umontpellier.fr    |SuperAdmin    |SUPERADMIN|  
-| 11       | Stratulat     | Tiberiu    | tibi.stratulat@umontpellier.fr     |Tibi          |TEACHER   |
+*Usage*:  `#DELETEDUSER {mess}`
 
 
 ### \#CREATEDDEPARTMENT
@@ -509,4 +499,17 @@ The server responds to a #UPDATECLASS from the client by sending this.
 Arguments:
 - mess : String with the result of the action.
 *Usage*:  `#UPDATEDCLASS {mess}`
+
+ 
+  
+#Users in the DB  
+| id       |      name     |  first name |           email                   |   password   | role     |  
+|----------|:-------------:|:-----------:|:---------------------------------:|:------------:|:--------:|  
+| 3        |  SANSON       | Yvan       | yvan.sanson@etu.umontpellier.fr    |LearnTogether |STUDENT   |        
+| 4        |    SALELLES   |   Marie    | marie.salelles@etu.umontpellier.fr |Test          |STUDENT   |  
+| 6        | Teacher       |    PolyMtp | teacher@umontpellier.fr            |Teacher       |TEACHER   |  
+| 8        | Staff         | PolyMtp    | StaffAdmin@umontpellier.fr         |AdmStaff      |ADMIN     |  
+| 9        | SuperStaff    | PolyMtp    | SuperAdminAdmin@umontpellier.fr    |SuperAdmin    |SUPERADMIN|  
+| 11       | Stratulat     | Tiberiu    | tibi.stratulat@umontpellier.fr     |Tibi          |TEACHER   |
+| 21       | VALDURIEZ     | Esther     | esther@umontpellier.fr             |null          |TEACHER   |
 
