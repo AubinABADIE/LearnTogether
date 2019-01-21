@@ -26,7 +26,7 @@ Launch the startUI to connect a client.
 ##If you have the JARs available:
 For the client side application, nothing particular is required. Just run the application by double-clicking on the JAR file.
 For the server side:
-- In a terminal at the location of the JAR file, enter the command `jar xf LearnTogetherServer.jar`
+- In a terminal at the location of the JAR file, enter the command `jar xf LearnTogetherServerAndTests.jar`
 - This will unarchive the different classes contained in the JAR file.
 - To launch the server, type `java server.ServerConsole` at the same location as before.
 
