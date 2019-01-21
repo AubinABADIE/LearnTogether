@@ -42,7 +42,7 @@ If you create a user with the administrator or super administrator account you c
 For some reason, the WI-FI network *eduroam* blocks the connection to the database (and Azure in general). Please connect to another WI-FI if possible, or a VPN to bypass this limitation.
 
 # Launch tests
-To launch tests, type `java test.UserServicesTest` in a terminal.
+To launch tests, use an IDE (Eclipse for example) and run the class in the package `test`.
 
 # Protocol 
   
