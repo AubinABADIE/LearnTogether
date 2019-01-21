@@ -1191,12 +1191,12 @@ public class GeneralServer implements Observer {
      * @param idTeacher : the teacher related to the event
      * @param idClass : the class related to the event
      * @param idPromo : the promo related to the event
-     * @param iddepartement : the departement related to the event
+     * @param idDepartment : the department related to the event
      */
     
-    private void handleCreateEventFromClient(int idEvent, Date dateTimeEvent, float duration, int idRoom, int idCourse, int idTeacher, int idClass, int idPromo, int idDepartement, ConnectionToClient client){
+    private void handleCreateEventFromClient(int idEvent, Date dateTimeEvent, float duration, int idRoom, int idCourse, int idTeacher, int idClass, int idPromo, int idDepartment, ConnectionToClient client){
     	
-    	int result = dao.getEventDAO().createEvent(dateTimeEvent, duration, idRoom, idCourse, idTeacher, idClass, idPromo, idDepartement, client);
+    	int result = dao.getEventDAO().createEvent(dateTimeEvent, duration, idRoom, idCourse, idTeacher, idClass, idPromo, idDepartment);
 
         String mess;
         if (result == 1){

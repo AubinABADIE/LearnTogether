@@ -3,7 +3,6 @@ package test;
 import client.Users.UserServices;
 import org.junit.Test;
 
-import static org.junit.Assert.*;
 import static org.testng.AssertJUnit.assertFalse;
 import static org.testng.AssertJUnit.assertTrue;
 
@@ -17,5 +16,7 @@ public class UserServicesTest {
 		assertTrue("Same passwords", userService.encryptPwd("mdp").equals(res));
 		assertFalse("Different passwords", userService.encryptPwd("mdpDifferent").equals(res));
 	}
+
+
 
 }
